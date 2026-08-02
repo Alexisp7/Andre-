@@ -1,0 +1,200 @@
+{
+  "farmacologia": [
+    {
+      "codigo": "PSF-01",
+      "titulo": "Introducción a la psicofarmacología",
+      "archivo": "01-introduccion-psicofarmacologia.pdf",
+      "paginas": 9
+    },
+    {
+      "codigo": "PSF-02",
+      "titulo": "Psicofarmacología y neurotransmisión química",
+      "archivo": "02-psicofarmacologia.pdf",
+      "paginas": 11
+    },
+    {
+      "codigo": "BIO-01",
+      "titulo": "Biología celular",
+      "archivo": "03-biologia-celular.pdf",
+      "paginas": 53
+    },
+    {
+      "codigo": "BIO-02",
+      "titulo": "Biología molecular",
+      "archivo": "04-biologia-molecular.pdf",
+      "paginas": 41
+    },
+    {
+      "codigo": "PK-01",
+      "titulo": "Farmacocinética: absorción, distribución, metabolismo y excreción",
+      "archivo": "05-farmacocinetica.pdf",
+      "paginas": 93
+    },
+    {
+      "codigo": "PD-01",
+      "titulo": "Farmacodinamia: ligando, receptor y efecto farmacológico",
+      "archivo": "06-farmacodinamia.pdf",
+      "paginas": 43
+    }
+  ],
+  "neuroanatomia": [
+    {
+      "codigo": "NA-01",
+      "titulo": "Organización del sistema nervioso",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "NA-02",
+      "titulo": "Médula espinal: sustancia gris y blanca",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "NA-03",
+      "titulo": "Nervios espinales, dermatomas y miotomas",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "TE-01",
+      "titulo": "Bulbo, protuberancia y mesencéfalo",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "TE-02",
+      "titulo": "Nervios craneales y sus núcleos",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "TE-03",
+      "titulo": "Cerebelo: lóbulos y circuitería",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "DT-01",
+      "titulo": "Tálamo, hipotálamo y epitálamo",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "DT-02",
+      "titulo": "Ganglios basales y circuitos motores",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "DT-03",
+      "titulo": "Corteza cerebral y áreas de Brodmann",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "DT-04",
+      "titulo": "Sistema límbico, hipocampo y amígdala",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "VC-01",
+      "titulo": "Vías ascendentes y descendentes",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "VC-02",
+      "titulo": "Polígono de Willis e irrigación encefálica",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "VC-03",
+      "titulo": "Meninges, LCR y sistema ventricular",
+      "archivo": null,
+      "paginas": 0
+    }
+  ],
+  "neurofisiologia": [
+    {
+      "codigo": "EM-01",
+      "titulo": "Potencial de reposo y bomba Na⁺/K⁺",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "EM-02",
+      "titulo": "Potencial de acción y canales de voltaje",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "EM-03",
+      "titulo": "Conducción saltatoria",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "SP-01",
+      "titulo": "Transmisión sináptica química y eléctrica",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "SP-02",
+      "titulo": "Integración sináptica",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "SP-03",
+      "titulo": "LTP, LTD y bases celulares de la memoria",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "SM-01",
+      "titulo": "Transducción sensorial y campos receptivos",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "SM-02",
+      "titulo": "Visión: de la retina a V1",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "SM-03",
+      "titulo": "Audición, sistema vestibular y somatosensación",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "SM-04",
+      "titulo": "Control motor: reflejos y unidad motora",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "RC-01",
+      "titulo": "EEG: ritmos delta, theta, alfa, beta y gamma",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "RC-02",
+      "titulo": "Arquitectura del sueño",
+      "archivo": null,
+      "paginas": 0
+    },
+    {
+      "codigo": "RC-03",
+      "titulo": "Atención, memoria de trabajo y oscilaciones",
+      "archivo": null,
+      "paginas": 0
+    }
+  ]
+}

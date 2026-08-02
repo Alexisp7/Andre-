@@ -1,0 +1,2 @@
+neuronas-a.webp   neuronas de la izquierda de la portada (azul + dorado)
+neuronas-b.webp   neuronas de la derecha (dorado + azul)

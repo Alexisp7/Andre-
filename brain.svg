@@ -1,0 +1,140 @@
+<svg viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#C8A96E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="0" y="0" width="560" height="440" fill="#111111" stroke="none"/>
+
+  <defs>
+    <path id="cerebro" d="M44 186
+             C40 146, 62 112, 98 96
+             C132 80, 172 86, 196 106
+             C220 100, 244 114, 250 140
+             C256 164, 246 186, 228 196
+             C230 210, 222 222, 208 226
+             C202 238, 186 244, 172 240
+             C156 246, 136 244, 124 234
+             C96 234, 72 222, 62 206
+             C50 202, 42 194, 44 186 Z"/>
+    <clipPath id="clipCerebro"><use href="#cerebro"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#clipCerebro)" opacity="0.8">
+    <path d="M104 92 C114 116, 108 140, 90 152 C76 162, 62 161, 52 154"/>
+    <path d="M140 82 C150 110, 144 136, 124 150 C106 162, 86 162, 74 153"/>
+    <path d="M176 86 C184 114, 174 142, 152 154 C132 165, 112 164, 100 156"/>
+    <path d="M204 106 C210 132, 200 158, 178 168 C160 177, 142 176, 132 168"/>
+    <path d="M230 126 C236 150, 226 170, 208 178 C194 185, 180 184, 172 178"/>
+    <path d="M250 152 C250 172, 238 186, 222 190"/>
+    <path d="M70 176 C84 168, 102 170, 112 180"/>
+    <path d="M88 200 C104 190, 124 191, 136 202"/>
+    <path d="M128 220 C142 211, 160 211, 172 220"/>
+    <path d="M56 132 C68 124, 82 124, 92 130"/>
+  </g>
+
+  <g clip-path="url(#clipCerebro)">
+    <path d="M88 182 C102 152, 140 138, 176 147 C198 152, 212 165, 216 180" stroke-width="1.4"/>
+    <path d="M97 187 C110 163, 142 151, 174 158 C192 162, 204 172, 208 184" stroke-width="0.9" opacity="0.7"/>
+    <path d="M118 196 C132 182, 158 178, 178 186" stroke-width="0.8" opacity="0.55"/>
+  </g>
+
+  <use href="#cerebro" stroke-width="1.3"/>
+
+  <g opacity="0.95">
+    <path d="M186 224
+             C204 214, 232 218, 244 234
+             C256 250, 250 272, 230 278
+             C212 283, 194 275, 188 260
+             C184 250, 183 236, 186 224 Z" stroke-width="1.2"/>
+    <path d="M192 232 C210 224, 232 230, 241 244" stroke-width="0.75" opacity="0.75"/>
+    <path d="M189 244 C206 235, 228 241, 239 256" stroke-width="0.75" opacity="0.75"/>
+    <path d="M188 256 C204 247, 224 252, 234 266" stroke-width="0.75" opacity="0.75"/>
+    <path d="M191 266 C204 259, 218 262, 226 272" stroke-width="0.75" opacity="0.75"/>
+  </g>
+
+  <g stroke-width="1.25">
+    <path d="M148 224
+             C154 236, 158 246, 162 254
+             C168 266, 172 280, 170 296"/>
+    <path d="M182 220
+             C184 234, 186 244, 188 252
+             C192 266, 192 282, 188 298"/>
+    <path d="M170 296 C176 300, 182 300, 188 298" stroke-width="1.1"/>
+  </g>
+  <g stroke-width="0.75" opacity="0.7">
+    <path d="M158 248 C166 253, 176 254, 186 250"/>
+    <path d="M166 272 C173 277, 181 277, 189 274"/>
+  </g>
+
+  <circle cx="150" cy="98" r="4.5" stroke-width="1.3"/>
+  <path d="M154 95 L310 78" stroke-width="0.6" opacity="0.5"/>
+  <path d="M154 102 L310 150" stroke-width="0.6" opacity="0.5"/>
+
+  <g>
+    <circle cx="372" cy="114" r="72" stroke-width="1.3"/>
+    <clipPath id="c1"><circle cx="372" cy="114" r="70"/></clipPath>
+    <g clip-path="url(#c1)">
+      <g stroke-width="0.7" opacity="0.4">
+        <path d="M298 58 H448"/><path d="M298 76 H448"/><path d="M298 98 H448"/>
+        <path d="M298 124 H448"/><path d="M298 148 H448"/><path d="M298 168 H448"/>
+      </g>
+      <g stroke-width="0.95">
+        <circle cx="322" cy="68" r="2.4"/><circle cx="350" cy="66" r="2.4"/>
+        <circle cx="384" cy="69" r="2.4"/><circle cx="416" cy="67" r="2.4"/>
+
+        <g><circle cx="332" cy="88" r="3.4"/><path d="M332 84 v-6 M328 85 l-5 -5 M336 85 l5 -5 M332 92 v7"/></g>
+        <g><circle cx="368" cy="86" r="3.4"/><path d="M368 82 v-6 M364 83 l-5 -5 M372 83 l5 -5 M368 90 v7"/></g>
+        <g><circle cx="404" cy="89" r="3.4"/><path d="M404 85 v-6 M400 86 l-5 -5 M408 86 l5 -5 M404 93 v7"/></g>
+
+        <g><path d="M316 116 l6 -10 l6 10 Z" stroke-width="1.1"/><path d="M322 106 v-9 M322 97 l-5 -6 M322 97 l5 -6 M316 116 l-7 6 M328 116 l7 6 M322 116 v13"/></g>
+        <g><path d="M356 118 l6 -10 l6 10 Z" stroke-width="1.1"/><path d="M362 108 v-9 M362 99 l-5 -6 M362 99 l5 -6 M356 118 l-7 6 M368 118 l7 6 M362 118 v13"/></g>
+        <g><path d="M396 115 l6 -10 l6 10 Z" stroke-width="1.1"/><path d="M402 105 v-9 M402 96 l-5 -6 M402 96 l5 -6 M396 115 l-7 6 M408 115 l7 6 M402 115 v13"/></g>
+        <g><path d="M430 120 l6 -10 l6 10 Z" stroke-width="1.1"/><path d="M436 110 v-9 M436 101 l-5 -6 M436 101 l5 -6 M430 120 l-7 6 M442 120 l7 6 M436 120 v11"/></g>
+
+        <g><circle cx="336" cy="140" r="3"/><path d="M336 137 v-6 M336 143 v7 M333 138 l-6 -4 M339 138 l6 -4"/></g>
+        <g><circle cx="376" cy="142" r="3"/><path d="M376 139 v-6 M376 145 v7 M373 140 l-6 -4 M379 140 l6 -4"/></g>
+        <g><circle cx="414" cy="139" r="3"/><path d="M414 136 v-6 M414 142 v7 M411 137 l-6 -4 M417 137 l6 -4"/></g>
+
+        <circle cx="330" cy="160" r="2.2"/><circle cx="362" cy="162" r="2.2"/>
+        <circle cx="396" cy="159" r="2.2"/><circle cx="426" cy="161" r="2.2"/>
+      </g>
+    </g>
+  </g>
+
+  <path d="M330 172 L338 262" stroke-width="0.6" opacity="0.5"/>
+  <path d="M428 158 L510 262" stroke-width="0.6" opacity="0.5"/>
+
+  <g>
+    <circle cx="424" cy="314" r="100" stroke-width="1.3"/>
+    <clipPath id="c2"><circle cx="424" cy="314" r="98"/></clipPath>
+    <g clip-path="url(#c2)">
+      <g stroke-width="1.15">
+        <path d="M424 286 L424 258"/>
+        <path d="M424 258 L404 238 M424 258 L446 236"/>
+        <path d="M404 238 L392 226 M404 238 L398 222"/>
+        <path d="M446 236 L458 224 M446 236 L442 220"/>
+        <path d="M392 226 L384 218 M398 222 L394 212"/>
+        <path d="M458 224 L466 216 M442 220 L440 210"/>
+
+        <path d="M410 304 L386 314 M386 314 L366 322 M386 314 L374 328"/>
+        <path d="M410 308 L390 330 M390 330 L378 344"/>
+        <path d="M438 304 L462 314 M462 314 L482 322 M462 314 L474 328"/>
+        <path d="M438 308 L458 330 M458 330 L470 344"/>
+      </g>
+
+      <path d="M424 284 L408 306 L440 306 Z" stroke-width="1.5"/>
+      <circle cx="424" cy="298" r="5.5" stroke-width="1"/>
+      <circle cx="424" cy="298" r="2" fill="#C8A96E" stroke="none"/>
+
+      <path d="M424 306 L424 318" stroke-width="1.2"/>
+      <g stroke-width="1.05">
+        <rect x="418" y="317" width="12" height="19" rx="6"/>
+        <rect x="418" y="341" width="12" height="19" rx="6"/>
+        <rect x="418" y="365" width="12" height="19" rx="6"/>
+        <path d="M424 336 v5 M424 360 v5 M424 384 v4"/>
+      </g>
+      <path d="M424 388 L406 400 M424 388 L424 404 M424 388 L442 400" stroke-width="1.1"/>
+      <g stroke-width="0.9">
+        <circle cx="404" cy="402" r="2.6"/><circle cx="424" cy="407" r="2.6"/><circle cx="444" cy="402" r="2.6"/>
+        <circle cx="383" cy="217" r="2" opacity="0.85"/><circle cx="467" cy="215" r="2" opacity="0.85"/>
+        <circle cx="393" cy="211" r="2" opacity="0.85"/><circle cx="439" cy="209" r="2" opacity="0.85"/>
+      </g>
+    </g>
+  </g>
+</svg>
