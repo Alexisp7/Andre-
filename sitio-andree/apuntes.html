@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo de apuntes — Dr. Andreé Salvatierra Baldeón</title>
-  <meta name="description" content="Catálogo de apuntes de Farmacología, Neuroanatomía y Neurofisiología."/>
+  <title>Catálogo de apuntes — Neurona</title>
+  <meta name="description" content="Catálogo completo de apuntes del Dr. Andreé Salvatierra."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=Inter:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
@@ -27,11 +27,11 @@
           </svg>
         </span>
         <div class="site-logo">
-          <span class="site-logo-name">Dr. Andreé Salvatierra</span>
-          <span class="site-logo-subtitle">Neurociencia · Farmacología</span>
+          <span class="site-logo-name">Neurona</span>
+          <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
         </div>
       </div>
-      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><a href="farmacologia.html">Farmacología</a><span class="nav-sep">|</span><a href="neuroanatomia.html">Neuroanatomía</a><span class="nav-sep">|</span><a href="neurofisiologia.html">Neurofisiología</a><span class="nav-sep">|</span><a href="apuntes.html" class="active">Apuntes</a></nav>
+      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><a href="biopsicologia.html">Biopsicología</a><span class="nav-sep">|</span><a href="neuroanatomia.html">Neuroanatomía</a><span class="nav-sep">|</span><a href="neuropsicologia.html">Neuropsicología</a><span class="nav-sep">|</span><a href="farmacologia.html">Farmacología</a><span class="nav-sep">|</span><a href="psicofarmacologia.html">Psicofarmacología</a><span class="nav-sep">|</span><a href="apuntes.html" class="active">Apuntes</a></nav>
     </div>
     <div class="header-border"></div>
   </header>
@@ -48,44 +48,24 @@
   <section id="recientes">
     <div class="section">
       <div class="notes-toolbar">
-        <input type="search" id="noteSearch" class="notes-search" placeholder="Buscar un tema… (ej. receptores, célula, absorción)" autocomplete="off"/>
+        <input type="search" id="noteSearch" class="notes-search" placeholder="Buscar un tema… (ej. receptores, célula, absorción, sinapsis)" autocomplete="off"/>
         <div class="notes-filters">
           <button class="notes-filter is-active" data-filter="all">Todos</button>
-          <button class="notes-filter" data-filter="farmacologia">Farmacología</button>
+          <button class="notes-filter" data-filter="biopsicologia">Biopsicología</button>
           <button class="notes-filter" data-filter="neuroanatomia">Neuroanatomía</button>
-          <button class="notes-filter" data-filter="neurofisiologia">Neurofisiología</button>
+          <button class="notes-filter" data-filter="neuropsicologia">Neuropsicología</button>
+          <button class="notes-filter" data-filter="farmacologia">Farmacología</button>
+          <button class="notes-filter" data-filter="psicofarmacologia">Psicofarmacología</button>
         </div>
       </div>
 
       <div class="notes-table" id="notesTable">
-        <a href="apuntes/farmacologia/01-introduccion-psicofarmacologia.pdf" class="note-row" target="_blank" rel="noopener"
-           data-course="farmacologia" data-search="introduccion a la psicofarmacologia farmacologia introduccion a la psicofarmacologia psf-01">
-          <span class="note-idx">01</span>
-          <span class="note-main">
-            <span class="note-title">Introducción a la psicofarmacología</span>
-            <span class="note-sub">Unidad I · Introducción a la psicofarmacología</span>
-          </span>
-          <span class="note-course">Farmacología</span>
-          <span class="note-pages">9 pág.</span>
-          <span class="note-dl">Abrir PDF</span>
-        </a>
-        <a href="apuntes/farmacologia/02-psicofarmacologia.pdf" class="note-row" target="_blank" rel="noopener"
-           data-course="farmacologia" data-search="psicofarmacologia y neurotransmision quimica farmacologia introduccion a la psicofarmacologia psf-02">
-          <span class="note-idx">02</span>
-          <span class="note-main">
-            <span class="note-title">Psicofarmacología y neurotransmisión química</span>
-            <span class="note-sub">Unidad I · Introducción a la psicofarmacología</span>
-          </span>
-          <span class="note-course">Farmacología</span>
-          <span class="note-pages">11 pág.</span>
-          <span class="note-dl">Abrir PDF</span>
-        </a>
         <a href="apuntes/farmacologia/03-biologia-celular.pdf" class="note-row" target="_blank" rel="noopener"
            data-course="farmacologia" data-search="biologia celular farmacologia bases celulares y moleculares bio-01">
-          <span class="note-idx">03</span>
+          <span class="note-idx">01</span>
           <span class="note-main">
             <span class="note-title">Biología celular</span>
-            <span class="note-sub">Unidad II · Bases celulares y moleculares</span>
+            <span class="note-sub">Unidad I · Bases celulares y moleculares</span>
           </span>
           <span class="note-course">Farmacología</span>
           <span class="note-pages">53 pág.</span>
@@ -93,10 +73,10 @@
         </a>
         <a href="apuntes/farmacologia/04-biologia-molecular.pdf" class="note-row" target="_blank" rel="noopener"
            data-course="farmacologia" data-search="biologia molecular farmacologia bases celulares y moleculares bio-02">
-          <span class="note-idx">04</span>
+          <span class="note-idx">02</span>
           <span class="note-main">
             <span class="note-title">Biología molecular</span>
-            <span class="note-sub">Unidad II · Bases celulares y moleculares</span>
+            <span class="note-sub">Unidad I · Bases celulares y moleculares</span>
           </span>
           <span class="note-course">Farmacología</span>
           <span class="note-pages">41 pág.</span>
@@ -104,10 +84,10 @@
         </a>
         <a href="apuntes/farmacologia/05-farmacocinetica.pdf" class="note-row" target="_blank" rel="noopener"
            data-course="farmacologia" data-search="farmacocinetica: absorcion, distribucion, metabolismo y excrecion farmacologia farmacocinetica pk-01">
-          <span class="note-idx">05</span>
+          <span class="note-idx">03</span>
           <span class="note-main">
             <span class="note-title">Farmacocinética: absorción, distribución, metabolismo y excreción</span>
-            <span class="note-sub">Unidad III · Farmacocinética</span>
+            <span class="note-sub">Unidad II · Farmacocinética</span>
           </span>
           <span class="note-course">Farmacología</span>
           <span class="note-pages">93 pág.</span>
@@ -115,20 +95,42 @@
         </a>
         <a href="apuntes/farmacologia/06-farmacodinamia.pdf" class="note-row" target="_blank" rel="noopener"
            data-course="farmacologia" data-search="farmacodinamia: ligando, receptor y efecto farmacologico farmacologia farmacodinamia pd-01">
-          <span class="note-idx">06</span>
+          <span class="note-idx">04</span>
           <span class="note-main">
             <span class="note-title">Farmacodinamia: ligando, receptor y efecto farmacológico</span>
-            <span class="note-sub">Unidad IV · Farmacodinamia</span>
+            <span class="note-sub">Unidad III · Farmacodinamia</span>
           </span>
           <span class="note-course">Farmacología</span>
           <span class="note-pages">43 pág.</span>
+          <span class="note-dl">Abrir PDF</span>
+        </a>
+        <a href="apuntes/psicofarmacologia/01-introduccion-psicofarmacologia.pdf" class="note-row" target="_blank" rel="noopener"
+           data-course="psicofarmacologia" data-search="introduccion a la psicofarmacologia psicofarmacologia introduccion a la psicofarmacologia psf-01">
+          <span class="note-idx">05</span>
+          <span class="note-main">
+            <span class="note-title">Introducción a la psicofarmacología</span>
+            <span class="note-sub">Unidad I · Introducción a la psicofarmacología</span>
+          </span>
+          <span class="note-course">Psicofarmacología</span>
+          <span class="note-pages">9 pág.</span>
+          <span class="note-dl">Abrir PDF</span>
+        </a>
+        <a href="apuntes/psicofarmacologia/02-psicofarmacologia.pdf" class="note-row" target="_blank" rel="noopener"
+           data-course="psicofarmacologia" data-search="psicofarmacologia y neurotransmision quimica psicofarmacologia introduccion a la psicofarmacologia psf-02">
+          <span class="note-idx">06</span>
+          <span class="note-main">
+            <span class="note-title">Psicofarmacología y neurotransmisión química</span>
+            <span class="note-sub">Unidad I · Introducción a la psicofarmacología</span>
+          </span>
+          <span class="note-course">Psicofarmacología</span>
+          <span class="note-pages">11 pág.</span>
           <span class="note-dl">Abrir PDF</span>
         </a>
       </div>
       <p class="notes-empty" id="notesEmpty" style="display:none;">No hay apuntes que coincidan con esa búsqueda.</p>
 
       <div class="callout">
-        <strong>El catálogo crece cada ciclo.</strong> Neuroanatomía y Neurofisiología todavía no tienen apuntes publicados; su temario provisional puede consultarse en la página de cada curso.
+        <strong>El catálogo crece cada ciclo.</strong> Biopsicología, Neuroanatomía y Neuropsicología todavía no tienen apuntes publicados; su temario provisional puede consultarse en la página de cada curso.
       </div>
     </div>
   </section>
@@ -176,16 +178,18 @@
         <div class="footer-logo-group">
           <span class="footer-phi">Ψ</span>
           <div>
-            <div class="footer-logo-name">Dr. Andreé Salvatierra Baldeón</div>
-            <div class="footer-logo-sub">Neurociencia · Farmacología</div>
+            <div class="footer-logo-name">Neurona</div>
+            <div class="footer-logo-sub">Dr. Andreé Salvatierra</div>
           </div>
         </div>
         <div class="footer-links-col">
           <div class="footer-col">
             <div class="footer-col-title">Cursos</div>
-            <a href="farmacologia.html">Farmacología</a>
+            <a href="biopsicologia.html">Biopsicología</a>
             <a href="neuroanatomia.html">Neuroanatomía</a>
-            <a href="neurofisiologia.html">Neurofisiología</a>
+            <a href="neuropsicologia.html">Neuropsicología</a>
+            <a href="farmacologia.html">Farmacología</a>
+            <a href="psicofarmacologia.html">Psicofarmacología</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title">Biblioteca</div>
@@ -201,7 +205,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">© 2026 Dr. Andreé Salvatierra Baldeón · Apuntes de libre distribución con atribución</span>
+        <span class="footer-copy">© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución</span>
       </div>
     </div>
   </footer>

@@ -1749,3 +1749,36 @@ a.topic-row:hover .topic-status.ready {
   @keyframes neuronaIn  { from { opacity: 0; } to { opacity: 0.32; } }
   @keyframes neuronaInB { from { opacity: 0; } to { opacity: 0.30; } }
 }
+
+
+/* ── Navegación con siete entradas: se aprieta antes de romperse ── */
+@media (max-width: 1420px) {
+  nav.main-nav a { padding: 8px 13px; letter-spacing: 0.12em; }
+  .header-inner { padding: 20px 32px; }
+}
+@media (max-width: 1180px) {
+  nav.main-nav a { padding: 8px 9px; font-size: 9px; letter-spacing: 0.08em; }
+  nav.main-nav .nav-sep { display: none; }
+  .header-inner { padding: 18px 24px; }
+  .site-logo-name { font-size: 22px; }
+}
+
+/* ── Rejilla de cinco cursos: la última fila no lleva línea inferior ── */
+.library-grid { grid-auto-rows: 1fr; }
+.shelf-card:nth-child(n+4) { border-bottom: none; }
+
+@media (max-width: 1000px) {
+  .shelf-card { border-right: none; border-bottom: 0.5px solid var(--border); }
+  .shelf-card:last-child { border-bottom: none; }
+}
+
+/* ── Pestañas de curso: cinco caben justas ── */
+.courses-tabs a { padding: 16px 15px; }
+@media (max-width: 1100px) {
+  .courses-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .courses-tabs a { padding: 14px 12px; white-space: nowrap; }
+}
+
+/* ── Filtros del catálogo: seis botones, que envuelvan bien ── */
+.notes-filters { row-gap: 0; }
+.notes-filter { padding: 12px 14px; }

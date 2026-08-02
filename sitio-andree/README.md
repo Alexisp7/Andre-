@@ -1,10 +1,11 @@
-# Biblioteca — Dr. Andreé Salvatierra Baldeón
+# Neurona — Dr. Andreé Salvatierra
 
-Sitio estático con los apuntes de clase de **Farmacología**, **Neuroanatomía** y **Neurofisiología**.
+Sitio estático con los apuntes de clase de cinco cursos: **Biopsicología**,
+**Neuroanatomía**, **Neuropsicología**, **Farmacología** y **Psicofarmacología**.
 Sin build, sin dependencias: HTML + un CSS. Se publica tal cual en GitHub Pages.
 
-**Estado actual:** 6 apuntes publicados (Farmacología). Neuroanatomía y Neurofisiología
-tienen temario provisional y ningún PDF todavía.
+**Estado actual:** 6 apuntes publicados — 4 en Farmacología y 2 en Psicofarmacología.
+Los otros tres cursos tienen temario provisional y ningún PDF todavía.
 
 ---
 
@@ -30,18 +31,22 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
 
 ```
 .
-├── index.html              Portada
-├── farmacologia.html       Temario + apuntes
-├── neuroanatomia.html      Temario provisional
-├── neurofisiologia.html    Temario provisional
-├── apuntes.html            Catálogo con buscador y filtros
-├── css/theme.css           Todo el estilo (un solo archivo)
-├── img/                    Neuronas de la portada
+├── index.html                 Portada
+├── biopsicologia.html         Temario provisional
+├── neuroanatomia.html         Temario provisional
+├── neuropsicologia.html       Temario provisional
+├── farmacologia.html          Temario + 4 apuntes
+├── psicofarmacologia.html     Temario + 2 apuntes
+├── apuntes.html               Catálogo con buscador y filtros
+├── css/theme.css              Todo el estilo (un solo archivo)
+├── img/                       Neuronas de la portada
 └── apuntes/
-    ├── farmacologia/       6 PDFs
-    ├── neuroanatomia/      (vacío)
-    ├── neurofisiologia/    (vacío)
-    └── manifiesto.json     Listado generado
+    ├── biopsicologia/         (vacío)
+    ├── neuroanatomia/         (vacío)
+    ├── neuropsicologia/       (vacío)
+    ├── farmacologia/          4 PDFs
+    ├── psicofarmacologia/     2 PDFs
+    └── manifiesto.json        Listado generado
 ```
 
 ---
@@ -65,23 +70,39 @@ Para publicar un apunte nuevo:
    (o añade una tupla nueva).
 3. Ejecuta `python3 build.py` desde la carpeta que contiene el script.
 
-Las páginas se regeneran solas: portada, página del curso y catálogo. Los contadores
-("6 apuntes", "93 pág.") se calculan a partir de los datos, no hay que tocarlos.
+Las páginas se regeneran solas: portada, página del curso, catálogo y sus filtros.
+Los contadores ("4 apuntes", "93 pág.") se calculan a partir de los datos, no hay que
+tocarlos. Añadir o quitar un curso de la lista `CURSOS` crea o borra su página, su
+tarjeta en la portada, su pestaña y su filtro en el catálogo.
 
 Si solo quieres **reemplazar** un PDF por una versión corregida, sobrescribe el archivo
 conservando el mismo nombre. No hay que regenerar nada.
 
 ### Cambiar el temario
 
-Los temarios de Neuroanatomía y Neurofisiología son provisionales — los escribí a partir
-del contenido estándar de esos cursos, no del programa real de Andreé. Cámbialos en
-`build.py` (listas `unidades`) y vuelve a ejecutarlo.
+Los temarios de Biopsicología, Neuroanatomía y Neuropsicología son provisionales — los
+escribí a partir del contenido estándar de esos cursos, no del programa real de Andreé.
+Cámbialos en `build.py` (listas `unidades`) y vuelve a ejecutarlo.
+
+### Cómo repartí los seis PDFs
+
+Los seis apuntes originales venían numerados como un solo bloque. Al separarse
+Psicofarmacología como curso propio, los repartí así:
+
+- **Farmacología** — Biología celular, Biología molecular, PK, PD
+- **Psicofarmacología** — Introducción a la psicofarmacología, Psicofarmacología
+
+Si Andreé los quiere todos juntos otra vez, es mover las tuplas de una lista `unidades`
+a la otra en `build.py` y arrastrar los PDFs a la carpeta correspondiente.
 
 ---
 
 ## Editar textos
 
-- **Nombre y subtítulo del logo** — en `build.py`, función `header()`.
+- **Rótulo del logo** — en `build.py`, función `header()`. Arriba va "Neurona" y debajo,
+  en dorado, "Dr. Andreé Salvatierra".
+- **Titular de la portada** — en `build.py`, función `build_index()`: "Neurona" en dorado
+  y el nombre como subtítulo.
 - **Correo y enlaces académicos** — en `build.py`, constante `FOOTER`. Ahora dicen
   `correo@ejemplo.com` y `#`.
 - **Bio de la portada** — en `build.py`, función `build_index()`.
@@ -118,6 +139,8 @@ efectos de una vez; borrar ese bloque deja el sitio íntegramente dorado.
 
 Ocupa el alto de la pantalla. La cabecera está fija y visible desde el
 principio, igual que en el resto de páginas.
+
+**Rótulos.** El titular es "Neurona" en dorado y debajo va "Dr. Andreé Salvatierra".
 
 **Fondo de color entero.** Sin foto, sin vídeo, sin degradados: un solo color
 plano, `--ink: #0B0E14`, un tinta muy oscuro con sesgo azul que hace de puente
@@ -174,4 +197,4 @@ transparente y bordes desvanecidos; si no, se verá el recuadro.
 
 ---
 
-© 2026 Dr. Andreé Salvatierra Baldeón · Apuntes de libre distribución con atribución
+© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución
