@@ -1033,13 +1033,7 @@ nav.main-nav .nav-sep {
   margin-top: 6px;
 }
 
-.footer-phi {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 38px;
-  color: var(--gold);
-  opacity: 0.4;
-  margin-right: 16px;
-}
+
 
 .footer-logo-group {
   display: flex;
@@ -1185,7 +1179,7 @@ nav.main-nav .nav-sep {
 }
 .btn-show-more:hover::before { transform:scaleX(1); }
 .btn-show-more:hover { color:var(--white); }
-.btn-show-more .psi-btn { font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:var(--gold); }
+
 
 
 /* ── VER TODOS card ── */
@@ -1782,3 +1776,54 @@ a.topic-row:hover .topic-status.ready {
 /* ── Filtros del catálogo: seis botones, que envuelvan bien ── */
 .notes-filters { row-gap: 0; }
 .notes-filter { padding: 12px 14px; }
+
+
+/* ══════════════════════════════════════════
+   LOGOTIPO DIBUJADO "NEURONA"
+   Trazado a mano en SVG: no depende de ninguna
+   fuente y se colorea con `color`.
+   ══════════════════════════════════════════ */
+
+.letras-neurona { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* ── Encabezado ── */
+.site-logo-marca {
+  display: block;
+  width: 128px;
+  color: var(--black);
+  line-height: 0;
+}
+.site-logo-marca .letras-neurona { transition: color 0.3s ease; }
+.logo-group:hover .site-logo-marca { color: var(--blue); }
+
+.site-logo { gap: 7px; }
+.site-logo-subtitle { margin-left: 1px; }
+
+/* ── Portada ── */
+.library-hero-name {
+  display: block;
+  width: clamp(280px, 46vw, 620px);
+  margin: 0 auto 30px;
+  color: var(--gold);
+  font-size: 0;
+  line-height: 0;
+}
+
+/* ── Pie ── */
+.footer-marca {
+  display: block;
+  width: 150px;
+  color: var(--gold);
+  line-height: 0;
+  margin-bottom: 10px;
+}
+.footer-logo-group { align-items: flex-start; }
+
+@media (max-width: 1180px) {
+  .site-logo-marca { width: 108px; }
+}
+@media (max-width: 760px) {
+  .site-logo-marca { width: 96px; }
+  .library-hero-name { width: min(78vw, 380px); }
+  .footer-marca { width: 130px; }
+}

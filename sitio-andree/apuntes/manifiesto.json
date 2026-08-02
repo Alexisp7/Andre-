@@ -215,7 +215,19 @@
       "paginas": 0
     }
   ],
-  "farmacologia": [
+  "psicofarmacologia": [
+    {
+      "codigo": "PSF-01",
+      "titulo": "Introducción a la psicofarmacología",
+      "archivo": "01-introduccion-psicofarmacologia.pdf",
+      "paginas": 9
+    },
+    {
+      "codigo": "PSF-02",
+      "titulo": "Psicofarmacología y neurotransmisión química",
+      "archivo": "02-psicofarmacologia.pdf",
+      "paginas": 11
+    },
     {
       "codigo": "BIO-01",
       "titulo": "Biología celular",
@@ -239,20 +251,6 @@
       "titulo": "Farmacodinamia: ligando, receptor y efecto farmacológico",
       "archivo": "06-farmacodinamia.pdf",
       "paginas": 43
-    }
-  ],
-  "psicofarmacologia": [
-    {
-      "codigo": "PSF-01",
-      "titulo": "Introducción a la psicofarmacología",
-      "archivo": "01-introduccion-psicofarmacologia.pdf",
-      "paginas": 9
-    },
-    {
-      "codigo": "PSF-02",
-      "titulo": "Psicofarmacología y neurotransmisión química",
-      "archivo": "02-psicofarmacologia.pdf",
-      "paginas": 11
     }
   ]
 }

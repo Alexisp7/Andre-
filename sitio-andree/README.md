@@ -1,11 +1,11 @@
 # Neurona — Dr. Andreé Salvatierra
 
-Sitio estático con los apuntes de clase de cinco cursos: **Biopsicología**,
-**Neuroanatomía**, **Neuropsicología**, **Farmacología** y **Psicofarmacología**.
+Sitio estático con los apuntes de clase de cuatro cursos: **Biopsicología**,
+**Neuroanatomía**, **Neuropsicología** y **Psicofarmacología**.
 Sin build, sin dependencias: HTML + un CSS. Se publica tal cual en GitHub Pages.
 
-**Estado actual:** 6 apuntes publicados — 4 en Farmacología y 2 en Psicofarmacología.
-Los otros tres cursos tienen temario provisional y ningún PDF todavía.
+**Estado actual:** 6 apuntes publicados, todos en Psicofarmacología. Los otros
+tres cursos tienen temario provisional y ningún PDF todavía.
 
 ---
 
@@ -35,8 +35,7 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
 ├── biopsicologia.html         Temario provisional
 ├── neuroanatomia.html         Temario provisional
 ├── neuropsicologia.html       Temario provisional
-├── farmacologia.html          Temario + 4 apuntes
-├── psicofarmacologia.html     Temario + 2 apuntes
+├── psicofarmacologia.html     Temario + 6 apuntes
 ├── apuntes.html               Catálogo con buscador y filtros
 ├── css/theme.css              Todo el estilo (un solo archivo)
 ├── img/                       Neuronas de la portada
@@ -44,8 +43,7 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
     ├── biopsicologia/         (vacío)
     ├── neuroanatomia/         (vacío)
     ├── neuropsicologia/       (vacío)
-    ├── farmacologia/          4 PDFs
-    ├── psicofarmacologia/     2 PDFs
+    ├── psicofarmacologia/     6 PDFs
     └── manifiesto.json        Listado generado
 ```
 
@@ -84,25 +82,19 @@ Los temarios de Biopsicología, Neuroanatomía y Neuropsicología son provisiona
 escribí a partir del contenido estándar de esos cursos, no del programa real de Andreé.
 Cámbialos en `build.py` (listas `unidades`) y vuelve a ejecutarlo.
 
-### Cómo repartí los seis PDFs
+### Los seis PDFs
 
-Los seis apuntes originales venían numerados como un solo bloque. Al separarse
-Psicofarmacología como curso propio, los repartí así:
-
-- **Farmacología** — Biología celular, Biología molecular, PK, PD
-- **Psicofarmacología** — Introducción a la psicofarmacología, Psicofarmacología
-
-Si Andreé los quiere todos juntos otra vez, es mover las tuplas de una lista `unidades`
-a la otra en `build.py` y arrastrar los PDFs a la carpeta correspondiente.
+Los seis apuntes viven en Psicofarmacología, repartidos en cuatro unidades:
+introducción, bases celulares y moleculares, farmacocinética y farmacodinamia.
+Es el orden en que venían numerados en el original.
 
 ---
 
 ## Editar textos
 
-- **Rótulo del logo** — en `build.py`, función `header()`. Arriba va "Neurona" y debajo,
-  en dorado, "Dr. Andreé Salvatierra".
-- **Titular de la portada** — en `build.py`, función `build_index()`: "Neurona" en dorado
-  y el nombre como subtítulo.
+- **Logotipo** — es un dibujo en SVG, no texto. Ver la sección *El logotipo* más abajo.
+- **Subtítulo del encabezado** — en `build.py`, función `header()`.
+- **Antetítulo de la portada** — en `build.py`, función `build_index()`.
 - **Correo y enlaces académicos** — en `build.py`, constante `FOOTER`. Ahora dicen
   `correo@ejemplo.com` y `#`.
 - **Bio de la portada** — en `build.py`, función `build_index()`.
@@ -140,7 +132,8 @@ efectos de una vez; borrar ese bloque deja el sitio íntegramente dorado.
 Ocupa el alto de la pantalla. La cabecera está fija y visible desde el
 principio, igual que en el resto de páginas.
 
-**Rótulos.** El titular es "Neurona" en dorado y debajo va "Dr. Andreé Salvatierra".
+**Rótulos.** El titular es el logotipo dibujado en dorado y debajo va
+"Dr. Andreé Salvatierra". El antetítulo dice solo "Biblioteca abierta de apuntes".
 
 **Fondo de color entero.** Sin foto, sin vídeo, sin degradados: un solo color
 plano, `--ink: #0B0E14`, un tinta muy oscuro con sesgo azul que hace de puente
@@ -187,13 +180,44 @@ transparente y bordes desvanecidos; si no, se verá el recuadro.
 
 ---
 
+## El logotipo
+
+La palabra **Neurona** no es texto: es un dibujo vectorial. Partí de las formas de
+una serif itálica, las convertí a trazados y les añadí a mano el rasgo que subraya
+la palabra, con grosor variable —grueso en el centro, afilado en las puntas—.
+
+Ventajas de que sea un dibujo y no una fuente: se ve idéntico en cualquier
+dispositivo, no parpadea mientras carga la tipografía, y escala sin perder nitidez.
+
+**Cómo está montado.** El trazado se define una sola vez por página, dentro de un
+`<symbol id="marcaNeurona">` justo después de `<body>`. Los tres sitios donde
+aparece —encabezado, portada y pie— lo referencian con `<use href="#marcaNeurona"/>`.
+Así el dibujo pesa una vez y no tres.
+
+**Color.** Los trazados usan `fill="currentColor"`, así que el logotipo toma el color
+del contenedor. En `theme.css`:
+
+```css
+.site-logo-marca { color: var(--black); width: 128px; }   /* encabezado */
+.library-hero-name { color: var(--gold); }                /* portada */
+.footer-marca { color: var(--gold); width: 150px; }       /* pie */
+```
+
+Para cambiar el tamaño se toca solo el `width`; la altura se ajusta sola.
+
+**Regenerarlo.** El trazado se generó con `fontTools` a partir de Lora Italic en peso
+600, escalando a 200 px de altura de em, y luego se le añadió el rasgo a mano. Si
+alguna vez hay que rehacerlo, está incrustado en `build.py` como `WORDMARK_DEFS`.
+
+---
+
 ## Notas técnicas
 
 - Sin frameworks ni build de verdad. `build.py` solo concatena plantillas de texto.
 - El buscador del catálogo es JavaScript plano e ignora tildes.
 - Responsive hasta 360 px. En móvil el menú superior se oculta.
-- Tipografía y paleta compartidas con el sitio de física; el único ornamento
-  propio es la neurona del logo.
+- Tipografía y paleta compartidas con el sitio de física; los elementos propios son
+  el logotipo dibujado y el icono de neurona del encabezado.
 
 ---
 
