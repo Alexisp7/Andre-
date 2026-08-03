@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta name="robots" content="noindex"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visor de apuntes — Neurona</title>
+  <meta name="description" content="Visor de apuntes del Dr. Andreé Salvatierra."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=Inter:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/theme.css"/>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-greek-bar"></div>
+    <div class="header-inner">
+      <div class="logo-group">
+        <span class="logo-neuron">
+          <svg viewBox="0 0 32 32" fill="none" stroke="#C8A96E" stroke-width="1.2" stroke-linecap="round">
+            <circle cx="13" cy="15" r="4.5"/>
+            <circle cx="13" cy="15" r="1.6" fill="#C8A96E" stroke="none"/>
+            <path d="M17.5 15h6.5M24 15l3.5-3M24 15l3.5 3"/>
+            <path d="M9.4 11.8 5.5 7.5M8.5 15H3.5M9.4 18.2 5.5 22.5M13 19.5v5M13 10.5v-5"/>
+            <circle cx="27.5" cy="12" r="1.2" fill="#C8A96E" stroke="none"/>
+            <circle cx="27.5" cy="18" r="1.2" fill="#C8A96E" stroke="none"/>
+          </svg>
+        </span>
+        <div class="site-logo">
+          <span class="marca-neurona site-logo-marca">Neurona</span>
+          <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
+        </div>
+      </div>
+      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><a href="biopsicologia.html">Biopsicología</a><span class="nav-sep">|</span><a href="neuroanatomia.html">Neuroanatomía</a><span class="nav-sep">|</span><a href="neuropsicologia.html">Neuropsicología</a><span class="nav-sep">|</span><a href="psicofarmacologia.html">Psicofarmacología</a></nav>
+    </div>
+    <div class="header-border"></div>
+  </header>
+
+  <section class="visor-cab">
+    <div class="visor-cab-inner">
+      <a href="apuntes.html" class="visor-volver">Volver al catálogo</a>
+      <div class="visor-titulos">
+        <h1 class="visor-titulo" id="vTitulo">Cargando…</h1>
+        <p class="visor-meta" id="vMeta"></p>
+      </div>
+      <div class="visor-paginas" id="vPaginas"></div>
+    </div>
+  </section>
+
+  <section class="visor-zona">
+    <div class="visor-aviso" id="vAviso" hidden></div>
+    <div class="visor-lienzos" id="vLienzos" oncontextmenu="return false"></div>
+    <p class="visor-pie">
+      Material del Dr. Andreé Salvatierra. Uso educativo; prohibida su
+      descarga, reproducción y distribución.
+    </p>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    var CATALOGO = {"psicofarmacologia/01-introduccion-psicofarmacologia.pdf": {"titulo": "Introducción a la psicofarmacología", "curso": "Psicofarmacología", "unidad": "Unidad I · Introducción a la psicofarmacología", "paginas": 9}, "psicofarmacologia/02-psicofarmacologia.pdf": {"titulo": "Psicofarmacología y neurotransmisión química", "curso": "Psicofarmacología", "unidad": "Unidad I · Introducción a la psicofarmacología", "paginas": 11}, "psicofarmacologia/03-biologia-celular.pdf": {"titulo": "Biología celular", "curso": "Psicofarmacología", "unidad": "Unidad II · Bases celulares y moleculares", "paginas": 53}, "psicofarmacologia/04-biologia-molecular.pdf": {"titulo": "Biología molecular", "curso": "Psicofarmacología", "unidad": "Unidad II · Bases celulares y moleculares", "paginas": 41}, "psicofarmacologia/05-farmacocinetica.pdf": {"titulo": "Farmacocinética: absorción, distribución, metabolismo y excreción", "curso": "Psicofarmacología", "unidad": "Unidad III · Farmacocinética", "paginas": 93}, "psicofarmacologia/06-farmacodinamia.pdf": {"titulo": "Farmacodinamia: ligando, receptor y efecto farmacológico", "curso": "Psicofarmacología", "unidad": "Unidad IV · Farmacodinamia", "paginas": 43}};
+
+    (function () {
+      var zona    = document.getElementById('vLienzos');
+      var aviso   = document.getElementById('vAviso');
+      var titulo  = document.getElementById('vTitulo');
+      var meta    = document.getElementById('vMeta');
+      var contador= document.getElementById('vPaginas');
+
+      function fallo(txt) {
+        aviso.hidden = false; aviso.textContent = txt;
+        titulo.textContent = 'Apunte no disponible';
+      }
+
+      var doc = new URLSearchParams(location.search).get('doc') || '';
+      /* Solo se admiten rutas que estén en el catálogo: nada de cargar
+         archivos arbitrarios desde la barra de direcciones. */
+      var ficha = Object.prototype.hasOwnProperty.call(CATALOGO, doc) ? CATALOGO[doc] : null;
+      if (!ficha) { fallo('Ese apunte no existe en el catálogo.'); return; }
+
+      titulo.textContent = ficha.titulo;
+      meta.textContent = ficha.curso + ' · ' + ficha.unidad;
+      contador.textContent = ficha.paginas + ' pág.';
+      document.title = ficha.titulo + ' — Neurona';
+
+      if (typeof pdfjsLib === 'undefined') {
+        fallo('No se pudo cargar el visor. Comprueba tu conexión.'); return;
+      }
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      var escala = Math.min(2, (window.devicePixelRatio || 1) * 1.25);
+
+      pdfjsLib.getDocument({ url: 'apuntes/' + doc, password: '' }).promise.then(function (pdf) {
+        var ancho = zona.clientWidth || 900;
+        var cadena = Promise.resolve();
+        for (var n = 1; n <= pdf.numPages; n++) {
+          (function (n) {
+            cadena = cadena.then(function () {
+              return pdf.getPage(n).then(function (pagina) {
+                var base = pagina.getViewport({ scale: 1 });
+                var vista = pagina.getViewport({ scale: (ancho / base.width) * escala });
+
+                var hoja = document.createElement('div');
+                hoja.className = 'visor-hoja';
+                var lienzo = document.createElement('canvas');
+                lienzo.width = vista.width; lienzo.height = vista.height;
+                lienzo.style.width = '100%'; lienzo.style.height = 'auto';
+                var num = document.createElement('span');
+                num.className = 'visor-num'; num.textContent = n + ' / ' + pdf.numPages;
+                hoja.appendChild(lienzo); hoja.appendChild(num);
+                zona.appendChild(hoja);
+
+                return pagina.render({
+                  canvasContext: lienzo.getContext('2d', { alpha: false }),
+                  viewport: vista
+                }).promise;
+              });
+            });
+          })(n);
+        }
+        return cadena;
+      }).catch(function () {
+        fallo('No se pudo abrir el apunte.');
+      });
+
+      /* Fricción: ni menú contextual, ni arrastrar, ni atajos de guardado. */
+      document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+      document.addEventListener('dragstart', function (e) { e.preventDefault(); });
+      document.addEventListener('keydown', function (e) {
+        var k = (e.key || '').toLowerCase();
+        if ((e.ctrlKey || e.metaKey) && ['s', 'p', 'u'].indexOf(k) !== -1) {
+          e.preventDefault();
+        }
+      });
+    })();
+  </script>
+
+  <footer class="footer-wrap" id="contacto">
+    <div class="footer">
+      <div class="footer-top">
+        <div class="footer-logo-group">
+          <div>
+            <span class="marca-neurona footer-marca">Neurona</span>
+            <div class="footer-logo-sub">Dr. Andreé Salvatierra</div>
+          </div>
+        </div>
+        <div class="footer-links-col">
+          <div class="footer-col">
+            <div class="footer-col-title">Cursos</div>
+            <a href="biopsicologia.html">Biopsicología</a>
+            <a href="neuroanatomia.html">Neuroanatomía</a>
+            <a href="neuropsicologia.html">Neuropsicología</a>
+            <a href="psicofarmacologia.html">Psicofarmacología</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Biblioteca</div>
+            <a href="apuntes.html">Catálogo de apuntes</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="index.html#sobre">Sobre el autor</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Contacto</div>
+            <a href="mailto:4andree4@gmail.com">4andree4@gmail.com</a>
+            <a href="https://orcid.org/0000-0002-0638-563X" target="_blank" rel="noopener">ORCID</a>
+            <a href="https://scholar.google.com/citations?user=h9P861oAAAAJ&amp;hl=es" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/a-salvatierra" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

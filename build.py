@@ -171,9 +171,11 @@ PLATE = """\
         </svg>
 """
 
-NAV_ITEMS = [("index.html", "Inicio"), ("farmacologia.html", "Farmacología"),
+NAV_ITEMS = [("index.html", "Inicio"),
+             ("biopsicologia.html", "Biopsicología"),
              ("neuroanatomia.html", "Neuroanatomía"),
-             ("neurofisiologia.html", "Neurofisiología"), ("apuntes.html", "Apuntes")]
+             ("neuropsicologia.html", "Neuropsicología"),
+             ("psicofarmacologia.html", "Psicofarmacología")]
 
 
 def header(active):
@@ -188,8 +190,8 @@ def header(active):
       <div class="logo-group">
         %s
         <div class="site-logo">
-          <span class="site-logo-name">Dr. Andreé Salvatierra</span>
-          <span class="site-logo-subtitle">Neurociencia · Farmacología</span>
+          <span class="marca-neurona site-logo-marca">Neurona</span>
+          <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
         </div>
       </div>
       <nav class="main-nav">%s</nav>
@@ -198,41 +200,43 @@ def header(active):
   </header>''' % (NEURON_SVG, nav)
 
 
-FOOTER = '''  <footer class="footer-wrap" id="contacto">
+FOOTER = ('''  <footer class="footer-wrap" id="contacto">
     <div class="footer">
       <div class="footer-top">
         <div class="footer-logo-group">
-          <span class="footer-phi">Ψ</span>
           <div>
-            <div class="footer-logo-name">Dr. Andreé Salvatierra Baldeón</div>
-            <div class="footer-logo-sub">Neurociencia · Farmacología</div>
+            <span class="marca-neurona footer-marca">Neurona</span>
+            <div class="footer-logo-sub">Dr. Andreé Salvatierra</div>
           </div>
         </div>
         <div class="footer-links-col">
           <div class="footer-col">
             <div class="footer-col-title">Cursos</div>
-            <a href="farmacologia.html">Farmacología</a>
+            <a href="biopsicologia.html">Biopsicología</a>
             <a href="neuroanatomia.html">Neuroanatomía</a>
-            <a href="neurofisiologia.html">Neurofisiología</a>
+            <a href="neuropsicologia.html">Neuropsicología</a>
+            <a href="psicofarmacologia.html">Psicofarmacología</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title">Biblioteca</div>
             <a href="apuntes.html">Catálogo de apuntes</a>
+            <a href="noticias.html">Noticias</a>
             <a href="index.html#sobre">Sobre el autor</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title">Contacto</div>
-            <a href="mailto:correo@ejemplo.com">correo@ejemplo.com</a>
-            <a href="#">ORCID</a>
-            <a href="#">Google Scholar</a>
+            <a href="mailto:4andree4@gmail.com">4andree4@gmail.com</a>
+            <a href="https://orcid.org/0000-0002-0638-563X" target="_blank" rel="noopener">ORCID</a>
+            <a href="https://scholar.google.com/citations?user=h9P861oAAAAJ&amp;hl=es" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/a-salvatierra" target="_blank" rel="noopener">LinkedIn</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">© 2026 Dr. Andreé Salvatierra Baldeón · Apuntes de libre distribución con atribución</span>
+        <span class="footer-copy">© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución</span>
       </div>
     </div>
-  </footer>'''
+  </footer>''')
 
 
 def page(title, desc, active, body, body_class=""):
@@ -267,38 +271,42 @@ def page(title, desc, active, body, body_class=""):
 
 CURSOS = [
 {
- "slug": "farmacologia",
- "nombre": "Farmacología",
- "titulo_html": 'Farma<em>cología</em>',
- "eyebrow": "Curso 01 · Ciencias básicas",
- "ornamento": "Rx",
- "icono": '<path d="M10.5 3.5 3.9 10.1a4.7 4.7 0 0 0 6.6 6.6l6.6-6.6a4.7 4.7 0 0 0-6.6-6.6Z"/><path d="M7.2 6.8 14 13.6"/><circle cx="18.5" cy="18.5" r="3.5"/><path d="M16.5 18.5h4M18.5 16.5v4"/>',
- "tag": "Curso 01 · Ciencias básicas",
- "resumen": "De las bases celulares y moleculares a la farmacocinética, la farmacodinamia y la psicofarmacología clínica.",
- "sub": "De las bases celulares y moleculares del organismo a la farmacocinética, la farmacodinamia y la psicofarmacología clínica.",
- "ficha": [("Nivel", "Pregrado · Ciencias básicas"),
+ "slug": "biopsicologia",
+ "nombre": "Biopsicología",
+ "titulo_html": 'Bio<em>psicología</em>',
+ "eyebrow": "Curso 01 · Fundamentos",
+ "ornamento": "β",
+ "icono": '<path d="M12 3.4c-3 0-5.4 2.2-5.4 5 0 1 .3 1.9.8 2.7-1 .9-1.6 2.1-1.6 3.4 0 2.7 2.3 4.9 5.2 4.9 .4 0 .7 0 1-.1"/><path d="M12 3.4c3 0 5.4 2.2 5.4 5 0 1-.3 1.9-.8 2.7 1 .9 1.6 2.1 1.6 3.4 0 2.7-2.3 4.9-5.2 4.9-.4 0-.7 0-1-.1"/><path d="M12 3.6v16.8"/><circle cx="7.4" cy="9.2" r="1.1"/><circle cx="16.6" cy="14.4" r="1.1"/>',
+ "tag": "Curso 01 · Fundamentos",
+ "resumen": "Las bases biológicas de la conducta: de la célula nerviosa a los sistemas que producen comportamiento.",
+ "sub": "Las bases biológicas de la conducta. Cómo el sistema nervioso, las hormonas y la evolución dan forma a lo que hacemos, sentimos y recordamos.",
+ "ficha": [("Nivel", "Pregrado · Fundamentos"),
            ("Unidades", "4"),
-           ("Apuntes", "6 publicados"),
-           ("Páginas", "250 en total"),
+           ("Apuntes", "En preparación"),
            ("Formato", "Diapositivas en PDF"),
            ("Autor", "Dr. Andreé Salvatierra")],
  "bibliografia": [
-   "Goodman &amp; Gilman. <em>Las bases farmacológicas de la terapéutica</em>.",
-   "Katzung, B. <em>Farmacología básica y clínica</em>.",
-   "Rang &amp; Dale. <em>Farmacología</em>.",
-   "Stahl, S. <em>Psicofarmacología esencial</em>."],
- "intro": "El curso abre por donde importa: qué es la psicofarmacología y sobre qué actúa. Después baja a las bases celulares y moleculares, y solo entonces entra a los dos pilares clásicos — qué le hace el organismo al fármaco (PK) y qué le hace el fármaco al organismo (PD).",
+   "Pinel, J. <em>Biopsicología</em>.",
+   "Kalat, J. <em>Psicología biológica</em>.",
+   "Carlson, N. <em>Fisiología de la conducta</em>.",
+   "Rosenzweig, M. <em>Psicología biológica</em>."],
+ "intro": "Temario provisional. Los apuntes de este curso todavía no se han digitalizado; se irán publicando conforme avance el ciclo.",
  "unidades": [
-   {"num": "I", "nombre": "Introducción a la psicofarmacología", "horas": "20 pág.", "temas": [
-     ("PSF-01", "Introducción a la psicofarmacología", "01-introduccion-psicofarmacologia.pdf", 9),
-     ("PSF-02", "Psicofarmacología y neurotransmisión química", "02-psicofarmacologia.pdf", 11)]},
-   {"num": "II", "nombre": "Bases celulares y moleculares", "horas": "94 pág.", "temas": [
-     ("BIO-01", "Biología celular", "03-biologia-celular.pdf", 53),
-     ("BIO-02", "Biología molecular", "04-biologia-molecular.pdf", 41)]},
-   {"num": "III", "nombre": "Farmacocinética", "horas": "93 pág.", "temas": [
-     ("PK-01", "Farmacocinética: absorción, distribución, metabolismo y excreción", "05-farmacocinetica.pdf", 93)]},
-   {"num": "IV", "nombre": "Farmacodinamia", "horas": "43 pág.", "temas": [
-     ("PD-01", "Farmacodinamia: ligando, receptor y efecto farmacológico", "06-farmacodinamia.pdf", 43)]}],
+   {"num": "I", "nombre": "Bases celulares del sistema nervioso", "horas": "—", "temas": [
+     ("BP-01", "La neurona y la glía: estructura y función", None, 0),
+     ("BP-02", "Potencial de membrana y potencial de acción", None, 0),
+     ("BP-03", "Sinapsis y neurotransmisores", None, 0)]},
+   {"num": "II", "nombre": "Organización del sistema nervioso", "horas": "—", "temas": [
+     ("BP-04", "Sistema nervioso central y periférico", None, 0),
+     ("BP-05", "Sistema nervioso autónomo", None, 0),
+     ("BP-06", "Desarrollo y plasticidad del sistema nervioso", None, 0)]},
+   {"num": "III", "nombre": "Sistemas sensoriales y motores", "horas": "—", "temas": [
+     ("BP-07", "Visión, audición y sentidos químicos", None, 0),
+     ("BP-08", "Control motor y movimiento", None, 0)]},
+   {"num": "IV", "nombre": "Conducta y regulación", "horas": "—", "temas": [
+     ("BP-09", "Sueño y ritmos biológicos", None, 0),
+     ("BP-10", "Hormonas, emoción y estrés", None, 0),
+     ("BP-11", "Aprendizaje y memoria", None, 0)]}],
 },
 {
  "slug": "neuroanatomia",
@@ -327,62 +335,94 @@ CURSOS = [
      ("NA-02", "Médula espinal: sustancia gris y blanca", None, 0),
      ("NA-03", "Nervios espinales, dermatomas y miotomas", None, 0)]},
    {"num": "II", "nombre": "Tronco encefálico y cerebelo", "horas": "—", "temas": [
-     ("TE-01", "Bulbo, protuberancia y mesencéfalo", None, 0),
-     ("TE-02", "Nervios craneales y sus núcleos", None, 0),
-     ("TE-03", "Cerebelo: lóbulos y circuitería", None, 0)]},
+     ("NA-04", "Bulbo, protuberancia y mesencéfalo", None, 0),
+     ("NA-05", "Nervios craneales y sus núcleos", None, 0),
+     ("NA-06", "Cerebelo: lóbulos y circuitería", None, 0)]},
    {"num": "III", "nombre": "Diencéfalo y telencéfalo", "horas": "—", "temas": [
-     ("DT-01", "Tálamo, hipotálamo y epitálamo", None, 0),
-     ("DT-02", "Ganglios basales y circuitos motores", None, 0),
-     ("DT-03", "Corteza cerebral y áreas de Brodmann", None, 0),
-     ("DT-04", "Sistema límbico, hipocampo y amígdala", None, 0)]},
+     ("NA-07", "Tálamo, hipotálamo y epitálamo", None, 0),
+     ("NA-08", "Ganglios basales y circuitos motores", None, 0),
+     ("NA-09", "Corteza cerebral y áreas de Brodmann", None, 0),
+     ("NA-10", "Sistema límbico, hipocampo y amígdala", None, 0)]},
    {"num": "IV", "nombre": "Vías, irrigación y clínica", "horas": "—", "temas": [
-     ("VC-01", "Vías ascendentes y descendentes", None, 0),
-     ("VC-02", "Polígono de Willis e irrigación encefálica", None, 0),
-     ("VC-03", "Meninges, LCR y sistema ventricular", None, 0)]}],
+     ("NA-11", "Vías ascendentes y descendentes", None, 0),
+     ("NA-12", "Polígono de Willis e irrigación encefálica", None, 0),
+     ("NA-13", "Meninges, LCR y sistema ventricular", None, 0)]}],
 },
 {
- "slug": "neurofisiologia",
- "nombre": "Neurofisiología",
- "titulo_html": 'Neuro<em>fisiología</em>',
- "eyebrow": "Curso 03 · Función",
- "ornamento": "Δ",
- "icono": '<path d="M1.5 14h3l2-8 3 15 3-19 3 15 2-6h5"/>',
- "tag": "Curso 03 · Función",
- "resumen": "Cómo el tejido nervioso genera electricidad y la convierte en percepción, movimiento y memoria.",
- "sub": "Cómo el tejido nervioso genera electricidad, la transmite y la convierte en percepción, movimiento y memoria.",
- "ficha": [("Nivel", "Pregrado · Fisiología"),
+ "slug": "neuropsicologia",
+ "nombre": "Neuropsicología",
+ "titulo_html": 'Neuro<em>psicología</em>',
+ "eyebrow": "Curso 03 · Clínica",
+ "ornamento": "Ψ",
+ "icono": '<path d="M4.6 12a7.4 7.4 0 0 1 14.8 0v4.4a2.6 2.6 0 0 1-2.6 2.6h-1.2"/><path d="M4.6 12v5.2M19.4 12v5.2"/><circle cx="9" cy="12.4" r="1.2"/><circle cx="15" cy="12.4" r="1.2"/><path d="M9 15.6c1.6 1.4 4.4 1.4 6 0"/>',
+ "tag": "Curso 03 · Clínica",
+ "resumen": "Qué se pierde cuando el cerebro se lesiona: funciones superiores, síndromes y evaluación.",
+ "sub": "La relación entre lesión cerebral y función mental. Afasias, agnosias, apraxias y los síndromes que revelan cómo está organizada la cognición.",
+ "ficha": [("Nivel", "Pregrado · Clínica"),
            ("Unidades", "4"),
            ("Apuntes", "En preparación"),
            ("Formato", "Diapositivas en PDF"),
            ("Autor", "Dr. Andreé Salvatierra")],
  "bibliografia": [
-   "Kandel, E. <em>Principios de neurociencia</em>.",
-   "Purves, D. <em>Neurociencia</em>.",
-   "Bear, Connors &amp; Paradiso. <em>Neurociencia: explorando el cerebro</em>.",
-   "Guyton &amp; Hall. <em>Tratado de fisiología médica</em>."],
+   "Lezak, M. <em>Neuropsychological Assessment</em>.",
+   "Kolb &amp; Whishaw. <em>Neuropsicología humana</em>.",
+   "Ardila &amp; Ostrosky. <em>Diagnóstico del daño cerebral</em>.",
+   "Luria, A. <em>Las funciones corticales superiores del hombre</em>."],
  "intro": "Temario provisional. Los apuntes de este curso todavía no se han digitalizado; se irán publicando conforme avance el ciclo.",
  "unidades": [
-   {"num": "I", "nombre": "Excitabilidad de membrana", "horas": "—", "temas": [
-     ("EM-01", "Potencial de reposo y bomba Na⁺/K⁺", None, 0),
-     ("EM-02", "Potencial de acción y canales de voltaje", None, 0),
-     ("EM-03", "Conducción saltatoria", None, 0)]},
-   {"num": "II", "nombre": "Sinapsis y plasticidad", "horas": "—", "temas": [
-     ("SP-01", "Transmisión sináptica química y eléctrica", None, 0),
-     ("SP-02", "Integración sináptica", None, 0),
-     ("SP-03", "LTP, LTD y bases celulares de la memoria", None, 0)]},
-   {"num": "III", "nombre": "Sistemas sensoriales y motores", "horas": "—", "temas": [
-     ("SM-01", "Transducción sensorial y campos receptivos", None, 0),
-     ("SM-02", "Visión: de la retina a V1", None, 0),
-     ("SM-03", "Audición, sistema vestibular y somatosensación", None, 0),
-     ("SM-04", "Control motor: reflejos y unidad motora", None, 0)]},
-   {"num": "IV", "nombre": "Ritmos, sueño y cognición", "horas": "—", "temas": [
-     ("RC-01", "EEG: ritmos delta, theta, alfa, beta y gamma", None, 0),
-     ("RC-02", "Arquitectura del sueño", None, 0),
-     ("RC-03", "Atención, memoria de trabajo y oscilaciones", None, 0)]}],
+   {"num": "I", "nombre": "Fundamentos y método", "horas": "—", "temas": [
+     ("NP-01", "Historia y modelos en neuropsicología", None, 0),
+     ("NP-02", "Lateralización y especialización hemisférica", None, 0),
+     ("NP-03", "Métodos de estudio y neuroimagen", None, 0)]},
+   {"num": "II", "nombre": "Lenguaje y funciones simbólicas", "horas": "—", "temas": [
+     ("NP-04", "Afasias: clasificación y correlato anatómico", None, 0),
+     ("NP-05", "Alexias, agrafias y acalculias", None, 0)]},
+   {"num": "III", "nombre": "Percepción, acción y memoria", "horas": "—", "temas": [
+     ("NP-06", "Agnosias visuales, auditivas y táctiles", None, 0),
+     ("NP-07", "Apraxias y trastornos del movimiento intencional", None, 0),
+     ("NP-08", "Amnesias y sistemas de memoria", None, 0)]},
+   {"num": "IV", "nombre": "Funciones ejecutivas y evaluación", "horas": "—", "temas": [
+     ("NP-09", "Síndrome frontal y funciones ejecutivas", None, 0),
+     ("NP-10", "Atención y heminegligencia", None, 0),
+     ("NP-11", "Baterías y protocolos de evaluación", None, 0)]}],
+},
+{
+ "slug": "psicofarmacologia",
+ "nombre": "Psicofarmacología",
+ "titulo_html": 'Psico<em>farmacología</em>',
+ "eyebrow": "Curso 04 · Clínica",
+ "ornamento": "Rx",
+ "icono": '<circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="1.1"/><path d="M15.2 12h5M3.8 12h5M12 3.4v5.4M12 15.2v5.4"/><path d="M14.9 9.1 18 6M9.1 14.9 6 18M14.9 14.9 18 18M9.1 9.1 6 6"/>',
+ "tag": "Curso 04 · Clínica",
+ "resumen": "De las bases celulares y moleculares a la acción de los psicofármacos sobre la neurotransmisión.",
+ "sub": "Los elementos centrales de la psicofarmacología asociados a los síndromes clínicos. De la célula y la molécula a la farmacocinética, la farmacodinamia y la acción sobre la transmisión sináptica.",
+ "ficha": [("Nivel", "Pregrado · Clínica"),
+           ("Unidades", "4"),
+           ("Apuntes", "6 publicados"),
+           ("Páginas", "250 en total"),
+           ("Formato", "Diapositivas en PDF"),
+           ("Autor", "Dr. Andreé Salvatierra")],
+ "bibliografia": [
+   "Stahl, S. <em>Psicofarmacología esencial</em>.",
+   "Julien, R. <em>Manual de psicofarmacología</em>.",
+   "Goodman &amp; Gilman. <em>Las bases farmacológicas de la terapéutica</em>.",
+   "Katzung, B. <em>Farmacología básica y clínica</em>."],
+ "intro": "El curso abre por donde importa: qué es la psicofarmacología y sobre qué actúa. La mayoría de psicofármacos ejercen su efecto interviniendo algún mecanismo de la transmisión sináptica química. De ahí baja a las bases celulares y moleculares, y termina con los dos pilares clásicos: qué le hace el organismo al fármaco y qué le hace el fármaco al organismo.",
+ "unidades": [
+   {"num": "I", "nombre": "Introducción a la psicofarmacología", "horas": "20 pág.", "temas": [
+     ("PSF-01", "Introducción a la psicofarmacología", "01-introduccion-psicofarmacologia.pdf", 9),
+     ("PSF-02", "Psicofarmacología y neurotransmisión química", "02-psicofarmacologia.pdf", 11)]},
+   {"num": "II", "nombre": "Bases celulares y moleculares", "horas": "94 pág.", "temas": [
+     ("BIO-01", "Biología celular", "03-biologia-celular.pdf", 53),
+     ("BIO-02", "Biología molecular", "04-biologia-molecular.pdf", 41)]},
+   {"num": "III", "nombre": "Farmacocinética", "horas": "93 pág.", "temas": [
+     ("PK-01", "Farmacocinética: absorción, distribución, metabolismo y excreción", "05-farmacocinetica.pdf", 93)]},
+   {"num": "IV", "nombre": "Farmacodinamia", "horas": "43 pág.", "temas": [
+     ("PD-01", "Farmacodinamia: ligando, receptor y efecto farmacológico", "06-farmacodinamia.pdf", 43)]}],
 },
 ]
 
-STATUS_READY = '<span class="topic-status ready">Apunte PDF</span>'
+STATUS_READY = '<span class="topic-status ready">Leer apunte</span>'
 STATUS_SOON = '<span class="topic-status">En preparación</span>'
 
 
@@ -401,7 +441,7 @@ def n_temas(c):
 def build_index():
     tarjetas = []
     for i, c in enumerate(CURSOS):
-        romano = ["I", "II", "III"][i]
+        romano = ["I", "II", "III", "IV", "V"][i]
         pub = n_pdfs(c)
         meta = ('<span><strong>%d</strong> unidades</span>\n            '
                 '<span><strong>%s</strong> apuntes</span>' % (
@@ -429,11 +469,9 @@ def build_index():
       <img src="img/neuronas-b.webp" alt="" width="393" height="380" loading="eager" decoding="async"/>
     </div>
     <div class="library-hero-inner">
-      <p class="hero-eyebrow">Biblioteca abierta de apuntes · Neurociencia</p>
-      <h1 class="library-hero-name"><em>A.</em> Salvatierra</h1>
-      <p class="library-hero-role">
-        Neurocientífico <span class="title-sep">·</span> Docente <span class="title-sep">·</span> Investigador
-      </p>
+      <h1 class="marca-neurona library-hero-name">Neurona</h1>
+      <p class="hero-lema"><span>Biblioteca abierta de apuntes</span></p>
+      <p class="library-hero-role">Dr. Andreé Salvatierra</p>
     </div>
   </section>
 
@@ -441,7 +479,7 @@ def build_index():
     <div class="section">
       <div class="section-header">
         <p class="section-eyebrow">Salas de la biblioteca</p>
-        <h2 class="section-title">Los tres <em>cursos</em></h2>
+        <h2 class="section-title">Los cuatro <em>cursos</em></h2>
       </div>
 
       <div class="library-grid">
@@ -451,7 +489,7 @@ def build_index():
       </div>
 
       <div class="courses-show-more">
-        <a href="apuntes.html" class="btn-show-more"><span class="psi-btn">Ψ</span> Ver el catálogo completo</a>
+        <a href="apuntes.html" class="btn-show-more">Ver el catálogo completo</a>
       </div>
     </div>
   </section>
@@ -465,29 +503,60 @@ def build_index():
         <h2 class="section-title">Sobre <em>el autor</em></h2>
       </div>
 
-      <div style="max-width:760px;">
-        <p class="about-body">El Dr. Andreé Salvatierra Baldeón es neurocientífico y docente. Dicta Farmacología, Neuroanatomía y Neurofisiología, tres cursos que comparten una misma obsesión: entender cómo una molécula, una vía o un potencial de acción terminan produciendo comportamiento.</p>
+      <div class="autor-grid">
+        <div class="autor-retrato">
+          <img src="img/autor.webp" alt="Dr. Andreé Salvatierra Baldeón"
+               width="760" height="950" loading="lazy" decoding="async"/>
+          <div class="corner-ornament tl"></div>
+          <div class="corner-ornament tr"></div>
+          <div class="corner-ornament bl"></div>
+          <div class="corner-ornament br"></div>
+        </div>
 
-        <p class="about-body">Este sitio no es un portafolio. Es una biblioteca: cada apunte que aparece aquí fue escrito por él para dictar clase, y se publica tal como está.</p>
+        <div class="autor-texto">
+          <h3 class="autor-nombre">Andreé Salvatierra Baldeón</h3>
+          <p class="autor-cargos">Neuropsicólogo <span class="title-sep">·</span> Doctor en neurociencias <span class="title-sep">·</span> Máster en psicofarmacología y en farmacología</p>
 
-        <blockquote class="about-quote">Un apunte guardado en un cajón no le sirve a nadie. Este es el cajón, pero abierto.</blockquote>
+          <p class="about-body">Posdoctorado en la unidad de cognición y conducta del Instituto Nacional de Neurología y Neurocirugía de México. Doctor en neurociencias por la Facultad de Medicina de la Universidad Nacional Mayor de San Marcos, especialista en neuropsicología por la Universidad Nacional Federico Villarreal, máster en psicofarmacología por la Universidad de Valencia, máster en farmacología por la Facultad de Medicina de la Universidad Autónoma de Barcelona y psicólogo por la Universidad Continental.</p>
 
-        <p class="about-body">El material se actualiza conforme avanza cada ciclo. Si encuentras un error — y los habrá — escríbele; corregirlo mejora el apunte para todos los que vengan después.</p>
+          <p class="about-body">Estancias de investigación y formación en el departamento de salud pública y la escuela profesional de neurociencias de la UNAM, en la Universidad Pedagógica Nacional de México y en la unidad de ensayos clínicos del Institut Hospital del Mar d’Investigacions Mèdiques. Pasantías en la Universidad de Antioquia y en la Facultad de Psicología de la UNAM; rotante en la unidad de neuropsiquiatría, el centro de investigaciones cerebrales y la unidad de neuroimagen del INNN.</p>
 
-        <div class="skills-row">
-          <span class="skill-tag accent">Farmacología</span>
-          <span class="skill-tag accent">Neuroanatomía</span>
-          <span class="skill-tag accent">Neurofisiología</span>
-          <span class="skill-tag">Psicofarmacología</span>
-          <span class="skill-tag">Neurotransmisión</span>
-          <span class="skill-tag">Docencia universitaria</span>
+          <p class="autor-registros">
+            <span>CPsP <strong>32563</strong></span>
+            <span>RNE <strong>622</strong></span>
+            <span>RENACYT <strong>P0093916</strong></span>
+          </p>
+
+          <div class="perfiles">
+            <a class="perfil" href="https://www.linkedin.com/in/a-salvatierra" target="_blank" rel="noopener noreferrer"><span class="perfil-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="3.4"/><circle cx="7.6" cy="7.7" r="1.15" fill="currentColor" stroke="none"/><path d="M7.6 10.8v6.6"/><path d="M11.4 17.4v-6.6"/><path d="M11.4 13.2c0-1.5 1.1-2.5 2.5-2.5s2.5 1 2.5 2.5v4.2"/></svg></span><span>LinkedIn</span></a>\n            <a class="perfil" href="https://www.researchgate.net/profile/Andree-Salvatierra-Baldeon?ev=hdr_xprf" target="_blank" rel="noopener noreferrer"><span class="perfil-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="3.4"/><path d="M8.6 17.2V7.4h3.1c1.7 0 2.7 1 2.7 2.5s-1 2.5-2.7 2.5H9.9"/><path d="M12 12.4l3 4.8"/></svg></span><span>ResearchGate</span></a>\n            <a class="perfil" href="https://ctivitae.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=93916" target="_blank" rel="noopener noreferrer"><span class="perfil-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="4.6" width="18.8" height="14.8" rx="2.4"/><circle cx="8.6" cy="11" r="2.1"/><path d="M5.2 16.4c.5-1.6 1.8-2.5 3.4-2.5s2.9.9 3.4 2.5"/><path d="M14.8 10.2h4M14.8 13.4h4"/></svg></span><span>CTI Vitae</span></a>\n            <a class="perfil" href="https://orcid.org/0000-0002-0638-563X" target="_blank" rel="noopener noreferrer"><span class="perfil-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.4"/><circle cx="8.5" cy="7.9" r="0.95" fill="currentColor" stroke="none"/><path d="M8.5 10.6v6.4"/><path d="M12.4 17v-6.4h2.1a3.2 3.2 0 0 1 0 6.4Z"/></svg></span><span>ORCID</span></a>\n            <a class="perfil" href="https://scholar.google.com/citations?user=h9P861oAAAAJ&amp;hl=es" target="_blank" rel="noopener noreferrer"><span class="perfil-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.6 22 8.6l-10 5-10-5Z"/><path d="M5.6 11v4.8c0 1.9 2.9 3.4 6.4 3.4s6.4-1.5 6.4-3.4V11"/><path d="M21.2 9.2v5.2"/></svg></span><span>Google Scholar</span></a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>''' % ("\n\n".join(tarjetas))
 
-    html = page("Dr. Andreé Salvatierra Baldeón — Biblioteca de Neurociencia",
-                "Apuntes de Farmacología, Neuroanatomía y Neurofisiología del Dr. Andreé Salvatierra Baldeón. Acceso abierto.",
+      <div class="escudos-bloque">
+        <p class="escudos-titulo">Formación</p>
+        <div class="escudos escudos--seis">
+            <figure class="escudo">\n              <img src="img/escudos/continental.webp" alt="Universidad Continental" loading="lazy" decoding="async"/>\n              <figcaption><strong>Universidad Continental</strong><span>Pregrado en psicología</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/villarreal.webp" alt="U. N. Federico Villarreal" loading="lazy" decoding="async"/>\n              <figcaption><strong>U. N. Federico Villarreal</strong><span>Especialidad en neuropsicología</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/valencia.webp" alt="Universitat de València" loading="lazy" decoding="async"/>\n              <figcaption><strong>Universitat de València</strong><span>Máster en psicofarmacología</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/uab.webp" alt="U. Autònoma de Barcelona" loading="lazy" decoding="async"/>\n              <figcaption><strong>U. Autònoma de Barcelona</strong><span>Máster en farmacología</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/unmsm.webp" alt="UNMSM" loading="lazy" decoding="async"/>\n              <figcaption><strong>UNMSM</strong><span>Doctorado en neurociencias</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/innn.webp" alt="INNN · México" loading="lazy" decoding="async"/>\n              <figcaption><strong>INNN · México</strong><span>Posdoctorado</span></figcaption>\n            </figure>
+        </div>
+
+        <p class="escudos-titulo">Estancias e investigación</p>
+        <div class="escudos escudos--cuatro">
+            <figure class="escudo">\n              <img src="img/escudos/unam.webp" alt="UNAM · México" loading="lazy" decoding="async"/>\n              <figcaption><strong>UNAM · México</strong><span>Salud pública y neurociencias</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/upn.webp" alt="U. Pedagógica Nacional" loading="lazy" decoding="async"/>\n              <figcaption><strong>U. Pedagógica Nacional</strong><span>México</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/imim.webp" alt="IMIM · Hospital del Mar" loading="lazy" decoding="async"/>\n              <figcaption><strong>IMIM · Hospital del Mar</strong><span>Unidad de ensayos clínicos</span></figcaption>\n            </figure>\n            <figure class="escudo">\n              <img src="img/escudos/antioquia.webp" alt="U. de Antioquia" loading="lazy" decoding="async"/>\n              <figcaption><strong>U. de Antioquia</strong><span>Colombia</span></figcaption>\n            </figure>
+        </div>
+      </div>
+
+      <div class="linea-corta"></div>
+
+      <div class="courses-show-more">
+        <a href="noticias.html" class="btn-show-more">Noticias</a>
+      </div>
+    </div>
+  </section>
+
+''' % ("\n\n".join(tarjetas))
+
+    html = page("Neurona — Dr. Andreé Salvatierra",
+                "Neurona: biblioteca de apuntes del Dr. Andreé Salvatierra. Biopsicología, Neuroanatomía, Neuropsicología y Psicofarmacología.",
                 "index.html", body)
     open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(html)
     print("  ✓ index.html")
@@ -510,7 +579,7 @@ def build_curso(c):
         for code, name, pdf, pags in u["temas"]:
             if pdf:
                 temas.append(
-                    '            <a href="apuntes/%s/%s" class="topic-row" target="_blank" rel="noopener">\n'
+                    '            <a href="visor.html?doc=%s/%s" class="topic-row">\n'
                     '              <span class="topic-code">%s</span>\n'
                     '              <span class="topic-name">%s</span>\n'
                     '              %s\n'
@@ -541,9 +610,9 @@ def build_curso(c):
     pub = n_pdfs(c)
     if pub:
         nota = ('<strong>Sobre los apuntes.</strong> Los temas marcados como '
-                '<em>Apunte PDF</em> abren el documento directamente. Los que dicen '
-                '<em>En preparación</em> aún no se han digitalizado. Todo el material '
-                'es de libre uso citando la fuente.')
+                '<em>Leer apunte</em> se abren en el visor del sitio. Los que dicen '
+                '<em>En preparación</em> aún no se han digitalizado. El material se '
+                'consulta en línea; no está disponible para descarga.')
     else:
         nota = ('<strong>Curso en preparación.</strong> El temario que aparece arriba es '
                 'provisional y todavía no tiene apuntes publicados. Los documentos se irán '
@@ -598,7 +667,7 @@ def build_curso(c):
           </div>
 
           <div class="courses-show-more" style="justify-content:flex-start;">
-            <a href="apuntes.html" class="btn-show-more"><span class="psi-btn">Ψ</span> Ver todos los apuntes</a>
+            <a href="apuntes.html" class="btn-show-more">Ver todos los apuntes</a>
           </div>
         </div>
 
@@ -608,7 +677,7 @@ def build_curso(c):
                    tabs_html, ficha, biblio, c["intro"],
                    "\n".join(unidades), nota)
 
-    html = page("%s — Dr. Andreé Salvatierra Baldeón" % c["nombre"],
+    html = page("%s — Neurona · Dr. Andreé Salvatierra" % c["nombre"],
                 c["sub"], "%s.html" % c["slug"], body)
     open(os.path.join(OUT, "%s.html" % c["slug"]), "w", encoding="utf-8").write(html)
     print("  ✓ %s.html  (%d apuntes / %d temas)" % (c["slug"], pub, n_temas(c)))
@@ -619,6 +688,8 @@ def build_curso(c):
 # ══════════════════════════════════════════════════════════════
 
 def build_apuntes():
+    filtros = ['          <button class="notes-filter" data-filter="%s">%s</button>'
+               % (c["slug"], c["nombre"]) for c in CURSOS]
     rows, i = [], 0
     for c in CURSOS:
         for u in c["unidades"]:
@@ -630,7 +701,7 @@ def build_apuntes():
                 busca = busca.replace("á", "a").replace("é", "e").replace("í", "i")
                 busca = busca.replace("ó", "o").replace("ú", "u")
                 rows.append(
-                    '        <a href="apuntes/%s/%s" class="note-row" target="_blank" rel="noopener"\n'
+                    '        <a href="visor.html?doc=%s/%s" class="note-row"\n'
                     '           data-course="%s" data-search="%s">\n'
                     '          <span class="note-idx">%02d</span>\n'
                     '          <span class="note-main">\n'
@@ -639,7 +710,7 @@ def build_apuntes():
                     '          </span>\n'
                     '          <span class="note-course">%s</span>\n'
                     '          <span class="note-pages">%d pág.</span>\n'
-                    '          <span class="note-dl">Abrir PDF</span>\n'
+                    '          <span class="note-dl">Leer</span>\n'
                     '        </a>' % (c["slug"], pdf, c["slug"], busca, i, name,
                                       u["num"], u["nombre"], c["nombre"], pags))
     total = i
@@ -650,18 +721,16 @@ def build_apuntes():
       <h1 class="page-hero-title">La <em>biblioteca</em></h1>
       <p class="page-hero-sub">%d apuntes publicados, ordenados por curso y unidad. Busca por tema, filtra por curso, abre el PDF.</p>
     </div>
-    <div class="page-hero-ornament">Ψ</div>
+    <div class="page-hero-ornament">N</div>
   </section>
 
   <section id="recientes">
     <div class="section">
       <div class="notes-toolbar">
-        <input type="search" id="noteSearch" class="notes-search" placeholder="Buscar un tema… (ej. receptores, célula, absorción)" autocomplete="off"/>
+        <input type="search" id="noteSearch" class="notes-search" placeholder="Buscar un tema… (ej. receptores, célula, absorción, sinapsis)" autocomplete="off"/>
         <div class="notes-filters">
           <button class="notes-filter is-active" data-filter="all">Todos</button>
-          <button class="notes-filter" data-filter="farmacologia">Farmacología</button>
-          <button class="notes-filter" data-filter="neuroanatomia">Neuroanatomía</button>
-          <button class="notes-filter" data-filter="neurofisiologia">Neurofisiología</button>
+%s
         </div>
       </div>
 
@@ -671,7 +740,7 @@ def build_apuntes():
       <p class="notes-empty" id="notesEmpty" style="display:none;">No hay apuntes que coincidan con esa búsqueda.</p>
 
       <div class="callout">
-        <strong>El catálogo crece cada ciclo.</strong> Neuroanatomía y Neurofisiología todavía no tienen apuntes publicados; su temario provisional puede consultarse en la página de cada curso.
+        <strong>El catálogo crece cada ciclo.</strong> Biopsicología, Neuroanatomía y Neuropsicología todavía no tienen apuntes publicados; su temario provisional puede consultarse en la página de cada curso.
       </div>
     </div>
   </section>
@@ -711,14 +780,298 @@ def build_apuntes():
         });
       });
     })();
-  </script>''' % (total, "\n".join(rows))
+  </script>''' % (total, "\n".join(filtros), "\n".join(rows))
 
-    html = page("Catálogo de apuntes — Dr. Andreé Salvatierra Baldeón",
-                "Catálogo de apuntes de Farmacología, Neuroanatomía y Neurofisiología.",
+    html = page("Catálogo de apuntes — Neurona",
+                "Catálogo completo de apuntes del Dr. Andreé Salvatierra.",
                 "apuntes.html", body)
     open(os.path.join(OUT, "apuntes.html"), "w", encoding="utf-8").write(html)
     print("  ✓ apuntes.html  (%d apuntes)" % total)
     return total
+
+
+
+# ══════════════════════════════════════════════════════════════
+#  VISOR DE APUNTES
+#  Dibuja el PDF en lienzos: no hay enlace al archivo ni barra
+#  del navegador, así que tampoco botón de descarga.
+# ══════════════════════════════════════════════════════════════
+
+def build_visor():
+    catalogo = {}
+    for c in CURSOS:
+        for u in c["unidades"]:
+            for code, name, pdf, pags in u["temas"]:
+                if pdf:
+                    catalogo["%s/%s" % (c["slug"], pdf)] = {
+                        "titulo": name, "curso": c["nombre"],
+                        "unidad": "Unidad %s · %s" % (u["num"], u["nombre"]),
+                        "paginas": pags,
+                    }
+
+    body = '''  <section class="visor-cab">
+    <div class="visor-cab-inner">
+      <a href="apuntes.html" class="visor-volver">Volver al catálogo</a>
+      <div class="visor-titulos">
+        <h1 class="visor-titulo" id="vTitulo">Cargando…</h1>
+        <p class="visor-meta" id="vMeta"></p>
+      </div>
+      <div class="visor-paginas" id="vPaginas"></div>
+    </div>
+  </section>
+
+  <section class="visor-zona">
+    <div class="visor-aviso" id="vAviso" hidden></div>
+    <div class="visor-lienzos" id="vLienzos" oncontextmenu="return false"></div>
+    <p class="visor-pie">
+      Material del Dr. Andreé Salvatierra. Uso educativo; prohibida su
+      descarga, reproducción y distribución.
+    </p>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    var CATALOGO = %s;
+
+    (function () {
+      var zona    = document.getElementById('vLienzos');
+      var aviso   = document.getElementById('vAviso');
+      var titulo  = document.getElementById('vTitulo');
+      var meta    = document.getElementById('vMeta');
+      var contador= document.getElementById('vPaginas');
+
+      function fallo(txt) {
+        aviso.hidden = false; aviso.textContent = txt;
+        titulo.textContent = 'Apunte no disponible';
+      }
+
+      var doc = new URLSearchParams(location.search).get('doc') || '';
+      /* Solo se admiten rutas que estén en el catálogo: nada de cargar
+         archivos arbitrarios desde la barra de direcciones. */
+      var ficha = Object.prototype.hasOwnProperty.call(CATALOGO, doc) ? CATALOGO[doc] : null;
+      if (!ficha) { fallo('Ese apunte no existe en el catálogo.'); return; }
+
+      titulo.textContent = ficha.titulo;
+      meta.textContent = ficha.curso + ' · ' + ficha.unidad;
+      contador.textContent = ficha.paginas + ' pág.';
+      document.title = ficha.titulo + ' — Neurona';
+
+      if (typeof pdfjsLib === 'undefined') {
+        fallo('No se pudo cargar el visor. Comprueba tu conexión.'); return;
+      }
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      var escala = Math.min(2, (window.devicePixelRatio || 1) * 1.25);
+
+      pdfjsLib.getDocument({ url: 'apuntes/' + doc, password: '' }).promise.then(function (pdf) {
+        var ancho = zona.clientWidth || 900;
+        var cadena = Promise.resolve();
+        for (var n = 1; n <= pdf.numPages; n++) {
+          (function (n) {
+            cadena = cadena.then(function () {
+              return pdf.getPage(n).then(function (pagina) {
+                var base = pagina.getViewport({ scale: 1 });
+                var vista = pagina.getViewport({ scale: (ancho / base.width) * escala });
+
+                var hoja = document.createElement('div');
+                hoja.className = 'visor-hoja';
+                var lienzo = document.createElement('canvas');
+                lienzo.width = vista.width; lienzo.height = vista.height;
+                lienzo.style.width = '100%%'; lienzo.style.height = 'auto';
+                var num = document.createElement('span');
+                num.className = 'visor-num'; num.textContent = n + ' / ' + pdf.numPages;
+                hoja.appendChild(lienzo); hoja.appendChild(num);
+                zona.appendChild(hoja);
+
+                return pagina.render({
+                  canvasContext: lienzo.getContext('2d', { alpha: false }),
+                  viewport: vista
+                }).promise;
+              });
+            });
+          })(n);
+        }
+        return cadena;
+      }).catch(function () {
+        fallo('No se pudo abrir el apunte.');
+      });
+
+      /* Fricción: ni menú contextual, ni arrastrar, ni atajos de guardado. */
+      document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+      document.addEventListener('dragstart', function (e) { e.preventDefault(); });
+      document.addEventListener('keydown', function (e) {
+        var k = (e.key || '').toLowerCase();
+        if ((e.ctrlKey || e.metaKey) && ['s', 'p', 'u'].indexOf(k) !== -1) {
+          e.preventDefault();
+        }
+      });
+    })();
+  </script>''' % json.dumps(catalogo, ensure_ascii=False)
+
+    html = page("Visor de apuntes — Neurona",
+                "Visor de apuntes del Dr. Andreé Salvatierra.",
+                "apuntes.html", body)
+    html = html.replace("<head>", "<head>\n  <meta name=\"robots\" content=\"noindex\"/>")
+    open(os.path.join(OUT, "visor.html"), "w", encoding="utf-8").write(html)
+    print("  ✓ visor.html  (%d apuntes en el catálogo)" % len(catalogo))
+
+
+
+# ══════════════════════════════════════════════════════════════
+#  NOTICIAS
+#  Las entradas viven en noticias.json y se leen en el navegador,
+#  así que basta con editar ese archivo: no hay que regenerar nada.
+# ══════════════════════════════════════════════════════════════
+
+ORCID_ID = "0000-0002-0638-563X"
+LINKEDIN = "https://www.linkedin.com/in/a-salvatierra"
+
+JS_NOTICIAS = """
+    function fechaLarga(iso) {
+      var p = (iso || '').split('-');
+      if (p.length !== 3) return iso || '';
+      var meses = ['enero','febrero','marzo','abril','mayo','junio','julio',
+                   'agosto','septiembre','octubre','noviembre','diciembre'];
+      return parseInt(p[2], 10) + ' de ' + meses[parseInt(p[1], 10) - 1] + ' de ' + p[0];
+    }
+
+    function limpiar(t) {
+      var d = document.createElement('div');
+      d.textContent = t == null ? '' : String(t);
+      return d.innerHTML;
+    }
+
+    function pintarNoticias(destino, entradas, tope) {
+      if (!destino) return;
+      if (!entradas.length) {
+        destino.innerHTML = '<p class="noticias-vacio">Todavía no hay entradas publicadas.</p>';
+        return;
+      }
+      entradas.sort(function (a, b) { return (b.fecha || '').localeCompare(a.fecha || ''); });
+      if (tope) entradas = entradas.slice(0, tope);
+      destino.innerHTML = entradas.map(function (n) {
+        var enlace = n.enlace
+          ? '<a class="noticia-enlace" href="' + limpiar(n.enlace) +
+            '" target="_blank" rel="noopener noreferrer">Ver más</a>'
+          : '';
+        return '<article class="noticia">' +
+                 '<div class="noticia-meta">' +
+                   '<time datetime="' + limpiar(n.fecha) + '">' + limpiar(fechaLarga(n.fecha)) + '</time>' +
+                   (n.etiqueta ? '<span class="noticia-etiqueta">' + limpiar(n.etiqueta) + '</span>' : '') +
+                 '</div>' +
+                 '<div class="noticia-cuerpo">' +
+                   '<h3 class="noticia-titulo">' + limpiar(n.titulo) + '</h3>' +
+                   '<p class="noticia-texto">' + limpiar(n.texto) + '</p>' +
+                   enlace +
+                 '</div>' +
+               '</article>';
+      }).join('');
+    }
+
+    function cargarNoticias(destino, tope) {
+      if (!destino) return;
+      fetch('noticias.json', { cache: 'no-cache' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { pintarNoticias(destino, d.entradas || [], tope); })
+        .catch(function () {
+          destino.innerHTML = '<p class="noticias-vacio">No se pudieron cargar las entradas. ' +
+            'Si estás viendo la página desde el disco, ábrela con un servidor local.</p>';
+        });
+    }
+"""
+
+JS_ORCID = """
+    /* Publicaciones: se leen de ORCID, que sí tiene API pública.
+       Si falla, el bloque se oculta y no pasa nada. */
+    function cargarPublicaciones(destino, seccion) {
+      if (!destino) return;
+      fetch('https://pub.orcid.org/v3.0/%s/works', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var obras = (d.group || []).map(function (g) {
+            var w = g['work-summary'][0];
+            var anio = w['publication-date'] && w['publication-date'].year
+                     ? w['publication-date'].year.value : '';
+            var revista = w['journal-title'] ? w['journal-title'].value : '';
+            var doi = '';
+            (g['external-ids'] && g['external-ids']['external-id'] || []).forEach(function (e) {
+              if (e['external-id-type'] === 'doi') doi = e['external-id-value'];
+            });
+            return { titulo: w.title.title.value, anio: anio, revista: revista, doi: doi };
+          });
+          obras.sort(function (a, b) { return (b.anio || '').localeCompare(a.anio || ''); });
+          if (!obras.length) { if (seccion) seccion.hidden = true; return; }
+          destino.innerHTML = obras.map(function (o) {
+            var url = o.doi ? 'https://doi.org/' + o.doi : '';
+            var titulo = url
+              ? '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + limpiar(o.titulo) + '</a>'
+              : limpiar(o.titulo);
+            return '<li class="publicacion">' +
+                     '<span class="publicacion-anio">' + limpiar(o.anio || '—') + '</span>' +
+                     '<span class="publicacion-datos">' +
+                       '<span class="publicacion-titulo">' + titulo + '</span>' +
+                       (o.revista ? '<span class="publicacion-revista">' + limpiar(o.revista) + '</span>' : '') +
+                     '</span>' +
+                   '</li>';
+          }).join('');
+        })
+        .catch(function () { if (seccion) seccion.hidden = true; });
+    }
+""" % ORCID_ID
+
+
+def build_noticias():
+    body = '''  <section class="page-hero">
+    <div class="page-hero-inner">
+      <p class="hero-eyebrow" style="margin-bottom:18px;">Actividad reciente</p>
+      <h1 class="page-hero-title">Noti<em>cias</em></h1>
+      <p class="page-hero-sub">Congresos, publicaciones, docencia y apariciones. Lo que va ocurriendo, en orden.</p>
+    </div>
+    <div class="page-hero-ornament">§</div>
+  </section>
+
+  <section>
+    <div class="section">
+      <div class="noticias-grid">
+        <div>
+          <div class="noticias" id="listaNoticias">
+            <p class="noticias-vacio">Cargando…</p>
+          </div>
+        </div>
+
+        <aside class="noticias-lateral">
+          <div class="aside-card">
+            <p class="aside-label">Seguir la actividad</p>
+            <p class="lateral-texto">LinkedIn es donde el Dr. Salvatierra publica el día a día: congresos, clases y colaboraciones.</p>
+            <a class="perfil perfil--bloque" href="%s" target="_blank" rel="noopener noreferrer">
+              <span class="perfil-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="3.4"/><circle cx="7.6" cy="7.7" r="1.15" fill="currentColor" stroke="none"/><path d="M7.6 10.8v6.6"/><path d="M11.4 17.4v-6.6"/><path d="M11.4 13.2c0-1.5 1.1-2.5 2.5-2.5s2.5 1 2.5 2.5v4.2"/></svg></span>
+              <span>Ver actividad en LinkedIn</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+
+      <section class="publicaciones-bloque" id="bloquePublicaciones">
+        <p class="escudos-titulo">Publicaciones · actualizado desde ORCID</p>
+        <ul class="publicaciones" id="listaPublicaciones"></ul>
+      </section>
+    </div>
+  </section>
+
+  <script>
+%s
+%s
+    cargarNoticias(document.getElementById('listaNoticias'), 0);
+    cargarPublicaciones(document.getElementById('listaPublicaciones'),
+                        document.getElementById('bloquePublicaciones'));
+  </script>''' % (LINKEDIN, JS_NOTICIAS, JS_ORCID)
+
+    html = page("Noticias — Neurona · Dr. Andreé Salvatierra",
+                "Actividad reciente del Dr. Andreé Salvatierra: congresos, publicaciones y docencia.",
+                "noticias.html", body)
+    open(os.path.join(OUT, "noticias.html"), "w", encoding="utf-8").write(html)
+    print("  ✓ noticias.html")
 
 
 if __name__ == "__main__":
@@ -727,6 +1080,8 @@ if __name__ == "__main__":
     for c in CURSOS:
         build_curso(c)
     total = build_apuntes()
+    build_visor()
+    build_noticias()
 
     manifiesto = {}
     for c in CURSOS:

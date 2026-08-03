@@ -23,7 +23,7 @@ git push -u origin main
 Luego en GitHub: **Settings → Pages → Source: Deploy from a branch → Branch: `main` / `(root)`**.
 El sitio queda en `https://USUARIO.github.io/REPO/`.
 
-> Los PDFs pesan ~10 MB en total. Está dentro de lo que GitHub admite sin problema.
+> Los PDFs pesan ~12 MB en total. Está dentro de lo que GitHub admite sin problema.
 
 ---
 
@@ -37,8 +37,12 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
 ├── neuropsicologia.html       Temario provisional
 ├── psicofarmacologia.html     Temario + 6 apuntes
 ├── apuntes.html               Catálogo con buscador y filtros
+├── noticias.html              Actividad reciente
+├── noticias.json              Las entradas de noticias (se edita a mano)
+├── visor.html                 Visor de apuntes (no se enlaza a los PDF)
 ├── css/theme.css              Todo el estilo (un solo archivo)
-├── img/                       Neuronas de la portada
+├── fonts/neurona.woff2        Tipografía del logotipo, recortada (3,9 KB)
+├── img/                       Neuronas, retrato y escudos
 └── apuntes/
     ├── biopsicologia/         (vacío)
     ├── neuroanatomia/         (vacío)
@@ -63,18 +67,19 @@ Cada tema es una tupla de cuatro campos:
 
 Para publicar un apunte nuevo:
 
-1. Copia el PDF a `apuntes/<curso>/` con un nombre en minúsculas y sin tildes.
-2. En `build.py`, busca el curso y la unidad, y cambia el `None` por el nombre del archivo
-   (o añade una tupla nueva).
-3. Ejecuta `python3 build.py` desde la carpeta que contiene el script.
+1. Copia el PDF **limpio** a `originales/` con un nombre en minúsculas y sin tildes.
+2. Añade una línea al diccionario `DESTINOS` de `proteger.py` indicando a qué curso va.
+3. En `build.py`, busca el curso y la unidad, y cambia el `None` por el nombre del
+   archivo (o añade una tupla nueva).
+4. Ejecuta `python3 proteger.py` y después `python3 build.py`.
 
 Las páginas se regeneran solas: portada, página del curso, catálogo y sus filtros.
 Los contadores ("4 apuntes", "93 pág.") se calculan a partir de los datos, no hay que
 tocarlos. Añadir o quitar un curso de la lista `CURSOS` crea o borra su página, su
 tarjeta en la portada, su pestaña y su filtro en el catálogo.
 
-Si solo quieres **reemplazar** un PDF por una versión corregida, sobrescribe el archivo
-conservando el mismo nombre. No hay que regenerar nada.
+Si solo quieres **reemplazar** un PDF por una versión corregida, sobrescribe el de
+`originales/` conservando el mismo nombre y vuelve a ejecutar `proteger.py`.
 
 ### Cambiar el temario
 
@@ -90,13 +95,77 @@ Es el orden en que venían numerados en el original.
 
 ---
 
+## Protección de los apuntes
+
+Antes que nada, con honestidad: **en un sitio estático no se puede impedir la
+descarga**. El navegador tiene que recibir el archivo para poder mostrarlo, así
+que quien sepa abrir las herramientas de desarrollador podrá quedárselo. Lo que
+sí se puede hacer —y está hecho— es poner el listón alto y dejar marcado el
+material para que, si sale de aquí, se sepa de quién es.
+
+### Lo que es permanente
+
+**Marca de agua incrustada.** Cada una de las 250 páginas lleva el logotipo
+caligráfico y el nombre estampados en el propio PDF, no superpuestos por el navegador: una
+diagonal muy tenue repetida por toda la página y un pie con el logotipo, el
+nombre y el aviso de uso. Va dentro del archivo, así que sobrevive a cualquier
+copia. El lado derecho del pie se deja libre a propósito porque ahí está la
+firma que Andreé ya lleva en sus diapositivas.
+
+**Cifrado AES-256 con permisos denegados.** Los archivos se abren sin
+contraseña, pero llevan denegados imprimir, copiar texto, extraer contenido y
+modificar. Los lectores que respetan la norma —Acrobat, Vista Previa, Edge—
+hacen caso. La contraseña de propietario se genera al azar en cada ejecución y
+no se guarda: nadie puede levantar esas restricciones, ni siquiera nosotros.
+
+### Lo que es fricción
+
+**Visor propio.** `visor.html` dibuja las páginas en lienzos con PDF.js. No hay
+etiqueta `<embed>` ni `<iframe>`, así que no aparece la barra del visor de PDF
+del navegador con su botón de descarga y su botón de imprimir. Ninguna página
+del sitio enlaza ya a un archivo `.pdf`.
+
+**Solo abre lo que está en el catálogo.** El visor compara el parámetro `?doc=`
+con una lista incrustada; escribir otra ruta a mano no carga nada.
+
+**Bloqueos de interfaz.** Sin menú contextual, sin arrastrar imágenes, sin
+Ctrl+S, Ctrl+P ni Ctrl+U, y una regla de impresión que deja la hoja en blanco
+con un aviso.
+
+### Regenerar los apuntes protegidos
+
+Los seis PDF **limpios** viven en `originales/`, un nivel arriba de esta
+carpeta, y nunca se tocan. El script `proteger.py` los lee de ahí y escribe los
+protegidos en `apuntes/`:
+
+```bash
+python3 proteger.py
+```
+
+Se puede ejecutar las veces que haga falta: como siempre parte de los
+originales, la marca no se acumula. Para añadir un apunte nuevo, se copia el PDF
+limpio a `originales/`, se añade una línea al diccionario `DESTINOS` indicando a
+qué curso va, y se ejecuta el script.
+
+Dos números para ajustar la marca, al principio de `proteger.py`:
+
+```python
+OPACIDAD_DIAGONAL = 0.055   # la diagonal repetida
+OPACIDAD_PIE      = 0.42    # el logotipo y el nombre del pie
+```
+
+> **Importante:** `originales/` no debe subirse a GitHub. El `.gitignore` ya lo
+> excluye, pero conviene comprobarlo antes del primer `push`.
+
+---
+
 ## Editar textos
 
-- **Logotipo** — es un dibujo en SVG, no texto. Ver la sección *El logotipo* más abajo.
+- **Logotipo** — es texto con una tipografía propia. Ver la sección *El logotipo*.
 - **Subtítulo del encabezado** — en `build.py`, función `header()`.
 - **Antetítulo de la portada** — en `build.py`, función `build_index()`.
-- **Correo y enlaces académicos** — en `build.py`, constante `FOOTER`. Ahora dicen
-  `correo@ejemplo.com` y `#`.
+- **Correo y enlaces académicos** — en `build.py`, constante `FOOTER`.
+- **Botones de perfil** — en `build.py`, lista `PERFILES`.
 - **Bio de la portada** — en `build.py`, función `build_index()`.
 - **Ficha y bibliografía de un curso** — en `build.py`, claves `ficha` y `bibliografia`.
 
@@ -182,32 +251,173 @@ transparente y bordes desvanecidos; si no, se verá el recuadro.
 
 ## El logotipo
 
-La palabra **Neurona** no es texto: es un dibujo vectorial. Partí de las formas de
-una serif itálica, las convertí a trazados y les añadí a mano el rasgo que subraya
-la palabra, con grosor variable —grueso en el centro, afilado en las puntas—.
+La palabra **Neurona** es texto de verdad, escrito con la tipografía caligráfica
+**Miracle History**. Nada de trazados ni de SVG: es un `<span>` con una clase.
 
-Ventajas de que sea un dibujo y no una fuente: se ve idéntico en cualquier
-dispositivo, no parpadea mientras carga la tipografía, y escala sin perder nitidez.
-
-**Cómo está montado.** El trazado se define una sola vez por página, dentro de un
-`<symbol id="marcaNeurona">` justo después de `<body>`. Los tres sitios donde
-aparece —encabezado, portada y pie— lo referencian con `<use href="#marcaNeurona"/>`.
-Así el dibujo pesa una vez y no tres.
-
-**Color.** Los trazados usan `fill="currentColor"`, así que el logotipo toma el color
-del contenedor. En `theme.css`:
-
-```css
-.site-logo-marca { color: var(--black); width: 128px; }   /* encabezado */
-.library-hero-name { color: var(--gold); }                /* portada */
-.footer-marca { color: var(--gold); width: 150px; }       /* pie */
+```html
+<span class="marca-neurona site-logo-marca">Neurona</span>
 ```
 
-Para cambiar el tamaño se toca solo el `width`; la altura se ajusta sola.
+**La fuente va recortada.** `fonts/neurona.woff2` contiene solo los glifos de
+esas siete letras, así que pesa **3,9 KB** en vez de los 97 KB del `.ttf`
+completo. Se declara una vez en `theme.css`:
 
-**Regenerarlo.** El trazado se generó con `fontTools` a partir de Lora Italic en peso
-600, escalando a 200 px de altura de em, y luego se le añadió el rasgo a mano. Si
-alguna vez hay que rehacerlo, está incrustado en `build.py` como `WORDMARK_DEFS`.
+```css
+@font-face {
+  font-family: 'Miracle History';
+  src: url('../fonts/neurona.woff2') format('woff2');
+  font-display: swap;
+}
+```
+
+Si el archivo fallara, `font-display: swap` deja Cormorant Garamond como
+respaldo y la página sigue leyéndose.
+
+### Tamaño y posición
+
+Al ser texto, se controla con `font-size` y con márgenes normales. Los tres
+sitios donde aparece:
+
+```css
+.site-logo-marca   { font-size: 47px;  }              /* encabezado */
+.library-hero-name { font-size: clamp(72px, 12vw, 176px); }  /* portada */
+.footer-marca      { font-size: 54px;  }              /* pie */
+.marca-neurona     { line-height: 0.86; }             /* aprieta la caja */
+```
+
+`line-height: 0.86` es lo que quita el aire que la fuente reserva por encima de
+las letras. Para subir o bajar el logotipo se toca el `margin` de cada uno; para
+agrandarlo, el `font-size`.
+
+### Regenerar la fuente recortada
+
+```python
+from fontTools import subset
+from fontTools.ttLib import TTFont
+f = TTFont("Miracle History.ttf")
+s = subset.Subsetter(options=subset.Options(layout_features=["liga","kern","calt","rlig"]))
+s.populate(text="Neurona ")
+s.subset(f)
+f.flavor = "woff2"
+f.save("neurona.woff2")
+```
+
+El `.ttf` original está guardado un nivel arriba, junto a `build.py`.
+
+> **Licencia.** Miracle History (fikryalstudio.com) es de uso personal. Este
+> sitio es un repositorio académico gratuito y sin ánimo de lucro, así que
+> encaja, pero si algún día se le da un uso comercial hay que comprar la
+> licencia. Ten en cuenta que publicar la fuente en la web la deja descargable,
+> aunque el subconjunto solo sirva para escribir "Neurona".
+
+### La marca de agua de los PDF
+
+El sello de los apuntes usa `marca-negro.png`, un PNG de la misma palabra
+generado aparte. Si cambias el logotipo y quieres que los PDF vayan a juego,
+regenera ese PNG y vuelve a ejecutar `proteger.py`:
+
+```python
+from PIL import Image, ImageDraw, ImageFont
+f = ImageFont.truetype("Miracle History.ttf", 400)
+c = f.getbbox("Neurona")
+im = Image.new("RGBA", (c[2]-c[0]+20, c[3]-c[1]+20), (0,0,0,0))
+ImageDraw.Draw(im).text((10-c[0], 10-c[1]), "Neurona", font=f, fill=(0,0,0,255))
+im.save("marca-negro.png")
+```
+
+---
+
+## Sobre el autor
+
+La sección se armó con el PPT del CV: el retrato, la trayectoria y los escudos
+salieron de ahí.
+
+**Escudos.** Diez instituciones en dos grupos: *Formación*, en orden
+cronológico —pregrado, especialidad, los dos másteres, doctorado y
+posdoctorado—, y *Estancias e investigación*. Están en `img/escudos/` en WebP
+con fondo transparente; se muestran en gris al 60 % y recuperan su color al
+pasar el cursor, para que la rejilla no se convierta en una feria de logos.
+
+Las rejillas **no llevan recuadro**: entre una institución y la siguiente hay
+solo una línea vertical corta y centrada, nunca de borde a borde. Se dibuja con
+`.escudo::before` y se oculta en el primer elemento de cada fila con
+`:nth-child(6n+1)` en Formación y `:nth-child(4n+1)` en Estancias. Si cambias el
+número de columnas hay que ajustar esos múltiplos, o volverán a aparecer líneas
+al principio de fila.
+
+Los escudos están escritos como HTML en `build.py`, dentro de la sección
+`<div class="escudos">`; añadir uno es copiar el WebP y duplicar un `<figure>`.
+
+**Botones de perfil.** Cinco enlaces —LinkedIn, ResearchGate, CTI Vitae, ORCID y
+Google Scholar— con iconos dibujados a un solo trazo, en el mismo lenguaje que el
+resto del sitio. Todos abren en pestaña nueva con `rel="noopener"`. Están en la
+lista `PERFILES` de `build.py`, junto a los iconos.
+
+**Datos de contacto.** El correo es `4andree4@gmail.com` y los registros
+profesionales (CPsP, RNE, RENACYT) van bajo la biografía.
+
+> El retrato y los escudos proceden del PPT que hizo Andreé. Los logotipos
+> institucionales son marcas de sus respectivas universidades y se usan aquí de
+> forma descriptiva, para señalar dónde estudió y trabajó.
+
+---
+
+## Noticias
+
+### Lo que LinkedIn no permite
+
+Empiezo por lo importante: **LinkedIn no deja sacar automáticamente las
+publicaciones de un perfil personal.** No hay RSS, la API pública no expone el
+muro de una persona —solo páginas de empresa, y con permisos aprobados— y raspar
+el sitio va contra sus condiciones y está bloqueado técnicamente. Cualquiera que
+prometa lo contrario está describiendo algo que se rompe a las pocas semanas.
+
+Así que la sección funciona con dos fuentes que sí son fiables:
+
+### 1. Entradas escritas a mano (`noticias.json`)
+
+Es un archivo de texto sencillo. Cada entrada tiene fecha, etiqueta, título,
+texto y un enlace opcional:
+
+```json
+{
+  "fecha": "2026-09-12",
+  "etiqueta": "Congreso",
+  "titulo": "Ponencia en el Congreso Peruano de Neurología",
+  "texto": "Presentación sobre marcadores cognitivos tempranos.",
+  "enlace": "https://…"
+}
+```
+
+Las nuevas van **arriba del todo**. La página las ordena por fecha de todos
+modos, pero así se trabaja más cómodo.
+
+**No hay que ejecutar nada.** La web lee el archivo en el navegador, de forma que
+editarlo desde GitHub —se puede hacer desde el móvil, con el lápiz de la interfaz
+web— actualiza el sitio en cuanto se guarda.
+
+En la portada **no se lista nada**: al final de *Sobre el autor* hay solo un
+botón que dice «Noticias» y lleva a la página completa. **Tampoco aparece en el
+menú superior**, a propósito.
+
+### 2. Publicaciones automáticas desde ORCID
+
+La página de noticias trae al final la lista de publicaciones tirando de la API
+pública de ORCID con su identificador `0000-0002-0638-563X`. Eso sí se actualiza
+solo: cuando registre un artículo nuevo en ORCID, aparece aquí sin tocar nada.
+Si la petición falla, el bloque se oculta y el resto de la página sigue igual.
+
+### 3. Botón a LinkedIn
+
+Al lado de las entradas hay un botón que lleva a su perfil. Es lo más cerca que
+se puede estar de "seguir su actividad" sin inventar una integración que no
+existe.
+
+> **Nota para pruebas locales.** Como las entradas se cargan con `fetch`, abrir
+> `index.html` con doble clic no las mostrará: el navegador bloquea la lectura de
+> archivos locales. Para verlo en el ordenador, desde la carpeta del sitio:
+> `python3 -m http.server` y abrir `http://localhost:8000`. En GitHub Pages
+> funciona sin más.
 
 ---
 

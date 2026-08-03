@@ -1552,7 +1552,7 @@ nav.main-nav .nav-sep {
 }
 @media (max-width: 900px) {
   .library-hero-inner { grid-template-columns: 1fr; padding: 60px 24px; gap: 44px; }
-  .library-hero-name { font-size: 46px; }
+  .library-hero-name { font-size: clamp(56px, 16vw, 100px); }
   .library-hero-stats { gap: 28px; flex-wrap: wrap; }
   .library-photo { max-width: 280px; }
   .page-hero { padding: 52px 24px 44px; }
@@ -1702,13 +1702,10 @@ a.topic-row:hover .topic-status.ready {
 }
 
 .library-hero-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(48px, 8vw, 104px);
-  font-weight: 700; line-height: 1.0;
-  color: var(--white); letter-spacing: -0.025em;
-  margin-bottom: 26px;
+  font-size: clamp(72px, 12vw, 176px);
+  color: var(--gold);
+  margin: 0 auto 22px;
 }
-.library-hero-name em { font-style: italic; font-weight: 500; color: var(--gold); }
 
 .library-hero-role {
   font-family: 'Cormorant Garamond', serif;
@@ -1779,51 +1776,385 @@ a.topic-row:hover .topic-status.ready {
 
 
 /* ══════════════════════════════════════════
-   LOGOTIPO DIBUJADO "NEURONA"
-   Trazado a mano en SVG: no depende de ninguna
-   fuente y se colorea con `color`.
+   LOGOTIPO "NEURONA"
+   Texto de verdad con la tipografía Miracle History,
+   recortada a las letras que hacen falta (3,9 KB).
    ══════════════════════════════════════════ */
 
-.letras-neurona { display: block; width: 100%; height: auto; overflow: visible; }
+@font-face {
+  font-family: 'Miracle History';
+  src: url('../fonts/neurona.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.marca-neurona {
+  font-family: 'Miracle History', 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: 0.86;
+  display: block;
+  white-space: nowrap;
+}
 
 /* ── Encabezado ── */
 .site-logo-marca {
-  display: block;
-  width: 128px;
+  font-size: 47px;
   color: var(--black);
-  line-height: 0;
+  margin: -2px 0 -5px;
+  transition: color 0.3s ease;
 }
-.site-logo-marca .letras-neurona { transition: color 0.3s ease; }
 .logo-group:hover .site-logo-marca { color: var(--blue); }
 
-.site-logo { gap: 7px; }
-.site-logo-subtitle { margin-left: 1px; }
-
-/* ── Portada ── */
-.library-hero-name {
-  display: block;
-  width: clamp(280px, 46vw, 620px);
-  margin: 0 auto 30px;
-  color: var(--gold);
-  font-size: 0;
-  line-height: 0;
-}
+.site-logo { gap: 4px; }
+.site-logo-subtitle { margin-left: 2px; }
 
 /* ── Pie ── */
 .footer-marca {
-  display: block;
-  width: 150px;
+  font-size: 54px;
   color: var(--gold);
-  line-height: 0;
-  margin-bottom: 10px;
+  margin: -2px 0 4px;
 }
-.footer-logo-group { align-items: flex-start; }
+
+@media (max-width: 1180px) { .site-logo-marca { font-size: 40px; } }
+@media (max-width: 760px)  {
+  .site-logo-marca { font-size: 35px; }
+  .footer-marca    { font-size: 46px; }
+}
+
+/* ══════════════════════════════════════════
+   VISOR DE APUNTES
+   ══════════════════════════════════════════ */
+
+.visor-cab {
+  background: var(--ink);
+  border-bottom: 0.5px solid rgba(255,255,255,0.10);
+}
+.visor-cab-inner {
+  max-width: 1180px; margin: 0 auto; padding: 26px 48px;
+  display: flex; align-items: center; gap: 28px;
+}
+.visor-volver {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+  transition: color 0.25s ease;
+}
+.visor-volver::before { content: '←'; color: var(--gold); font-size: 14px; }
+.visor-volver:hover { color: var(--gold); }
+
+.visor-titulos { flex: 1; min-width: 0; }
+.visor-titulo {
+  font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600;
+  color: var(--white); line-height: 1.2; margin-bottom: 3px;
+}
+.visor-meta {
+  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
+}
+.visor-paginas {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: rgba(255,255,255,0.4); letter-spacing: 0.1em; white-space: nowrap;
+}
+
+.visor-zona { background: var(--bg-off); padding: 40px 24px 64px; }
+
+.visor-lienzos {
+  max-width: 1060px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 26px;
+  -webkit-user-select: none; user-select: none;
+}
+.visor-hoja {
+  position: relative;
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  box-shadow: 0 10px 30px -18px rgba(27,58,92,0.30);
+  line-height: 0;
+}
+.visor-hoja canvas { display: block; pointer-events: none; }
+.visor-num {
+  position: absolute; right: 10px; bottom: 8px;
+  font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em;
+  color: var(--gray-light); line-height: 1;
+}
+
+.visor-aviso {
+  max-width: 1060px; margin: 0 auto 26px;
+  border-left: 2px solid var(--gold); background: var(--white);
+  padding: 20px 24px; font-size: 14px; color: var(--gray);
+}
+.visor-pie {
+  max-width: 1060px; margin: 34px auto 0;
+  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray-light); text-align: center; line-height: 1.9;
+}
+
+/* Al imprimir no sale nada */
+@media print {
+  body * { display: none !important; }
+  body::after {
+    content: 'Este material no se puede imprimir. Neurona — Dr. Andreé Salvatierra.';
+    display: block !important; padding: 40px; font-family: sans-serif;
+  }
+}
+
+@media (max-width: 860px) {
+  .visor-cab-inner { padding: 20px 24px; gap: 16px; flex-wrap: wrap; }
+  .visor-titulo { font-size: 20px; }
+  .visor-paginas { width: 100%; }
+  .visor-zona { padding: 24px 14px 48px; }
+  .visor-lienzos { gap: 16px; }
+}
+
+
+/* ══════════════════════════════════════════
+   PORTADA · lema entre guiones
+   ══════════════════════════════════════════ */
+
+.hero-lema {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  margin: 0 0 20px;
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+}
+.hero-lema::before, .hero-lema::after {
+  content: ''; height: 0.5px; width: clamp(28px, 7vw, 78px);
+  background: var(--gold); opacity: 0.7; flex: 0 0 auto;
+}
+.hero-lema span { white-space: nowrap; }
+
+
+/* ══════════════════════════════════════════
+   SOBRE EL AUTOR
+   ══════════════════════════════════════════ */
+
+.autor-grid {
+  display: grid; grid-template-columns: 320px minmax(0, 1fr);
+  gap: 64px; align-items: start;
+}
+
+.autor-retrato {
+  position: relative; overflow: hidden;
+  background: var(--bg-off);
+  aspect-ratio: 4 / 5;
+}
+.autor-retrato img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.autor-retrato .corner-ornament { z-index: 2; }
+
+.autor-nombre {
+  font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 600;
+  color: var(--black); line-height: 1.15; margin-bottom: 8px;
+}
+.autor-cargos {
+  font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic;
+  color: var(--gray); margin-bottom: 26px;
+}
+.autor-cargos .title-sep { color: var(--gold); font-style: normal; }
+
+.autor-registros {
+  display: flex; flex-wrap: wrap; gap: 10px 28px;
+  margin: 26px 0 30px; padding-top: 20px;
+  border-top: 0.5px solid var(--border);
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray-light);
+}
+.autor-registros strong { color: var(--black); }
+
+/* ── Botones de perfil ── */
+.perfiles { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.perfil {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 18px 11px 14px;
+  border: 0.5px solid var(--border);
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gray); text-decoration: none;
+  transition: color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+.perfil-icono { display: block; width: 19px; height: 19px; color: var(--gold); }
+.perfil-icono svg { width: 100%; height: 100%; display: block; }
+.perfil:hover {
+  color: var(--blue); border-color: var(--blue-mid);
+  box-shadow: 0 6px 16px -8px var(--blue-shadow-strong);
+}
+.perfil:hover .perfil-icono { color: var(--blue-mid); }
+
+/* ── Escudos ── */
+.escudos-bloque { margin-top: 68px; }
+.escudos-titulo {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+}
+.escudos-titulo::after {
+  content: ''; flex: 1; height: 0.5px; background: var(--border);
+}
+.escudos-titulo:not(:first-child) { margin-top: 48px; }
+
+.escudos {
+  display: grid;
+  gap: 0;
+}
+.escudos--seis   { grid-template-columns: repeat(6, 1fr); }
+.escudos--cuatro { grid-template-columns: repeat(4, 1fr); }
+
+.escudo {
+  position: relative;
+  margin: 0; padding: 24px 18px 20px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 14px;
+}
+
+/* Separación solo entre instituciones: una línea corta y centrada,
+   nunca de borde a borde y nunca alrededor del bloque. */
+.escudo::before {
+  content: '';
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 0.5px; height: 62px;
+  background: var(--border);
+}
+.escudos--seis   .escudo:nth-child(6n + 1)::before,
+.escudos--cuatro .escudo:nth-child(4n + 1)::before { display: none; }
+
+.escudo img {
+  height: 62px; width: auto; max-width: 100%; object-fit: contain;
+  filter: grayscale(1); opacity: 0.6;
+  transition: filter 0.35s ease, opacity 0.35s ease;
+}
+.escudo:hover img { filter: grayscale(0); opacity: 1; }
+.escudo figcaption { display: flex; flex-direction: column; gap: 3px; }
+.escudo figcaption strong {
+  font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600;
+  color: var(--black); line-height: 1.25;
+}
+.escudo figcaption span {
+  font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-light);
+  line-height: 1.5;
+}
 
 @media (max-width: 1180px) {
-  .site-logo-marca { width: 108px; }
+  .escudos--seis { grid-template-columns: repeat(3, 1fr); }
+  .escudos--seis .escudo:nth-child(6n + 1)::before { display: block; }
+  .escudos--seis .escudo:nth-child(3n + 1)::before { display: none; }
 }
-@media (max-width: 760px) {
-  .site-logo-marca { width: 96px; }
-  .library-hero-name { width: min(78vw, 380px); }
-  .footer-marca { width: 130px; }
+@media (max-width: 820px) {
+  .escudos--seis, .escudos--cuatro { grid-template-columns: repeat(2, 1fr); }
+  .escudos--seis .escudo::before,
+  .escudos--cuatro .escudo::before { display: block; }
+  .escudos--seis .escudo:nth-child(2n + 1)::before,
+  .escudos--cuatro .escudo:nth-child(2n + 1)::before { display: none; }
+  .escudo { padding: 20px 12px 18px; }
+  .escudo img { height: 52px; }
+}
+
+@media (max-width: 900px) {
+  .autor-grid { grid-template-columns: 1fr; gap: 36px; }
+  .autor-retrato { max-width: 280px; }
+  .autor-nombre { font-size: 28px; }
+}
+
+
+/* ══════════════════════════════════════════
+   NOTICIAS
+   ══════════════════════════════════════════ */
+
+.noticias { border-top: 0.5px solid var(--gold); }
+
+.noticia {
+  display: grid; grid-template-columns: 190px minmax(0, 1fr);
+  gap: 28px; padding: 26px 4px;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+  transition: background 0.25s ease, padding-left 0.25s ease;
+}
+.noticia::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--blue-mid); transform: scaleY(0);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.noticia:hover { background: var(--bg-off); padding-left: 16px; }
+.noticia:hover::before { transform: scaleY(1); }
+
+.noticia-meta { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.noticia-meta time {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-light);
+}
+.noticia-etiqueta {
+  font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+  border: 0.5px solid var(--border); padding: 4px 10px;
+}
+
+.noticia-titulo {
+  font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600;
+  color: var(--black); line-height: 1.25; margin-bottom: 8px;
+}
+.noticia-texto { font-size: 14px; line-height: 1.8; color: var(--gray); }
+.noticia-enlace {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--black); text-decoration: none;
+  transition: color 0.25s ease;
+}
+.noticia-enlace::after { content: '↗'; color: var(--gold); font-size: 12px; }
+.noticia-enlace:hover { color: var(--blue); }
+.noticia-enlace:hover::after { color: var(--blue-mid); }
+
+.noticias-vacio {
+  padding: 40px 0; text-align: center; color: var(--gray-light);
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
+}
+
+/* ── Página de noticias ── */
+.noticias-grid {
+  display: grid; grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 56px; align-items: start;
+}
+.noticias-lateral { position: sticky; top: 100px; }
+.lateral-texto { font-size: 13.5px; line-height: 1.75; color: var(--gray); margin-bottom: 18px; }
+.perfil--bloque { display: flex; justify-content: center; width: 100%; }
+
+/* ── Publicaciones desde ORCID ── */
+.publicaciones-bloque { margin-top: 64px; }
+.publicaciones { list-style: none; border-top: 0.5px solid var(--border); }
+.publicacion {
+  display: grid; grid-template-columns: 74px minmax(0, 1fr);
+  gap: 20px; padding: 16px 4px;
+  border-bottom: 0.5px solid var(--border);
+}
+.publicacion-anio {
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.publicacion-datos { display: flex; flex-direction: column; gap: 3px; }
+.publicacion-titulo { font-size: 14.5px; line-height: 1.55; color: var(--dark); }
+.publicacion-titulo a { color: inherit; text-decoration: none; }
+.publicacion-titulo a:hover { color: var(--blue); }
+.publicacion-revista {
+  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light);
+}
+
+@media (max-width: 900px) {
+  .noticia { grid-template-columns: 1fr; gap: 12px; padding: 22px 4px; }
+  .noticia-meta { flex-direction: row; align-items: center; gap: 12px; }
+  .noticia-titulo { font-size: 20px; }
+  .noticias-grid { grid-template-columns: 1fr; gap: 36px; }
+  .noticias-lateral { position: static; }
+  .publicacion { grid-template-columns: 56px minmax(0, 1fr); gap: 14px; }
+}
+
+/* Separación corta y centrada, antes del botón de noticias */
+.linea-corta {
+  width: 84px; height: 0.5px;
+  background: var(--gold);
+  margin: 56px auto 0;
 }

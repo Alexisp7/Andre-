@@ -1,0 +1,20 @@
+{
+  "_instrucciones": "Cada entrada nueva va ARRIBA del todo. Campos: fecha (AAAA-MM-DD), etiqueta, titulo, texto y, si hay, enlace. Guarda el archivo y la web se actualiza sola: no hay que ejecutar nada. Borra las dos entradas de ejemplo cuando publiques la primera de verdad.",
+
+  "entradas": [
+    {
+      "fecha": "2026-08-01",
+      "etiqueta": "Ejemplo",
+      "titulo": "Esta es una entrada de ejemplo",
+      "texto": "Reemplaza este texto por la primera noticia real. Para añadir una nueva, copia este bloque, pégalo arriba del todo y cambia los campos. La fecha se escribe en formato AAAA-MM-DD y el sitio la muestra en español.",
+      "enlace": "https://www.linkedin.com/in/a-salvatierra"
+    },
+    {
+      "fecha": "2026-07-15",
+      "etiqueta": "Ejemplo",
+      "titulo": "Segunda entrada de ejemplo",
+      "texto": "El campo «enlace» es opcional: si lo dejas vacío o lo borras, la entrada se muestra sin botón. La «etiqueta» sirve para clasificar: Congreso, Publicación, Docencia, Premio, Medios…",
+      "enlace": ""
+    }
+  ]
+}

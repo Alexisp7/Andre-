@@ -1,2 +1,4 @@
-neuronas-a.webp   neuronas de la izquierda de la portada (azul + dorado)
-neuronas-b.webp   neuronas de la derecha (dorado + azul)
+autor.webp        retrato del Dr. Salvatierra (del PPT del CV)
+escudos/          escudos de las diez instituciones
+neuronas-a.webp   neuronas de la izquierda de la portada
+neuronas-b.webp   neuronas de la derecha
