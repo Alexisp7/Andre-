@@ -2021,22 +2021,12 @@ a.topic-row:hover .topic-status.ready {
 .escudos--seis   .escudo:nth-child(6n + 1)::before,
 .escudos--cuatro .escudo:nth-child(4n + 1)::before { display: none; }
 
+/* A color de entrada: los escudos son la única identificación que hay. */
 .escudo img {
   height: 62px; width: auto; max-width: 100%; object-fit: contain;
-  filter: grayscale(1); opacity: 0.6;
-  transition: filter 0.35s ease, opacity 0.35s ease;
+  transition: transform 0.35s ease;
 }
-.escudo:hover img { filter: grayscale(0); opacity: 1; }
-.escudo figcaption { display: flex; flex-direction: column; gap: 3px; }
-.escudo figcaption strong {
-  font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600;
-  color: var(--black); line-height: 1.25;
-}
-.escudo figcaption span {
-  font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-light);
-  line-height: 1.5;
-}
+.escudo:hover img { transform: scale(1.05); }
 
 @media (max-width: 1180px) {
   .escudos--seis { grid-template-columns: repeat(3, 1fr); }
@@ -2230,12 +2220,8 @@ a.topic-row:hover .topic-status.ready {
 .perfiles--columna { flex-direction: column; }
 .perfiles--columna .perfil { width: 100%; }
 
-/* Escudos: en Estancias solo el logo */
-.escudo figcaption {
-  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray);
-  line-height: 1.6;
-}
+/* Escudos: solo el logo, sin pie de texto */
+.escudos--seis   .escudo,
 .escudos--cuatro .escudo { padding: 28px 18px; }
 
 /* Investigación */
@@ -2470,4 +2456,22 @@ a.topic-row:hover .topic-status.ready {
   .ref { grid-template-columns: 58px minmax(0, 1fr); gap: 14px; }
   .docencia-fila { grid-template-columns: 1fr; gap: 5px; }
   .contacto-cabecera { padding: 32px 4px; }
+}
+
+
+/* ══════════════════════════════════════════
+   CONTACTO COMO PÁGINA PROPIA
+   ══════════════════════════════════════════ */
+
+/* Ya no es un desplegable: el contenido está a la vista al entrar. */
+.contacto--abierto { border: none; }
+.contacto--abierto .contacto-cuerpo {
+  animation: none;
+  padding: 0 4px 8px;
+}
+.contacto-seccion:has(.contacto--abierto) {
+  background: transparent; border-top: none;
+}
+.contacto-seccion:has(.contacto--abierto) .section {
+  padding-top: 8px; padding-bottom: 96px;
 }

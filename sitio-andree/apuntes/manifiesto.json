@@ -251,6 +251,60 @@
       "titulo": "Farmacodinamia: ligando, receptor y efecto farmacológico",
       "archivo": "06-farmacodinamia.pdf",
       "paginas": 43
+    },
+    {
+      "codigo": "VAR-01",
+      "titulo": "Farmacolómica: genómica, transcriptómica y proteómica del fármaco",
+      "archivo": "07-farmacolomica.pdf",
+      "paginas": 43
+    },
+    {
+      "codigo": "VAR-02",
+      "titulo": "Respuesta clínica a fármacos",
+      "archivo": "08-respuesta-clinica.pdf",
+      "paginas": 32
+    },
+    {
+      "codigo": "DES-01",
+      "titulo": "Desarrollo de un medicamento: del laboratorio al ensayo clínico",
+      "archivo": "09-desarrollo-medicamentos.pdf",
+      "paginas": 84
+    },
+    {
+      "codigo": "DES-02",
+      "titulo": "Bioequivalentes y biosimilares",
+      "archivo": "10-bioequivalentes-biosimilares.pdf",
+      "paginas": 22
+    },
+    {
+      "codigo": "FAC-01",
+      "titulo": "Factores que modifican la respuesta farmacológica",
+      "archivo": "11-factores-modificadores.pdf",
+      "paginas": 35
+    },
+    {
+      "codigo": "NT-01",
+      "titulo": "Neurotransmisores",
+      "archivo": "12-neurotransmisores.pdf",
+      "paginas": 96
+    },
+    {
+      "codigo": "ANS-01",
+      "titulo": "Ansiolíticos",
+      "archivo": "13-ansioliticos.pdf",
+      "paginas": 40
+    },
+    {
+      "codigo": "ATD-01",
+      "titulo": "Antidepresivos",
+      "archivo": "14-antidepresivos.pdf",
+      "paginas": 57
+    },
+    {
+      "codigo": "APS-01",
+      "titulo": "Antipsicóticos",
+      "archivo": "15-antipsicoticos.pdf",
+      "paginas": 56
     }
   ]
 }

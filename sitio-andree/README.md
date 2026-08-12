@@ -4,8 +4,9 @@ Sitio estático con los apuntes de clase de cuatro cursos: **Biopsicología**,
 **Neuroanatomía**, **Neuropsicología** y **Psicofarmacología**.
 Sin build, sin dependencias: HTML + un CSS. Se publica tal cual en GitHub Pages.
 
-**Estado actual:** 6 apuntes publicados, todos en Psicofarmacología. Los otros
-tres cursos tienen temario provisional y ningún PDF todavía.
+**Estado actual:** 15 apuntes publicados (715 páginas), todos en
+Psicofarmacología. Los otros tres cursos tienen temario provisional y ningún
+PDF todavía.
 
 ---
 
@@ -23,7 +24,7 @@ git push -u origin main
 Luego en GitHub: **Settings → Pages → Source: Deploy from a branch → Branch: `main` / `(root)`**.
 El sitio queda en `https://USUARIO.github.io/REPO/`.
 
-> Los PDFs pesan ~12 MB en total. Está dentro de lo que GitHub admite sin problema.
+> Los PDFs pesan ~27 MB en total. Está dentro de lo que GitHub admite sin problema.
 
 ---
 
@@ -32,6 +33,7 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
 ```
 .
 ├── index.html                 Portada: logotipo, nombre y sobre el autor
+├── contacto.html              Teléfono, correo, perfiles y formulario
 ├── materiales.html            Las cuatro tarjetas de curso
 ├── investigacion.html         Publicaciones, tesis, conferencias y distinciones
 ├── biopsicologia.html         Temario provisional
@@ -89,11 +91,21 @@ Los temarios de Biopsicología, Neuroanatomía y Neuropsicología son provisiona
 escribí a partir del contenido estándar de esos cursos, no del programa real de Andreé.
 Cámbialos en `build.py` (listas `unidades`) y vuelve a ejecutarlo.
 
-### Los seis PDFs
+### Los quince PDFs
 
-Los seis apuntes viven en Psicofarmacología, repartidos en cuatro unidades:
-introducción, bases celulares y moleculares, farmacocinética y farmacodinamia.
-Es el orden en que venían numerados en el original.
+Todos viven en Psicofarmacología, repartidos en ocho unidades que respetan la
+numeración con la que Andreé los tiene ordenados:
+
+| Unidad | Apuntes | Páginas |
+|---|---|---|
+| I · Introducción a la psicofarmacología | 1, 2 | 20 |
+| II · Bases celulares y moleculares | 3, 4 | 94 |
+| III · Farmacocinética | 5 | 93 |
+| IV · Farmacodinamia | 6 | 43 |
+| V · Variabilidad de la respuesta | 7, 8 | 75 |
+| VI · Desarrollo del medicamento | 9, 10 | 106 |
+| VII · Factores modificadores | 11 | 35 |
+| VIII · Neurotransmisión y psicofármacos | 12, 13, 14, 15 | 249 |
 
 ---
 
@@ -107,7 +119,7 @@ material para que, si sale de aquí, se sepa de quién es.
 
 ### Lo que es permanente
 
-**Marca de agua incrustada.** Cada una de las 250 páginas lleva el logotipo
+**Marca de agua incrustada.** Cada una de las 715 páginas lleva el logotipo
 caligráfico y el nombre estampados en el propio PDF, no superpuestos por el navegador: una
 diagonal muy tenue repetida por toda la página y un pie con el logotipo, el
 nombre y el aviso de uso. Va dentro del archivo, así que sobrevive a cualquier
@@ -426,7 +438,7 @@ Cuatro pestañas y nada más:
 | **Materiales de clase** | Desplegable con los cuatro cursos; la pestaña en sí lleva a una página con las cuatro tarjetas. |
 | **Investigación** | Publicaciones, tesis dirigidas, conferencias y distinciones, tomadas del CV. |
 | **Noticias** | Lo que se escribe a mano en `noticias.json`. |
-| **Contacto** | Baja al bloque desplegable del final de Inicio y lo abre. |
+| **Contacto** | Página propia: teléfono, correo, perfiles y formulario, todo a la vista. |
 
 El desplegable se abre al pasar el cursor y también con el teclado
 (`:focus-within`), así que funciona sin ratón. La pestaña queda marcada como
@@ -532,3 +544,23 @@ teléfono, correo, LinkedIn, ORCID y los registros académicos.
 
 **El punto que sobraba** en Materiales de clase era el ornamento `§` bajo el
 título. Fuera.
+
+
+---
+
+## Cambios de esta ronda
+
+**Nueve apuntes más.** Del 7 al 15: farmacolómica, respuesta clínica, desarrollo
+de medicamentos, bioequivalentes y biosimilares, factores modificadores,
+neurotransmisores, ansiolíticos, antidepresivos y antipsicóticos. Ya son 15
+apuntes y 715 páginas, todas marcadas y cifradas igual que las anteriores. El
+temario pasó de cuatro unidades a ocho.
+
+**Los escudos, solo escudos.** Fuera el grado y los años bajo cada logo: se
+entiende con el escudo. Y a color desde que carga la página, no en gris
+esperando el cursor.
+
+**Contacto es una pestaña de verdad.** Antes era un ancla que bajaba al final de
+Inicio y abría un desplegable. Ahora `contacto.html` es una página como las
+demás, con todo visible al entrar: teléfono, correo, LinkedIn, ORCID, registros
+y el formulario.
