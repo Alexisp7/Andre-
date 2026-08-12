@@ -1,20 +1,57 @@
 {
-  "_instrucciones": "Cada entrada nueva va ARRIBA del todo. Campos: fecha (AAAA-MM-DD), etiqueta, titulo, texto y, si hay, enlace. Guarda el archivo y la web se actualiza sola: no hay que ejecutar nada. Borra las dos entradas de ejemplo cuando publiques la primera de verdad.",
+  "_instrucciones": "Cada entrada nueva va ARRIBA del todo. Campos obligatorios: fecha (AAAA-MM-DD), etiqueta, titulo y texto. Opcionales: enlace (al post original), temas (lista de palabras), imagen (ruta dentro de img/noticias/), alt (descripción de la imagen), video y poster (para vídeos). Guarda el archivo y la web se actualiza sola: no hay que ejecutar nada.",
 
   "entradas": [
     {
-      "fecha": "2026-08-01",
-      "etiqueta": "Ejemplo",
-      "titulo": "Esta es una entrada de ejemplo",
-      "texto": "Reemplaza este texto por la primera noticia real. Para añadir una nueva, copia este bloque, pégalo arriba del todo y cambia los campos. La fecha se escribe en formato AAAA-MM-DD y el sitio la muestra en español.",
-      "enlace": "https://www.linkedin.com/in/a-salvatierra"
+      "fecha": "2026-05-06",
+      "etiqueta": "Formación",
+      "titulo": "Seleccionado para la Translational Neuroscience School (IBRO 2026)",
+      "texto": "Uno de los seleccionados para participar en la Translational Neuroscience School (IBRO) 2026, tras un proceso con más de 380 postulantes de Latinoamérica. El programa reúne a investigadores y profesionales de todo el mundo para discutir los avances en neurociencia traslacional y sus aplicaciones clínicas en neurodegeneración.",
+      "temas": ["IBRO", "Neuroscience", "Brain Research", "Translational Research"],
+      "imagen": "img/noticias/post1.webp",
+      "alt": "Cartel de la Translational Neuroscience School, Universidad Andina del Cusco, 11–15 de mayo de 2026",
+      "enlace": "https://www.linkedin.com/feed/update/urn:li:activity:7457776400243175424/"
     },
     {
-      "fecha": "2026-07-15",
-      "etiqueta": "Ejemplo",
-      "titulo": "Segunda entrada de ejemplo",
-      "texto": "El campo «enlace» es opcional: si lo dejas vacío o lo borras, la entrada se muestra sin botón. La «etiqueta» sirve para clasificar: Congreso, Publicación, Docencia, Premio, Medios…",
-      "enlace": ""
+      "fecha": "2026-03-13",
+      "etiqueta": "Congreso",
+      "titulo": "Ponente en el I Congreso Internacional de Neuropsicología en el Sur del Perú",
+      "texto": "Invitación como ponente al I Congreso Internacional de Neuropsicología en el Sur del Perú. Un gusto compartir conocimientos y aportar al desarrollo de la neuropsicología en el país.",
+      "temas": ["Neuropsicología", "Neurociencia", "Salud mental", "Investigación"],
+      "imagen": "img/noticias/post2.webp",
+      "alt": "Cartel del I Congreso Internacional de Neuropsicología en el Sur del Perú",
+      "enlace": "https://www.linkedin.com/feed/update/urn:li:activity:7438369559058808832/"
+    },
+    {
+      "fecha": "2025-11-10",
+      "etiqueta": "Congreso",
+      "titulo": "Ponente invitado en el V Congreso Internacional de Neurociencias",
+      "texto": "Ponente invitado en el V Congreso Internacional de Neurociencias, un encuentro que reúne a especialistas e investigadores de distintos países dedicados a comprender los límites y las posibilidades del cerebro humano.",
+      "temas": ["Neurociencias", "Investigación"],
+      "imagen": "img/noticias/post3.webp",
+      "alt": "Cartel del V Congreso Internacional de Neurociencias, campus UTEC, 12–14 de noviembre",
+      "enlace": "https://www.linkedin.com/feed/update/urn:li:activity:7393732903467339776/"
+    },
+    {
+      "fecha": "2025-11-07",
+      "etiqueta": "Reconocimiento",
+      "titulo": "YUYAY, tercer lugar en la IDEATÓN 2025",
+      "texto": "El proyecto YUYAY obtuvo el 3.er lugar en la IDEATÓN 2025 entre 245 proyectos de todo el país, reconocido por fortalecer la adherencia al tratamiento farmacológico en pacientes con enfermedades crónicas, sobre todo en zonas rurales. YUYAY —«recordar» en quechua— envía mensajes de voz personalizados en lengua nativa para que el paciente no olvide su medicación, incluso sin internet ni teléfono inteligente. El paciente escucha la indicación y responde pulsando 1 si cumplió y 2 si no; la respuesta se guarda en un panel al que acceden el centro de salud y la familia, que pasan a ser parte activa del seguimiento. Pequeñas ideas, bien pensadas, pueden transformar la salud de miles de personas.",
+      "temas": ["Salud pública", "Salud digital", "Tecnología con propósito"],
+      "imagen": "img/noticias/post4.webp",
+      "alt": "Logotipo de YUYAY: un colibrí junto a unas ondas de sonido",
+      "enlace": "https://www.linkedin.com/feed/update/urn:li:activity:7392705716068773888/"
+    },
+    {
+      "fecha": "2024-04-07",
+      "etiqueta": "Docencia",
+      "titulo": "Exposición de maquetas interactivas de neurociencias",
+      "texto": "En 2023, junto a estudiantes de Psicología de la Universidad Antonio Ruiz de Montoya, organizó una exposición de maquetas interactivas sobre temas de neurociencias. La actividad demostró la creatividad de los estudiantes para integrar conocimientos, traducirlos a un lenguaje sencillo y aterrizarlos en representaciones dinámicas y tangibles, con ellos como protagonistas de la difusión. Recibió más de 600 visitantes entre colegas y estudiantes de distintas casas de estudios.",
+      "temas": ["No más neurofobia"],
+      "video": "img/noticias/post5.mp4",
+      "poster": "img/noticias/post5-poster.webp",
+      "alt": "Recorrido por los stands de la exposición de maquetas de neurociencias",
+      "enlace": "https://www.linkedin.com/feed/update/urn:li:activity:7182606587046305792/"
     }
   ]
 }

@@ -31,7 +31,7 @@
           <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
         </div>
       </div>
-      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html">Materiales de clase<span class="nav-flecha" aria-hidden="true">▾</span></a><span class="nav-submenu"><a href="biopsicologia.html">Biopsicología</a><a href="neuroanatomia.html">Neuroanatomía</a><a href="neuropsicologia.html">Neuropsicología</a><a href="psicofarmacologia.html">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html" class="active">Noticias</a><span class="nav-sep">|</span><a href="contacto.html">Contacto</a></nav>
+      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html">Materiales de clase</a><span class="nav-submenu"><a href="biopsicologia.html">Biopsicología</a><a href="neuroanatomia.html">Neuroanatomía</a><a href="neuropsicologia.html">Neuropsicología</a><a href="psicofarmacologia.html">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html" class="active">Noticias</a><span class="nav-sep">|</span><a href="contacto.html">Contacto</a></nav>
     </div>
     <div class="header-border"></div>
   </header>
@@ -98,16 +98,43 @@
       destino.innerHTML = entradas.map(function (n) {
         var enlace = n.enlace
           ? '<a class="noticia-enlace" href="' + limpiar(n.enlace) +
-            '" target="_blank" rel="noopener noreferrer">Ver más</a>'
+            '" target="_blank" rel="noopener noreferrer">Ver la publicación</a>'
           : '';
-        return '<article class="noticia">' +
+
+        /* Imagen o vídeo, si la entrada lo trae. */
+        var media = '';
+        if (n.video) {
+          media = '<figure class="noticia-media noticia-media--video">' +
+                    '<video controls preload="none" playsinline' +
+                      (n.poster ? ' poster="' + limpiar(n.poster) + '"' : '') + '>' +
+                      '<source src="' + limpiar(n.video) + '" type="video/mp4"/>' +
+                    '</video>' +
+                  '</figure>';
+        } else if (n.imagen) {
+          media = '<figure class="noticia-media">' +
+                    '<img src="' + limpiar(n.imagen) + '" alt="' + limpiar(n.alt || n.titulo) +
+                    '" loading="lazy" decoding="async"/>' +
+                  '</figure>';
+        }
+
+        /* Temas: los hashtags, escritos como se leen. */
+        var temas = '';
+        if (n.temas && n.temas.length) {
+          temas = '<ul class="noticia-temas">' + n.temas.map(function (t) {
+            return '<li>' + limpiar(t) + '</li>';
+          }).join('') + '</ul>';
+        }
+
+        return '<article class="noticia' + (media ? ' noticia--con-media' : '') + '">' +
                  '<div class="noticia-meta">' +
                    '<time datetime="' + limpiar(n.fecha) + '">' + limpiar(fechaLarga(n.fecha)) + '</time>' +
                    (n.etiqueta ? '<span class="noticia-etiqueta">' + limpiar(n.etiqueta) + '</span>' : '') +
                  '</div>' +
                  '<div class="noticia-cuerpo">' +
                    '<h3 class="noticia-titulo">' + limpiar(n.titulo) + '</h3>' +
+                   media +
                    '<p class="noticia-texto">' + limpiar(n.texto) + '</p>' +
+                   temas +
                    enlace +
                  '</div>' +
                '</article>';

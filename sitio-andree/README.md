@@ -46,7 +46,8 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
 ├── visor.html                 Visor de apuntes (no se enlaza a los PDF)
 ├── css/theme.css              Todo el estilo (un solo archivo)
 ├── fonts/neurona.woff2        Tipografía del logotipo, recortada (3,9 KB)
-├── img/                       Neuronas, retrato y escudos
+├── img/                       Neuronas, retrato, escudos y media de noticias
+│   └── noticias/              Carteles y el vídeo de las publicaciones
 └── apuntes/
     ├── biopsicologia/         (vacío)
     ├── neuroanatomia/         (vacío)
@@ -572,3 +573,36 @@ quieren en otra página.
 **El desplegable de Contáctame vuelve al final de Inicio.** Convive con la
 pestaña: en Inicio es un bloque que se abre al pulsarlo, y `contacto.html` sigue
 siendo la página con todo a la vista. La pestaña del menú lleva a la página.
+
+
+---
+
+## Noticias: las publicaciones de LinkedIn
+
+Las cinco entradas de `noticias.json` son las publicaciones reales de su perfil,
+pasadas a mano al archivo. Cada una guarda:
+
+| Campo | Qué es |
+|---|---|
+| `fecha` | La fecha exacta del post, en AAAA-MM-DD |
+| `etiqueta` | Formación, Congreso, Reconocimiento, Docencia… |
+| `titulo` | Un titular corto, escrito a partir del post |
+| `texto` | El texto del post, sin los `hashtag#` ni el «… más» |
+| `temas` | Los hashtags, escritos como se leen |
+| `imagen` + `alt` | El cartel, en `img/noticias/` |
+| `video` + `poster` | Para la entrada que llevaba vídeo |
+| `enlace` | El post original en LinkedIn |
+
+Las fechas no son las relativas («hace 3 meses») que muestra LinkedIn: salen del
+identificador del propio post, que lleva dentro la marca de tiempo. Por eso son
+exactas.
+
+**Media.** Los cuatro carteles se pasaron a WebP (10–130 KB cada uno). El vídeo
+de la exposición de maquetas —112 segundos— se reencodó a MP4 de 640 px y pesa
+8 MB; es el archivo más grande del sitio después de los apuntes. Se carga con
+`preload="none"`, así que solo baja si alguien le da al play.
+
+**Añadir una entrada nueva.** Se copia el bloque de arriba del todo en
+`noticias.json`, se cambian los campos y se guarda. Si lleva imagen, se deja en
+`img/noticias/` y se apunta la ruta. No hay que ejecutar `build.py`: la página
+lee el JSON en el navegador.
