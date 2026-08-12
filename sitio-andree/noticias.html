@@ -31,7 +31,7 @@
           <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
         </div>
       </div>
-      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><a href="biopsicologia.html">Biopsicología</a><span class="nav-sep">|</span><a href="neuroanatomia.html">Neuroanatomía</a><span class="nav-sep">|</span><a href="neuropsicologia.html">Neuropsicología</a><span class="nav-sep">|</span><a href="psicofarmacologia.html">Psicofarmacología</a></nav>
+      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html">Materiales de clase<span class="nav-flecha" aria-hidden="true">▾</span></a><span class="nav-submenu"><a href="biopsicologia.html">Biopsicología</a><a href="neuroanatomia.html">Neuroanatomía</a><a href="neuropsicologia.html">Neuropsicología</a><a href="psicofarmacologia.html">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html" class="active">Noticias</a></nav>
     </div>
     <div class="header-border"></div>
   </header>
@@ -40,7 +40,7 @@
     <div class="page-hero-inner">
       <p class="hero-eyebrow" style="margin-bottom:18px;">Actividad reciente</p>
       <h1 class="page-hero-title">Noti<em>cias</em></h1>
-      <p class="page-hero-sub">Congresos, publicaciones, docencia y apariciones. Lo que va ocurriendo, en orden.</p>
+      <p class="page-hero-sub">Congresos, docencia, reconocimientos y colaboraciones. Lo que va ocurriendo, en orden.</p>
     </div>
     <div class="page-hero-ornament">§</div>
   </section>
@@ -66,14 +66,17 @@
         </aside>
       </div>
 
-      <section class="publicaciones-bloque" id="bloquePublicaciones">
-        <p class="escudos-titulo">Publicaciones · actualizado desde ORCID</p>
-        <ul class="publicaciones" id="listaPublicaciones"></ul>
-      </section>
     </div>
   </section>
 
   <script>
+
+    function limpiar(t) {
+      var d = document.createElement('div');
+      d.textContent = t == null ? '' : String(t);
+      return d.innerHTML;
+    }
+
 
     function fechaLarga(iso) {
       var p = (iso || '').split('-');
@@ -81,12 +84,6 @@
       var meses = ['enero','febrero','marzo','abril','mayo','junio','julio',
                    'agosto','septiembre','octubre','noviembre','diciembre'];
       return parseInt(p[2], 10) + ' de ' + meses[parseInt(p[1], 10) - 1] + ' de ' + p[0];
-    }
-
-    function limpiar(t) {
-      var d = document.createElement('div');
-      d.textContent = t == null ? '' : String(t);
-      return d.innerHTML;
     }
 
     function pintarNoticias(destino, entradas, tope) {
@@ -127,47 +124,7 @@
         });
     }
 
-
-    /* Publicaciones: se leen de ORCID, que sí tiene API pública.
-       Si falla, el bloque se oculta y no pasa nada. */
-    function cargarPublicaciones(destino, seccion) {
-      if (!destino) return;
-      fetch('https://pub.orcid.org/v3.0/0000-0002-0638-563X/works', { headers: { Accept: 'application/json' } })
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          var obras = (d.group || []).map(function (g) {
-            var w = g['work-summary'][0];
-            var anio = w['publication-date'] && w['publication-date'].year
-                     ? w['publication-date'].year.value : '';
-            var revista = w['journal-title'] ? w['journal-title'].value : '';
-            var doi = '';
-            (g['external-ids'] && g['external-ids']['external-id'] || []).forEach(function (e) {
-              if (e['external-id-type'] === 'doi') doi = e['external-id-value'];
-            });
-            return { titulo: w.title.title.value, anio: anio, revista: revista, doi: doi };
-          });
-          obras.sort(function (a, b) { return (b.anio || '').localeCompare(a.anio || ''); });
-          if (!obras.length) { if (seccion) seccion.hidden = true; return; }
-          destino.innerHTML = obras.map(function (o) {
-            var url = o.doi ? 'https://doi.org/' + o.doi : '';
-            var titulo = url
-              ? '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + limpiar(o.titulo) + '</a>'
-              : limpiar(o.titulo);
-            return '<li class="publicacion">' +
-                     '<span class="publicacion-anio">' + limpiar(o.anio || '—') + '</span>' +
-                     '<span class="publicacion-datos">' +
-                       '<span class="publicacion-titulo">' + titulo + '</span>' +
-                       (o.revista ? '<span class="publicacion-revista">' + limpiar(o.revista) + '</span>' : '') +
-                     '</span>' +
-                   '</li>';
-          }).join('');
-        })
-        .catch(function () { if (seccion) seccion.hidden = true; });
-    }
-
     cargarNoticias(document.getElementById('listaNoticias'), 0);
-    cargarPublicaciones(document.getElementById('listaPublicaciones'),
-                        document.getElementById('bloquePublicaciones'));
   </script>
 
   <footer class="footer-wrap" id="contacto">
@@ -181,7 +138,7 @@
         </div>
         <div class="footer-links-col">
           <div class="footer-col">
-            <div class="footer-col-title">Cursos</div>
+            <div class="footer-col-title">Materiales de clase</div>
             <a href="biopsicologia.html">Biopsicología</a>
             <a href="neuroanatomia.html">Neuroanatomía</a>
             <a href="neuropsicologia.html">Neuropsicología</a>
@@ -189,9 +146,10 @@
           </div>
           <div class="footer-col">
             <div class="footer-col-title">Biblioteca</div>
+            <a href="materiales.html">Materiales de clase</a>
             <a href="apuntes.html">Catálogo de apuntes</a>
+            <a href="investigacion.html">Investigación</a>
             <a href="noticias.html">Noticias</a>
-            <a href="index.html#sobre">Sobre el autor</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title">Contacto</div>

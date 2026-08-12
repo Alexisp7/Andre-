@@ -31,13 +31,15 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
 
 ```
 .
-├── index.html                 Portada
+├── index.html                 Portada: logotipo, nombre y sobre el autor
+├── materiales.html            Las cuatro tarjetas de curso
+├── investigacion.html         Publicaciones (ORCID, automático)
 ├── biopsicologia.html         Temario provisional
 ├── neuroanatomia.html         Temario provisional
 ├── neuropsicologia.html       Temario provisional
 ├── psicofarmacologia.html     Temario + 6 apuntes
 ├── apuntes.html               Catálogo con buscador y filtros
-├── noticias.html              Actividad reciente
+├── noticias.html              Actividad: lo que se escribe a mano
 ├── noticias.json              Las entradas de noticias (se edita a mano)
 ├── visor.html                 Visor de apuntes (no se enlaza a los PDF)
 ├── css/theme.css              Todo el estilo (un solo archivo)
@@ -418,6 +420,35 @@ existe.
 > archivos locales. Para verlo en el ordenador, desde la carpeta del sitio:
 > `python3 -m http.server` y abrir `http://localhost:8000`. En GitHub Pages
 > funciona sin más.
+
+---
+
+## El menú
+
+Cuatro pestañas y nada más:
+
+| Pestaña | Qué es |
+|---|---|
+| **Inicio** | Logotipo, nombre y la sección del autor. Nada de cursos. |
+| **Materiales de clase** | Desplegable con los cuatro cursos; la pestaña en sí lleva a una página con las cuatro tarjetas. |
+| **Investigación** | Publicaciones, tiradas de ORCID. |
+| **Noticias** | Lo que se escribe a mano en `noticias.json`. |
+
+El desplegable se abre al pasar el cursor y también con el teclado
+(`:focus-within`), así que funciona sin ratón. La pestaña queda marcada como
+activa tanto en la página de materiales como dentro de cualquier curso.
+
+Para añadir o cambiar entradas del menú se edita `NAV_ITEMS` en `build.py`. Cada
+entrada es `(archivo, etiqueta, hijos)`; si `hijos` es `None`, es un enlace
+normal; si es una lista, se convierte en desplegable.
+
+### Investigación y Noticias son cosas distintas
+
+- **Investigación** = artículos y producción científica. Se actualiza sola desde
+  ORCID; no hay que tocar nada.
+- **Noticias** = congresos, premios, docencia, colaboraciones. Eso se escribe a
+  mano en `noticias.json`, que es lo que se sincronizaría con LinkedIn si
+  LinkedIn lo permitiera —y no lo permite, ver más arriba.
 
 ---
 
