@@ -33,7 +33,7 @@ El sitio queda en `https://USUARIO.github.io/REPO/`.
 .
 ├── index.html                 Portada: logotipo, nombre y sobre el autor
 ├── materiales.html            Las cuatro tarjetas de curso
-├── investigacion.html         Publicaciones (ORCID, automático)
+├── investigacion.html         Publicaciones, tesis, conferencias y distinciones
 ├── biopsicologia.html         Temario provisional
 ├── neuroanatomia.html         Temario provisional
 ├── neuropsicologia.html       Temario provisional
@@ -402,14 +402,7 @@ En la portada **no se lista nada**: al final de *Sobre el autor* hay solo un
 botón que dice «Noticias» y lleva a la página completa. **Tampoco aparece en el
 menú superior**, a propósito.
 
-### 2. Publicaciones automáticas desde ORCID
-
-La página de noticias trae al final la lista de publicaciones tirando de la API
-pública de ORCID con su identificador `0000-0002-0638-563X`. Eso sí se actualiza
-solo: cuando registre un artículo nuevo en ORCID, aparece aquí sin tocar nada.
-Si la petición falla, el bloque se oculta y el resto de la página sigue igual.
-
-### 3. Botón a LinkedIn
+### 2. Botón a LinkedIn
 
 Al lado de las entradas hay un botón que lleva a su perfil. Es lo más cerca que
 se puede estar de "seguir su actividad" sin inventar una integración que no
@@ -431,8 +424,9 @@ Cuatro pestañas y nada más:
 |---|---|
 | **Inicio** | Logotipo, nombre y la sección del autor. Nada de cursos. |
 | **Materiales de clase** | Desplegable con los cuatro cursos; la pestaña en sí lleva a una página con las cuatro tarjetas. |
-| **Investigación** | Publicaciones, tiradas de ORCID. |
+| **Investigación** | Publicaciones, tesis dirigidas, conferencias y distinciones, tomadas del CV. |
 | **Noticias** | Lo que se escribe a mano en `noticias.json`. |
+| **Contacto** | Baja al bloque desplegable del final de Inicio y lo abre. |
 
 El desplegable se abre al pasar el cursor y también con el teclado
 (`:focus-within`), así que funciona sin ratón. La pestaña queda marcada como
@@ -442,13 +436,58 @@ Para añadir o cambiar entradas del menú se edita `NAV_ITEMS` en `build.py`. Ca
 entrada es `(archivo, etiqueta, hijos)`; si `hijos` es `None`, es un enlace
 normal; si es una lista, se convierte en desplegable.
 
+### De dónde salen los datos
+
+Todo el contenido de *Sobre el autor* e *Investigación* viene del CV real
+(`CV_Andreé Salvatierra.docx`): la biografía, la formación con sus años, las
+estancias, la docencia de pregrado y posgrado, las publicaciones, las tesis
+dirigidas, las conferencias y las distinciones. Si el CV cambia, se actualizan
+las listas correspondientes en `build.py` y se vuelve a ejecutar.
+
 ### Investigación y Noticias son cosas distintas
 
-- **Investigación** = artículos y producción científica. Se actualiza sola desde
-  ORCID; no hay que tocar nada.
+- **Investigación** = artículos y producción científica, tomados del CV: 12
+  publicaciones con su DOI, 3 tesis dirigidas, 11 conferencias magistrales y las
+  distinciones. Están en `build.py` como listas (`PUBLICACIONES`, `TESIS`,
+  `CONFERENCIAS`, `DISTINCIONES`); para añadir una, se copia la línea de arriba
+  y se ejecuta `python3 build.py`.
 - **Noticias** = congresos, premios, docencia, colaboraciones. Eso se escribe a
   mano en `noticias.json`, que es lo que se sincronizaría con LinkedIn si
   LinkedIn lo permitiera —y no lo permite, ver más arriba.
+
+---
+
+## El bloque de contacto
+
+Al final de Inicio hay un **Contáctame** plegado. Se abre hacia abajo al pulsarlo
+y trae los datos de contacto a la izquierda y un formulario a la derecha. Está
+hecho con `<details>`/`<summary>`, así que funciona sin JavaScript: si el
+navegador tuviera los scripts desactivados, el bloque se sigue abriendo.
+
+La pestaña **Contacto** del menú apunta a `index.html#contactame`; un pequeño
+script detecta ese ancla y abre el bloque solo, incluso si vienes desde otra
+página.
+
+### El formulario y el correo
+
+Aquí hay un límite del que conviene ser consciente: **un sitio estático no puede
+procesar formularios**. No hay servidor que reciba nada. Así que el botón
+*Enviar* compone un correo con lo que se ha escrito y abre el programa de correo
+del visitante con el mensaje ya redactado, dirigido a `4andree4@gmail.com`.
+
+Ventaja: funciona desde el primer día, sin registrarse en ningún sitio y sin que
+los mensajes pasen por terceros. Inconveniente: el visitante ve abrirse su
+cliente de correo, y si usa webmail sin configurar puede resultarle raro.
+
+Si algún día se prefiere que el mensaje llegue sin abrir el cliente de correo,
+basta con darse de alta en un servicio gratuito como Formspree y cambiar el
+formulario por:
+
+```html
+<form action="https://formspree.io/f/TU_CODIGO" method="POST">
+```
+
+…quitando el `<script>` que hay debajo. El resto del diseño no cambia.
 
 ---
 
@@ -463,3 +502,33 @@ normal; si es una lista, se convierte en desplegable.
 ---
 
 © 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución
+
+
+---
+
+## Lo último que se cambió
+
+**Investigación se escribe desde el CV, no desde ORCID.** Antes la página tiraba
+de la API pública de ORCID. La quité: la lista del CV está completa, tiene la
+cita entera y el DOI de cada artículo, y no depende de que un servicio externo
+responda. Se puede volver atrás si algún día interesa, pero entonces la página
+mostraría menos de lo que muestra ahora. Lo que hay:
+
+| Bloque | Cuántos |
+|---|---|
+| Publicaciones (con DOI cuando lo tienen) | 12 |
+| Tesis dirigidas | 3 |
+| Conferencias magistrales | 11 |
+| Distinciones | 4 |
+
+**Sobre el autor** lleva la biografía del CV, la formación con sus años
+(licenciatura, maestría, doctorado y posdoctorado), las cuatro estancias de
+investigación con su escudo, y un bloque nuevo de **docencia**: 7 cursos de
+pregrado y 6 de posgrado.
+
+**Contáctame** es ahora un desplegable de verdad, con su antetítulo, su título
+grande y un `+` dorado que gira hasta convertirse en `×` al abrirse. Dentro:
+teléfono, correo, LinkedIn, ORCID y los registros académicos.
+
+**El punto que sobraba** en Materiales de clase era el ornamento `§` bajo el
+título. Fuera.

@@ -2255,3 +2255,219 @@ a.topic-row:hover .topic-status.ready {
 @media (max-width: 900px) {
   .investigacion-grid { grid-template-columns: 1fr; gap: 36px; }
 }
+
+
+/* ══════════════════════════════════════════
+   CONTÁCTAME — bloque desplegable
+   ══════════════════════════════════════════ */
+
+.contacto-seccion { background: var(--bg-off); }
+.contacto-seccion .section { padding-top: 0; padding-bottom: 0; }
+
+.contacto { border-top: 0.5px solid var(--border); }
+.contacto:last-child { border-bottom: 0.5px solid var(--border); }
+
+.contacto-cabecera {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding: 40px 4px;
+  transition: color 0.25s ease;
+}
+.contacto-cabecera::-webkit-details-marker { display: none; }
+
+.contacto-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 600; color: var(--black); line-height: 1.1;
+}
+.contacto-flecha {
+  font-size: 16px; color: var(--gold);
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.contacto[open] .contacto-flecha { transform: rotate(180deg); }
+.contacto-cabecera:hover .contacto-titulo { color: var(--blue); }
+.contacto-cabecera:hover .contacto-flecha { color: var(--blue-mid); }
+
+.contacto-cuerpo {
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 56px; padding: 8px 4px 56px;
+  animation: contactoAbre 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes contactoAbre {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.contacto-nombre {
+  font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600;
+  color: var(--black); margin-bottom: 4px;
+}
+.contacto-cargo {
+  font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;
+  color: var(--gray); margin-bottom: 26px;
+}
+
+.contacto-lista {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr);
+  gap: 10px 18px; margin-bottom: 24px;
+}
+.contacto-lista dt {
+  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+  padding-top: 3px;
+}
+.contacto-lista dd { font-size: 14px; color: var(--gray); line-height: 1.6; }
+.contacto-lista a { color: var(--dark); text-decoration: none; }
+.contacto-lista a:hover { color: var(--blue); }
+
+.contacto-nota {
+  font-size: 13.5px; line-height: 1.75; color: var(--gray-light);
+  padding-top: 18px; border-top: 0.5px solid var(--border);
+}
+
+/* ── Formulario ── */
+.contacto-form { display: flex; flex-direction: column; gap: 14px; }
+
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo > span {
+  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-light);
+}
+.campo > span em { color: var(--gold); font-style: normal; }
+
+.campo input, .campo textarea {
+  font-family: 'Inter', sans-serif; font-size: 14px; color: var(--dark);
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  padding: 13px 15px; outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.campo textarea { resize: vertical; min-height: 120px; line-height: 1.7; }
+.campo input:focus, .campo textarea:focus {
+  border-color: var(--blue-mid);
+  box-shadow: 0 0 0 3px var(--blue-tint);
+}
+
+.contacto-aviso {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+}
+
+.btn-enviar {
+  align-self: flex-start; margin-top: 6px;
+  position: relative; z-index: 0; overflow: hidden;
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--black); background: none;
+  border: 0.5px solid var(--border);
+  padding: 14px 34px; cursor: pointer;
+  transition: color 0.28s ease, border-color 0.28s ease;
+}
+.btn-enviar::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: var(--blue);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-enviar:hover { color: var(--white); border-color: var(--blue); }
+.btn-enviar:hover::before { transform: scaleX(1); }
+
+@media (max-width: 900px) {
+  .contacto-cuerpo { grid-template-columns: 1fr; gap: 36px; padding-bottom: 44px; }
+  .contacto-cabecera { padding: 30px 4px; }
+  .contacto-lista { grid-template-columns: 1fr; gap: 4px 0; }
+  .contacto-lista dd { margin-bottom: 10px; }
+}
+
+
+/* ══════════════════════════════════════════
+   AJUSTES: CV REAL Y CONTACTO VISIBLE
+   ══════════════════════════════════════════ */
+
+/* ── El desplegable de contacto, imposible de pasar por alto ── */
+.contacto-seccion { background: var(--bg-off); border-top: 1px solid var(--gold); }
+.contacto { border-top: none; }
+.contacto:last-child { border-bottom: none; }
+
+.contacto-cabecera { padding: 46px 4px; align-items: center; }
+.contacto-cabecera-textos { display: flex; flex-direction: column; gap: 8px; }
+.contacto-antetitulo {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+}
+.contacto-titulo { font-size: clamp(32px, 4vw, 52px); }
+
+/* Signo + dibujado con dos filetes, gira a × al abrir */
+.contacto-signo {
+  position: relative; flex: 0 0 34px; width: 34px; height: 34px;
+  border: 0.5px solid var(--gold); border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease;
+}
+.contacto-signo::before, .contacto-signo::after {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  background: var(--gold); transition: background 0.3s ease;
+}
+.contacto-signo::before { width: 13px; height: 1px; transform: translate(-50%, -50%); }
+.contacto-signo::after  { width: 1px; height: 13px; transform: translate(-50%, -50%); }
+.contacto[open] .contacto-signo { transform: rotate(135deg); }
+.contacto-cabecera:hover .contacto-signo { border-color: var(--blue-mid); }
+.contacto-cabecera:hover .contacto-signo::before,
+.contacto-cabecera:hover .contacto-signo::after { background: var(--blue-mid); }
+
+/* ── Referencias de investigación ── */
+.refs { list-style: none; border-top: 0.5px solid var(--gold); margin-bottom: 52px; }
+.ref {
+  display: grid; grid-template-columns: 78px minmax(0, 1fr);
+  gap: 20px; padding: 18px 4px;
+  border-bottom: 0.5px solid var(--border);
+  transition: background 0.22s ease, padding-left 0.22s ease;
+}
+.ref:hover { background: var(--bg-off); padding-left: 12px; }
+.ref-anio {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--gold); padding-top: 2px;
+}
+.ref-datos { display: flex; flex-direction: column; gap: 7px; }
+.ref-cita { font-size: 14.5px; line-height: 1.65; color: var(--dark); }
+.ref-cita b { font-weight: 600; color: var(--black); }
+.ref-cita i { font-style: italic; }
+.ref-nota {
+  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light);
+  line-height: 1.7;
+}
+.ref-lugar { color: var(--gold); }
+.ref-enlace {
+  align-self: flex-start;
+  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gray); text-decoration: none;
+  border-bottom: 0.5px solid var(--border); padding-bottom: 2px;
+  transition: color 0.22s ease, border-color 0.22s ease;
+}
+.ref-enlace:hover { color: var(--blue); border-color: var(--blue-mid); }
+
+/* ── Docencia ── */
+.docencia { list-style: none; border-top: 0.5px solid var(--border); margin-bottom: 44px; }
+.docencia-fila {
+  display: grid; grid-template-columns: 130px minmax(0, 1fr);
+  gap: 20px; padding: 15px 4px;
+  border-bottom: 0.5px solid var(--border);
+}
+.docencia-anio {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
+  padding-top: 3px;
+}
+.docencia-datos { display: flex; flex-direction: column; gap: 3px; }
+.docencia-datos strong {
+  font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600;
+  color: var(--black); line-height: 1.3;
+}
+.docencia-datos > span { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .ref { grid-template-columns: 58px minmax(0, 1fr); gap: 14px; }
+  .docencia-fila { grid-template-columns: 1fr; gap: 5px; }
+  .contacto-cabecera { padding: 32px 4px; }
+}
