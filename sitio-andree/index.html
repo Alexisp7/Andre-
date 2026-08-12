@@ -128,33 +128,102 @@
 
 
 
-      <div class="escudos-bloque">
-        <p class="escudos-titulo">Docencia · pregrado</p>
-        <ul class="docencia">
-          <li class="docencia-fila"><span class="docencia-anio">2026</span><span class="docencia-datos"><strong>Universidad Peruana Cayetano Heredia</strong><span>Psicofarmacología · Neuropsicología</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2024</span><span class="docencia-datos"><strong>Universidad San Martín de Porres</strong><span>Psicobiología · Neuropsicología</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2022 – actual</span><span class="docencia-datos"><strong>Universidad Antonio Ruiz de Montoya</strong><span>Bases biológicas del comportamiento · Neuropsicología</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2021 – actual</span><span class="docencia-datos"><strong>Universidad Continental</strong><span>Psicofarmacología</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2021 – 2022</span><span class="docencia-datos"><strong>Universidad Tecnológica del Perú</strong><span>Bases biológicas del comportamiento</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2018 – 2019</span><span class="docencia-datos"><strong>Universidad Nacional de Huancavelica</strong><span>Psicología y desarrollo personal</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2018 – 2020</span><span class="docencia-datos"><strong>Universidad para el Desarrollo Andino</strong><span>Neuropsicología</span></span></li>
-        </ul>
-
-        <p class="escudos-titulo">Docencia · posgrado</p>
-        <ul class="docencia">
-          <li class="docencia-fila"><span class="docencia-anio">2026 – actual</span><span class="docencia-datos"><strong>Universidad Continental</strong><span>Doctorado en psicología · Seminario de investigación</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2025 – actual</span><span class="docencia-datos"><strong>Universidad Ricardo Palma</strong><span>Maestría en psicología clínica y de la salud · Psiconeuroinmunología y neurociencia aplicada</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2025 – actual</span><span class="docencia-datos"><strong>Centro de Desarrollo Ejecutivo UCV+</strong><span>Neuroeducación y neurodidáctica</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2025</span><span class="docencia-datos"><strong>Policía Nacional del Perú</strong><span>Diplomado para tenientes en investigación criminal · Liderazgo y toma de decisiones</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2025 – actual</span><span class="docencia-datos"><strong>Universidad Continental</strong><span>Segunda especialidad en neuropsicología · Neuropsicología de las emociones</span></span></li>
-          <li class="docencia-fila"><span class="docencia-anio">2024</span><span class="docencia-datos"><strong>Universidad Antonio Ruiz de Montoya</strong><span>Diplomado en neuroeducación e inclusión · Neuroanatomía</span></span></li>
-        </ul>
-      </div>
-
     </div>
   </section>
 
 
+  <section id="contactame" class="contacto-seccion">
+    <div class="section">
+      <details class="contacto" id="detallesContacto">
+        <summary class="contacto-cabecera">
+          <span class="contacto-cabecera-textos">
+            <span class="contacto-antetitulo">Escríbeme</span>
+            <span class="contacto-titulo">Contáctame</span>
+          </span>
+          <span class="contacto-signo" aria-hidden="true"></span>
+        </summary>
+
+        <div class="contacto-cuerpo">
+          <div class="contacto-datos">
+            <p class="contacto-nombre">Dr. Andreé Salvatierra Baldeón</p>
+            <p class="contacto-cargo">Neuropsicólogo · Doctor en neurociencias</p>
+
+            <dl class="contacto-lista">
+              <dt>Teléfono</dt>
+              <dd><a href="tel:+51901070337">+51 901 070 337</a></dd>
+              <dt>Correo</dt>
+              <dd><a href="mailto:4andree4@gmail.com">4andree4@gmail.com</a></dd>
+              <dt>LinkedIn</dt>
+              <dd><a href="https://www.linkedin.com/in/a-salvatierra" target="_blank" rel="noopener noreferrer">/in/a-salvatierra</a></dd>
+              <dt>ORCID</dt>
+              <dd><a href="https://orcid.org/0000-0002-0638-563X" target="_blank" rel="noopener noreferrer">0000-0002-0638-563X</a></dd>
+              <dt>Registros</dt>
+              <dd>CPsP 32563 · RNE 622 · RENACYT P0093916</dd>
+            </dl>
+
+            <p class="contacto-nota">Consultas sobre los apuntes, docencia, colaboraciones o investigación.</p>
+          </div>
+
+          <form class="contacto-form" id="formContacto" novalidate>
+            <label class="campo">
+              <span>Nombre <em>*</em></span>
+              <input type="text" name="nombre" required autocomplete="name"/>
+            </label>
+            <label class="campo">
+              <span>Correo <em>*</em></span>
+              <input type="email" name="correo" required autocomplete="email"/>
+            </label>
+            <label class="campo">
+              <span>Asunto</span>
+              <input type="text" name="asunto"/>
+            </label>
+            <label class="campo">
+              <span>Mensaje</span>
+              <textarea name="mensaje" rows="6"></textarea>
+            </label>
+            <p class="contacto-aviso" id="avisoContacto" hidden></p>
+            <button type="submit" class="btn-enviar">Enviar</button>
+          </form>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var form   = document.getElementById('formContacto');
+      var aviso  = document.getElementById('avisoContacto');
+      var bloque = document.getElementById('detallesContacto');
+      if (!form) return;
+
+      /* Si llegan con #contactame, el bloque se abre solo. */
+      function abrirSiToca() {
+        if (location.hash === '#contactame' && bloque) { bloque.open = true; }
+      }
+      abrirSiToca();
+      window.addEventListener('hashchange', abrirSiToca);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var d = new FormData(form);
+        var nombre = (d.get('nombre') || '').trim();
+        var correo = (d.get('correo') || '').trim();
+        if (!nombre || !correo) {
+          aviso.hidden = false;
+          aviso.textContent = 'Faltan el nombre y el correo.';
+          return;
+        }
+        var asunto = (d.get('asunto') || '').trim() || 'Consulta desde la web';
+        var cuerpo = (d.get('mensaje') || '').trim()
+                   + '\n\n—\n' + nombre + ' · ' + correo;
+        aviso.hidden = false;
+        aviso.textContent = 'Abriendo tu programa de correo…';
+        location.href = 'mailto:4andree4@gmail.com'
+                      + '?subject=' + encodeURIComponent(asunto)
+                      + '&body=' + encodeURIComponent(cuerpo);
+      });
+    })();
+  </script>
 
   <footer class="footer-wrap" id="contacto">
     <div class="footer">

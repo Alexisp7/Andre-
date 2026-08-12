@@ -533,10 +533,8 @@ mostraría menos de lo que muestra ahora. Lo que hay:
 | Conferencias magistrales | 11 |
 | Distinciones | 4 |
 
-**Sobre el autor** lleva la biografía del CV, la formación con sus años
-(licenciatura, maestría, doctorado y posdoctorado), las cuatro estancias de
-investigación con su escudo, y un bloque nuevo de **docencia**: 7 cursos de
-pregrado y 6 de posgrado.
+**Sobre el autor** lleva la biografía del CV, los escudos de formación y los de
+las cuatro estancias de investigación.
 
 **Contáctame** es ahora un desplegable de verdad, con su antetítulo, su título
 grande y un `+` dorado que gira hasta convertirse en `×` al abrirse. Dentro:
@@ -564,3 +562,13 @@ esperando el cursor.
 Inicio y abría un desplegable. Ahora `contacto.html` es una página como las
 demás, con todo visible al entrar: teléfono, correo, LinkedIn, ORCID, registros
 y el formulario.
+
+
+**Fuera la docencia de la portada.** Las dos tablas de cursos (pregrado y
+posgrado) se quitaron: la portada tiene que quedar corta. Los datos siguen en
+`build.py`, en las listas `DOCENCIA_PRE` y `DOCENCIA_POS`, por si algún día se
+quieren en otra página.
+
+**El desplegable de Contáctame vuelve al final de Inicio.** Convive con la
+pestaña: en Inicio es un bloque que se abre al pulsarlo, y `contacto.html` sigue
+siendo la página con todo a la vista. La pestaña del menú lleva a la página.
