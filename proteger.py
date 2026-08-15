@@ -25,6 +25,11 @@ DESTINOS = {
     "04-biologia-molecular.pdf":             "psicofarmacologia",
     "05-farmacocinetica.pdf":                "psicofarmacologia",
     "06-farmacodinamia.pdf":                 "psicofarmacologia",
+    "16-hipnoticos.pdf":                     "psicofarmacologia",
+    "17-estabilizadores-humor.pdf":          "psicofarmacologia",
+    "18-psicoestimulantes.pdf":              "psicofarmacologia",
+    "19-toxicomanias.pdf":                   "psicofarmacologia",
+    "20-etica.pdf":                          "psicofarmacologia",
 }
 
 AUTOR = "Dr. Andreé Salvatierra"

@@ -305,6 +305,36 @@
       "titulo": "Antipsicóticos",
       "archivo": "15-antipsicoticos.pdf",
       "paginas": 56
+    },
+    {
+      "codigo": "HIP-01",
+      "titulo": "Hipnóticos",
+      "archivo": "16-hipnoticos.pdf",
+      "paginas": 33
+    },
+    {
+      "codigo": "EST-01",
+      "titulo": "Estabilizadores del humor",
+      "archivo": "17-estabilizadores-humor.pdf",
+      "paginas": 14
+    },
+    {
+      "codigo": "PSE-01",
+      "titulo": "Psicoestimulantes",
+      "archivo": "18-psicoestimulantes.pdf",
+      "paginas": 64
+    },
+    {
+      "codigo": "TOX-01",
+      "titulo": "Toxicomanías",
+      "archivo": "19-toxicomanias.pdf",
+      "paginas": 55
+    },
+    {
+      "codigo": "ETI-01",
+      "titulo": "Ética",
+      "archivo": "20-etica.pdf",
+      "paginas": 33
     }
   ]
 }

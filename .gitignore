@@ -1,0 +1,6 @@
+.DS_Store
+Thumbs.db
+*.zip
+
+# Los PDF sin marca de agua no se publican
+/originales/

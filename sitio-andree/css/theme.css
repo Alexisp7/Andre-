@@ -1709,7 +1709,7 @@ a.topic-row:hover .topic-status.ready {
 
 .library-hero-role {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(16px, 1.6vw, 21px);
+  font-size: clamp(20px, 1.9vw, 25px);
   font-style: italic; color: rgba(255,255,255,0.62);
   display: flex; align-items: center; justify-content: center;
   gap: 14px; flex-wrap: wrap;
@@ -1940,7 +1940,7 @@ a.topic-row:hover .topic-status.ready {
 .autor-retrato {
   position: relative; overflow: hidden;
   background: var(--bg-off);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 600 / 950;
 }
 .autor-retrato img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .autor-retrato .corner-ornament { z-index: 2; }
