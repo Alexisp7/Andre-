@@ -40,7 +40,13 @@
     <div class="visor-cab-inner">
       <a href="apuntes.html" class="visor-volver">Volver al catálogo</a>
       <div class="visor-titulos">
-        <h1 class="visor-titulo" id="vTitulo">Cargando…</h1>
+        <div class="visor-titulo-fila">
+          <h1 class="visor-titulo" id="vTitulo">Cargando…</h1>
+          <div class="visor-vistas" id="vVistas" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="vVistasNum"></span>
+          </div>
+        </div>
         <p class="visor-meta" id="vMeta"></p>
       </div>
       <div class="visor-paginas" id="vPaginas"></div>
@@ -51,10 +57,6 @@
     <div class="visor-aviso" id="vAviso" hidden></div>
     <div class="visor-lienzos" id="vLienzos" oncontextmenu="return false"></div>
     <div class="visor-marca-agua" aria-hidden="true"></div>
-    <div class="visor-vistas" id="vVistas" hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
-      <span id="vVistasNum"></span>
-    </div>
     <p class="visor-pie">
       Material del Dr. Andreé Salvatierra. Uso educativo; prohibida su
       descarga, reproducción y distribución.
