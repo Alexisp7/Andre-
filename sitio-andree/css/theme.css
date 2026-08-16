@@ -15,13 +15,13 @@
   --bg-off: #F7F6F3;
   --bg-dark: #111111;
   --white: #FFFFFF;
-  --blue: #1B3A5C;
-  --blue-mid: #2E5A88;
-  --blue-soft: #6E9BC4;
-  --blue-tint: rgba(46, 90, 140, 0.09);
-  --blue-shadow: rgba(27, 58, 92, 0.13);
-  --blue-shadow-strong: rgba(27, 58, 92, 0.20);
-  --ink: #0B0E14;
+  --blue: #14233D;
+  --blue-mid: #14233D;
+  --blue-soft: #14233D;
+  --blue-tint: rgba(20, 35, 61, 0.09);
+  --blue-shadow: rgba(20, 35, 61, 0.13);
+  --blue-shadow-strong: rgba(20, 35, 61, 0.20);
+  --ink: #14233D;
 }
 
 html { scroll-behavior: smooth; }
@@ -1245,7 +1245,7 @@ nav.main-nav .nav-sep {
 
 /* ── PAGE HERO ── */
 .page-hero {
-  background: var(--black); position:relative; overflow:hidden;
+  background: var(--blue); position:relative; overflow:hidden;
   padding:72px 48px 64px; border-bottom:0.5px solid #222;
 }
 .page-hero-inner { max-width:1280px; margin:0 auto; position:relative; z-index:2; }
@@ -1709,7 +1709,7 @@ a.topic-row:hover .topic-status.ready {
 
 .library-hero-role {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(16px, 1.6vw, 21px);
+  font-size: clamp(22px, 2.1vw, 27px);
   font-style: italic; color: rgba(255,255,255,0.62);
   display: flex; align-items: center; justify-content: center;
   gap: 14px; flex-wrap: wrap;
@@ -1860,7 +1860,17 @@ a.topic-row:hover .topic-status.ready {
   color: rgba(255,255,255,0.4); letter-spacing: 0.1em; white-space: nowrap;
 }
 
-.visor-zona { background: var(--bg-off); padding: 40px 24px 64px; }
+.visor-zona { position: relative; background: var(--bg-off); padding: 40px 24px 64px; }
+
+/* Marca de agua propia del visor: cubre toda la zona de lectura (se
+   desplaza con las páginas), independiente de la que ya llevan los PDF
+   incrustada. No se extiende al pie de página. */
+.visor-marca-agua {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='260'%3E%3Ctext x='0' y='140' font-family='Georgia, serif' font-style='italic' font-size='27' fill='rgba(17,17,17,0.05)' transform='rotate(-30 210 130)' text-anchor='middle'%3ENeurona%3C/text%3E%3Ctext x='0' y='168' font-family='Arial, sans-serif' font-weight='700' font-size='10' letter-spacing='2' fill='rgba(17,17,17,0.05)' transform='rotate(-30 210 130)' text-anchor='middle'%3EDR. ANDRE%C3%89 SALVATIERRA%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
 
 .visor-lienzos {
   max-width: 1060px; margin: 0 auto;
@@ -1871,7 +1881,7 @@ a.topic-row:hover .topic-status.ready {
   position: relative;
   background: var(--white);
   border: 0.5px solid var(--border);
-  box-shadow: 0 10px 30px -18px rgba(27,58,92,0.30);
+  box-shadow: 0 10px 30px -18px rgba(20,35,61,0.30);
   line-height: 0;
 }
 .visor-hoja canvas { display: block; pointer-events: none; }
@@ -1880,6 +1890,16 @@ a.topic-row:hover .topic-status.ready {
   font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em;
   color: var(--gray-light); line-height: 1;
 }
+
+.visor-vistas[hidden] { display: none; }
+.visor-vistas {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  max-width: 1060px; margin: 30px auto 0;
+  position: relative; z-index: 6;
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light);
+}
+.visor-vistas svg { width: 15px; height: 15px; color: var(--gold); flex: none; }
 
 .visor-aviso {
   max-width: 1060px; margin: 0 auto 26px;
@@ -1891,6 +1911,12 @@ a.topic-row:hover .topic-status.ready {
   font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--gray-light); text-align: center; line-height: 1.9;
+  position: relative; z-index: 6;
+}
+.visor-pie-copy {
+  display: block; margin-top: 4px;
+  font-size: 8px; font-weight: 400; letter-spacing: 0.08em;
+  text-transform: none; color: var(--gray-light);
 }
 
 /* Al imprimir no sale nada */
@@ -1940,7 +1966,7 @@ a.topic-row:hover .topic-status.ready {
 .autor-retrato {
   position: relative; overflow: hidden;
   background: var(--bg-off);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 600 / 950;
 }
 .autor-retrato img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .autor-retrato .corner-ornament { z-index: 2; }
@@ -1998,49 +2024,36 @@ a.topic-row:hover .topic-status.ready {
 
 .escudos {
   display: grid;
-  gap: 0;
+  gap: 34px 0;
 }
 .escudos--seis   { grid-template-columns: repeat(6, 1fr); }
 .escudos--cuatro { grid-template-columns: repeat(4, 1fr); }
 
 .escudo {
   position: relative;
-  margin: 0; padding: 24px 18px 20px;
+  margin: 0; padding: 0 18px;
   display: flex; flex-direction: column; align-items: center; text-align: center;
   gap: 14px;
 }
 
-/* Separación solo entre instituciones: una línea corta y centrada,
-   nunca de borde a borde y nunca alrededor del bloque. */
-.escudo::before {
-  content: '';
-  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 0.5px; height: 62px;
-  background: var(--border);
-}
-.escudos--seis   .escudo:nth-child(6n + 1)::before,
-.escudos--cuatro .escudo:nth-child(4n + 1)::before { display: none; }
-
-/* A color de entrada: los escudos son la única identificación que hay. */
 .escudo img {
-  height: 62px; width: auto; max-width: 100%; object-fit: contain;
+  height: 80px; width: auto; max-width: 100%; object-fit: contain;
   transition: transform 0.35s ease;
 }
 .escudo:hover img { transform: scale(1.05); }
 
+.escudo figcaption {
+  font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.06em; color: var(--gold);
+}
+
 @media (max-width: 1180px) {
   .escudos--seis { grid-template-columns: repeat(3, 1fr); }
-  .escudos--seis .escudo:nth-child(6n + 1)::before { display: block; }
-  .escudos--seis .escudo:nth-child(3n + 1)::before { display: none; }
 }
 @media (max-width: 820px) {
   .escudos--seis, .escudos--cuatro { grid-template-columns: repeat(2, 1fr); }
-  .escudos--seis .escudo::before,
-  .escudos--cuatro .escudo::before { display: block; }
-  .escudos--seis .escudo:nth-child(2n + 1)::before,
-  .escudos--cuatro .escudo:nth-child(2n + 1)::before { display: none; }
-  .escudo { padding: 20px 12px 18px; }
-  .escudo img { height: 52px; }
+  .escudo { padding: 0 12px; }
+  .escudo img { height: 60px; }
 }
 
 @media (max-width: 900px) {
@@ -2209,9 +2222,22 @@ a.topic-row:hover .topic-status.ready {
   font-size: clamp(38px, 4.6vw, 60px);
   font-weight: 700; line-height: 1.05;
   color: var(--gold); letter-spacing: -0.02em;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+}
+.autor-nombre-regla {
+  width: 56px; height: 2px;
+  background: var(--gold);
+  margin: 0 0 28px;
 }
 .autor-cargos { font-size: 18px; margin-bottom: 30px; }
+
+.about-body { text-align: justify; }
+.autor-texto .about-body:first-of-type::first-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.6em; font-weight: 700; line-height: 0.78;
+  color: var(--gold);
+  float: left; padding: 4px 9px 0 0;
+}
 
 /* Botones de perfil, algo mayores */
 .perfil { padding: 13px 20px 13px 16px; font-size: 9.5px; }
@@ -2220,9 +2246,6 @@ a.topic-row:hover .topic-status.ready {
 .perfiles--columna { flex-direction: column; }
 .perfiles--columna .perfil { width: 100%; }
 
-/* Escudos: solo el logo, sin pie de texto */
-.escudos--seis   .escudo,
-.escudos--cuatro .escudo { padding: 28px 18px; }
 
 /* Investigación */
 .investigacion-grid {
@@ -2469,6 +2492,11 @@ a.topic-row:hover .topic-status.ready {
   animation: none;
   padding: 0 4px;
 }
+/* En la portada (no es la página propia de contacto) hace falta aire
+   antes del pie de página. */
+.contacto-seccion:not(.contacto-seccion--pagina) .contacto-cuerpo {
+  padding-bottom: 64px;
+}
 .contacto-seccion--pagina { background: transparent; border-top: none; }
 .contacto-seccion--pagina .section {
   padding-top: 88px; padding-bottom: 104px;
@@ -2502,7 +2530,7 @@ a.topic-row:hover .topic-status.ready {
 }
 .noticia:hover .noticia-media {
   border-color: var(--blue-soft);
-  box-shadow: 0 10px 30px -18px rgba(27, 58, 92, 0.5);
+  box-shadow: 0 10px 30px -18px rgba(20, 35, 61, 0.5);
 }
 .noticia:hover .noticia-media img { transform: scale(1.02); }
 

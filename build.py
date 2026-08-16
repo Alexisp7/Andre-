@@ -506,7 +506,7 @@ def build_index():
       <div class="autor-grid">
         <div class="autor-retrato">
           <img src="img/autor.webp" alt="Dr. Andreé Salvatierra Baldeón"
-               width="760" height="950" loading="lazy" decoding="async"/>
+               width="600" height="950" loading="lazy" decoding="async"/>
           <div class="corner-ornament tl"></div>
           <div class="corner-ornament tr"></div>
           <div class="corner-ornament bl"></div>
@@ -515,7 +515,6 @@ def build_index():
 
         <div class="autor-texto">
           <h3 class="autor-nombre">Andreé Salvatierra Baldeón</h3>
-          <p class="autor-cargos">Neuropsicólogo <span class="title-sep">·</span> Doctor en neurociencias <span class="title-sep">·</span> Máster en psicofarmacología y en farmacología</p>
 
           <p class="about-body">Posdoctorado en la unidad de cognición y conducta del Instituto Nacional de Neurología y Neurocirugía de México. Doctor en neurociencias por la Facultad de Medicina de la Universidad Nacional Mayor de San Marcos, especialista en neuropsicología por la Universidad Nacional Federico Villarreal, máster en psicofarmacología por la Universidad de Valencia, máster en farmacología por la Facultad de Medicina de la Universidad Autónoma de Barcelona y psicólogo por la Universidad Continental.</p>
 

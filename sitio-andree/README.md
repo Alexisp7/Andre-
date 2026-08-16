@@ -4,7 +4,7 @@ Sitio estático con los apuntes de clase de cuatro cursos: **Biopsicología**,
 **Neuroanatomía**, **Neuropsicología** y **Psicofarmacología**.
 Sin build, sin dependencias: HTML + un CSS. Se publica tal cual en GitHub Pages.
 
-**Estado actual:** 15 apuntes publicados (715 páginas), todos en
+**Estado actual:** 20 apuntes publicados (914 páginas), todos en
 Psicofarmacología. Los otros tres cursos tienen temario provisional y ningún
 PDF todavía.
 
@@ -92,9 +92,9 @@ Los temarios de Biopsicología, Neuroanatomía y Neuropsicología son provisiona
 escribí a partir del contenido estándar de esos cursos, no del programa real de Andreé.
 Cámbialos en `build.py` (listas `unidades`) y vuelve a ejecutarlo.
 
-### Los quince PDFs
+### Los veinte PDFs
 
-Todos viven en Psicofarmacología, repartidos en ocho unidades que respetan la
+Todos viven en Psicofarmacología, repartidos en diez unidades que respetan la
 numeración con la que Andreé los tiene ordenados:
 
 | Unidad | Apuntes | Páginas |
@@ -106,7 +106,9 @@ numeración con la que Andreé los tiene ordenados:
 | V · Variabilidad de la respuesta | 7, 8 | 75 |
 | VI · Desarrollo del medicamento | 9, 10 | 106 |
 | VII · Factores modificadores | 11 | 35 |
-| VIII · Neurotransmisión y psicofármacos | 12, 13, 14, 15 | 249 |
+| VIII · Neurotransmisión y psicofármacos | 12, 13, 14, 15, 16, 17, 18 | 360 |
+| IX · Toxicomanías | 19 | 55 |
+| X · Ética de la práctica farmacológica | 20 | 33 |
 
 ---
 
@@ -120,7 +122,7 @@ material para que, si sale de aquí, se sepa de quién es.
 
 ### Lo que es permanente
 
-**Marca de agua incrustada.** Cada una de las 715 páginas lleva el logotipo
+**Marca de agua incrustada.** Cada una de las 914 páginas lleva el logotipo
 caligráfico y el nombre estampados en el propio PDF, no superpuestos por el navegador: una
 diagonal muy tenue repetida por toda la página y un pie con el logotipo, el
 nombre y el aviso de uso. Va dentro del archivo, así que sobrevive a cualquier
@@ -149,7 +151,7 @@ con un aviso.
 
 ### Regenerar los apuntes protegidos
 
-Los seis PDF **limpios** viven en `originales/`, un nivel arriba de esta
+Los PDF **limpios** viven en `originales/`, un nivel arriba de esta
 carpeta, y nunca se tocan. El script `proteger.py` los lee de ahí y escribe los
 protegidos en `apuntes/`:
 
