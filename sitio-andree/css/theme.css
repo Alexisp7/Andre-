@@ -183,6 +183,7 @@ hr.thin-line {
   display: flex;
   align-items: center;
 }
+.logo-link { text-decoration: none; }
 
 /* NAV */
 nav.main-nav {
@@ -1476,6 +1477,7 @@ nav.main-nav .nav-sep {
 
 /* ── TEMARIO (páginas de curso) ── */
 .syllabus-grid { display: grid; grid-template-columns: 300px 1fr; gap: 64px; align-items: start; }
+.syllabus-solo { max-width: 920px; margin: 0 auto; }
 .syllabus-aside { position: sticky; top: 100px; }
 .aside-card { border: 0.5px solid var(--border); padding: 30px 28px; }
 .aside-card + .aside-card { border-top: none; }
@@ -2233,12 +2235,6 @@ a.topic-row:hover .topic-status.ready {
 .autor-cargos { font-size: 18px; margin-bottom: 30px; }
 
 .about-body { text-align: justify; }
-.autor-texto .about-body:first-of-type::first-letter {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3.6em; font-weight: 700; line-height: 0.78;
-  color: var(--gold);
-  float: left; padding: 4px 9px 0 0;
-}
 
 /* Botones de perfil, algo mayores */
 .perfil { padding: 13px 20px 13px 16px; font-size: 9.5px; }
