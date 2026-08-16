@@ -1998,14 +1998,17 @@ a.topic-row:hover .topic-status.ready {
 
 .escudos {
   display: grid;
-  gap: 0;
+  gap: 28px 0;
+  background: var(--blue);
+  border-radius: 14px;
+  padding: 36px 20px 30px;
 }
 .escudos--seis   { grid-template-columns: repeat(6, 1fr); }
 .escudos--cuatro { grid-template-columns: repeat(4, 1fr); }
 
 .escudo {
   position: relative;
-  margin: 0; padding: 24px 18px 20px;
+  margin: 0; padding: 0 18px;
   display: flex; flex-direction: column; align-items: center; text-align: center;
   gap: 14px;
 }
@@ -2016,17 +2019,29 @@ a.topic-row:hover .topic-status.ready {
   content: '';
   position: absolute; left: 0; top: 50%; transform: translateY(-50%);
   width: 0.5px; height: 62px;
-  background: var(--border);
+  background: rgba(255,255,255,0.18);
 }
 .escudos--seis   .escudo:nth-child(6n + 1)::before,
 .escudos--cuatro .escudo:nth-child(4n + 1)::before { display: none; }
 
-/* A color de entrada: los escudos son la única identificación que hay. */
+/* Ficha blanca detrás de cada escudo: fondo uniforme y logos siempre legibles. */
+.escudo-tile {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 88px;
+  background: var(--white);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
 .escudo img {
-  height: 62px; width: auto; max-width: 100%; object-fit: contain;
+  height: 72px; width: auto; max-width: 100%; object-fit: contain;
   transition: transform 0.35s ease;
 }
 .escudo:hover img { transform: scale(1.05); }
+
+.escudo figcaption {
+  font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.06em; color: var(--gold-light);
+}
 
 @media (max-width: 1180px) {
   .escudos--seis { grid-template-columns: repeat(3, 1fr); }
@@ -2039,8 +2054,9 @@ a.topic-row:hover .topic-status.ready {
   .escudos--cuatro .escudo::before { display: block; }
   .escudos--seis .escudo:nth-child(2n + 1)::before,
   .escudos--cuatro .escudo:nth-child(2n + 1)::before { display: none; }
-  .escudo { padding: 20px 12px 18px; }
-  .escudo img { height: 52px; }
+  .escudo { padding: 0 12px; }
+  .escudo-tile { height: 72px; }
+  .escudo img { height: 56px; }
 }
 
 @media (max-width: 900px) {
@@ -2220,9 +2236,6 @@ a.topic-row:hover .topic-status.ready {
 .perfiles--columna { flex-direction: column; }
 .perfiles--columna .perfil { width: 100%; }
 
-/* Escudos: solo el logo, sin pie de texto */
-.escudos--seis   .escudo,
-.escudos--cuatro .escudo { padding: 28px 18px; }
 
 /* Investigación */
 .investigacion-grid {

@@ -84,38 +84,44 @@
         <p class="escudos-titulo">Formación</p>
         <div class="escudos escudos--seis">
             <figure class="escudo">
-              <img src="img/escudos/continental.webp" alt="Universidad Continental" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/continental.webp" alt="Universidad Continental" loading="lazy" decoding="async"/></span>
+              <figcaption>Psicólogo</figcaption>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/villarreal.webp" alt="U. N. Federico Villarreal" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/villarreal.webp" alt="U. N. Federico Villarreal" loading="lazy" decoding="async"/></span>
+              <figcaption>Neuropsicólogo</figcaption>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/valencia.webp" alt="Universitat de València" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/valencia.webp" alt="Universitat de València" loading="lazy" decoding="async"/></span>
+              <figcaption>Máster en Psicofarmacología</figcaption>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/uab.webp" alt="U. Autònoma de Barcelona" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/uab.webp" alt="U. Autònoma de Barcelona" loading="lazy" decoding="async"/></span>
+              <figcaption>Máster en Farmacología</figcaption>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/unmsm.webp" alt="UNMSM" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/unmsm.webp" alt="UNMSM" loading="lazy" decoding="async"/></span>
+              <figcaption>Doctor en Neurociencias</figcaption>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/innn.webp" alt="INNN · México" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/innn.webp" alt="INNN · México" loading="lazy" decoding="async"/></span>
+              <figcaption>Posdoctorado</figcaption>
             </figure>
         </div>
 
         <p class="escudos-titulo">Estancias e investigación</p>
         <div class="escudos escudos--cuatro">
             <figure class="escudo">
-              <img src="img/escudos/unam.webp" alt="UNAM · CDMX" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/unam.webp" alt="UNAM · CDMX" loading="lazy" decoding="async"/></span>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/imim.webp" alt="IMIM · Barcelona" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/imim.webp" alt="IMIM · Barcelona" loading="lazy" decoding="async"/></span>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/innn.webp" alt="INNN · CDMX" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/innn.webp" alt="INNN · CDMX" loading="lazy" decoding="async"/></span>
             </figure>
             <figure class="escudo">
-              <img src="img/escudos/antioquia.webp" alt="U. de Antioquia · Medellín" loading="lazy" decoding="async"/>
+              <span class="escudo-tile"><img src="img/escudos/antioquia.webp" alt="U. de Antioquia · Medellín" loading="lazy" decoding="async"/></span>
             </figure>
         </div>
       </div>
@@ -128,24 +134,22 @@
 
   <section id="contactame" class="contacto-seccion">
     <div class="section">
-      <details class="contacto" id="detallesContacto">
-        <summary class="contacto-cabecera">
+      <div class="contacto contacto--abierto">
+        <div class="contacto-cabecera">
           <span class="contacto-cabecera-textos">
             <span class="contacto-titulo">Contacto</span>
           </span>
-          <span class="contacto-signo" aria-hidden="true"></span>
-        </summary>
+        </div>
 
         <div class="contacto-cuerpo">
           <div class="contacto-datos">
             <p class="contacto-nombre">Dr. Andreé Salvatierra Baldeón</p>
-            <p class="contacto-cargo">Neuropsicólogo · Doctor en neurociencias</p>
 
             <dl class="contacto-lista">
-              <dt>Teléfono</dt>
-              <dd><a href="tel:+51901070337">+51 901 070 337</a></dd>
               <dt>Correo</dt>
               <dd><a href="mailto:4andree4@gmail.com">4andree4@gmail.com</a></dd>
+              <dt>Instagram</dt>
+              <dd><a href="https://www.instagram.com/andres_salva" target="_blank" rel="noopener noreferrer">@andres_salva</a></dd>
               <dt>LinkedIn</dt>
               <dd><a href="https://www.linkedin.com/in/a-salvatierra" target="_blank" rel="noopener noreferrer">/in/a-salvatierra</a></dd>
               <dt>ORCID</dt>
@@ -178,7 +182,7 @@
             <button type="submit" class="btn-enviar">Enviar</button>
           </form>
         </div>
-      </details>
+      </div>
     </div>
   </section>
 
@@ -186,15 +190,7 @@
     (function () {
       var form   = document.getElementById('formContacto');
       var aviso  = document.getElementById('avisoContacto');
-      var bloque = document.getElementById('detallesContacto');
       if (!form) return;
-
-      /* Si llegan con #contactame, el bloque se abre solo. */
-      function abrirSiToca() {
-        if (location.hash === '#contactame' && bloque) { bloque.open = true; }
-      }
-      abrirSiToca();
-      window.addEventListener('hashchange', abrirSiToca);
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
