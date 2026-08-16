@@ -238,6 +238,26 @@ nav.main-nav .nav-sep {
   user-select: none;
 }
 
+/* Hamburguesa (solo visible en móvil, ver media query) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 34px; height: 34px;
+  padding: 0;
+  background: none; border: none; cursor: pointer;
+  flex: none;
+}
+.nav-toggle span {
+  display: block; width: 100%; height: 1.5px;
+  background: var(--black);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
 
 .header-border {
   height: 0.5px;
@@ -1094,8 +1114,41 @@ nav.main-nav .nav-sep {
    RESPONSIVE
 ──────────────────────────────── */
 @media (max-width: 900px) {
-  .header-inner { padding: 16px 24px; }
-  nav.main-nav { display: none; }
+  .header-inner { padding: 16px 24px; position: relative; }
+  .nav-toggle { display: flex; }
+
+  nav.main-nav {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--white);
+    border-top: 0.5px solid var(--border);
+    box-shadow: 0 24px 40px -24px rgba(20,35,61,0.30);
+    z-index: 200;
+    padding: 6px 0;
+  }
+  body.nav-open nav.main-nav { display: flex; }
+
+  nav.main-nav .nav-sep { display: none; }
+  nav.main-nav a {
+    padding: 16px 24px; width: 100%;
+    border-bottom: 0.5px solid var(--border);
+  }
+  nav.main-nav a::before { display: none; }
+  nav.main-nav a:hover,
+  nav.main-nav a.active { color: var(--blue); background: var(--bg-off); }
+
+  .nav-desplegable { flex-direction: column; align-items: stretch; width: 100%; }
+  .nav-flecha { display: none; }
+  .nav-submenu {
+    position: static; opacity: 1; visibility: visible; transform: none;
+    box-shadow: none; border: none; min-width: 0;
+    background: var(--bg-off);
+    padding: 0;
+  }
+  .nav-submenu a { padding: 14px 24px 14px 40px; border-bottom: 0.5px solid var(--border); }
+  .nav-submenu a:last-child, nav.main-nav > a:last-child { border-bottom: none; }
+
   .hero { grid-template-columns: 1fr; padding: 56px 24px; gap: 48px; }
   .hero-name { font-size: 52px; }
   .section { padding: 64px 24px; }
@@ -1867,7 +1920,14 @@ a.topic-row:hover .topic-status.ready {
 
 .visor-zona { position: relative; background: var(--bg-off); padding: 40px 24px 64px; }
 
-/* Marca de agua propia del visor: cubre toda la zona de lectura (se
+.visor-lienzos {
+  position: relative;
+  max-width: 1060px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 26px;
+  -webkit-user-select: none; user-select: none;
+}
+
+/* Marca de agua propia del visor: cubre solo la zona de lectura (se
    desplaza con las páginas), independiente de la que ya llevan los PDF
    incrustada. No se extiende al pie de página. */
 .visor-marca-agua {
@@ -1875,12 +1935,6 @@ a.topic-row:hover .topic-status.ready {
   pointer-events: none; z-index: 5;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='260'%3E%3Ctext x='0' y='140' font-family='Georgia, serif' font-style='italic' font-size='27' fill='rgba(17,17,17,0.05)' transform='rotate(-30 210 130)' text-anchor='middle'%3ENeurona%3C/text%3E%3Ctext x='0' y='168' font-family='Arial, sans-serif' font-weight='700' font-size='10' letter-spacing='2' fill='rgba(17,17,17,0.05)' transform='rotate(-30 210 130)' text-anchor='middle'%3EDR. ANDRE%C3%89 SALVATIERRA%3C/text%3E%3C/svg%3E");
   background-repeat: repeat;
-}
-
-.visor-lienzos {
-  max-width: 1060px; margin: 0 auto;
-  display: flex; flex-direction: column; gap: 26px;
-  -webkit-user-select: none; user-select: none;
 }
 .visor-hoja {
   position: relative;
@@ -1932,8 +1986,10 @@ a.topic-row:hover .topic-status.ready {
 }
 
 @media (max-width: 860px) {
-  .visor-cab-inner { padding: 20px 24px; gap: 16px; flex-wrap: wrap; }
+  .visor-cab-inner { padding: 20px 24px; gap: 10px; flex-direction: column; align-items: flex-start; }
+  .visor-titulos { width: 100%; }
   .visor-titulo { font-size: 20px; }
+  .visor-titulo-fila { gap: 12px; }
   .visor-paginas { width: 100%; }
   .visor-zona { padding: 24px 14px 48px; }
   .visor-lienzos { gap: 16px; }
@@ -2552,4 +2608,33 @@ a.topic-row:hover .topic-status.ready {
 
 @media (max-width: 820px) {
   .noticia-media, .noticia-media--video { max-width: 100%; }
+}
+
+/* ══════════════════════════════════════════
+   MENÚ MÓVIL (gana sobre las reglas de hover
+   del menú desplegable, definidas más arriba)
+   ══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav-desplegable {
+    display: flex; flex-direction: column; align-items: stretch; width: 100%;
+  }
+  .nav-flecha { display: none; }
+  .nav-submenu {
+    position: static; opacity: 1; visibility: visible; transform: none;
+    box-shadow: none; border: none; min-width: 0;
+    background: var(--bg-off);
+    display: flex; flex-direction: column; align-items: stretch; width: 100%;
+  }
+  .nav-desplegable:hover .nav-submenu,
+  .nav-desplegable:focus-within .nav-submenu {
+    opacity: 1; visibility: visible; transform: none;
+  }
+  .nav-submenu a { width: 100%; text-align: left; }
+}
+
+@media (max-width: 420px) {
+  .notes-search { font-size: 13px; min-width: 0; }
+}
+@media (max-width: 340px) {
+  .notes-search { font-size: 12px; padding: 13px 12px; }
 }

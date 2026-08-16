@@ -30,7 +30,10 @@
           <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
         </div>
       </a>
-      <nav class="main-nav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html" class="active">Materiales de clase</a><span class="nav-submenu"><a href="psicofarmacologia.html">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html">Noticias</a></nav>
+      <nav class="main-nav" id="mainNav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html" class="active">Materiales de clase</a><span class="nav-submenu"><a href="psicofarmacologia.html">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html">Noticias</a></nav>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
     <div class="header-border"></div>
   </header>
@@ -222,5 +225,27 @@
     </div>
   </footer>
 
+  <script>
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('mainNav');
+      if (!btn || !nav) return;
+      function cerrar() {
+        document.body.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var abierto = document.body.classList.toggle('nav-open');
+        btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+      });
+      document.addEventListener('click', function (e) {
+        if (document.body.classList.contains('nav-open') && !nav.contains(e.target) && e.target !== btn) cerrar();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') cerrar();
+      });
+    })();
+  </script>
 </body>
 </html>
