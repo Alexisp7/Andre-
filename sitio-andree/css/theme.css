@@ -1891,6 +1891,16 @@ a.topic-row:hover .topic-status.ready {
   color: var(--gray-light); line-height: 1;
 }
 
+.visor-vistas[hidden] { display: none; }
+.visor-vistas {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  max-width: 1060px; margin: 30px auto 0;
+  position: relative; z-index: 6;
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light);
+}
+.visor-vistas svg { width: 15px; height: 15px; color: var(--gold); flex: none; }
+
 .visor-aviso {
   max-width: 1060px; margin: 0 auto 26px;
   border-left: 2px solid var(--gold); background: var(--white);
