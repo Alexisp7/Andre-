@@ -16,9 +16,9 @@
   --bg-dark: #111111;
   --white: #FFFFFF;
   --blue: #1B3A5C;
-  --blue-mid: #2E5A88;
-  --blue-soft: #6E9BC4;
-  --blue-tint: rgba(46, 90, 140, 0.09);
+  --blue-mid: #1B3A5C;
+  --blue-soft: #1B3A5C;
+  --blue-tint: rgba(27, 58, 92, 0.09);
   --blue-shadow: rgba(27, 58, 92, 0.13);
   --blue-shadow-strong: rgba(27, 58, 92, 0.20);
   --ink: #0B0E14;
@@ -1860,7 +1860,17 @@ a.topic-row:hover .topic-status.ready {
   color: rgba(255,255,255,0.4); letter-spacing: 0.1em; white-space: nowrap;
 }
 
-.visor-zona { background: var(--bg-off); padding: 40px 24px 64px; }
+.visor-zona { position: relative; background: var(--bg-off); padding: 40px 24px 64px; }
+
+/* Marca de agua propia del visor: cubre toda la zona de lectura (se
+   desplaza con las páginas), independiente de la que ya llevan los PDF
+   incrustada. No se extiende al pie de página. */
+.visor-marca-agua {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='260'%3E%3Ctext x='0' y='140' font-family='Georgia, serif' font-style='italic' font-size='27' fill='rgba(17,17,17,0.05)' transform='rotate(-30 210 130)' text-anchor='middle'%3ENeurona%3C/text%3E%3Ctext x='0' y='168' font-family='Arial, sans-serif' font-weight='700' font-size='10' letter-spacing='2' fill='rgba(17,17,17,0.05)' transform='rotate(-30 210 130)' text-anchor='middle'%3EDR. ANDRE%C3%89 SALVATIERRA%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
 
 .visor-lienzos {
   max-width: 1060px; margin: 0 auto;
@@ -1891,6 +1901,12 @@ a.topic-row:hover .topic-status.ready {
   font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--gray-light); text-align: center; line-height: 1.9;
+  position: relative; z-index: 6;
+}
+.visor-pie-copy {
+  display: block; margin-top: 4px;
+  font-size: 8px; font-weight: 400; letter-spacing: 0.08em;
+  text-transform: none; color: var(--gray-light);
 }
 
 /* Al imprimir no sale nada */
