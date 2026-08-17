@@ -2102,8 +2102,8 @@ a.topic-row:hover .topic-status.ready {
 .escudo:hover img { transform: scale(1.05); }
 
 .escudo figcaption {
-  font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 700;
-  letter-spacing: 0.06em; color: var(--gold);
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px;
+  font-weight: 500; letter-spacing: 0.01em; color: var(--black);
 }
 
 @media (max-width: 1180px) {
@@ -2638,3 +2638,67 @@ a.topic-row:hover .topic-status.ready {
 @media (max-width: 340px) {
   .notes-search { font-size: 12px; padding: 13px 12px; }
 }
+
+/* ══════════════════════════════════════════
+   CONTACTO SOBRE FONDO AZUL
+   ══════════════════════════════════════════ */
+.contacto-seccion,
+.contacto-seccion--pagina,
+.contacto-seccion--pagina .section {
+  background: var(--blue);
+  border-top: none;
+}
+
+.contacto-antetitulo { color: var(--gold); }
+.contacto-titulo,
+.contacto-cabecera:hover .contacto-titulo { color: var(--white); }
+.contacto-cabecera:hover .contacto-flecha { color: var(--gold); }
+
+.contacto-signo { border-color: var(--gold); }
+.contacto-signo::before, .contacto-signo::after { background: var(--gold); }
+.contacto-cabecera:hover .contacto-signo { border-color: var(--gold); }
+.contacto-cabecera:hover .contacto-signo::before,
+.contacto-cabecera:hover .contacto-signo::after { background: var(--gold); }
+
+.contacto-nombre { color: var(--white); }
+.contacto-cargo { color: rgba(255,255,255,0.55); }
+
+.contacto-lista dt { color: var(--gold); }
+.contacto-lista dd { color: rgba(255,255,255,0.72); }
+.contacto-lista a { color: var(--white); }
+.contacto-lista a:hover { color: var(--gold); }
+
+.contacto-nota {
+  color: rgba(255,255,255,0.5);
+  border-top: 0.5px solid rgba(255,255,255,0.15);
+}
+
+.campo > span { color: rgba(255,255,255,0.55); }
+.campo > span em { color: var(--gold); }
+.campo input, .campo textarea {
+  background: rgba(255,255,255,0.97);
+  border: 0.5px solid rgba(255,255,255,0.2);
+}
+.campo input:focus, .campo textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,169,110,0.22);
+}
+
+.contacto-aviso { color: var(--gold); }
+
+.btn-enviar { color: var(--white); border-color: var(--gold); }
+.btn-enviar::before { background: var(--gold); }
+.btn-enviar:hover { color: var(--ink); border-color: var(--gold); }
+
+/* Perfiles académicos, alojados aquí junto a los datos de contacto */
+.contacto-perfiles { margin-top: 22px; }
+.contacto-perfiles .perfil {
+  color: rgba(255,255,255,0.75);
+  border-color: rgba(255,255,255,0.22);
+}
+.contacto-perfiles .perfil-icono { color: var(--gold); }
+.contacto-perfiles .perfil:hover {
+  color: var(--white); border-color: var(--gold);
+  box-shadow: none;
+}
+.contacto-perfiles .perfil:hover .perfil-icono { color: var(--gold); }
