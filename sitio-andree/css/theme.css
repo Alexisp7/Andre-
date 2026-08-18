@@ -1571,25 +1571,22 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .unit-body { padding: 6px 30px 22px; }
 .topic-row {
   display: flex; align-items: center; gap: 16px;
-  padding: 15px 0; border-bottom: 0.5px solid var(--border);
-  text-decoration: none; color: inherit; transition: padding-left 0.25s ease;
+  padding: 15px 16px; margin: 0 -16px; width: calc(100% + 32px);
+  border-bottom: 0.5px solid var(--border);
+  text-decoration: none; color: inherit;
 }
 .topic-row:last-child { border-bottom: none; }
-.topic-row:hover { padding-left: 10px; }
 .topic-code {
   font-family: 'Space Mono', monospace; font-size: 9.5px; color: var(--gold);
   letter-spacing: 0.1em; flex: 0 0 46px;
 }
 .topic-name { font-size: 14.5px; color: var(--dark); flex: 1; line-height: 1.5; }
-.topic-row:hover .topic-name { color: var(--black); }
 .topic-status {
   font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase;
   padding: 5px 11px; border: 0.5px solid var(--border); color: var(--gray-light);
   white-space: nowrap;
 }
-.topic-status.ready { color: var(--black); border-color: var(--gold); }
-.topic-row:hover .topic-status.ready { background: var(--gold); border-color: var(--gold); color: var(--black); }
 
 /* ── CITA / NOTA DE ADVERTENCIA ── */
 .callout {
@@ -1681,19 +1678,14 @@ nav.main-nav a.active::before { background: var(--black); }
 .notes-filter { transition: all 0.25s ease; }
 .notes-filter:hover:not(.is-active) { border-color: var(--blue-mid); color: var(--blue); }
 
-/* Temario */
-.topic-row { position: relative; transition: padding-left 0.25s ease; }
-.topic-row::before {
-  content: ''; position: absolute; left: -30px; top: 0; bottom: 0; width: 2px;
-  background: var(--blue-mid); transform: scaleY(0);
-  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+/* Temario: la fila entera es el enlace; se resalta completa al pasar el mouse */
+.topic-row { position: relative; transition: background 0.22s ease; }
+.topic-code, .topic-name { transition: color 0.22s ease; position: relative; z-index: 1; }
+a.topic-row:hover {
+  background: var(--blue); border-bottom-color: var(--blue);
 }
-a.topic-row:hover::before { transform: scaleY(1); }
-.topic-code { transition: color 0.25s ease; }
-a.topic-row:hover .topic-code { color: var(--blue-mid); }
-a.topic-row:hover .topic-status.ready {
-  background: var(--blue); border-color: var(--blue); color: var(--white);
-}
+a.topic-row:hover .topic-code { color: var(--gold-light); }
+a.topic-row:hover .topic-name { color: var(--white); }
 
 /* Fichas laterales, etiquetas y botones */
 .aside-card { transition: box-shadow 0.35s ease; }
@@ -2059,7 +2051,7 @@ a.topic-row:hover .topic-status.ready {
   font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--gray); text-decoration: none;
-  transition: color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+  transition: color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
 }
 .perfil-icono { display: block; width: 19px; height: 19px; color: var(--gold); }
 .perfil-icono svg { width: 100%; height: 100%; display: block; }
@@ -2305,6 +2297,7 @@ a.topic-row:hover .topic-status.ready {
   display: grid; grid-template-columns: minmax(0, 1fr) 300px;
   gap: 56px; align-items: start;
 }
+.investigacion-sola { max-width: 920px; margin: 0 auto; }
 .publicacion-cargando {
   list-style: none; padding: 40px 0; text-align: center;
   font-family: 'Cormorant Garamond', serif; font-style: italic;
@@ -2699,6 +2692,7 @@ a.topic-row:hover .topic-status.ready {
 .contacto-perfiles .perfil-icono { color: var(--gold); }
 .contacto-perfiles .perfil:hover {
   color: var(--white); border-color: var(--gold);
+  background: rgba(255,255,255,0.06);
   box-shadow: none;
 }
 .contacto-perfiles .perfil:hover .perfil-icono { color: var(--gold); }
