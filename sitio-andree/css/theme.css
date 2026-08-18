@@ -2561,18 +2561,20 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
 .noticia-cuerpo { display: flex; flex-direction: column; align-items: flex-start; flex: 1; }
 
-/* Tarjeta: la imagen se recorta parejo para que todas las noticias
-   midan lo mismo en la grilla. */
+/* Tarjeta: la imagen se muestra completa, a su proporción real (nada
+   de recortarla ni forzarla a un cuadrado); cada tarjeta mide lo que
+   necesite su flyer. */
 .noticia-media {
-  margin: 0 0 18px; width: 100%; aspect-ratio: 4 / 3;
+  margin: 0 0 18px; width: 100%;
   border: 0.5px solid var(--border);
   background: var(--bg-off);
   overflow: hidden;
+  line-height: 0;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .noticia-media img,
 .noticia-media video {
-  display: block; width: 100%; height: 100%; object-fit: cover;
+  display: block; width: 100%; height: auto;
   transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
 }
 .noticia:hover .noticia-media {
@@ -2581,9 +2583,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .noticia:hover .noticia-media img { transform: scale(1.05); }
 
-/* El vídeo lleva sus propios controles: nada de escalarlo al pasar. */
+/* El vídeo llena la tarjeta sin barras ni márgenes; queda a su propia
+   proporción, igual que las imágenes. */
 .noticia-media--video { background: var(--ink); }
-.noticia-media--video video { object-fit: contain; transform: none !important; }
+.noticia-media--video video { transform: none !important; }
 
 /* Los hashtags, escritos como se leen */
 .noticia-temas {
