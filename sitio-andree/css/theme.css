@@ -2298,6 +2298,9 @@ a.topic-row:hover .topic-name { color: var(--white); }
   gap: 56px; align-items: start;
 }
 .investigacion-sola { max-width: 920px; margin: 0 auto; }
+.investigacion-sola .escudos-titulo {
+  font-size: 13px; letter-spacing: 0.16em; color: var(--blue);
+}
 .publicacion-cargando {
   list-style: none; padding: 40px 0; text-align: center;
   font-family: 'Cormorant Garamond', serif; font-style: italic;
@@ -2362,16 +2365,8 @@ a.topic-row:hover .topic-name { color: var(--white); }
   color: var(--gray); margin-bottom: 26px;
 }
 
-.contacto-lista {
-  display: grid; grid-template-columns: 96px minmax(0, 1fr);
-  gap: 10px 18px; margin-bottom: 24px;
-}
-.contacto-lista dt {
-  font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
-  padding-top: 3px;
-}
-.contacto-lista dd { font-size: 14px; color: var(--gray); line-height: 1.6; }
+.contacto-lista { margin-bottom: 24px; }
+.contacto-lista dd { font-size: 16px; color: var(--gray); line-height: 1.6; margin: 0; }
 .contacto-lista a { color: var(--dark); text-decoration: none; }
 .contacto-lista a:hover { color: var(--blue); }
 
@@ -2430,8 +2425,6 @@ a.topic-row:hover .topic-name { color: var(--white); }
 @media (max-width: 900px) {
   .contacto-cuerpo { grid-template-columns: 1fr; gap: 36px; padding-bottom: 44px; }
   .contacto-cabecera { padding: 30px 4px; }
-  .contacto-lista { grid-template-columns: 1fr; gap: 4px 0; }
-  .contacto-lista dd { margin-bottom: 10px; }
 }
 
 
@@ -2656,7 +2649,6 @@ a.topic-row:hover .topic-name { color: var(--white); }
 .contacto-nombre { color: var(--white); }
 .contacto-cargo { color: rgba(255,255,255,0.55); }
 
-.contacto-lista dt { color: var(--gold); }
 .contacto-lista dd { color: rgba(255,255,255,0.72); }
 .contacto-lista a { color: var(--white); }
 .contacto-lista a:hover { color: var(--gold); }
