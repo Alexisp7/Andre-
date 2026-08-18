@@ -7,7 +7,7 @@ Lee los PDF limpios de ./originales/ y escribe los protegidos en
 sitio-andree/apuntes/<curso>/. Los originales nunca se tocan, así que
 el script se puede volver a ejecutar sin que la marca se acumule.
 """
-import io, math, os, secrets
+import io, os, secrets
 
 from pypdf import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
@@ -45,21 +45,8 @@ AUTOR = "Dr. Andreé Salvatierra"
 AVISO = "Apuntes de libre distribución con atribución"
 
 # Intensidad de la marca. Subir = más visible.
-OPACIDAD_DIAGONAL = 0.065
+OPACIDAD_DIAGONAL = 0.16
 OPACIDAD_PIE      = 0.42
-
-
-def _neurona(c, x, y, escala):
-    """Dibuja un pequeño ícono de neurona (soma + dendritas) en (x, y)."""
-    r = escala * 0.45
-    c.circle(x, y, r, stroke=1, fill=0)
-    c.circle(x, y, r * 0.32, stroke=0, fill=1)
-    for angulo in (200, 245, 300, 40, 85, 135):
-        rad = math.radians(angulo)
-        x1, y1 = x + math.cos(rad) * r, y + math.sin(rad) * r
-        x2, y2 = x + math.cos(rad) * r * 2.3, y + math.sin(rad) * r * 2.3
-        c.line(x1, y1, x2, y2)
-    c.line(x, y - r, x, y - r * 3.6)
 
 
 def capa(ancho, alto):
@@ -69,26 +56,25 @@ def capa(ancho, alto):
     logo = ImageReader(LOGO)
     prop = 0.276250          # alto/ancho del logotipo
 
-    # ── Diagonal repetida: mosaico fino de íconos de neurona + el
-    #    nombre, muy menudo. Al ser tantas marcas pequeñas en vez de
-    #    pocas grandes, la marca resiste mejor los recortes y ajustes
-    #    de brillo/contraste que se le hagan a una copia de la página.
+    # ── Diagonal repetida: el logotipo "Neurona" grande, semitransparente
+    #    pero bien sólido. La opacidad alta (no el tamaño de la marca) es
+    #    lo que la hace resistir si alguien le sube el brillo o el
+    #    contraste a una copia de la página.
     c.saveState()
     c.setFillAlpha(OPACIDAD_DIAGONAL)
-    c.setStrokeAlpha(OPACIDAD_DIAGONAL)
-    c.setFillColorRGB(0, 0, 0)
-    c.setStrokeColorRGB(0, 0, 0)
-    c.setLineWidth(max(0.4, ancho * 0.0008))
     c.translate(ancho / 2.0, alto / 2.0)
     c.rotate(32)
-    paso_x, paso_y = ancho * 0.20, alto * 0.13
-    escala = ancho * 0.022
-    for fx in range(-5, 6):
-        for fy in range(-7, 8):
-            cx, cy = fx * paso_x, fy * paso_y
-            _neurona(c, cx, cy, escala)
-            c.setFont("Helvetica", ancho * 0.0075)
-            c.drawCentredString(cx, cy - escala * 1.5, "NEURONA")
+    paso_x, paso_y = ancho * 0.62, alto * 0.34
+    anchoLogo = ancho * 0.34
+    for fx in (-1.5, -0.5, 0.5, 1.5):
+        for fy in (-1.5, -0.5, 0.5, 1.5):
+            c.drawImage(logo,
+                        fx * paso_x - anchoLogo / 2.0,
+                        fy * paso_y,
+                        width=anchoLogo, height=anchoLogo * prop,
+                        mask="auto")
+            c.setFont("Helvetica", ancho * 0.016)
+            c.drawCentredString(fx * paso_x, fy * paso_y - ancho * 0.022, AUTOR)
     c.restoreState()
 
     # ── Pie de página ───────────────────────────────────────────
