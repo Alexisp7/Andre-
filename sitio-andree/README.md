@@ -106,8 +106,8 @@ numeración con la que Andreé los tiene ordenados:
 | V · Variabilidad de la respuesta | 7, 8 | 75 |
 | VI · Desarrollo del medicamento | 9, 10 | 106 |
 | VII · Factores modificadores | 11 | 35 |
-| VIII · Neurotransmisión y psicofármacos | 12, 13, 14, 15, 16, 17, 18 | 360 |
-| IX · Toxicomanías | 19 | 55 |
+| VIII · Neurotransmisores | 12 | 96 |
+| IX · Psicofármacos | 13, 14, 15, 16, 17, 18, 19 | 319 |
 | X · Ética de la práctica farmacológica | 20 | 33 |
 
 ---

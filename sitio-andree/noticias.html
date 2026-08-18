@@ -112,13 +112,13 @@
         }
 
         return '<article class="noticia' + (media ? ' noticia--con-media' : '') + '">' +
-                 '<div class="noticia-meta">' +
-                   '<time datetime="' + limpiar(n.fecha) + '">' + limpiar(fechaLarga(n.fecha)) + '</time>' +
-                   (n.etiqueta ? '<span class="noticia-etiqueta">' + limpiar(n.etiqueta) + '</span>' : '') +
-                 '</div>' +
+                 media +
                  '<div class="noticia-cuerpo">' +
+                   '<div class="noticia-meta">' +
+                     (n.etiqueta ? '<span class="noticia-etiqueta">' + limpiar(n.etiqueta) + '</span>' : '') +
+                     '<time datetime="' + limpiar(n.fecha) + '">' + limpiar(fechaLarga(n.fecha)) + '</time>' +
+                   '</div>' +
                    '<h3 class="noticia-titulo">' + limpiar(n.titulo) + '</h3>' +
-                   media +
                    '<p class="noticia-texto">' + limpiar(n.texto) + '</p>' +
                    temas +
                    enlace +
