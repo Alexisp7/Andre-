@@ -1916,23 +1916,28 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
 }
-.visor-paginas {
-  font-family: 'Space Mono', monospace; font-size: 10px;
-  color: rgba(255,255,255,0.4); letter-spacing: 0.1em; white-space: nowrap;
-}
-
 .visor-zona { position: relative; background: var(--bg-off); padding: 40px 24px 64px; }
 
-.visor-lienzos {
-  position: relative;
-  max-width: 1060px; margin: 0 auto;
-  display: flex; flex-direction: column; gap: 26px;
+/* Visor tipo folio: una página a la vez, con botones a los lados y
+   deslizamiento rápido al cambiar de página. */
+.visor-folio {
+  max-width: 1140px; margin: 0 auto;
+  display: flex; align-items: center; gap: 16px;
+}
+.visor-viewport {
+  position: relative; flex: 1; min-width: 0;
+  overflow: hidden;
   -webkit-user-select: none; user-select: none;
+  transition: height 0.32s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.visor-carrusel {
+  display: flex; align-items: flex-start;
+  transition: transform 0.32s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* Marca de agua propia del visor: cubre solo la zona de lectura (se
-   desplaza con las páginas), independiente de la que ya llevan los PDF
-   incrustada. No se extiende al pie de página. */
+/* Marca de agua propia del visor: cubre la zona de lectura visible,
+   independiente de la que ya llevan los PDF incrustada. No se
+   desliza con las páginas ni se extiende al pie de página. */
 .visor-marca-agua {
   position: absolute; inset: 0;
   pointer-events: none; z-index: 5;
@@ -1941,16 +1946,32 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-hoja {
   position: relative;
+  flex: 0 0 100%; max-width: 100%;
   background: var(--white);
   border: 0.5px solid var(--border);
   box-shadow: 0 10px 30px -18px rgba(20,35,61,0.30);
   line-height: 0;
 }
-.visor-hoja canvas { display: block; pointer-events: none; }
-.visor-num {
-  position: absolute; right: 10px; bottom: 8px;
-  font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em;
-  color: var(--gray-light); line-height: 1;
+.visor-hoja canvas { display: block; pointer-events: none; width: 100%; height: auto; }
+
+.visor-nav {
+  flex: none;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  color: var(--ink); cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+}
+.visor-nav svg { width: 18px; height: 18px; }
+.visor-nav:hover:not(:disabled) { color: var(--gold); border-color: var(--gold); }
+.visor-nav:disabled { opacity: 0.25; cursor: default; }
+
+.visor-indicador {
+  max-width: 1140px; margin: 16px auto 0;
+  text-align: center;
+  font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray-light);
 }
 
 .visor-vistas[hidden] { display: none; }
@@ -1993,9 +2014,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   .visor-titulos { width: 100%; }
   .visor-titulo { font-size: 20px; }
   .visor-titulo-fila { gap: 12px; }
-  .visor-paginas { width: 100%; }
   .visor-zona { padding: 24px 14px 48px; }
-  .visor-lienzos { gap: 16px; }
+  .visor-folio { gap: 8px; }
+  .visor-nav { width: 34px; height: 34px; }
+  .visor-nav svg { width: 15px; height: 15px; }
 }
 
 
@@ -2099,7 +2121,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 
 .escudo img {
-  height: 80px; width: auto; max-width: 100%; object-fit: contain;
+  height: 96px; width: auto; max-width: 100%; object-fit: contain;
   transition: transform 0.35s ease;
 }
 .escudo:hover img { transform: scale(1.05); }
@@ -2115,7 +2137,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 @media (max-width: 820px) {
   .escudos--seis, .escudos--cuatro { grid-template-columns: repeat(2, 1fr); }
   .escudo { padding: 0 12px; }
-  .escudo img { height: 60px; }
+  .escudo img { height: 72px; }
 }
 
 @media (max-width: 900px) {
