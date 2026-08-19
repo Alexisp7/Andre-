@@ -103,14 +103,6 @@
                   '</figure>';
         }
 
-        /* Temas: los hashtags, escritos como se leen. */
-        var temas = '';
-        if (n.temas && n.temas.length) {
-          temas = '<ul class="noticia-temas">' + n.temas.map(function (t) {
-            return '<li>' + limpiar(t) + '</li>';
-          }).join('') + '</ul>';
-        }
-
         return '<article class="noticia' + (media ? ' noticia--con-media' : '') + '">' +
                  media +
                  '<div class="noticia-cuerpo">' +
@@ -120,7 +112,6 @@
                    '</div>' +
                    '<h3 class="noticia-titulo">' + limpiar(n.titulo) + '</h3>' +
                    '<p class="noticia-texto">' + limpiar(n.texto) + '</p>' +
-                   temas +
                    enlace +
                  '</div>' +
                '</article>';
