@@ -2661,8 +2661,8 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .contacto-perfiles .perfil-icono { color: var(--gold); }
 .contacto-perfiles .perfil:hover {
-  color: var(--white); border-color: var(--gold);
-  background: rgba(255,255,255,0.06);
+  color: var(--black); border-color: var(--white);
+  background: var(--white);
   box-shadow: none;
 }
-.contacto-perfiles .perfil:hover .perfil-icono { color: var(--gold); }
+.contacto-perfiles .perfil:hover .perfil-icono { color: var(--black); }
