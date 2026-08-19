@@ -1719,6 +1719,17 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   background: var(--ink);
 }
 
+.library-hero-video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  pointer-events: none;
+}
+.library-hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: rgba(20, 35, 61, 0.62);
+  pointer-events: none;
+}
+
 .library-hero-inner {
   position: relative; z-index: 2;
   max-width: 980px; margin: 0 auto; width: 100%;
@@ -1739,21 +1750,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-neurona { animation: none; opacity: 0.52; }
-  .hero-neurona.der { opacity: 0.46; }
+  .library-hero-video { display: none; }
 }
 
-@media (max-width: 1024px) {
-  .hero-neurona.izq { left: -8vw; width: 240px; }
-  .hero-neurona.der { right: -7vw; width: 260px; }
-}
 @media (max-width: 760px) {
   .library-hero { min-height: 76vh; }
   .library-hero-inner { padding: 56px 24px; }
-  .hero-neurona.izq { left: -14vw; top: 22%; width: 190px; }
-  .hero-neurona.der { right: -13vw; top: 78%; width: 200px; }
-  @keyframes neuronaIn  { from { opacity: 0; } to { opacity: 0.32; } }
-  @keyframes neuronaInB { from { opacity: 0; } to { opacity: 0.30; } }
 }
 
 
