@@ -1897,15 +1897,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   transition: transform 0.32s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* Marca de agua propia del visor: cubre la zona de lectura visible,
-   independiente de la que ya llevan los PDF incrustada. No se
-   desliza con las páginas ni se extiende al pie de página. */
-.visor-marca-agua {
-  position: absolute; inset: 0;
-  pointer-events: none; z-index: 5;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27420%27%20height%3D%27260%27%3E%3Ctext%20x%3D%270%27%20y%3D%27140%27%20font-family%3D%27Georgia%2C%20serif%27%20font-style%3D%27italic%27%20font-size%3D%2727%27%20fill%3D%27rgba%2817%2C17%2C17%2C0.13%29%27%20transform%3D%27rotate%28-30%20210%20130%29%27%20text-anchor%3D%27middle%27%3ENeurona%3C%2Ftext%3E%3Ctext%20x%3D%270%27%20y%3D%27168%27%20font-family%3D%27Arial%2C%20sans-serif%27%20font-weight%3D%27700%27%20font-size%3D%2710%27%20letter-spacing%3D%272%27%20fill%3D%27rgba%2817%2C17%2C17%2C0.13%29%27%20transform%3D%27rotate%28-30%20210%20130%29%27%20text-anchor%3D%27middle%27%3EDR.%20ANDRE%C3%89%20SALVATIERRA%3C%2Ftext%3E%3C%2Fsvg%3E");
-  background-repeat: repeat;
-}
 .visor-hoja {
   position: relative;
   flex: 0 0 100%; max-width: 100%;
