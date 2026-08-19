@@ -579,17 +579,15 @@ def build_curso(c):
             if pdf:
                 temas.append(
                     '            <a href="visor.html?doc=%s/%s" class="topic-row">\n'
-                    '              <span class="topic-code">%s</span>\n'
                     '              <span class="topic-name">%s</span>\n'
                     '              %s\n'
-                    '            </a>' % (c["slug"], pdf, code, name, STATUS_READY))
+                    '            </a>' % (c["slug"], pdf, name, STATUS_READY))
             else:
                 temas.append(
                     '            <div class="topic-row">\n'
-                    '              <span class="topic-code">%s</span>\n'
                     '              <span class="topic-name">%s</span>\n'
                     '              %s\n'
-                    '            </div>' % (code, name, STATUS_SOON))
+                    '            </div>' % (name, STATUS_SOON))
         unidades.append(
             '        <div class="unit-block">\n'
             '          <div class="unit-head">\n'
@@ -702,7 +700,6 @@ def build_apuntes():
                 rows.append(
                     '        <a href="visor.html?doc=%s/%s" class="note-row"\n'
                     '           data-course="%s" data-search="%s">\n'
-                    '          <span class="note-idx">%02d</span>\n'
                     '          <span class="note-main">\n'
                     '            <span class="note-title">%s</span>\n'
                     '            <span class="note-sub">Unidad %s · %s</span>\n'
@@ -710,7 +707,7 @@ def build_apuntes():
                     '          <span class="note-course">%s</span>\n'
                     '          <span class="note-pages">%d pág.</span>\n'
                     '          <span class="note-dl">Leer</span>\n'
-                    '        </a>' % (c["slug"], pdf, c["slug"], busca, i, name,
+                    '        </a>' % (c["slug"], pdf, c["slug"], busca, name,
                                       u["num"], u["nombre"], c["nombre"], pags))
     total = i
 
