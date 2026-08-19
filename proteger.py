@@ -7,7 +7,7 @@ Lee los PDF limpios de ./originales/ y escribe los protegidos en
 sitio-andree/apuntes/<curso>/. Los originales nunca se tocan, así que
 el script se puede volver a ejecutar sin que la marca se acumule.
 """
-import io, os, secrets
+import io, math, os, secrets
 
 from pypdf import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
@@ -45,7 +45,7 @@ AUTOR = "Dr. Andreé Salvatierra"
 AVISO = "Apuntes de libre distribución con atribución"
 
 # Intensidad de la marca. Subir = más visible.
-OPACIDAD_DIAGONAL = 0.11
+OPACIDAD_DIAGONAL = 0.08
 OPACIDAD_PIE      = 0.42
 
 
@@ -56,25 +56,39 @@ def capa(ancho, alto):
     logo = ImageReader(LOGO)
     prop = 0.276250          # alto/ancho del logotipo
 
-    # ── Diagonal repetida: el logotipo "Neurona" grande, semitransparente
-    #    pero bien sólido. La opacidad alta (no el tamaño de la marca) es
-    #    lo que la hace resistir si alguien le sube el brillo o el
-    #    contraste a una copia de la página.
+    # ── Diagonal repetida: solo el logotipo "Neurona", sin el nombre
+    #    debajo de cada copia. Cada copia se rota sobre su propio
+    #    centro y solo se dibuja si cabe entera dentro de la página:
+    #    así ninguna queda cortada por el borde (se vería "eurona" en
+    #    vez de "Neurona" si se permitiera el recorte).
+    ANGULO = 32
+    rad = math.radians(ANGULO)
+    cos_a, sin_a = abs(math.cos(rad)), abs(math.sin(rad))
+    anchoLogo = ancho * 0.26
+    altoLogo = anchoLogo * prop
+    mitadAncho = (anchoLogo * cos_a + altoLogo * sin_a) / 2.0
+    mitadAlto  = (anchoLogo * sin_a + altoLogo * cos_a) / 2.0
+
+    x_ini, x_fin = mitadAncho, ancho - mitadAncho
+    y_ini, y_fin = mitadAlto, alto - mitadAlto
+    columnas, filas = 3, 3
+
     c.saveState()
     c.setFillAlpha(OPACIDAD_DIAGONAL)
-    c.translate(ancho / 2.0, alto / 2.0)
-    c.rotate(32)
-    paso_x, paso_y = ancho * 0.62, alto * 0.34
-    anchoLogo = ancho * 0.34
-    for fx in (-1.5, -0.5, 0.5, 1.5):
-        for fy in (-1.5, -0.5, 0.5, 1.5):
-            c.drawImage(logo,
-                        fx * paso_x - anchoLogo / 2.0,
-                        fy * paso_y,
-                        width=anchoLogo, height=anchoLogo * prop,
-                        mask="auto")
-            c.setFont("Helvetica", ancho * 0.016)
-            c.drawCentredString(fx * paso_x, fy * paso_y - ancho * 0.022, AUTOR)
+    for i in range(columnas):
+        gx = x_ini + (x_fin - x_ini) * (i / (columnas - 1))
+        desplazo = anchoLogo * 0.16 if (i % 2) else -anchoLogo * 0.16
+        for j in range(filas):
+            gy = y_ini + (y_fin - y_ini) * (j / (filas - 1))
+            cx_tile = gx + desplazo
+            if cx_tile - mitadAncho < 0 or cx_tile + mitadAncho > ancho:
+                cx_tile = gx
+            c.saveState()
+            c.translate(cx_tile, gy)
+            c.rotate(ANGULO)
+            c.drawImage(logo, -anchoLogo / 2.0, -altoLogo / 2.0,
+                        width=anchoLogo, height=altoLogo, mask="auto")
+            c.restoreState()
     c.restoreState()
 
     # ── Pie de página ───────────────────────────────────────────
@@ -94,17 +108,14 @@ def capa(ancho, alto):
     c.line(margen, altoPie, ancho - margen, altoPie)
     c.restoreState()
 
-    # Todo a la izquierda: la mitad derecha se deja libre porque ahí
-    # va la firma que el propio autor lleva en sus diapositivas.
+    # Solo el logotipo a la izquierda: el nombre ya no se repite aquí
+    # porque el propio autor ya lleva su firma en el lado derecho de
+    # sus diapositivas.
     c.saveState()
     c.setFillAlpha(OPACIDAD_PIE)
     anchoLogoPie = ancho * 0.105
     c.drawImage(logo, margen, altoPie * 0.30,
                 width=anchoLogoPie, height=anchoLogoPie * prop, mask="auto")
-    x = margen + anchoLogoPie + ancho * 0.016
-    c.setFillColorRGB(0, 0, 0)
-    c.setFont("Helvetica", ancho * 0.0125)
-    c.drawString(x, altoPie * 0.38, AUTOR)
     c.restoreState()
 
     c.saveState()
