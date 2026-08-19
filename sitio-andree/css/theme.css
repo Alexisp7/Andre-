@@ -1741,6 +1741,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   font-size: clamp(72px, 12vw, 176px);
   color: var(--gold);
   margin: 0 auto 22px;
+  -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.6);
 }
 
 .library-hero .hero-eyebrow {
