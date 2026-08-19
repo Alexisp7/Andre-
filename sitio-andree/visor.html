@@ -52,18 +52,26 @@
         </div>
         <p class="visor-meta" id="vMeta"></p>
       </div>
-      <div class="visor-paginas" id="vPaginas"></div>
     </div>
   </section>
 
   <section class="visor-zona">
     <div class="visor-aviso" id="vAviso" hidden></div>
-    <div class="visor-lienzos" id="vLienzos" oncontextmenu="return false">
-      <div class="visor-marca-agua" aria-hidden="true"></div>
+    <div class="visor-folio">
+      <button type="button" class="visor-nav visor-nav--prev" id="vPrev" aria-label="Página anterior" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+      </button>
+      <div class="visor-viewport" id="vViewport" oncontextmenu="return false">
+        <div class="visor-marca-agua" aria-hidden="true"></div>
+        <div class="visor-carrusel" id="vLienzos"></div>
+      </div>
+      <button type="button" class="visor-nav visor-nav--next" id="vNext" aria-label="Página siguiente" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+      </button>
     </div>
+    <p class="visor-indicador" id="vIndicador"></p>
     <p class="visor-pie">
-      Material del Dr. Andreé Salvatierra. Uso educativo; prohibida su
-      descarga, reproducción y distribución.
+      Material del Dr. Andreé Salvatierra. Uso educativo.
       <span class="visor-pie-copy">© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución</span>
     </p>
   </section>
@@ -73,11 +81,43 @@
     var CATALOGO = {"psicofarmacologia/01-introduccion-psicofarmacologia.pdf": {"titulo": "Introducción a la psicofarmacología", "curso": "Psicofarmacología", "unidad": "Unidad I · Introducción a la psicofarmacología", "paginas": 9}, "psicofarmacologia/02-psicofarmacologia.pdf": {"titulo": "Psicofarmacología y neurotransmisión química", "curso": "Psicofarmacología", "unidad": "Unidad I · Introducción a la psicofarmacología", "paginas": 11}, "psicofarmacologia/03-biologia-celular.pdf": {"titulo": "Biología celular", "curso": "Psicofarmacología", "unidad": "Unidad II · Bases celulares y moleculares", "paginas": 53}, "psicofarmacologia/04-biologia-molecular.pdf": {"titulo": "Biología molecular", "curso": "Psicofarmacología", "unidad": "Unidad II · Bases celulares y moleculares", "paginas": 41}, "psicofarmacologia/05-farmacocinetica.pdf": {"titulo": "Farmacocinética: absorción, distribución, metabolismo y excreción", "curso": "Psicofarmacología", "unidad": "Unidad III · Farmacocinética", "paginas": 93}, "psicofarmacologia/06-farmacodinamia.pdf": {"titulo": "Farmacodinamia: ligando, receptor y efecto farmacológico", "curso": "Psicofarmacología", "unidad": "Unidad IV · Farmacodinamia", "paginas": 43}, "psicofarmacologia/07-farmacolomica.pdf": {"titulo": "Farmacolómica: genómica, transcriptómica y proteómica del fármaco", "curso": "Psicofarmacología", "unidad": "Unidad V · Variabilidad de la respuesta", "paginas": 43}, "psicofarmacologia/08-respuesta-clinica.pdf": {"titulo": "Respuesta clínica a fármacos", "curso": "Psicofarmacología", "unidad": "Unidad V · Variabilidad de la respuesta", "paginas": 32}, "psicofarmacologia/09-desarrollo-medicamentos.pdf": {"titulo": "Desarrollo de un medicamento: del laboratorio al ensayo clínico", "curso": "Psicofarmacología", "unidad": "Unidad VI · Desarrollo del medicamento", "paginas": 84}, "psicofarmacologia/10-bioequivalentes-biosimilares.pdf": {"titulo": "Bioequivalentes y biosimilares", "curso": "Psicofarmacología", "unidad": "Unidad VI · Desarrollo del medicamento", "paginas": 22}, "psicofarmacologia/11-factores-modificadores.pdf": {"titulo": "Factores que modifican la respuesta farmacológica", "curso": "Psicofarmacología", "unidad": "Unidad VII · Factores modificadores", "paginas": 35}, "psicofarmacologia/12-neurotransmisores.pdf": {"titulo": "Neurotransmisores", "curso": "Psicofarmacología", "unidad": "Unidad VIII · Neurotransmisores", "paginas": 96}, "psicofarmacologia/13-ansioliticos.pdf": {"titulo": "Ansiolíticos", "curso": "Psicofarmacología", "unidad": "Unidad IX · Psicofármacos", "paginas": 40}, "psicofarmacologia/14-antidepresivos.pdf": {"titulo": "Antidepresivos", "curso": "Psicofarmacología", "unidad": "Unidad IX · Psicofármacos", "paginas": 57}, "psicofarmacologia/15-antipsicoticos.pdf": {"titulo": "Antipsicóticos", "curso": "Psicofarmacología", "unidad": "Unidad IX · Psicofármacos", "paginas": 56}, "psicofarmacologia/16-hipnoticos.pdf": {"titulo": "Hipnóticos", "curso": "Psicofarmacología", "unidad": "Unidad IX · Psicofármacos", "paginas": 33}, "psicofarmacologia/17-estabilizadores-humor.pdf": {"titulo": "Estabilizadores del humor", "curso": "Psicofarmacología", "unidad": "Unidad IX · Psicofármacos", "paginas": 14}, "psicofarmacologia/18-psicoestimulantes.pdf": {"titulo": "Psicoestimulantes", "curso": "Psicofarmacología", "unidad": "Unidad IX · Psicofármacos", "paginas": 64}, "psicofarmacologia/19-toxicomanias.pdf": {"titulo": "Toxicomanías", "curso": "Psicofarmacología", "unidad": "Unidad IX · Psicofármacos", "paginas": 55}, "psicofarmacologia/20-etica.pdf": {"titulo": "Ética", "curso": "Psicofarmacología", "unidad": "Unidad X · Ética de la práctica farmacológica", "paginas": 33}};
 
     (function () {
-      var zona    = document.getElementById('vLienzos');
-      var aviso   = document.getElementById('vAviso');
-      var titulo  = document.getElementById('vTitulo');
-      var meta    = document.getElementById('vMeta');
-      var contador= document.getElementById('vPaginas');
+      var zona      = document.getElementById('vLienzos');
+      var viewport  = document.getElementById('vViewport');
+      var aviso     = document.getElementById('vAviso');
+      var titulo    = document.getElementById('vTitulo');
+      var meta      = document.getElementById('vMeta');
+      var vPrev     = document.getElementById('vPrev');
+      var vNext     = document.getElementById('vNext');
+      var vIndicador= document.getElementById('vIndicador');
+
+      /* Visor tipo folio: una página a la vez, con deslizamiento
+         rápido hacia el lado correspondiente al cambiar de página. */
+      var hojas = [];
+      var indice = 0;
+      var totalPaginas = 0;
+
+      function medirAltura() {
+        var activa = hojas[indice];
+        if (activa) viewport.style.height = activa.offsetHeight + 'px';
+      }
+
+      function irA(n) {
+        if (!totalPaginas) return;
+        indice = Math.max(0, Math.min(totalPaginas - 1, n));
+        zona.style.transform = 'translateX(-' + (indice * 100) + '%)';
+        vPrev.disabled = indice <= 0;
+        vNext.disabled = indice >= totalPaginas - 1;
+        vIndicador.textContent = (indice + 1) + ' / ' + totalPaginas;
+        medirAltura();
+      }
+
+      vPrev.addEventListener('click', function () { irA(indice - 1); });
+      vNext.addEventListener('click', function () { irA(indice + 1); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') irA(indice - 1);
+        else if (e.key === 'ArrowRight') irA(indice + 1);
+      });
+      window.addEventListener('resize', medirAltura);
 
       function fallo(txt) {
         aviso.hidden = false; aviso.textContent = txt;
@@ -92,7 +132,6 @@
 
       titulo.textContent = ficha.titulo;
       meta.textContent = ficha.curso + ' · ' + ficha.unidad;
-      contador.textContent = ficha.paginas + ' pág.';
       document.title = ficha.titulo + ' — Neurona';
 
       /* Contador de vistas (requiere el backend de Vercel; en GitHub Pages
@@ -118,6 +157,7 @@
 
       pdfjsLib.getDocument({ url: 'apuntes/' + doc, password: '' }).promise.then(function (pdf) {
         var ancho = zona.clientWidth || 900;
+        totalPaginas = pdf.numPages;
         var cadena = Promise.resolve();
         for (var n = 1; n <= pdf.numPages; n++) {
           (function (n) {
@@ -131,10 +171,10 @@
                 var lienzo = document.createElement('canvas');
                 lienzo.width = vista.width; lienzo.height = vista.height;
                 lienzo.style.width = '100%'; lienzo.style.height = 'auto';
-                var num = document.createElement('span');
-                num.className = 'visor-num'; num.textContent = n + ' / ' + pdf.numPages;
-                hoja.appendChild(lienzo); hoja.appendChild(num);
+                hoja.appendChild(lienzo);
                 zona.appendChild(hoja);
+                hojas[n - 1] = hoja;
+                if (n === 1) irA(0);
 
                 return pagina.render({
                   canvasContext: lienzo.getContext('2d', { alpha: false }),

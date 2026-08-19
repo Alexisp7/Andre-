@@ -56,18 +56,29 @@ def capa(ancho, alto):
     logo = ImageReader(LOGO)
     prop = 0.276250          # alto/ancho del logotipo
 
-    # ── Diagonal repetida: solo el logotipo "Neurona", sin el nombre
-    #    debajo de cada copia. Cada copia se rota sobre su propio
-    #    centro y solo se dibuja si cabe entera dentro de la página:
-    #    así ninguna queda cortada por el borde (se vería "eurona" en
-    #    vez de "Neurona" si se permitiera el recorte).
+    # ── Diagonal repetida: el logotipo "Neurona" con "Salvatierra"
+    #    debajo, en cada copia. Cada copia (logo + nombre) se rota
+    #    sobre su propio centro y solo se dibuja si cabe entera dentro
+    #    de la página: así ninguna queda cortada por el borde.
     ANGULO = 32
     rad = math.radians(ANGULO)
-    cos_a, sin_a = abs(math.cos(rad)), abs(math.sin(rad))
+    NOMBRE = "Salvatierra"
+    FUENTE_NOMBRE = "Helvetica"
     anchoLogo = ancho * 0.26
     altoLogo = anchoLogo * prop
-    mitadAncho = (anchoLogo * cos_a + altoLogo * sin_a) / 2.0
-    mitadAlto  = (anchoLogo * sin_a + altoLogo * cos_a) / 2.0
+    tamNombre = anchoLogo * 0.072
+    espacio = altoLogo * 0.24
+    anchoNombre = c.stringWidth(NOMBRE, FUENTE_NOMBRE, tamNombre)
+
+    # Caja local del contenido (logo arriba, nombre debajo), medida
+    # desde el punto de rotación (el centro vertical del logo).
+    mitadAnchoCaja = max(anchoLogo, anchoNombre) / 2.0
+    yArriba = altoLogo / 2.0
+    yAbajo = -(altoLogo / 2.0 + espacio + tamNombre)
+    esquinasLocales = ((-mitadAnchoCaja, yArriba), (mitadAnchoCaja, yArriba),
+                        (-mitadAnchoCaja, yAbajo), (mitadAnchoCaja, yAbajo))
+    mitadAncho = max(abs(lx * math.cos(rad) - ly * math.sin(rad)) for lx, ly in esquinasLocales)
+    mitadAlto  = max(abs(lx * math.sin(rad) + ly * math.cos(rad)) for lx, ly in esquinasLocales)
 
     x_ini, x_fin = mitadAncho, ancho - mitadAncho
     y_ini, y_fin = mitadAlto, alto - mitadAlto
@@ -75,6 +86,7 @@ def capa(ancho, alto):
 
     c.saveState()
     c.setFillAlpha(OPACIDAD_DIAGONAL)
+    c.setFont(FUENTE_NOMBRE, tamNombre)
     for i in range(columnas):
         gx = x_ini + (x_fin - x_ini) * (i / (columnas - 1))
         desplazo = anchoLogo * 0.16 if (i % 2) else -anchoLogo * 0.16
@@ -88,6 +100,7 @@ def capa(ancho, alto):
             c.rotate(ANGULO)
             c.drawImage(logo, -anchoLogo / 2.0, -altoLogo / 2.0,
                         width=anchoLogo, height=altoLogo, mask="auto")
+            c.drawCentredString(0, -(altoLogo / 2.0 + espacio + tamNombre * 0.72), NOMBRE)
             c.restoreState()
     c.restoreState()
 
