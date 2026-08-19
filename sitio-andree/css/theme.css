@@ -2671,13 +2671,14 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* Perfiles académicos, alojados aquí junto a los datos de contacto */
 .contacto-perfiles { margin-top: 22px; }
 .contacto-perfiles .perfil {
-  color: rgba(255,255,255,0.75);
-  border-color: rgba(255,255,255,0.22);
-}
-.contacto-perfiles .perfil-icono { color: var(--gold); }
-.contacto-perfiles .perfil:hover {
-  color: var(--black); border-color: var(--white);
+  color: var(--ink);
   background: var(--white);
+  border-color: var(--white);
+}
+.contacto-perfiles .perfil-icono { color: var(--ink); }
+.contacto-perfiles .perfil:hover {
+  color: var(--ink); border-color: var(--gold);
+  background: var(--gold);
   box-shadow: none;
 }
-.contacto-perfiles .perfil:hover .perfil-icono { color: var(--black); }
+.contacto-perfiles .perfil:hover .perfil-icono { color: var(--ink); }
