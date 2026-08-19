@@ -45,7 +45,7 @@ AUTOR = "Dr. Andreé Salvatierra"
 AVISO = "Apuntes de libre distribución con atribución"
 
 # Intensidad de la marca. Subir = más visible.
-OPACIDAD_DIAGONAL = 0.16
+OPACIDAD_DIAGONAL = 0.11
 OPACIDAD_PIE      = 0.42
 
 
@@ -108,11 +108,10 @@ def capa(ancho, alto):
     c.restoreState()
 
     c.saveState()
-    c.setFillAlpha(0.30)
+    c.setFillAlpha(1.0)
     c.setFillColorRGB(0, 0, 0)
     c.setFont("Helvetica", ancho * 0.0105)
-    c.drawString(x + c.stringWidth(AUTOR, "Helvetica", ancho * 0.0125) + ancho * 0.016,
-                 altoPie * 0.38, AVISO)
+    c.drawCentredString(ancho / 2.0, altoPie * 0.38, AVISO)
     c.restoreState()
 
     c.showPage()
