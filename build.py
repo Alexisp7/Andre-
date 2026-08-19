@@ -247,6 +247,9 @@ def page(title, desc, active, body, body_class=""):
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>%s</title>
   <meta name="description" content="%s"/>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  <link rel="icon" href="favicon.png" sizes="32x32" type="image/png"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
   %s
   <link rel="stylesheet" href="css/theme.css"/>
 </head>
