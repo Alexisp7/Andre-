@@ -1305,7 +1305,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .page-hero-inner { max-width:1280px; margin:0 auto; position:relative; z-index:2; }
 .page-hero-title {
   font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:700;
-  color:var(--white); letter-spacing:-0.02em; line-height:1.05; margin-bottom:16px;
+  font-style:italic; color:var(--gold); letter-spacing:-0.02em; line-height:1.05; margin-bottom:16px;
 }
 .page-hero-title em { font-style:italic; font-weight:500; color:var(--gold); }
 .page-hero-sub {
@@ -2589,20 +2589,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .noticia-media--video video { transform: none !important; }
 
 /* Los hashtags, escritos como se leen */
-.noticia-temas {
-  list-style: none; display: flex; flex-wrap: wrap; gap: 6px;
-  margin: 10px 0 0; padding: 0;
-}
-.noticia-temas li {
-  font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--gray-light);
-  padding: 5px 9px;
-  border: 0.5px solid var(--border);
-  transition: color 0.25s ease, border-color 0.25s ease;
-}
-.noticia:hover .noticia-temas li { color: var(--gray); border-color: var(--blue-soft); }
-
 /* ══════════════════════════════════════════
    MENÚ MÓVIL (gana sobre las reglas de hover
    del menú desplegable, definidas más arriba)
