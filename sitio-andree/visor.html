@@ -18,10 +18,7 @@
   <header class="header">
     <div class="header-inner">
       <a href="index.html" class="logo-group logo-link" aria-label="Ir al inicio">
-        <div class="site-logo">
-          <span class="marca-neurona site-logo-marca">Neurona</span>
-          <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
-        </div>
+        <img class="site-logo-img" src="img/logo-header.webp" alt="Neurona — material educativo en neurociencias" width="899" height="522"/>
       </a>
       <nav class="main-nav" id="mainNav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html">Cursos</a><span class="nav-submenu"><a href="psicofarmacologia.html">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html">Noticias</a></nav>
       <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
@@ -67,7 +64,7 @@
       </button>
     </div>
     <p class="visor-pie">
-      <span class="visor-pie-copy">Dr. Andreé Salvatierra | Material académico de uso educativo</span>
+      <span class="visor-pie-copy"><span class="visor-pie-nombre">Dr. Andreé Salvatierra</span><span class="visor-pie-sep"> | </span><span class="visor-pie-material">Material académico de uso educativo</span></span>
     </p>
   </section>
 
@@ -113,6 +110,16 @@
 
       var ICONO_EXPANDIR = '<path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4"/>';
       var ICONO_CONTRAER = '<path d="M9 4v4a1 1 0 0 1-1 1H4M15 4v4a1 1 0 0 1 1 1h4M9 20v-4a1 1 0 0 0-1-1H4M15 20v-4a1 1 0 0 1 1-1h4"/>';
+      var ICONO_X = '<path d="M6 6l12 12M18 6 6 18"/>';
+
+      /* En celulares, al girar a horizontal conviene ver el apunte a
+         pantalla completa sin tener que buscar el botón: se activa sola.
+         Solo en pantallas angostas y táctiles, para no interferir si
+         alguien simplemente angosta la ventana en un navegador de
+         escritorio. */
+      var esTactil = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      var mqLandscapeMovil = window.matchMedia('(max-width: 930px) and (orientation: landscape)');
+      function landscapeMovilActivo() { return esTactil && mqLandscapeMovil.matches; }
 
       function pseudoActivo() { return viewport.classList.contains('pseudo-fullscreen'); }
       function enPantallaCompleta() { return document.fullscreenElement === viewport || pseudoActivo(); }
@@ -126,7 +133,7 @@
            siempre haya cómo salir. */
         document.documentElement.classList.toggle('visor-modo-presentacion', activo);
         vPantallaCompleta.setAttribute('aria-label', activo ? 'Salir de pantalla completa' : 'Modo presentación');
-        vPantallaCompleta.querySelector('svg').innerHTML = activo ? ICONO_CONTRAER : ICONO_EXPANDIR;
+        vPantallaCompleta.querySelector('svg').innerHTML = !activo ? ICONO_EXPANDIR : (landscapeMovilActivo() ? ICONO_X : ICONO_CONTRAER);
         if (activo) {
           /* En pantalla completa el alto lo controla el CSS de :fullscreen
              (o su alternativa por clase), no la medida de la página activa. */
@@ -147,25 +154,31 @@
         actualizarBoton();
       }
 
-      vPantallaCompleta.addEventListener('click', function () {
-        if (!enPantallaCompleta()) {
-          /* En algunos navegadores de Android (sobre todo dentro de apps
-             o WebViews) la Fullscreen API existe pero está deshabilitada,
-             o la promesa se rechaza sin avisar: si eso pasa, se simula
-             el mismo modo con una superposición fija por CSS. */
-          if (document.fullscreenEnabled && viewport.requestFullscreen) {
-            var resultado = viewport.requestFullscreen();
-            if (resultado && typeof resultado.catch === 'function') {
-              resultado.catch(activarPseudoPantallaCompleta);
-            }
-          } else {
-            activarPseudoPantallaCompleta();
+      function entrarPantallaCompleta() {
+        /* En algunos navegadores de Android (sobre todo dentro de apps o
+           WebViews) la Fullscreen API existe pero está deshabilitada, o
+           su promesa se rechaza sin avisar: si eso pasa, se simula el
+           mismo modo con una superposición fija por CSS. */
+        if (document.fullscreenEnabled && viewport.requestFullscreen) {
+          var resultado = viewport.requestFullscreen();
+          if (resultado && typeof resultado.catch === 'function') {
+            resultado.catch(activarPseudoPantallaCompleta);
           }
-        } else if (document.fullscreenElement) {
-          if (document.exitFullscreen) document.exitFullscreen();
         } else {
+          activarPseudoPantallaCompleta();
+        }
+      }
+      function salirPantallaCompletaCualquiera() {
+        if (document.fullscreenElement) {
+          if (document.exitFullscreen) document.exitFullscreen();
+        } else if (pseudoActivo()) {
           salirPseudoPantallaCompleta();
         }
+      }
+
+      vPantallaCompleta.addEventListener('click', function () {
+        if (!enPantallaCompleta()) entrarPantallaCompleta();
+        else salirPantallaCompletaCualquiera();
       });
       document.addEventListener('fullscreenchange', function () {
         if (!pseudoActivo()) actualizarBoton();
@@ -176,6 +189,16 @@
         else if (e.key === 'Escape' && pseudoActivo()) salirPseudoPantallaCompleta();
       });
       window.addEventListener('resize', medirAltura);
+
+      if (esTactil && mqLandscapeMovil.addEventListener) {
+        mqLandscapeMovil.addEventListener('change', function (e) {
+          if (totalPaginas) {
+            if (e.matches && !enPantallaCompleta()) entrarPantallaCompleta();
+            else if (!e.matches && enPantallaCompleta()) salirPantallaCompletaCualquiera();
+          }
+          actualizarBoton();
+        });
+      }
 
       function fallo(txt) {
         aviso.hidden = false; aviso.textContent = txt;
