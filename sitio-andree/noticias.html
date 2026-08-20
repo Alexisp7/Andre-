@@ -76,7 +76,8 @@
       destino.innerHTML = entradas.map(function (n) {
         var enlace = n.enlace
           ? '<a class="noticia-enlace" href="' + limpiar(n.enlace) +
-            '" target="_blank" rel="noopener noreferrer">Ver la publicación</a>'
+            '" target="_blank" rel="noopener noreferrer">Ver la publicación: ' +
+            limpiar(n.titulo) + '</a>'
           : '';
 
         /* Imagen o vídeo, si la entrada lo trae. */
@@ -95,7 +96,8 @@
                   '</figure>';
         }
 
-        return '<article class="noticia' + (media ? ' noticia--con-media' : '') + '">' +
+        return '<article class="noticia' + (media ? ' noticia--con-media' : '') +
+                 (n.enlace ? ' noticia--con-enlace' : '') + '">' +
                  media +
                  '<div class="noticia-cuerpo">' +
                    '<div class="noticia-meta">' +

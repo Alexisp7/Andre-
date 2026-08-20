@@ -1753,7 +1753,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .hero-nombre-linea {
@@ -1772,6 +1772,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
 .hero-nombre-texto {
   display: inline-flex;
+  min-height: 1.2em;
   color: var(--white);
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
@@ -2174,23 +2175,30 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
 .noticias {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 44px 28px;
+  gap: 56px 36px;
 }
 
 .noticia {
   display: flex; flex-direction: column;
   position: relative;
+  padding: 14px;
+  margin: -14px;
+  transition: background 0.25s ease;
 }
+.noticia--con-enlace:hover,
+.noticia--con-enlace:focus-within { background: var(--blue); cursor: pointer; }
 
 .noticia-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .noticia-meta time {
   font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light);
+  transition: color 0.25s ease;
 }
 .noticia-etiqueta {
   font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--white);
   background: var(--blue); padding: 4px 10px;
+  transition: color 0.25s ease, background 0.25s ease;
 }
 
 .noticia-titulo {
@@ -2199,21 +2207,25 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
   transition: color 0.25s ease;
 }
-.noticia:hover .noticia-titulo { color: var(--blue); }
 .noticia-texto {
   font-size: 13.5px; line-height: 1.75; color: var(--gray);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
-}
-.noticia-enlace {
-  display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px;
-  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--black); text-decoration: none;
   transition: color 0.25s ease;
 }
-.noticia-enlace::after { content: '↗'; color: var(--gold); font-size: 12px; }
-.noticia-enlace:hover { color: var(--blue); }
-.noticia-enlace:hover::after { color: var(--blue-mid); }
+/* El enlace no muestra texto: toda la tarjeta es el enlace a la
+   publicación (igual que las referencias de investigación). */
+.noticia-enlace {
+  position: absolute; inset: 0;
+  text-indent: -9999px; overflow: hidden;
+}
+.noticia--con-enlace:hover .noticia-meta time,
+.noticia--con-enlace:hover .noticia-titulo,
+.noticia--con-enlace:hover .noticia-texto {
+  color: var(--white);
+}
+.noticia--con-enlace:hover .noticia-etiqueta {
+  color: var(--blue); background: var(--white);
+}
 
 .noticias-vacio {
   padding: 40px 0; text-align: center; color: var(--gray-light);
