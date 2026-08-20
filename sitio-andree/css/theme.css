@@ -108,6 +108,11 @@ hr.thin-line {
   position: sticky;
   top: 0;
   z-index: 100;
+  /* La propia caja (sin transformar) sigue existiendo aunque su
+     contenido esté oculto arriba en la portada — sin esto, bloquearía
+     los clics del nav flotante que queda "debajo" en ese hueco. Todo lo
+     clicable vive en .header-deslizable, que se lo devuelve. */
+  pointer-events: none;
 }
 
 /* El contenido visual vive en este envoltorio, no directamente en
@@ -117,6 +122,7 @@ hr.thin-line {
    choque con su propio position:sticky. */
 .header-deslizable {
   background: var(--white);
+  pointer-events: auto;
 }
 
 /* Franja griega superior */
@@ -1811,6 +1817,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.14);
 }
 .hero-nav-flotante a {
+  position: relative;
   font-family: 'Space Mono', monospace;
   font-size: 10px;
   font-weight: 700;
@@ -1821,8 +1828,19 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   padding: 8px 20px;
   transition: color 0.28s ease;
 }
+.hero-nav-flotante a::after {
+  content: '';
+  position: absolute; left: 20px; right: 20px; bottom: 4px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
 .hero-nav-flotante a:hover,
 .hero-nav-flotante a.active { color: var(--white); }
+.hero-nav-flotante a:hover::after,
+.hero-nav-flotante a.active::after { transform: scaleX(1); }
 .hero-nav-flotante .hero-nav-sep {
   font-family: 'Cormorant Garamond', serif;
   color: rgba(232, 213, 163, 0.65);
