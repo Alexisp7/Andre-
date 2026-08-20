@@ -31,6 +31,7 @@ body {
   background: var(--white);
   color: var(--dark);
   font-size: 15px;
+  font-weight: 600;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
@@ -338,7 +339,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .hero-bio {
   font-family: 'Cormorant Garamond', serif;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.85;
   color: var(--gray);
   max-width: 480px;
@@ -610,7 +611,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .course-desc {
   font-family: 'Cormorant Garamond', serif;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--gray);
   line-height: 1.75;
   margin-bottom: 24px;
@@ -886,7 +887,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .about-body {
   font-family: 'Cormorant Garamond', serif;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.7;
   color: var(--gray);
   margin-bottom: 18px;
