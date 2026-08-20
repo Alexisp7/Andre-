@@ -1596,7 +1596,6 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 @media (max-width: 900px) {
   .library-hero-inner { grid-template-columns: 1fr; padding: 60px 24px; gap: 44px; }
-  .library-hero-name { font-size: clamp(56px, 16vw, 100px); }
   .library-hero-stats { gap: 28px; flex-wrap: wrap; }
   .library-photo { max-width: 280px; }
   .page-hero { padding: 52px 24px 44px; }
@@ -1737,18 +1736,15 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   text-align: center;
 }
 
-h1.library-hero-name {
-  font-family: 'Playfair Display', 'Cormorant Garamond', serif;
-  font-weight: 700; font-style: normal;
-}
 .library-hero-name {
-  font-size: clamp(72px, 12vw, 176px);
-  color: var(--gold);
-  margin: 0 auto 22px;
-  -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.6);
-  text-shadow:
-    0 0 10px rgba(74, 144, 226, 0.65),
-    0 0 22px rgba(74, 144, 226, 0.4);
+  margin: 0 auto; line-height: 0;
+}
+.library-hero-name img {
+  width: clamp(200px, 20vw, 340px);
+  height: auto;
+  filter:
+    drop-shadow(-1.5px -1.5px 0.5px rgba(255, 255, 255, 0.55))
+    drop-shadow(1.5px 1.5px 1px rgba(0, 0, 0, 0.5));
 }
 
 .library-hero .hero-eyebrow {
