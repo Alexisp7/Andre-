@@ -106,8 +106,6 @@
         vNext.disabled = indice >= totalPaginas - 1;
         vIndicador.textContent = (indice + 1) + ' / ' + totalPaginas;
         medirAltura();
-        observarCanvasActivo();
-        posicionarBotonesLaterales();
       }
 
       vPrev.addEventListener('click', function () { irA(indice - 1); });
@@ -117,9 +115,7 @@
       var ICONO_CONTRAER = '<path d="M9 4v4a1 1 0 0 1-1 1H4M15 4v4a1 1 0 0 1 1 1h4M9 20v-4a1 1 0 0 0-1-1H4M15 20v-4a1 1 0 0 1 1-1h4"/>';
       var ICONO_X = '<path d="M6 6l12 12M18 6 6 18"/>';
 
-      /* En celulares, al girar a horizontal conviene ver el apunte a
-         pantalla completa sin tener que buscar el botón: se activa sola.
-         Solo en pantallas angostas y táctiles, para no interferir si
+      /* Solo en pantallas angostas y táctiles: para no interferir si
          alguien simplemente angosta la ventana en un navegador de
          escritorio. */
       var esTactil = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -128,51 +124,6 @@
 
       function pseudoActivo() { return viewport.classList.contains('pseudo-fullscreen'); }
       function enPantallaCompleta() { return document.fullscreenElement === viewport || pseudoActivo(); }
-
-      /* Los tres botones quedan pegados al borde real de la página:
-         el centro del botón se alinea con el propio borde de la PPT, así
-         que la mitad queda montada encima y la otra mitad afuera, en vez
-         de flotar lejos en el margen negro cuando la página es angosta. */
-      var BORDE_MIN = 6;
-      function posicionarBotonesLaterales() {
-        if (!(enPantallaCompleta() && landscapeMovilActivo())) {
-          vPrev.style.left = '';
-          vNext.style.right = '';
-          vPantallaCompleta.style.top = '';
-          vPantallaCompleta.style.right = '';
-          return;
-        }
-        var activa = hojas[indice];
-        var lienzo = activa && activa.querySelector('canvas');
-        if (!lienzo) return;
-        var rc = lienzo.getBoundingClientRect();
-        if (!rc.width || !rc.height) return;
-        var anchoBtn = vPrev.getBoundingClientRect().width || 38;
-        var anchoX = vPantallaCompleta.getBoundingClientRect().width || 38;
-        var altoX = vPantallaCompleta.getBoundingClientRect().height || 38;
-        var margenIzq = rc.left;
-        var margenDer = window.innerWidth - rc.right;
-        var margenArriba = rc.top;
-        vPrev.style.left = Math.max(BORDE_MIN, margenIzq - anchoBtn / 2) + 'px';
-        vNext.style.right = Math.max(BORDE_MIN, margenDer - anchoBtn / 2) + 'px';
-        vPantallaCompleta.style.right = Math.max(BORDE_MIN, margenDer - anchoX / 2) + 'px';
-        vPantallaCompleta.style.top = Math.max(BORDE_MIN, margenArriba - altoX / 2) + 'px';
-      }
-
-      /* La transición a :fullscreen real no siempre termina de acomodar
-         el tamaño del canvas dentro de un par de fotogramas — así que,
-         además de recalcular al entrar, se observa el propio canvas y se
-         reacomoda cada vez que su tamaño realmente cambia. */
-      var observadorCanvas = typeof ResizeObserver !== 'undefined'
-        ? new ResizeObserver(function () { posicionarBotonesLaterales(); })
-        : null;
-      function observarCanvasActivo() {
-        if (!observadorCanvas) return;
-        observadorCanvas.disconnect();
-        var activa = hojas[indice];
-        var lienzo = activa && activa.querySelector('canvas');
-        if (lienzo) observadorCanvas.observe(lienzo);
-      }
 
       function actualizarBoton() {
         var activo = enPantallaCompleta();
@@ -191,10 +142,6 @@
         } else {
           medirAltura();
         }
-        /* Doble rAF: espera a que el navegador termine de aplicar el
-           layout de :fullscreen (o su clase equivalente) antes de medir
-           dónde quedaron los márgenes reales de la página. */
-        requestAnimationFrame(function () { requestAnimationFrame(posicionarBotonesLaterales); });
       }
 
       function activarPseudoPantallaCompleta() {
@@ -230,19 +177,6 @@
         return Promise.resolve();
       }
 
-      /* En el teléfono del cliente, la Fullscreen API solo "agarra" bien
-         si se pide estando ya en la orientación final: si se activó en
-         vertical y luego se gira a horizontal, el navegador la deja a
-         medias (cubre solo el ancho de la página web, no el teléfono
-         entero). Cerrarla y volver a pedirla, ya en horizontal, fuerza a
-         que el navegador la aplique de nuevo — y esta vez sí, completa. */
-      function reingresarPantallaCompleta() {
-        Promise.resolve(salirPantallaCompletaCualquiera()).then(
-          function () { setTimeout(entrarPantallaCompleta, 80); },
-          function () { setTimeout(entrarPantallaCompleta, 80); }
-        );
-      }
-
       var vGiroAviso = document.getElementById('vGiroAviso');
       var avisoGiroTimeout = null;
       function mostrarAvisoGiro() {
@@ -263,8 +197,7 @@
         if (!enPantallaCompleta()) {
           entrarPantallaCompleta();
           /* Al activarla en vertical, se avisa que conviene girar el
-             teléfono para más resolución; el propio giro dispara el
-             cierre-y-reapertura de arriba. */
+             teléfono para más resolución. */
           if (esTactil && window.innerWidth < 930 && !mqLandscapeMovil.matches) mostrarAvisoGiro();
         } else {
           salirPantallaCompletaCualquiera();
@@ -279,14 +212,18 @@
         else if (e.key === 'ArrowRight') irA(indice + 1);
         else if (e.key === 'Escape' && pseudoActivo()) salirPseudoPantallaCompleta();
       });
-      window.addEventListener('resize', function () { medirAltura(); posicionarBotonesLaterales(); });
+      window.addEventListener('resize', medirAltura);
 
+      /* La Fullscreen API no deja pedirse a sí misma desde este evento
+         (no cuenta como gesto del usuario), así que al girar a horizontal
+         no se reintenta activarla: el navegador ya mantiene sola la
+         pantalla completa real que el usuario haya activado con su
+         propio toque, la reajusta a la nueva orientación. Aquí solo se
+         hace lo que sí es seguro sin gesto: salir al volver a vertical. */
       if (esTactil && mqLandscapeMovil.addEventListener) {
         mqLandscapeMovil.addEventListener('change', function (e) {
           if (totalPaginas) {
             if (e.matches) {
-              if (enPantallaCompleta()) reingresarPantallaCompleta();
-              else entrarPantallaCompleta();
               ocultarAvisoGiro();
             } else if (enPantallaCompleta()) {
               salirPantallaCompletaCualquiera();
