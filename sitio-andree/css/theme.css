@@ -1816,7 +1816,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    nav, exactamente como antes. */
 .hero-nav-boton { display: none; }
 .hero-nav-links { display: contents; }
-.nav-submenu-corchete { display: none; }
 
 /* En celular no caben las 4 pestañas cómodas y a la vista todo el
    tiempo: se esconden detrás de un botón circular, moderno y discreto,
@@ -1850,6 +1849,8 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
   .hero-nav-links {
     display: none;
+    position: relative;
+    justify-content: center;
     justify-items: center; align-items: center;
     grid-template-columns: max-content max-content max-content;
     column-gap: 14px; row-gap: 8px;
@@ -1861,32 +1862,33 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
      filas de tres solo, así que se oculta (sigue contando como el 3er
      separador de la fila de escritorio, donde el wrapper es "contents"). */
   .hero-nav-flotante .hero-nav-break { display: none; }
-  .hero-nav-flotante .nav-desplegable { width: auto; flex-direction: row; position: relative; }
+  .hero-nav-flotante .nav-desplegable { width: auto; flex-direction: row; position: static; }
+  /* "Cursos" se subraya igual que una pestaña activa mientras su
+     submenú está abierto, para conectarlos visualmente sin depender de
+     una forma que los una. El submenú cuelga centrado bajo todo el
+     bloque de pestañas (no bajo "Cursos" en particular, que al estar en
+     la columna derecha lo sacaba de la pantalla). */
+  .hero-nav-flotante .nav-desplegable--abierto > a {
+    color: var(--white);
+  }
+  .hero-nav-flotante .nav-desplegable--abierto > a::after {
+    transform: scaleX(1);
+  }
   .hero-nav-flotante .nav-submenu {
     position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-6px);
-    margin-top: 24px;
+    margin-top: 12px;
     opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
   }
-  .hero-nav-flotante .nav-desplegable--abierto .nav-submenu {
+  /* Especificidad reforzada con el id: sin esto, la regla genérica
+     ".nav-desplegable:focus-within .nav-submenu" (que el propio toque
+     dispara, al enfocar el enlace) empata en especificidad y gana por
+     venir después en la hoja de estilos, pisando el translateX(-50%) y
+     dejando el submenú pegado a su ancla sin recentrar — la causa real
+     de que se fuera fuera de pantalla. */
+  #heroNavFlotante .nav-desplegable--abierto .nav-submenu {
     opacity: 1; visibility: visible; pointer-events: auto;
     transform: translateX(-50%) translateY(0);
-  }
-  /* El corchete conecta visualmente "Cursos" con el submenú superpuesto
-     que se abre debajo, sin empujar al resto de las pestañas. Va fuera
-     de .nav-submenu (que tiene overflow:hidden para el brillo) para que
-     no se lo recorte. */
-  .nav-submenu-corchete {
-    display: block;
-    position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(3px);
-    width: 26px; height: 18px;
-    color: var(--gold);
-    filter: drop-shadow(0 0 3px rgba(232, 213, 163, 0.7));
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.22s ease, visibility 0.22s;
-  }
-  .hero-nav-flotante .nav-desplegable--abierto .nav-submenu-corchete {
-    opacity: 1; visibility: visible;
   }
 }
 
