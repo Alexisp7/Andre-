@@ -155,7 +155,7 @@ hr.thin-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px 48px;
+  padding: 6px 48px;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -1128,7 +1128,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
    RESPONSIVE
 ──────────────────────────────── */
 @media (max-width: 900px) {
-  .header-inner { padding: 16px 24px; position: relative; }
+  .header-inner { padding: 6px 24px; position: relative; }
   .nav-toggle { display: flex; }
 
   nav.main-nav {
@@ -1849,7 +1849,26 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   line-height: 1;
   user-select: none;
 }
-@media (max-width: 900px) { .hero-nav-flotante { display: none; } }
+/* En celular no hay espacio para el mismo tamaño: se achica en vez de
+   ocultarse, para que las pestañas de la portada sigan visibles antes
+   de bajar el scroll (ahí no hay ningún otro menú a la vista). */
+@media (max-width: 900px) {
+  .hero-nav-flotante { padding: 14px 10px; flex-wrap: wrap; row-gap: 4px; }
+  .hero-nav-flotante a { font-size: 8px; letter-spacing: 0.11em; padding: 6px 7px; }
+  .hero-nav-flotante a::after { left: 7px; right: 7px; }
+  .hero-nav-flotante .hero-nav-sep { font-size: 13px; }
+  /* Sin hover real en táctil, el desplegable de Cursos no tiene forma
+     limpia de abrirse aquí (y hereda estilos pensados para el panel del
+     encabezado real): "Cursos" queda como enlace directo, sin submenú.
+     También hereda de ahí un width:100% que lo mandaba solo a su propia
+     línea — se revierte a un enlace corto normal. */
+  .hero-nav-flotante .nav-submenu { display: none; }
+  .hero-nav-flotante .nav-desplegable { width: auto; flex-direction: row; }
+  /* No caben las 4 pestañas en una sola línea: se parte siempre en el
+     mismo punto (Inicio/Cursos arriba, Investigación/Noticias abajo) en
+     vez de dejar que el navegador decida dónde, que quedaba disparejo. */
+  .hero-nav-flotante .hero-nav-break { flex-basis: 100%; height: 0; margin: 0; overflow: hidden; }
+}
 
 /* El desplegable de "Cursos" hereda el mismo estilo blanco sólido del
    encabezado real, que aquí sobre el video se ve fuera de lugar: se le
@@ -1858,9 +1877,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    noticias) al pasar el mouse. */
 .hero-nav-flotante .nav-submenu {
   position: absolute;
-  background: rgba(20, 35, 61, 0.5);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(20, 35, 61, 0.62);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border: 0.5px solid rgba(255, 255, 255, 0.16);
   border-top: 1px solid var(--gold);
   overflow: hidden;
@@ -1904,12 +1923,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* ── Navegación con siete entradas: se aprieta antes de romperse ── */
 @media (max-width: 1420px) {
   nav.main-nav a { padding: 8px 13px; letter-spacing: 0.12em; }
-  .header-inner { padding: 20px 32px; }
+  .header-inner { padding: 6px 32px; }
 }
 @media (max-width: 1180px) {
   nav.main-nav a { padding: 8px 9px; font-size: 9px; letter-spacing: 0.08em; }
   nav.main-nav .nav-sep { display: none; }
-  .header-inner { padding: 18px 24px; }
+  .header-inner { padding: 6px 24px; }
   .site-logo-name { font-size: 22px; }
 }
 
@@ -1961,7 +1980,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* ── Encabezado ── */
 .site-logo-img {
   display: block;
-  height: 44px;
+  height: 38px;
   width: auto;
   transition: opacity 0.3s ease;
 }
@@ -1974,9 +1993,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   margin: -2px 0 4px;
 }
 
-@media (max-width: 1180px) { .site-logo-img { height: 40px; } }
+@media (max-width: 1180px) { .site-logo-img { height: 34px; } }
 @media (max-width: 760px)  {
-  .site-logo-img   { height: 36px; }
+  .site-logo-img   { height: 30px; }
   .footer-marca    { font-size: 46px; }
 }
 
@@ -1990,7 +2009,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-cab-inner {
   max-width: 1180px; margin: 0 auto; padding: 26px 48px;
-  display: flex; align-items: center; gap: 28px;
+  display: flex; flex-direction: column; gap: 10px;
 }
 .visor-volver {
   text-decoration: none;
@@ -2009,14 +2028,17 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   color: var(--white);
 }
 
-.visor-titulos { flex: 1; min-width: 0; }
+/* Fila fija: la flecha y el título siempre empiezan juntos, uno al lado
+   del otro, tanto en escritorio como en celular. */
 .visor-titulo-fila {
-  display: flex; align-items: baseline; flex-wrap: wrap; gap: 20px;
+  display: flex; align-items: center; gap: 20px;
 }
 .visor-titulo {
+  flex: 1; min-width: 0;
   font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600;
-  color: var(--white); line-height: 1.2; margin-bottom: 3px;
+  color: var(--white); line-height: 1.2;
 }
+.visor-titulos { display: flex; flex-direction: column; gap: 6px; }
 .visor-meta {
   font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
@@ -2201,7 +2223,6 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 .visor-vistas[hidden] { display: none; }
 .visor-vistas {
   display: flex; align-items: center; gap: 5px;
-  margin-left: auto;
   font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.38);
 }
@@ -2235,8 +2256,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 
 @media (max-width: 860px) {
-  .visor-cab-inner { padding: 20px 24px; gap: 10px; flex-direction: column; align-items: flex-start; }
-  .visor-titulos { width: 100%; }
+  .visor-cab-inner { padding: 20px 24px; gap: 8px; }
   .visor-titulo { font-size: 20px; }
   .visor-titulo-fila { gap: 12px; }
   .visor-zona { padding: 24px 14px 48px; }
