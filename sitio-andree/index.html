@@ -22,18 +22,23 @@
       <span></span><span></span><span></span>
     </button>
     <div class="hero-nav-links" id="heroNavLinks">
-      <a href="index.html" class="active">Inicio</a>
-      <span class="hero-nav-sep">|</span>
-      <span class="nav-desplegable" id="cursosDesplegable">
-        <a href="materiales.html">Cursos</a>
-        <span class="nav-submenu">
-          <a href="psicofarmacologia.html">Psicofarmacología</a>
+      <span class="hero-nav-mitad">
+        <a href="index.html" class="active">Inicio</a>
+        <span class="hero-nav-sep">|</span>
+        <span class="nav-desplegable" id="cursosDesplegable">
+          <a href="materiales.html">Cursos</a>
+          <span class="nav-submenu">
+            <a href="psicofarmacologia.html">Psicofarmacología</a>
+          </span>
         </span>
       </span>
       <span class="hero-nav-sep hero-nav-break">|</span>
-      <a href="investigacion.html">Investigación</a>
-      <span class="hero-nav-sep">|</span>
-      <a href="noticias.html">Noticias</a>
+      <span class="hero-nav-espaciador" aria-hidden="true"></span>
+      <span class="hero-nav-mitad">
+        <a href="investigacion.html">Investigación</a>
+        <span class="hero-nav-sep">|</span>
+        <a href="noticias.html">Noticias</a>
+      </span>
     </div>
   </nav>
 
@@ -405,7 +410,7 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+      }, { threshold: 0.05, rootMargin: '0px 0px 12% 0px' });
       items.forEach(function (i) { io.observe(i); });
     })();
   </script>
