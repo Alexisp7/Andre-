@@ -62,10 +62,20 @@
 
   <script>
     (function () {
+      var headerFuera = document.getElementById('headerPrincipal');
       var header = document.getElementById('headerDeslizable');
       var heroNav = document.getElementById('heroNavFlotante');
       var hero = document.getElementById('portada');
       if (!header || !hero) return;
+
+      /* El alto real del encabezado (que varía según el ancho de
+         pantalla) se mide y se expone como variable CSS: la portada lo
+         usa para subirse ese mismo tanto y que el video arranque justo
+         desde arriba, sin dejar nunca una franja en blanco encima. */
+      function medirAltoEncabezado() {
+        var alto = (headerFuera || header).offsetHeight;
+        if (alto) document.documentElement.style.setProperty('--header-height', alto + 'px');
+      }
 
       /* El encabezado blanco arranca oculto (corrido hacia arriba) y baja
          a la vista siguiendo el propio scroll del usuario a través de la
@@ -88,9 +98,10 @@
         actualizando = true;
         requestAnimationFrame(actualizar);
       }
+      medirAltoEncabezado();
       actualizar();
       window.addEventListener('scroll', pedirActualizacion, { passive: true });
-      window.addEventListener('resize', pedirActualizacion);
+      window.addEventListener('resize', function () { medirAltoEncabezado(); pedirActualizacion(); });
     })();
   </script>
 

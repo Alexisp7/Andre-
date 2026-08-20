@@ -1716,8 +1716,13 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    ══════════════════════════════════════════ */
 
 .library-hero {
-  min-height: calc(100vh - 76px);
-  min-height: calc(100svh - 76px);
+  /* El video ocupa la pantalla completa desde arriba (por detrás del
+     encabezado, que empieza oculto): se sube con un margen negativo
+     igual al alto real del encabezado, medido por JS, para que nunca
+     quede una franja en blanco encima del video. */
+  margin-top: calc(-1 * var(--header-height, 95px));
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
