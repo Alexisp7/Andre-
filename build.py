@@ -13,17 +13,6 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"/>\n'
          '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>\n'
          '  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=Inter:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>')
 
-NEURON_SVG = '''<span class="logo-neuron">
-          <svg viewBox="0 0 32 32" fill="none" stroke="#C8A96E" stroke-width="1.2" stroke-linecap="round">
-            <circle cx="13" cy="15" r="4.5"/>
-            <circle cx="13" cy="15" r="1.6" fill="#C8A96E" stroke="none"/>
-            <path d="M17.5 15h6.5M24 15l3.5-3M24 15l3.5 3"/>
-            <path d="M9.4 11.8 5.5 7.5M8.5 15H3.5M9.4 18.2 5.5 22.5M13 19.5v5M13 10.5v-5"/>
-            <circle cx="27.5" cy="12" r="1.2" fill="#C8A96E" stroke="none"/>
-            <circle cx="27.5" cy="18" r="1.2" fill="#C8A96E" stroke="none"/>
-          </svg>
-        </span>'''
-
 PLATE = """\
         <svg viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#C8A96E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
 
@@ -188,7 +177,6 @@ def header(active):
     <div class="header-greek-bar"></div>
     <div class="header-inner">
       <div class="logo-group">
-        %s
         <div class="site-logo">
           <span class="marca-neurona site-logo-marca">Neurona</span>
           <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
@@ -197,7 +185,7 @@ def header(active):
       <nav class="main-nav">%s</nav>
     </div>
     <div class="header-border"></div>
-  </header>''' % (NEURON_SVG, nav)
+  </header>''' % nav
 
 
 FOOTER = ('''  <footer class="footer-wrap" id="contacto">
