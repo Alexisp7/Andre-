@@ -54,26 +54,18 @@
       var linea = document.getElementById('heroNombreLinea');
       if (!el) return;
 
-      var POOLS = {
-        latin: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-        greek: 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρστυφχψω',
-        cyrillic: 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯабвгдежзийклмнопрстуфхцчшщэюя',
-        zh: '神经元脑波思考感知记忆意识智能',
-        ja: 'ニューロンアイウエオカキクケコサシスセソ',
-        ko: '뉴런가나다라마바사아자차카타파하'
-      };
-      var ESPANOL = { texto: 'Neurona', clase: 'hero-nombre-final', pool: 'Neuronaeuo' };
+      var ESPANOL = { texto: 'Neurona', clase: 'hero-nombre-final' };
       var IDIOMAS = [
-        { texto: 'Neuron',      clase: '',              pool: POOLS.latin },
-        { texto: 'Neurone',     clase: '',              pool: POOLS.latin },
-        { texto: 'Νευρώνας',    clase: '',              pool: POOLS.greek },
-        { texto: 'Neurônio',    clase: '',              pool: POOLS.latin },
-        { texto: '神经元',       clase: 'hero-nombre-zh', pool: POOLS.zh },
-        { texto: 'Neuron',      clase: '',              pool: POOLS.latin },
-        { texto: 'Neurone',     clase: '',              pool: POOLS.latin },
-        { texto: 'Нейрон',      clase: '',              pool: POOLS.cyrillic },
-        { texto: 'ニューロン',    clase: 'hero-nombre-ja', pool: POOLS.ja },
-        { texto: '뉴런',         clase: 'hero-nombre-ko', pool: POOLS.ko }
+        { texto: 'Neuron',    clase: '' },
+        { texto: 'Neurone',   clase: '' },
+        { texto: 'Νευρώνας',  clase: '' },
+        { texto: 'Neurônio',  clase: '' },
+        { texto: '神经元',     clase: 'hero-nombre-zh' },
+        { texto: 'Neuron',    clase: '' },
+        { texto: 'Neurone',   clase: '' },
+        { texto: 'Нейрон',    clase: '' },
+        { texto: 'ニューロン',  clase: 'hero-nombre-ja' },
+        { texto: '뉴런',       clase: 'hero-nombre-ko' }
       ];
 
       // Secuencia completa: cada idioma seguido de "Neurona" en español,
@@ -92,68 +84,42 @@
         return;
       }
 
-      function pintarPalabra(letras) {
-        el.innerHTML = '';
-        letras.forEach(function (ch) {
-          var s = document.createElement('span');
-          s.className = 'hero-letra';
-          s.textContent = ch;
-          el.appendChild(s);
-        });
+      var BORRADO = 40;   // ms entre cada letra que se borra
+      var ESCRITO = 65;   // ms entre cada letra que se escribe
+      var PAUSA = 2000;   // ms con la palabra completa antes de borrarla
+
+      function borrar(alTerminar) {
+        if (!el.lastElementChild) { alTerminar(); return; }
+        el.removeChild(el.lastElementChild);
+        setTimeout(function () { borrar(alTerminar); }, BORRADO);
       }
-      pintarPalabra(SECUENCIA[0].texto.split(''));
-      el.className = 'hero-nombre-texto' + (SECUENCIA[0].clase ? ' ' + SECUENCIA[0].clase : '');
-      if (linea) linea.classList.toggle('visible', SECUENCIA[0] === ESPANOL);
 
-      var ESPACIADO = 28;    // ms entre el arranque de cada letra
-      var TIC = 45;          // ms entre cada carácter aleatorio del "decodificado"
-      var TICS = 3;          // cuántos caracteres aleatorios antes de asentarse
+      function escribir(letras, i, alTerminar) {
+        if (i >= letras.length) { alTerminar(); return; }
+        var s = document.createElement('span');
+        s.className = 'hero-letra';
+        s.textContent = letras[i];
+        el.appendChild(s);
+        setTimeout(function () { escribir(letras, i + 1, alTerminar); }, ESCRITO);
+      }
 
-      function cambiarLetraPorLetra(item, alTerminar) {
+      function mostrar(item, alTerminar) {
         el.className = 'hero-nombre-texto' + (item.clase ? ' ' + item.clase : '');
         if (linea) linea.classList.toggle('visible', item === ESPANOL);
-        var destino = item.texto.split('');
-        var maxLen = Math.max(el.children.length, destino.length);
-        while (el.children.length < maxLen) {
-          var s = document.createElement('span');
-          s.className = 'hero-letra';
-          el.appendChild(s);
-        }
-        while (el.children.length > maxLen) {
-          el.removeChild(el.lastChild);
-        }
-        var spans = Array.prototype.slice.call(el.children);
-        var faltan = maxLen;
-        spans.forEach(function (span, i) {
-          var destChar = destino[i] || '';
-          setTimeout(function () {
-            var ticks = 0;
-            var iv = setInterval(function () {
-              ticks++;
-              if (ticks < TICS) {
-                span.textContent = destChar
-                  ? item.pool.charAt(Math.floor(Math.random() * item.pool.length))
-                  : span.textContent;
-              } else {
-                clearInterval(iv);
-                span.textContent = destChar;
-                span.style.opacity = destChar ? '1' : '0';
-                faltan--;
-                if (faltan === 0 && alTerminar) alTerminar();
-              }
-            }, TIC);
-          }, i * ESPACIADO);
+        escribir(item.texto.split(''), 0, function () {
+          setTimeout(alTerminar, PAUSA);
         });
       }
 
+      el.innerHTML = '';
       var indice = 0;
-      function siguiente() {
-        indice = (indice + 1) % SECUENCIA.length;
-        cambiarLetraPorLetra(SECUENCIA[indice], function () {
-          setTimeout(siguiente, 1000);
+      function ciclo() {
+        borrar(function () {
+          indice = (indice + 1) % SECUENCIA.length;
+          mostrar(SECUENCIA[indice], ciclo);
         });
       }
-      setTimeout(siguiente, 1200);
+      mostrar(SECUENCIA[0], ciclo);
     })();
   </script>
 
