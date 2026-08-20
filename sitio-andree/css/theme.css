@@ -2226,17 +2226,19 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   }
   html.visor-modo-presentacion .visor-nav {
     position: fixed;
-    background: transparent; border-color: transparent;
-    color: rgba(255,255,255,0.7);
+    background: rgba(17, 17, 17, 0.3); backdrop-filter: blur(7px);
+    border-color: transparent; border-radius: 10px;
+    color: rgba(255,255,255,0.8);
     transition: background 0.15s ease, color 0.15s ease;
   }
   html.visor-modo-presentacion .visor-nav:active {
-    background: rgba(20,35,61,0.55); color: var(--white);
+    background: var(--blue); color: var(--white);
   }
   /* Posición fija (no se recalcula por página): así no "viajan" de un
      lado a otro según el ancho de cada PPT. Ni tan pegados al borde
      (celulares con notch) ni tan lejos — quedan a medio montar sobre el
-     borde de la página, que al ser transparentes no estorba. */
+     borde de la página; el cuadrado borroso de fondo deja ver dónde
+     tocar aunque la página debajo sea clara. */
   html.visor-modo-presentacion .visor-nav--prev { left: 22px; top: 50%; transform: translateY(-50%); }
   html.visor-modo-presentacion .visor-nav--next { right: 22px; top: 50%; transform: translateY(-50%); }
   html.visor-modo-presentacion .visor-nav--inicio {
