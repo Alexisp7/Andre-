@@ -140,8 +140,7 @@
         </div>
 
         <div class="autor-texto">
-          <p class="eyebrow" data-reveal>§ Sobre el autor</p>
-          <h2 class="autor-nombre" data-reveal style="--i:1"><span class="swept-heading" data-sweep>Andreé Salvatierra Baldeón</span></h2>
+          <h2 class="autor-nombre" data-reveal style="--i:1">Andreé Salvatierra Baldeón</h2>
 
           <p class="about-body" data-reveal style="--i:2">Estancia posdoctoral en la unidad de cognición y conducta del Instituto Nacional de Neurología y Neurocirugía de México. Doctor en neurociencias por la Facultad de Medicina de la Universidad Nacional Mayor de San Marcos, especialista en neuropsicología por la Universidad Nacional Federico Villarreal, máster en psicofarmacología por la Universidad de Valencia, máster en farmacología por la Facultad de Medicina de la Universidad Autónoma de Barcelona y psicólogo por la Universidad Continental.</p>
 
@@ -348,7 +347,7 @@
 
   <script>
     (function () {
-      var items = document.querySelectorAll('[data-reveal], [data-sweep]');
+      var items = document.querySelectorAll('[data-reveal]');
       if (!items.length) return;
       if (!('IntersectionObserver' in window)) {
         items.forEach(function (i) { i.classList.add('is-visible'); });
