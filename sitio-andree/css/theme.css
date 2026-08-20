@@ -1748,9 +1748,19 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   line-height: 1.15;
   min-height: 1.3em;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
+.hero-nombre-linea {
+  width: 46px; height: 1.5px;
+  background: var(--white);
+  opacity: 0;
+  margin-bottom: 14px;
+  transition: opacity 0.3s ease;
+}
+.hero-nombre-linea.visible { opacity: 0.7; }
 
 .hero-nombre-texto {
   display: inline-flex;
@@ -1896,13 +1906,16 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   display: flex; align-items: center; gap: 28px;
 }
 .visor-volver {
-  color: rgba(255,255,255,0.55); text-decoration: none;
+  text-decoration: none;
   display: inline-flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; flex: none;
-  transition: color 0.25s ease;
+  width: 38px; height: 38px; flex: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transition: border-color 0.25s ease;
 }
-.visor-volver::before { content: '←'; color: var(--gold); font-size: 20px; }
-.visor-volver:hover { color: var(--gold); }
+.visor-volver::before { content: '←'; color: var(--gold); font-size: 17px; transition: color 0.25s ease; }
+.visor-volver:hover { border-color: rgba(255,255,255,0.8); }
+.visor-volver:hover::before { color: var(--white); }
 
 .visor-titulos { flex: 1; min-width: 0; }
 .visor-titulo-fila {

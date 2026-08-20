@@ -42,6 +42,7 @@
     <div class="library-hero-inner">
       <img class="library-hero-emblem" src="img/logo-emblema.webp" alt="" aria-hidden="true" width="775" height="718"/>
       <h1 class="library-hero-name notranslate" aria-label="Neurona" translate="no">
+        <span class="hero-nombre-linea" id="heroNombreLinea"></span>
         <span class="hero-nombre-texto" id="heroNombreTexto" aria-hidden="true">Neuron</span>
       </h1>
     </div>
@@ -50,6 +51,7 @@
   <script>
     (function () {
       var el = document.getElementById('heroNombreTexto');
+      var linea = document.getElementById('heroNombreLinea');
       if (!el) return;
 
       var POOLS = {
@@ -60,7 +62,7 @@
         ja: 'ニューロンアイウエオカキクケコサシスセソ',
         ko: '뉴런가나다라마바사아자차카타파하'
       };
-      var ESPANOL = { texto: 'Neurona', clase: 'hero-nombre-final', pool: POOLS.latin };
+      var ESPANOL = { texto: 'Neurona', clase: 'hero-nombre-final', pool: 'Neuronaeuo' };
       var IDIOMAS = [
         { texto: 'Neuron',      clase: '',              pool: POOLS.latin },
         { texto: 'Neurone',     clase: '',              pool: POOLS.latin },
@@ -86,6 +88,7 @@
       if (reducido) {
         el.textContent = ESPANOL.texto;
         el.classList.add(ESPANOL.clase);
+        if (linea) linea.classList.add('visible');
         return;
       }
 
@@ -100,6 +103,7 @@
       }
       pintarPalabra(SECUENCIA[0].texto.split(''));
       el.className = 'hero-nombre-texto' + (SECUENCIA[0].clase ? ' ' + SECUENCIA[0].clase : '');
+      if (linea) linea.classList.toggle('visible', SECUENCIA[0] === ESPANOL);
 
       var ESPACIADO = 28;    // ms entre el arranque de cada letra
       var TIC = 45;          // ms entre cada carácter aleatorio del "decodificado"
@@ -107,6 +111,7 @@
 
       function cambiarLetraPorLetra(item, alTerminar) {
         el.className = 'hero-nombre-texto' + (item.clase ? ' ' + item.clase : '');
+        if (linea) linea.classList.toggle('visible', item === ESPANOL);
         var destino = item.texto.split('');
         var maxLen = Math.max(el.children.length, destino.length);
         while (el.children.length < maxLen) {
