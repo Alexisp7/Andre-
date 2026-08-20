@@ -108,7 +108,6 @@ AVISO = "Apuntes de libre distribución con atribución"
 
 # Intensidad de la marca. Subir = más visible.
 OPACIDAD_DIAGONAL = 0.08
-OPACIDAD_PIE      = 0.42
 
 
 def capa(ancho, alto):
@@ -181,16 +180,6 @@ def capa(ancho, alto):
     c.setStrokeAlpha(0.30)
     c.setLineWidth(0.6)
     c.line(margen, altoPie, ancho - margen, altoPie)
-    c.restoreState()
-
-    # Solo el logotipo a la izquierda: el nombre ya no se repite aquí
-    # porque el propio autor ya lleva su firma en el lado derecho de
-    # sus diapositivas.
-    c.saveState()
-    c.setFillAlpha(OPACIDAD_PIE)
-    anchoLogoPie = ancho * 0.105
-    c.drawImage(logo, margen, altoPie * 0.30,
-                width=anchoLogoPie, height=anchoLogoPie * prop, mask="auto")
     c.restoreState()
 
     c.saveState()
