@@ -1737,11 +1737,18 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   text-align: center;
 }
 
+h1.library-hero-name {
+  font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+  font-weight: 700; font-style: normal;
+}
 .library-hero-name {
   font-size: clamp(72px, 12vw, 176px);
   color: var(--gold);
   margin: 0 auto 22px;
   -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.6);
+  text-shadow:
+    0 0 10px rgba(74, 144, 226, 0.65),
+    0 0 22px rgba(74, 144, 226, 0.4);
 }
 
 .library-hero .hero-eyebrow {
