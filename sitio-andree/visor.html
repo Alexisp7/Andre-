@@ -64,6 +64,11 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
       </button>
     </div>
+    <a href="#" class="visor-descargar" id="vDescargar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12m0 0-4.5-4.5M12 16l4.5-4.5"/><path d="M5 19.5h14"/></svg>
+      Descargar PDF
+    </a>
+    <p class="visor-descargar-nota">Documento protegido: solo lectura, con firma digital y marca de agua de Neurona.</p>
     <p class="visor-pie">
       Material del Dr. Andreé Salvatierra. Uso educativo.
       <span class="visor-pie-copy">© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución</span>
@@ -135,6 +140,10 @@
       var paginaCurso = doc.split('/')[0] + '.html';
       vVolver.href = paginaCurso;
       vVolver.textContent = 'Volver a ' + ficha.curso;
+
+      var vDescargar = document.getElementById('vDescargar');
+      vDescargar.href = 'apuntes/' + doc;
+      vDescargar.setAttribute('download', ficha.titulo + '.pdf');
 
       /* Contador de vistas (requiere el backend de Vercel; en GitHub Pages
          u otro hosting estático simplemente no aparece). */

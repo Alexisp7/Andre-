@@ -1970,6 +1970,30 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .visor-nav--inicio svg { width: 17px; height: 17px; }
 .visor-nav--inicio:hover:not(:disabled) { background: var(--blue); border-color: var(--blue); }
 
+.visor-descargar {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: fit-content;
+  margin: 18px auto 0;
+  padding: 11px 24px;
+  background: var(--bg-off);
+  border: 0.5px solid var(--border);
+  color: var(--gray);
+  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+.visor-descargar svg { width: 16px; height: 16px; flex: none; }
+.visor-descargar:hover { color: var(--white); border-color: var(--blue); background: var(--blue); }
+
+.visor-descargar-nota {
+  text-align: center;
+  margin: 10px auto 0;
+  font-family: 'Cormorant Garamond', serif; font-size: 11px; font-style: italic;
+  color: var(--gray-light);
+}
+
 .visor-vistas[hidden] { display: none; }
 .visor-vistas {
   display: flex; align-items: center; gap: 5px;

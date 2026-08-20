@@ -13,9 +13,71 @@ from pypdf import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 
+from pyhanko.sign import signers
+from pyhanko.sign.fields import SigFieldSpec, append_signature_field
+from pyhanko.pdf_utils.incremental_writer import IncrementalPdfFileWriter
+
 BASE = os.path.dirname(os.path.abspath(__file__))
 ORIG = os.path.join(BASE, "originales")
 LOGO = os.path.join(BASE, "marca-negro.png")
+
+# Certificado propio (autofirmado) usado para la firma digital que se
+# estampa en cada PDF protegido. No es un certificado de una autoridad
+# reconocida: los lectores de PDF lo mostrarán como "firma no verificada",
+# pero la firma en sí es criptográficamente real y demuestra que el
+# archivo salió de Neurona y no fue alterado después.
+#
+# La clave privada NUNCA se sube al repositorio (ver .gitignore): este
+# script la genera sola, en el equipo donde se ejecuta, la primera vez
+# que hace falta. Si se genera de nuevo en otro equipo, los PDF firmados
+# ahí quedan con una identidad de firma distinta a los anteriores; eso
+# no afecta la lectura ni la marca de agua, solo el certificado exacto
+# detrás de la firma.
+FIRMA_DIR = os.path.join(BASE, "firma")
+FIRMA_P12 = os.path.join(FIRMA_DIR, "neurona_firma.p12")
+FIRMA_CLAVE = b"neurona-firma-local"
+FIRMA_NOMBRE = "Neurona — Dr. Andreé Salvatierra"
+
+
+def asegurar_certificado():
+    """Crea el certificado autofirmado local si todavía no existe."""
+    if os.path.exists(FIRMA_P12):
+        return
+    import datetime
+    from cryptography import x509
+    from cryptography.x509.oid import NameOID, ExtendedKeyUsageOID
+    from cryptography.hazmat.primitives import hashes, serialization
+    from cryptography.hazmat.primitives.asymmetric import rsa
+    from cryptography.hazmat.primitives.serialization import pkcs12
+
+    clave = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    nombre = x509.Name([
+        x509.NameAttribute(NameOID.COMMON_NAME, FIRMA_NOMBRE),
+        x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Neurona"),
+        x509.NameAttribute(NameOID.EMAIL_ADDRESS, "4andree4@gmail.com"),
+        x509.NameAttribute(NameOID.COUNTRY_NAME, "PE"),
+    ])
+    ahora = datetime.datetime.utcnow()
+    certificado = (
+        x509.CertificateBuilder()
+        .subject_name(nombre).issuer_name(nombre).public_key(clave.public_key())
+        .serial_number(x509.random_serial_number())
+        .not_valid_before(ahora - datetime.timedelta(days=1))
+        .not_valid_after(ahora + datetime.timedelta(days=3650))
+        .add_extension(x509.BasicConstraints(ca=False, path_length=None), critical=True)
+        .add_extension(x509.KeyUsage(
+            digital_signature=True, content_commitment=True, key_encipherment=False,
+            data_encipherment=False, key_agreement=False, key_cert_sign=False,
+            crl_sign=False, encipher_only=False, decipher_only=False), critical=True)
+        .add_extension(x509.ExtendedKeyUsage([ExtendedKeyUsageOID.EMAIL_PROTECTION]), critical=False)
+        .sign(clave, hashes.SHA256())
+    )
+    os.makedirs(FIRMA_DIR, exist_ok=True)
+    with open(FIRMA_P12, "wb") as f:
+        f.write(pkcs12.serialize_key_and_certificates(
+            name=b"neurona", key=clave, cert=certificado, cas=None,
+            encryption_algorithm=serialization.BestAvailableEncryption(FIRMA_CLAVE),
+        ))
 
 # A qué curso va cada archivo
 DESTINOS = {
@@ -181,7 +243,30 @@ def proteger(origen, destino):
     os.makedirs(os.path.dirname(destino), exist_ok=True)
     with open(destino, "wb") as f:
         escritor.write(f)
+
+    firmar(destino)
     return len(lector.pages)
+
+
+def firmar(ruta):
+    """Añade la firma digital de Neurona al PDF ya cifrado, sin tocar
+    el cifrado ni los permisos existentes (actualización incremental)."""
+    asegurar_certificado()
+    signer = signers.SimpleSigner.load_pkcs12(FIRMA_P12, passphrase=FIRMA_CLAVE)
+    temporal = ruta + ".firmado"
+    with open(ruta, "rb") as entrada:
+        escritor = IncrementalPdfFileWriter(entrada)
+        escritor.encrypt("")  # contraseña de usuario (vacía, como al cifrar)
+        append_signature_field(escritor, SigFieldSpec(sig_field_name="FirmaNeurona"))
+        metadatos = signers.PdfSignatureMetadata(
+            field_name="FirmaNeurona",
+            reason="Documento oficial de Neurona",
+            location="Perú",
+            name=FIRMA_NOMBRE,
+        )
+        with open(temporal, "wb") as salida:
+            signers.sign_pdf(escritor, metadatos, signer=signer, output=salida)
+    os.replace(temporal, ruta)
 
 
 if __name__ == "__main__":
