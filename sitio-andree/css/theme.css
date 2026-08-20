@@ -1803,6 +1803,167 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   font-style: normal;
 }
 
+/* Nav flotante y transparente sobre el video de la portada: ocupa el
+   lugar del encabezado mientras este permanece oculto arriba, y se
+   desvanece a medida que el encabezado real baja con el scroll. */
+.hero-nav-flotante {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+  display: flex; align-items: center; justify-content: center;
+  gap: 0;
+  padding: 22px 48px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.14);
+}
+.hero-nav-flotante a {
+  position: relative;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  padding: 8px 20px;
+  transition: color 0.28s ease;
+}
+.hero-nav-flotante a::after {
+  content: '';
+  position: absolute; left: 20px; right: 20px; bottom: 4px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hero-nav-flotante a:hover,
+.hero-nav-flotante a.active { color: var(--white); }
+.hero-nav-flotante a:hover::after,
+.hero-nav-flotante a.active::after { transform: scaleX(1); }
+.hero-nav-flotante .hero-nav-sep {
+  font-family: 'Cormorant Garamond', serif;
+  color: rgba(232, 213, 163, 0.65);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  user-select: none;
+}
+
+/* El botón circular solo existe para el celular; en escritorio el
+   envoltorio de los enlaces se "vuelve invisible" como agrupador
+   (display:contents) para que sigan siendo hijos directos del flex del
+   nav, exactamente como antes. */
+.hero-nav-boton { display: none; }
+.hero-nav-links { display: contents; }
+.nav-submenu-corchete { display: none; }
+
+/* En celular no caben las 4 pestañas cómodas y a la vista todo el
+   tiempo: se esconden detrás de un botón circular, moderno y discreto,
+   que las despliega al tocarlo. En grid (no flex-wrap) para que los dos
+   separadores queden siempre alineados entre las dos filas, sin
+   importar que "Investigación" sea mucho más larga que "Inicio". */
+@media (max-width: 900px) {
+  .hero-nav-flotante {
+    flex-direction: column; padding: 10px 16px 12px; gap: 10px;
+  }
+  .hero-nav-boton {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px;
+    width: 32px; height: 32px; margin: 0 auto;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.10);
+    border: 0.5px solid rgba(255, 255, 255, 0.28);
+    cursor: pointer;
+  }
+  .hero-nav-boton span {
+    display: block; width: 12px; height: 1px;
+    background: rgba(255, 255, 255, 0.85);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton span:nth-child(2) { opacity: 0; }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton span:nth-child(3) { transform: translateY(-4px) rotate(-45deg); }
+
+  .hero-nav-links {
+    display: none;
+    justify-items: center; align-items: center;
+    grid-template-columns: max-content max-content max-content;
+    column-gap: 14px; row-gap: 8px;
+  }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-links { display: grid; }
+  .hero-nav-flotante a { font-size: 9px; letter-spacing: 0.11em; padding: 7px 10px; }
+  .hero-nav-flotante .hero-nav-sep { font-size: 14px; }
+  /* Ya no hace falta el separador de quiebre: el grid arma las dos
+     filas de tres solo, así que se oculta (sigue contando como el 3er
+     separador de la fila de escritorio, donde el wrapper es "contents"). */
+  .hero-nav-flotante .hero-nav-break { display: none; }
+  .hero-nav-flotante .nav-desplegable { width: auto; flex-direction: row; position: relative; }
+  .hero-nav-flotante .nav-submenu {
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-6px);
+    margin-top: 24px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  }
+  .hero-nav-flotante .nav-desplegable--abierto .nav-submenu {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  /* El corchete conecta visualmente "Cursos" con el submenú superpuesto
+     que se abre debajo, sin empujar al resto de las pestañas. Va fuera
+     de .nav-submenu (que tiene overflow:hidden para el brillo) para que
+     no se lo recorte. */
+  .nav-submenu-corchete {
+    display: block;
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(3px);
+    width: 26px; height: 18px;
+    color: var(--gold);
+    filter: drop-shadow(0 0 3px rgba(232, 213, 163, 0.7));
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.22s ease, visibility 0.22s;
+  }
+  .hero-nav-flotante .nav-desplegable--abierto .nav-submenu-corchete {
+    opacity: 1; visibility: visible;
+  }
+}
+
+/* El desplegable de "Cursos" hereda el mismo estilo blanco sólido del
+   encabezado real, que aquí sobre el video se ve fuera de lugar: se le
+   da el mismo tratamiento de vidrio esmerilado que el resto del nav
+   flotante, con un brillo apenas insinuado (mucho más sutil que el de
+   noticias) al pasar el mouse. */
+.hero-nav-flotante .nav-submenu {
+  position: absolute;
+  background: rgba(20, 35, 61, 0.62);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 0.5px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--gold);
+  overflow: hidden;
+}
+.hero-nav-flotante .nav-submenu a {
+  color: rgba(255, 255, 255, 0.75);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+.hero-nav-flotante .nav-submenu a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+}
+.hero-nav-flotante .nav-submenu::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.07) 50%, transparent 58%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.hero-nav-flotante .nav-desplegable:hover .nav-submenu::after {
+  transform: translateX(120%);
+  transition: transform 1s ease;
+}
+
 .library-hero .hero-eyebrow {
   color: var(--gold);
   justify-content: center;
