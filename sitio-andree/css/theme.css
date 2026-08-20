@@ -30,8 +30,8 @@ body {
   font-family: 'Cormorant Garamond', serif;
   background: var(--white);
   color: var(--dark);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
@@ -338,8 +338,8 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .hero-bio {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   line-height: 1.85;
   color: var(--gray);
   max-width: 480px;
@@ -610,8 +610,8 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .course-desc {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--gray);
   line-height: 1.75;
   margin-bottom: 24px;
@@ -886,8 +886,8 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .about-body {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   line-height: 1.7;
   color: var(--gray);
   margin-bottom: 18px;
@@ -1753,18 +1753,25 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 
 .hero-nombre-texto {
-  display: inline-block;
+  display: inline-flex;
   color: var(--white);
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 500;
   font-size: clamp(38px, 5.5vw, 68px);
   letter-spacing: 0.01em;
-  transition: opacity 0.26s ease;
 }
-.hero-nombre-texto.hero-nombre-fade { opacity: 0; }
+.hero-letra { display: inline-block; transition: opacity 0.12s ease; }
 .hero-nombre-texto.hero-nombre-zh {
   font-family: 'Noto Serif SC', 'Cormorant Garamond', serif;
+  font-style: normal;
+}
+.hero-nombre-texto.hero-nombre-ja {
+  font-family: 'Noto Serif JP', 'Cormorant Garamond', serif;
+  font-style: normal;
+}
+.hero-nombre-texto.hero-nombre-ko {
+  font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
   font-style: normal;
 }
 .hero-nombre-texto.hero-nombre-final {
@@ -1889,13 +1896,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   display: flex; align-items: center; gap: 28px;
 }
 .visor-volver {
-  font-family: 'Cormorant Garamond', serif; font-size: 9px; font-weight: 700;
-  letter-spacing: 0.18em; text-transform: uppercase;
   color: rgba(255,255,255,0.55); text-decoration: none;
-  display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; flex: none;
   transition: color 0.25s ease;
 }
-.visor-volver::before { content: '←'; color: var(--gold); font-size: 14px; }
+.visor-volver::before { content: '←'; color: var(--gold); font-size: 20px; }
 .visor-volver:hover { color: var(--gold); }
 
 .visor-titulos { flex: 1; min-width: 0; }
@@ -1987,13 +1993,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-descargar svg { width: 16px; height: 16px; flex: none; }
 .visor-descargar:hover { color: var(--white); border-color: var(--blue); background: var(--blue); }
-
-.visor-descargar-nota {
-  text-align: center;
-  margin: 10px auto 0;
-  font-family: 'Cormorant Garamond', serif; font-size: 11px; font-style: italic;
-  color: var(--gray-light);
-}
 
 .visor-vistas[hidden] { display: none; }
 .visor-vistas {
