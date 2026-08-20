@@ -94,6 +94,7 @@
       var totalPaginas = 0;
 
       function medirAltura() {
+        if (document.fullscreenElement === viewport) return;
         var activa = hojas[indice];
         if (activa) viewport.style.height = activa.offsetHeight + 'px';
       }
@@ -124,7 +125,13 @@
         var activo = document.fullscreenElement === viewport;
         vPantallaCompleta.setAttribute('aria-label', activo ? 'Salir de pantalla completa' : 'Modo presentación');
         vPantallaCompleta.querySelector('svg').innerHTML = activo ? ICONO_CONTRAER : ICONO_EXPANDIR;
-        medirAltura();
+        if (activo) {
+          /* En pantalla completa el alto lo controla el CSS de :fullscreen,
+             no la medida de la página activa. */
+          viewport.style.height = '';
+        } else {
+          medirAltura();
+        }
       });
       document.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowLeft') irA(indice - 1);
