@@ -142,6 +142,12 @@
       }
 
       function activarPseudoPantallaCompleta() {
+        /* Intento de ocultar la barra del navegador en los que la
+           colapsan al haber scroll (antes de bloquear el scroll, que si
+           no lo impide). No logra pantalla completa real — eso solo lo
+           da la Fullscreen API — pero ayuda un poco cuando esta no está
+           disponible. */
+        window.scrollTo(0, 1);
         viewport.classList.add('pseudo-fullscreen');
         document.documentElement.classList.add('visor-bloquear-scroll');
         actualizarBoton();
@@ -153,17 +159,29 @@
       }
 
       function entrarPantallaCompleta() {
-        /* En algunos navegadores de Android (sobre todo dentro de apps o
-           WebViews) la Fullscreen API existe pero está deshabilitada, o
-           su promesa se rechaza sin avisar: si eso pasa, se simula el
-           mismo modo con una superposición fija por CSS. */
-        if (document.fullscreenEnabled && viewport.requestFullscreen) {
-          var resultado = viewport.requestFullscreen();
-          if (resultado && typeof resultado.catch === 'function') {
-            resultado.catch(activarPseudoPantallaCompleta);
-          }
-        } else {
+        /* En algunos navegadores (sobre todo Android dentro de apps o
+           WebViews, o navegadores con bloqueadores tipo Brave) la
+           Fullscreen API existe pero está deshabilitada, o su promesa se
+           rechaza: si eso pasa, se simula el mismo modo con una
+           superposición fija por CSS. Mientras se identifica por qué la
+           rechaza el navegador del cliente, se avisa en pantalla el
+           motivo exacto (se quita en cuanto se sepa la causa real). */
+        if (!document.fullscreenEnabled) {
+          mostrarAviso('Sin fullscreen real: fullscreenEnabled=false', 6000);
           activarPseudoPantallaCompleta();
+          return;
+        }
+        if (!viewport.requestFullscreen) {
+          mostrarAviso('Sin fullscreen real: sin requestFullscreen', 6000);
+          activarPseudoPantallaCompleta();
+          return;
+        }
+        var resultado = viewport.requestFullscreen();
+        if (resultado && typeof resultado.catch === 'function') {
+          resultado.catch(function (err) {
+            mostrarAviso('Sin fullscreen real: ' + (err && err.name) + ' — ' + (err && err.message), 6000);
+            activarPseudoPantallaCompleta();
+          });
         }
       }
       function salirPantallaCompletaCualquiera() {
@@ -175,19 +193,22 @@
       }
 
       var vGiroAviso = document.getElementById('vGiroAviso');
+      var TEXTO_GIRO = vGiroAviso ? vGiroAviso.textContent : '';
       var avisoGiroTimeout = null;
-      function mostrarAvisoGiro() {
+      function mostrarAviso(texto, duracionMs) {
         if (!vGiroAviso) return;
+        vGiroAviso.textContent = texto;
         vGiroAviso.hidden = false;
         requestAnimationFrame(function () { vGiroAviso.classList.add('visor-giro-aviso--visible'); });
         clearTimeout(avisoGiroTimeout);
-        avisoGiroTimeout = setTimeout(ocultarAvisoGiro, 4000);
+        avisoGiroTimeout = setTimeout(ocultarAvisoGiro, duracionMs || 4000);
       }
+      function mostrarAvisoGiro() { mostrarAviso(TEXTO_GIRO, 4000); }
       function ocultarAvisoGiro() {
         if (!vGiroAviso) return;
         clearTimeout(avisoGiroTimeout);
         vGiroAviso.classList.remove('visor-giro-aviso--visible');
-        setTimeout(function () { vGiroAviso.hidden = true; }, 400);
+        setTimeout(function () { vGiroAviso.hidden = true; vGiroAviso.textContent = TEXTO_GIRO; }, 400);
       }
 
       vPantallaCompleta.addEventListener('click', function () {
@@ -370,6 +391,27 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') cerrar();
       });
+
+      /* En tablets, el hover de "Cursos" no siempre es confiable al
+         tocar (depende del navegador): con un toque se abre el
+         submenú sin navegar todavía; un segundo toque sobre "Cursos"
+         (o tocar fuera) lo cierra o sigue el enlace con normalidad. */
+      var cursosDesplegable = nav.querySelector('.nav-desplegable');
+      if (cursosDesplegable) {
+        var cursosLink = cursosDesplegable.querySelector('a');
+        cursosLink.addEventListener('click', function (e) {
+          if (window.matchMedia('(min-width: 901px)').matches &&
+              !cursosDesplegable.classList.contains('nav-desplegable--abierto')) {
+            e.preventDefault();
+            cursosDesplegable.classList.add('nav-desplegable--abierto');
+          }
+        });
+        document.addEventListener('click', function (e) {
+          if (!cursosDesplegable.contains(e.target)) {
+            cursosDesplegable.classList.remove('nav-desplegable--abierto');
+          }
+        });
+      }
     })();
   </script>
 </body>

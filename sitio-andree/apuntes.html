@@ -345,6 +345,27 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') cerrar();
       });
+
+      /* En tablets, el hover de "Cursos" no siempre es confiable al
+         tocar (depende del navegador): con un toque se abre el
+         submenú sin navegar todavía; un segundo toque sobre "Cursos"
+         (o tocar fuera) lo cierra o sigue el enlace con normalidad. */
+      var cursosDesplegable = nav.querySelector('.nav-desplegable');
+      if (cursosDesplegable) {
+        var cursosLink = cursosDesplegable.querySelector('a');
+        cursosLink.addEventListener('click', function (e) {
+          if (window.matchMedia('(min-width: 901px)').matches &&
+              !cursosDesplegable.classList.contains('nav-desplegable--abierto')) {
+            e.preventDefault();
+            cursosDesplegable.classList.add('nav-desplegable--abierto');
+          }
+        });
+        document.addEventListener('click', function (e) {
+          if (!cursosDesplegable.contains(e.target)) {
+            cursosDesplegable.classList.remove('nav-desplegable--abierto');
+          }
+        });
+      }
     })();
   </script>
 </body>

@@ -155,7 +155,7 @@ hr.thin-line {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 48px;
+  padding: 8px 48px;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -1093,7 +1093,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
    RESPONSIVE
 ──────────────────────────────── */
 @media (max-width: 900px) {
-  .header-inner { padding: 6px 24px; position: relative; }
+  .header-inner { padding: 8px 24px; position: relative; }
   .nav-toggle { display: flex; }
 
   nav.main-nav {
@@ -1945,12 +1945,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* ── Navegación con siete entradas: se aprieta antes de romperse ── */
 @media (max-width: 1420px) {
   nav.main-nav a { padding: 8px 13px; letter-spacing: 0.12em; }
-  .header-inner { padding: 6px 32px; }
+  .header-inner { padding: 8px 32px; }
 }
 @media (max-width: 1180px) {
   nav.main-nav a { padding: 8px 9px; font-size: 9px; letter-spacing: 0.08em; }
   nav.main-nav .nav-sep { display: none; }
-  .header-inner { padding: 6px 24px; }
+  .header-inner { padding: 8px 24px; }
 }
 
 /* ── Rejilla de cinco cursos: la última fila no lleva línea inferior ── */
@@ -2151,13 +2151,14 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   position: fixed; left: 50%; bottom: 64px; transform: translateX(-50%);
   z-index: 1001;
   margin: 0;
+  max-width: min(88vw, 420px);
   background: rgba(17, 17, 17, 0.75);
   color: var(--white);
   font-family: 'Space Mono', monospace;
   font-size: 10.5px; letter-spacing: 0.06em;
   padding: 10px 18px;
-  border-radius: 999px;
-  white-space: nowrap;
+  border-radius: 18px;
+  text-align: center;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -2548,7 +2549,8 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
 }
 .nav-desplegable:hover .nav-submenu,
-.nav-desplegable:focus-within .nav-submenu {
+.nav-desplegable:focus-within .nav-submenu,
+.nav-desplegable--abierto .nav-submenu {
   opacity: 1; visibility: visible; transform: translateY(0);
 }
 
