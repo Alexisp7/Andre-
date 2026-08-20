@@ -1981,6 +1981,34 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-hoja canvas { display: block; pointer-events: none; width: 100%; height: auto; }
 
+/* Pantalla completa: algunas páginas (diapositivas exportadas de PPT)
+   no tienen la proporción habitual del PDF y podían quedar más altas
+   que la pantalla. En pantalla completa se contienen enteras dentro
+   del alto disponible, con márgenes oscuros a los lados en vez de
+   recortarse. */
+.visor-viewport:fullscreen,
+.visor-viewport:-webkit-full-screen {
+  max-width: none; width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--dark);
+}
+.visor-viewport:fullscreen .visor-carrusel,
+.visor-viewport:-webkit-full-screen .visor-carrusel {
+  width: 100%; height: 100%;
+}
+.visor-viewport:fullscreen .visor-hoja,
+.visor-viewport:-webkit-full-screen .visor-hoja {
+  height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  border: none; box-shadow: none; background: transparent;
+}
+.visor-viewport:fullscreen .visor-hoja canvas,
+.visor-viewport:-webkit-full-screen .visor-hoja canvas {
+  width: auto; height: auto;
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+}
+
 .visor-indicador {
   max-width: 1140px; margin: 16px auto 0;
   text-align: center;
@@ -2206,6 +2234,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   position: relative;
   padding: 14px;
   margin: -14px;
+  border-radius: 12px;
   transition: background 0.25s ease;
 }
 .noticia--con-enlace:hover,
@@ -2220,7 +2249,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .noticia-etiqueta {
   font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--white);
-  background: var(--blue); padding: 4px 10px;
+  background: var(--blue); padding: 4px 10px; border-radius: 4px;
   transition: color 0.25s ease, background 0.25s ease;
 }
 
@@ -2715,8 +2744,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    de recortarla ni forzarla a un cuadrado); cada tarjeta mide lo que
    necesite su flyer. */
 .noticia-media {
+  position: relative;
   margin: 0 0 18px; width: 100%;
   border: 0.5px solid var(--border);
+  border-radius: 10px;
   background: var(--bg-off);
   overflow: hidden;
   line-height: 0;
@@ -2727,11 +2758,19 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   display: block; width: 100%; height: auto;
   transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
 }
+.noticia-media::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
 .noticia:hover .noticia-media {
   border-color: var(--blue-soft);
   box-shadow: 0 14px 34px -18px rgba(20, 35, 61, 0.5);
 }
 .noticia:hover .noticia-media img { transform: scale(1.05); }
+.noticia:hover .noticia-media::after { transform: translateX(120%); }
 
 /* El vídeo llena la tarjeta sin barras ni márgenes; queda a su propia
    proporción, igual que las imágenes. */
