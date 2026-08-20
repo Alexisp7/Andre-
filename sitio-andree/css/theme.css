@@ -154,50 +154,15 @@ hr.thin-line {
 .header-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 6px 48px;
   max-width: 1280px;
   margin: 0 auto;
 }
 
-.site-logo {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.site-logo-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--black);
-}
-
-.site-logo-subtitle {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.28em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-/* Logo symbol: phi */
-.logo-phi {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  font-weight: 400;
-  color: var(--gold);
-  line-height: 1;
-  margin-right: 14px;
-  opacity: 0.85;
-}
-
-.logo-group {
-  display: flex;
-  align-items: center;
-}
-.logo-link { text-decoration: none; }
+/* Sin logo, el botón de menú móvil (única pieza visible en ese ancho)
+   se ancla a la derecha en vez de quedar centrado con el resto. */
+.nav-toggle { margin-left: auto; }
 
 /* NAV */
 nav.main-nav {
@@ -1722,11 +1687,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    ══════════════════════════════════════════ */
 
 .library-hero {
-  /* El video ocupa la pantalla completa desde arriba (por detrás del
-     encabezado, que empieza oculto): se sube con un margen negativo
-     igual al alto real del encabezado, medido por JS, para que nunca
-     quede una franja en blanco encima del video. */
-  margin-top: calc(-1 * var(--header-height, 95px));
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
@@ -1989,7 +1949,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   nav.main-nav a { padding: 8px 9px; font-size: 9px; letter-spacing: 0.08em; }
   nav.main-nav .nav-sep { display: none; }
   .header-inner { padding: 6px 24px; }
-  .site-logo-name { font-size: 22px; }
 }
 
 /* ── Rejilla de cinco cursos: la última fila no lleva línea inferior ── */
@@ -2037,15 +1996,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   white-space: nowrap;
 }
 
-/* ── Encabezado ── */
-.site-logo-img {
-  display: block;
-  height: 38px;
-  width: auto;
-  transition: opacity 0.3s ease;
-}
-.logo-group:hover .site-logo-img { opacity: 0.8; }
-
 /* ── Pie ── */
 .footer-marca {
   font-size: 54px;
@@ -2053,9 +2003,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   margin: -2px 0 4px;
 }
 
-@media (max-width: 1180px) { .site-logo-img { height: 34px; } }
 @media (max-width: 760px)  {
-  .site-logo-img   { height: 30px; }
   .footer-marca    { font-size: 46px; }
 }
 

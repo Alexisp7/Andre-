@@ -17,21 +17,6 @@
 </head>
 <body>
 
-  <header class="header" id="headerPrincipal">
-    <div class="header-deslizable" id="headerDeslizable">
-      <div class="header-inner">
-        <a href="index.html" class="logo-group logo-link" aria-label="Ir al inicio">
-          <img class="site-logo-img" src="img/logo-header.webp" alt="Neurona — material educativo en neurociencias" width="899" height="522"/>
-        </a>
-        <nav class="main-nav" id="mainNav"><a href="index.html" class="active">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html">Cursos</a><span class="nav-submenu"><a href="psicofarmacologia.html">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html">Noticias</a></nav>
-        <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-      <div class="header-border"></div>
-    </div>
-  </header>
-
   <nav class="hero-nav-flotante" id="heroNavFlotante" aria-label="Navegación de la portada">
     <button type="button" class="hero-nav-boton" id="heroNavBoton" aria-label="Abrir menú" aria-expanded="false" aria-controls="heroNavLinks">
       <span></span><span></span><span></span>
@@ -75,46 +60,30 @@
 
   <script>
     (function () {
-      var headerFuera = document.getElementById('headerPrincipal');
-      var header = document.getElementById('headerDeslizable');
       var heroNav = document.getElementById('heroNavFlotante');
       var hero = document.getElementById('portada');
-      if (!header || !hero) return;
+      if (!heroNav || !hero) return;
 
-      /* El alto real del encabezado (que varía según el ancho de
-         pantalla) se mide y se expone como variable CSS: la portada lo
-         usa para subirse ese mismo tanto y que el video arranque justo
-         desde arriba, sin dejar nunca una franja en blanco encima. */
-      function medirAltoEncabezado() {
-        var alto = (headerFuera || header).offsetHeight;
-        if (alto) document.documentElement.style.setProperty('--header-height', alto + 'px');
-      }
-
-      /* El encabezado blanco arranca oculto (corrido hacia arriba) y baja
-         a la vista siguiendo el propio scroll del usuario a través de la
-         portada; el nav flotante y transparente hace el papel contrario,
-         desvaneciéndose a la par. Al terminar de recorrer la portada
-         queda uno completamente a la vista y el otro invisible. */
+      /* El nav flotante y transparente se desvanece a la par del scroll
+         del usuario a través de la portada: no hay ningún encabezado que
+         lo reemplace, así que al llegar al final de la portada
+         simplemente desaparece. */
       var actualizando = false;
       function actualizar() {
         actualizando = false;
         var alto = hero.offsetHeight || 1;
         var progreso = Math.min(1, Math.max(0, window.scrollY / alto));
-        header.style.transform = 'translateY(' + (-100 * (1 - progreso)) + '%)';
-        if (heroNav) {
-          heroNav.style.opacity = String(1 - progreso);
-          heroNav.style.pointerEvents = progreso > 0.85 ? 'none' : 'auto';
-        }
+        heroNav.style.opacity = String(1 - progreso);
+        heroNav.style.pointerEvents = progreso > 0.85 ? 'none' : 'auto';
       }
       function pedirActualizacion() {
         if (actualizando) return;
         actualizando = true;
         requestAnimationFrame(actualizar);
       }
-      medirAltoEncabezado();
       actualizar();
       window.addEventListener('scroll', pedirActualizacion, { passive: true });
-      window.addEventListener('resize', function () { medirAltoEncabezado(); pedirActualizacion(); });
+      window.addEventListener('resize', pedirActualizacion);
 
       /* En celular el nav flotante se abre/cierra con el circulito: no
          caben las 4 pestañas cómodas todo el tiempo ahí arriba. */
@@ -422,29 +391,6 @@
       </div>
     </div>
   </footer>
-
-  <script>
-    (function () {
-      var btn = document.getElementById('navToggle');
-      var nav = document.getElementById('mainNav');
-      if (!btn || !nav) return;
-      function cerrar() {
-        document.body.classList.remove('nav-open');
-        btn.setAttribute('aria-expanded', 'false');
-      }
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var abierto = document.body.classList.toggle('nav-open');
-        btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
-      });
-      document.addEventListener('click', function (e) {
-        if (document.body.classList.contains('nav-open') && !nav.contains(e.target) && e.target !== btn) cerrar();
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') cerrar();
-      });
-    })();
-  </script>
 
   <script>
     (function () {
