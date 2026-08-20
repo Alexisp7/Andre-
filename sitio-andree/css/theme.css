@@ -155,7 +155,7 @@ hr.thin-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 48px;
+  padding: 13px 48px;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -1851,6 +1851,40 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 @media (max-width: 900px) { .hero-nav-flotante { display: none; } }
 
+/* El desplegable de "Cursos" hereda el mismo estilo blanco sólido del
+   encabezado real, que aquí sobre el video se ve fuera de lugar: se le
+   da el mismo tratamiento de vidrio esmerilado que el resto del nav
+   flotante, con un brillo apenas insinuado (mucho más sutil que el de
+   noticias) al pasar el mouse. */
+.hero-nav-flotante .nav-submenu {
+  position: absolute;
+  background: rgba(20, 35, 61, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 0.5px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--gold);
+  overflow: hidden;
+}
+.hero-nav-flotante .nav-submenu a {
+  color: rgba(255, 255, 255, 0.75);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+.hero-nav-flotante .nav-submenu a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+}
+.hero-nav-flotante .nav-submenu::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.07) 50%, transparent 58%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.hero-nav-flotante .nav-desplegable:hover .nav-submenu::after {
+  transform: translateX(120%);
+  transition: transform 1s ease;
+}
+
 .library-hero .hero-eyebrow {
   color: var(--gold);
   justify-content: center;
@@ -1927,7 +1961,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* ── Encabezado ── */
 .site-logo-img {
   display: block;
-  height: 54px;
+  height: 44px;
   width: auto;
   transition: opacity 0.3s ease;
 }
@@ -1940,9 +1974,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   margin: -2px 0 4px;
 }
 
-@media (max-width: 1180px) { .site-logo-img { height: 46px; } }
+@media (max-width: 1180px) { .site-logo-img { height: 40px; } }
 @media (max-width: 760px)  {
-  .site-logo-img   { height: 40px; }
+  .site-logo-img   { height: 36px; }
   .footer-marca    { font-size: 46px; }
 }
 
