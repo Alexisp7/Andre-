@@ -59,18 +59,21 @@
 
   <section class="visor-zona">
     <div class="visor-aviso" id="vAviso" hidden></div>
-    <div class="visor-folio">
-      <button type="button" class="visor-nav visor-nav--prev" id="vPrev" aria-label="Página anterior" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
-      </button>
-      <div class="visor-viewport" id="vViewport" oncontextmenu="return false">
-        <div class="visor-carrusel" id="vLienzos"></div>
-      </div>
-      <button type="button" class="visor-nav visor-nav--next" id="vNext" aria-label="Página siguiente" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
-      </button>
+    <div class="visor-viewport" id="vViewport" oncontextmenu="return false">
+      <div class="visor-carrusel" id="vLienzos"></div>
     </div>
     <p class="visor-indicador" id="vIndicador"></p>
+    <div class="visor-controles">
+      <button type="button" class="visor-nav visor-nav--prev" id="vPrev" aria-label="Página anterior" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+      </button>
+      <button type="button" class="visor-nav visor-nav--inicio" id="vInicio" aria-label="Volver al inicio" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="2.2" height="14" fill="currentColor"/><path d="M19 5 8 12l11 7Z" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="visor-nav visor-nav--next" id="vNext" aria-label="Página siguiente" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+      </button>
+    </div>
     <p class="visor-pie">
       Material del Dr. Andreé Salvatierra. Uso educativo.
       <span class="visor-pie-copy">© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución</span>
@@ -89,6 +92,7 @@
       var meta      = document.getElementById('vMeta');
       var vPrev     = document.getElementById('vPrev');
       var vNext     = document.getElementById('vNext');
+      var vInicio   = document.getElementById('vInicio');
       var vIndicador= document.getElementById('vIndicador');
 
       /* Visor tipo folio: una página a la vez, con deslizamiento
@@ -108,12 +112,14 @@
         zona.style.transform = 'translateX(-' + (indice * 100) + '%)';
         vPrev.disabled = indice <= 0;
         vNext.disabled = indice >= totalPaginas - 1;
+        vInicio.disabled = indice <= 0;
         vIndicador.textContent = (indice + 1) + ' / ' + totalPaginas;
         medirAltura();
       }
 
       vPrev.addEventListener('click', function () { irA(indice - 1); });
       vNext.addEventListener('click', function () { irA(indice + 1); });
+      vInicio.addEventListener('click', function () { irA(0); });
       document.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowLeft') irA(indice - 1);
         else if (e.key === 'ArrowRight') irA(indice + 1);
