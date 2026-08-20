@@ -27,7 +27,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   background: var(--white);
   color: var(--dark);
   font-size: 17px;
@@ -279,7 +279,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .hero-eyebrow {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.32em;
@@ -293,7 +293,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .hero-eyebrow::before {
   content: 'Ψ';
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 20px;
   font-weight: 400;
 }
@@ -337,7 +337,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .hero-bio {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 17px;
   font-weight: 700;
   line-height: 1.55;
@@ -356,7 +356,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .stat-item {}
 
 .stat-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 40px;
   font-weight: 700;
   color: var(--black);
@@ -365,7 +365,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .stat-label {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -375,7 +375,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .stat-sub {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 14px;
   color: var(--gray-light);
   margin-top: 2px;
@@ -483,7 +483,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .section-eyebrow {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.35em;
@@ -590,7 +590,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .course-icon-box::after  { bottom: -2px; left: -2px; }
 
 .course-level {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -609,7 +609,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .course-desc {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 16px;
   font-weight: 700;
   color: var(--gray);
@@ -618,7 +618,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .course-cta {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -779,7 +779,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .project-badge {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -810,7 +810,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .project-year {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 13px;
   color: rgba(255,255,255,0.45);
   letter-spacing: 0.1em;
@@ -821,7 +821,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   position: absolute;
   top: 18px;
   right: 18px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -837,7 +837,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   position: absolute;
   top: 16px;
   left: 16px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 20px;
   color: var(--gold);
   opacity: 0.5;
@@ -885,7 +885,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .about-text {}
 
 .about-body {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 17px;
   font-weight: 700;
   line-height: 1.5;
@@ -894,7 +894,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .about-quote {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 26px;
   font-weight: 500;
   font-style: italic;
@@ -932,7 +932,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .skill-tag {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -1068,7 +1068,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .footer-col-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.25em;
@@ -1079,7 +1079,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .footer-col a {
   display: block;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 15px;
   font-weight: 400;
   color: #5A5A5A;
@@ -1097,7 +1097,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .footer-copy {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 13px;
   letter-spacing: 0.12em;
   color: #3A3A3A;
@@ -1181,14 +1181,14 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .project-card:hover .project-curtain { transform:translateY(0); }
 .curtain-greek {
-  font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic;
+  font-family:'Cambria',Georgia,'Times New Roman',serif; font-size:15px; font-style:italic;
   color:var(--gold); letter-spacing:0.35em; text-transform:uppercase;
   margin-bottom:18px; opacity:0.65;
   display:flex; align-items:center; gap:10px;
 }
 .curtain-greek::before,.curtain-greek::after { content:'—'; opacity:0.35; }
 .curtain-badge {
-  font-family:'Cormorant Garamond', serif; font-size:12px; font-weight:700;
+  font-family:'Cambria', Georgia, 'Times New Roman', serif; font-size:12px; font-weight:700;
   letter-spacing:0.22em; text-transform:uppercase; color:var(--gold);
   margin-bottom:14px; display:flex; align-items:center; gap:7px;
 }
@@ -1199,11 +1199,11 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .project-card.wide .curtain-name { font-size:30px; }
 .curtain-desc {
-  font-family:'Cormorant Garamond', serif; font-size:14px; color:rgba(255,255,255,0.52);
+  font-family:'Cambria', Georgia, 'Times New Roman', serif; font-size:14px; color:rgba(255,255,255,0.52);
   line-height:1.75; text-align:center; max-width:320px; margin-bottom:22px;
 }
 .curtain-link {
-  font-family:'Cormorant Garamond', serif; font-size:12px; font-weight:700;
+  font-family:'Cambria', Georgia, 'Times New Roman', serif; font-size:12px; font-weight:700;
   letter-spacing:0.22em; text-transform:uppercase; color:var(--gold);
   text-decoration:none; border:0.5px solid rgba(200,169,110,0.45);
   padding:9px 20px; transition:all 0.25s;
@@ -1221,7 +1221,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 /* ── SHOW MORE BUTTON ── */
 .courses-show-more { display:flex; justify-content:center; margin-top:40px; }
 .btn-show-more {
-  font-family:'Cormorant Garamond', serif; font-size:13px; font-weight:700;
+  font-family:'Cambria', Georgia, 'Times New Roman', serif; font-size:13px; font-weight:700;
   letter-spacing:0.22em; text-transform:uppercase; color:var(--black);
   text-decoration:none; border:0.5px solid var(--black); padding:14px 32px;
   position:relative; overflow:hidden; transition:color 0.3s; z-index:0;
@@ -1248,17 +1248,17 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .project-card--all:hover .all-projects-content { opacity: 0; }
 .all-projects-psi {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-size: 52px; font-weight: 700; font-style: italic;
   color: var(--gold); opacity: 0.18; line-height: 1;
 }
 .all-projects-label {
-  font-family: 'Cormorant Garamond', serif; font-size: 14px;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 14px;
   font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
   color: rgba(255,255,255,0.35); text-align: center; line-height: 1.7;
 }
 .all-projects-btn {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
   border: 0.5px solid rgba(200,169,110,0.3); padding: 10px 20px;
   text-decoration: none; transition: all 0.2s; display: inline-block;
@@ -1281,7 +1281,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   align-items: center; justify-content: center; gap: 18px; padding: 32px;
 }
 .slide-greek {
-  font-family: 'Cormorant Garamond', serif; font-size: 15px;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 15px;
   font-style: italic; color: var(--gold); letter-spacing: 0.35em;
   text-transform: uppercase; opacity: 0.6;
 }
@@ -1291,7 +1291,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .slide-title em { font-style: italic; font-weight: 500; color: var(--gold); }
 .slide-link {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
   text-decoration: none; border: 0.5px solid rgba(200,169,110,0.4);
   padding: 11px 24px; transition: all 0.22s; display: inline-block;
@@ -1310,7 +1310,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .page-hero-title em { font-style:italic; font-weight:500; color:var(--gold); }
 .page-hero-sub {
-  font-family:'Cormorant Garamond', serif; font-size:16px; color:rgba(255,255,255,0.45);
+  font-family:'Cambria', Georgia, 'Times New Roman', serif; font-size:20px; color:rgba(255,255,255,0.45);
   max-width:560px; line-height:1.7;
 }
 .page-hero-ornament {
@@ -1333,7 +1333,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   border-top:0.5px solid var(--border);
 }
 .courses-tabs a {
-  font-family:'Cormorant Garamond', serif; font-size:13px; font-weight:700;
+  font-family:'Cambria', Georgia, 'Times New Roman', serif; font-size:13px; font-weight:700;
   letter-spacing:0.18em; text-transform:uppercase; color:var(--gray);
   text-decoration:none; padding:16px 22px; position:relative;
   border-bottom:2px solid transparent; transition:color 0.2s;
@@ -1418,7 +1418,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .shelf-card:hover::before { transform: scaleX(1); }
 .shelf-num {
-  font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 46px; font-weight: 700;
   font-style: italic; color: var(--border); line-height: 1;
   position: absolute; top: 26px; right: 30px; transition: color 0.35s ease;
 }
@@ -1435,7 +1435,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .shelf-icon::before { top: -2px; right: -2px; }
 .shelf-icon::after { bottom: -2px; left: -2px; }
 .shelf-tag {
-  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12px; font-weight: 700;
   letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
   margin-bottom: 10px;
 }
@@ -1447,13 +1447,13 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .shelf-meta {
   display: flex; gap: 18px; padding-top: 16px;
   border-top: 0.5px solid var(--border);
-  font-family: 'Cormorant Garamond', serif; font-size: 13px;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-light);
 }
 .shelf-meta strong { color: var(--black); font-weight: 700; }
 .shelf-cta {
   display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--black);
 }
 .shelf-cta::after { content: '→'; color: var(--gold); font-size: 15px; transition: transform 0.3s ease; }
@@ -1466,7 +1466,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .notes-search {
   flex: 1 1 260px; min-width: 220px;
-  font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--dark);
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 15px; color: var(--dark);
   padding: 13px 16px; border: 0.5px solid var(--border); background: var(--white);
   outline: none; transition: border-color 0.25s ease;
 }
@@ -1474,7 +1474,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .notes-search::placeholder { color: var(--gray-light); }
 .notes-filters { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
 .notes-filter {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray);
   background: none; border: 0.5px solid var(--border); border-right: none;
   padding: 12px 18px; cursor: pointer; transition: all 0.25s ease;
@@ -1485,7 +1485,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .notes-table { border-top: 0.5px solid var(--gold); }
 .note-row {
-  display: grid; grid-template-columns: 1fr 150px 88px 110px;
+  display: grid; grid-template-columns: 1fr 210px 88px 110px;
   align-items: center; gap: 20px;
   padding: 20px 8px 20px 26px; border-bottom: 0.5px solid var(--border);
   text-decoration: none; color: inherit; position: relative;
@@ -1499,17 +1499,17 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .note-sub { font-size: 14.5px; color: var(--gray-light); line-height: 1.5; }
 .note-course {
-  font-family: 'Cormorant Garamond', serif; font-size: 12.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12.5px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray);
   display: inline-flex; align-items: center; gap: 7px;
 }
 .note-course::before { content: '◆'; font-size: 6px; color: var(--gold); }
 .note-pages {
-  font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--gray-light);
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 14px; color: var(--gray-light);
   letter-spacing: 0.08em;
 }
 .note-dl {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--black);
   justify-self: end; display: inline-flex; align-items: center; gap: 7px;
 }
@@ -1517,7 +1517,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .note-row:hover .note-dl { color: var(--gold); }
 .notes-empty {
   padding: 60px 0; text-align: center; color: var(--gray-light);
-  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-style: italic; font-size: 20px;
 }
 .note-row.is-hidden { display: none; }
 
@@ -1528,7 +1528,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .aside-card { border: 0.5px solid var(--border); padding: 30px 28px; }
 .aside-card + .aside-card { border-top: none; }
 .aside-label {
-  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12px; font-weight: 700;
   letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
   margin-bottom: 16px;
 }
@@ -1549,7 +1549,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   border-bottom: 0.5px solid var(--border);
 }
 .unit-num {
-  font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 30px; font-weight: 700;
   font-style: italic; color: var(--gold); line-height: 1;
 }
 .unit-name {
@@ -1557,7 +1557,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   color: var(--black); line-height: 1.2;
 }
 .unit-hours {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray-light);
   margin-left: auto;
 }
@@ -1571,7 +1571,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 .topic-row:last-child { border-bottom: none; }
 .topic-name { font-size: 15.5px; color: var(--dark); flex: 1; line-height: 1.5; }
 .topic-status {
-  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase;
   padding: 5px 11px; border: 0.5px solid var(--border); color: var(--gray-light);
   white-space: nowrap;
@@ -1675,7 +1675,7 @@ a.topic-row:hover .topic-name { color: var(--white); }
 /* Vistas por apunte, discretas, al fondo a la derecha de cada fila */
 .topic-vistas {
   display: flex; align-items: center; gap: 5px; margin-left: auto; flex: none;
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.08em; color: var(--gray-light);
   transition: color 0.22s ease;
 }
@@ -1754,13 +1754,18 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 
 .hero-nombre-linea {
-  width: 46px; height: 1.5px;
-  background: var(--white);
-  opacity: 0;
-  margin-bottom: 14px;
-  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  width: clamp(220px, 26vw, 400px);
+  margin-bottom: 16px;
 }
-.hero-nombre-linea.visible { opacity: 0.7; }
+.hero-nombre-linea-seg {
+  flex: 1;
+  height: 1.5px;
+  background: var(--white);
+  opacity: 0.7;
+}
 
 .hero-nombre-texto {
   display: inline-flex;
@@ -1785,14 +1790,11 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   font-style: normal;
 }
 .hero-nombre-texto.hero-nombre-final {
-  font-family: 'Miracle History', 'Cormorant Garamond', serif;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
   font-style: normal;
-  font-weight: 400;
-  font-size: clamp(60px, 8.5vw, 116px);
+  font-weight: 700;
+  font-size: clamp(52px, 7.5vw, 100px);
   letter-spacing: 0;
-  filter:
-    drop-shadow(-1.5px -1.5px 0.5px rgba(255, 255, 255, 0.55))
-    drop-shadow(1.5px 1.5px 1px rgba(0, 0, 0, 0.5));
 }
 
 .library-hero .hero-eyebrow {
@@ -1926,7 +1928,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   color: var(--white); line-height: 1.2; margin-bottom: 3px;
 }
 .visor-meta {
-  font-family: 'Cormorant Garamond', serif; font-size: 12.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12.5px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
 }
 .visor-zona { position: relative; background: var(--bg-off); padding: 40px 24px 64px; }
@@ -1958,7 +1960,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .visor-indicador {
   max-width: 1140px; margin: 16px auto 0;
   text-align: center;
-  font-family: 'Cormorant Garamond', serif; font-size: 13.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13.5px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray-light);
 }
 
@@ -1993,7 +1995,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .visor-vistas[hidden] { display: none; }
 .visor-vistas {
   display: flex; align-items: center; gap: 5px;
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.38);
 }
 .visor-vistas svg { width: 12px; height: 12px; color: rgba(255,255,255,0.38); flex: none; }
@@ -2005,7 +2007,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-pie {
   max-width: 1060px; margin: 34px auto 0;
-  font-family: 'Cormorant Garamond', serif; font-size: 12.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12.5px; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--gray-light); text-align: center; line-height: 1.9;
   position: relative; z-index: 6;
@@ -2046,7 +2048,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .hero-lema {
   display: flex; align-items: center; justify-content: center; gap: 18px;
   margin: 0 0 20px;
-  font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 14px; font-weight: 700;
   letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
 }
 .hero-lema::before, .hero-lema::after {
@@ -2078,7 +2080,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   color: var(--black); line-height: 1.15; margin-bottom: 8px;
 }
 .autor-cargos {
-  font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 17px; font-style: italic;
   color: var(--gray); margin-bottom: 26px;
 }
 .autor-cargos .title-sep { color: var(--gold); font-style: normal; }
@@ -2087,7 +2089,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   display: flex; flex-wrap: wrap; gap: 10px 28px;
   margin: 16px 0 20px; padding-top: 14px;
   border-top: 0.5px solid var(--border);
-  font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 16px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray);
 }
 .autor-registros strong { color: var(--black); }
@@ -2099,7 +2101,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   display: inline-flex; align-items: center; gap: 10px;
   padding: 11px 18px 11px 14px;
   border: 0.5px solid var(--border);
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--gray); text-decoration: none;
   transition: color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
@@ -2145,7 +2147,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .escudo:hover img { transform: scale(1.05); }
 
 .escudo figcaption {
-  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-style: italic; font-size: 16px;
   font-weight: 500; letter-spacing: 0.01em; color: var(--black);
 }
 
@@ -2181,11 +2183,11 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
 .noticia-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .noticia-meta time {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light);
 }
 .noticia-etiqueta {
-  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12px; font-weight: 700;
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
   border: 0.5px solid var(--gold); padding: 4px 10px;
 }
@@ -2203,7 +2205,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .noticia-enlace {
   display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px;
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--black); text-decoration: none;
   transition: color 0.25s ease;
@@ -2214,7 +2216,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
 .noticias-vacio {
   padding: 40px 0; text-align: center; color: var(--gray-light);
-  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-style: italic; font-size: 18px;
 }
 
 /* ── Página de noticias ── */
@@ -2235,7 +2237,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   border-bottom: 0.5px solid var(--border);
 }
 .publicacion-anio {
-  font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--gold);
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 14px; color: var(--gold);
   letter-spacing: 0.1em;
 }
 .publicacion-datos { display: flex; flex-direction: column; gap: 3px; }
@@ -2243,7 +2245,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .publicacion-titulo a { color: inherit; text-decoration: none; }
 .publicacion-titulo a:hover { color: var(--blue); }
 .publicacion-revista {
-  font-family: 'Cormorant Garamond', serif; font-size: 12.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12.5px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light);
 }
 
@@ -2292,7 +2294,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
 .nav-submenu a {
   padding: 12px 18px;
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--gray); text-decoration: none;
   border-bottom: 0.5px solid var(--border);
@@ -2346,7 +2348,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .publicacion-cargando {
   list-style: none; padding: 40px 0; text-align: center;
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-style: italic;
   font-size: 18px; color: var(--gray-light);
 }
 
@@ -2404,7 +2406,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   color: var(--black); margin-bottom: 4px;
 }
 .contacto-cargo {
-  font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 16px; font-style: italic;
   color: var(--gray); margin-bottom: 26px;
 }
 
@@ -2423,13 +2425,13 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
 .campo { display: flex; flex-direction: column; gap: 6px; }
 .campo > span {
-  font-family: 'Cormorant Garamond', serif; font-size: 12.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12.5px; font-weight: 700;
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-light);
 }
 .campo > span em { color: var(--gold); font-style: normal; }
 
 .campo input, .campo textarea {
-  font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--dark);
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 15px; color: var(--dark);
   background: var(--white);
   border: 0.5px solid var(--border);
   padding: 13px 15px; outline: none;
@@ -2442,14 +2444,14 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 
 .contacto-aviso {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
 }
 
 .btn-enviar {
   align-self: flex-start; margin-top: 6px;
   position: relative; z-index: 0; overflow: hidden;
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--black); background: none;
   border: 0.5px solid var(--border);
@@ -2483,7 +2485,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .contacto-cabecera { padding: 46px 4px; align-items: center; }
 .contacto-cabecera-textos { display: flex; flex-direction: column; gap: 8px; }
 .contacto-antetitulo {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
 }
 .contacto-titulo { font-size: clamp(32px, 4vw, 52px); }
@@ -2517,7 +2519,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .ref:hover, .ref:focus-within { background: var(--blue); padding-left: 12px; }
 .ref-anio {
-  font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 14px; font-weight: 700;
   letter-spacing: 0.1em; color: var(--gold); padding-top: 2px;
   transition: color 0.22s ease;
 }
@@ -2526,7 +2528,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .ref-cita b { font-weight: 600; color: var(--black); transition: color 0.22s ease; }
 .ref-cita i { font-style: italic; }
 .ref-nota {
-  font-family: 'Cormorant Garamond', serif; font-size: 12.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12.5px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light);
   line-height: 1.7;
   transition: color 0.22s ease;
@@ -2534,7 +2536,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .ref-lugar { color: var(--gold); transition: color 0.22s ease; }
 .ref-enlace {
   align-self: flex-start;
-  font-family: 'Cormorant Garamond', serif; font-size: 12.5px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 12.5px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--gray); text-decoration: none;
   border-bottom: 0.5px solid var(--border); padding-bottom: 2px;
@@ -2561,13 +2563,13 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   border-bottom: 0.5px solid var(--border);
 }
 .docencia-anio {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 13px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
   padding-top: 3px;
 }
 .docencia-datos { display: flex; flex-direction: column; gap: 3px; }
 .docencia-datos strong {
-  font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600;
+  font-family: 'Cambria', Georgia, 'Times New Roman', serif; font-size: 17px; font-weight: 600;
   color: var(--black); line-height: 1.3;
 }
 .docencia-datos > span { font-size: 15px; color: var(--gray); line-height: 1.6; }
