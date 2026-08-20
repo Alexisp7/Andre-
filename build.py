@@ -572,16 +572,11 @@ def build_curso(c):
                     'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" '
                     'aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 '
                     '18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>')
-                descargas_svg = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-                    'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" '
-                    'aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4"/>'
-                    '<path d="M5 19.5h14"/></svg>')
                 temas.append(
                     '            <a href="visor.html?doc=%s" class="topic-row">\n'
                     '              <span class="topic-name">%s</span>\n'
-                    '            <span class="topic-vistas" data-doc="%s" hidden>%s<span class="topic-vistas-num"></span></span>'
-                    '<span class="topic-vistas topic-descargas" data-doc="%s" hidden>%s<span class="topic-vistas-num"></span></span>\n'
-                    '            </a>' % (doc, name, doc, vistas_svg, doc, descargas_svg))
+                    '            <span class="topic-vistas" data-doc="%s" hidden>%s<span class="topic-vistas-num"></span></span>\n'
+                    '            </a>' % (doc, name, doc, vistas_svg))
             else:
                 temas.append(
                     '            <div class="topic-row">\n'
