@@ -1969,7 +1969,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-viewport:fullscreen .visor-hoja canvas,
 .visor-viewport:-webkit-full-screen .visor-hoja canvas {
-  width: auto; height: auto;
+  /* !important porque el canvas trae width:100%/height:auto puestos en
+     línea por JS para la vista normal; sin esto, ese estilo en línea le
+     gana por especificidad y la página se estira sin dejar márgenes. */
+  width: auto !important; height: auto !important;
   max-width: 100%; max-height: 100%;
   object-fit: contain;
 }
@@ -1990,7 +1993,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   border: none; box-shadow: none; background: transparent;
 }
 .visor-viewport.pseudo-fullscreen .visor-hoja canvas {
-  width: auto; height: auto;
+  width: auto !important; height: auto !important;
   max-width: 100%; max-height: 100%;
   object-fit: contain;
 }

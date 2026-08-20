@@ -103,6 +103,8 @@
         vNext.disabled = indice >= totalPaginas - 1;
         vIndicador.textContent = (indice + 1) + ' / ' + totalPaginas;
         medirAltura();
+        observarCanvasActivo();
+        posicionarBotonesLaterales();
       }
 
       vPrev.addEventListener('click', function () { irA(indice - 1); });
@@ -124,6 +126,50 @@
       function pseudoActivo() { return viewport.classList.contains('pseudo-fullscreen'); }
       function enPantallaCompleta() { return document.fullscreenElement === viewport || pseudoActivo(); }
 
+      /* En horizontal, la página se ve con márgenes vacíos a los lados o
+         arriba (según si es más angosta o más baja que la pantalla), o
+         sin ninguno si la llena; los tres botones se acomodan pegados a
+         esos márgenes reales del apunte, no a los bordes de la pantalla. */
+      function posicionarBotonesLaterales() {
+        if (!(enPantallaCompleta() && landscapeMovilActivo())) {
+          vPrev.style.left = '';
+          vNext.style.right = '';
+          vPantallaCompleta.style.top = '';
+          vPantallaCompleta.style.right = '';
+          return;
+        }
+        var activa = hojas[indice];
+        var lienzo = activa && activa.querySelector('canvas');
+        if (!lienzo) return;
+        var rc = lienzo.getBoundingClientRect();
+        if (!rc.width || !rc.height) return;
+        var anchoBtn = vPrev.getBoundingClientRect().width || 38;
+        var altoX = vPantallaCompleta.getBoundingClientRect().height || 38;
+        var margenIzq = rc.left;
+        var margenDer = window.innerWidth - rc.right;
+        var margenArriba = rc.top;
+        var BORDE_MIN = 6;
+        vPrev.style.left = Math.max(BORDE_MIN, (margenIzq - anchoBtn) / 2) + 'px';
+        vNext.style.right = Math.max(BORDE_MIN, (margenDer - anchoBtn) / 2) + 'px';
+        vPantallaCompleta.style.right = Math.max(BORDE_MIN, (margenDer - anchoBtn) / 2) + 'px';
+        vPantallaCompleta.style.top = Math.max(BORDE_MIN, (margenArriba - altoX) / 2) + 'px';
+      }
+
+      /* La transición a :fullscreen real no siempre termina de acomodar
+         el tamaño del canvas dentro de un par de fotogramas — así que,
+         además de recalcular al entrar, se observa el propio canvas y se
+         reacomoda cada vez que su tamaño realmente cambia. */
+      var observadorCanvas = typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(function () { posicionarBotonesLaterales(); })
+        : null;
+      function observarCanvasActivo() {
+        if (!observadorCanvas) return;
+        observadorCanvas.disconnect();
+        var activa = hojas[indice];
+        var lienzo = activa && activa.querySelector('canvas');
+        if (lienzo) observadorCanvas.observe(lienzo);
+      }
+
       function actualizarBoton() {
         var activo = enPantallaCompleta();
         /* Los controles (incluido este botón) viven fuera de #vViewport,
@@ -141,6 +187,10 @@
         } else {
           medirAltura();
         }
+        /* Doble rAF: espera a que el navegador termine de aplicar el
+           layout de :fullscreen (o su clase equivalente) antes de medir
+           dónde quedaron los márgenes reales de la página. */
+        requestAnimationFrame(function () { requestAnimationFrame(posicionarBotonesLaterales); });
       }
 
       function activarPseudoPantallaCompleta() {
@@ -188,7 +238,7 @@
         else if (e.key === 'ArrowRight') irA(indice + 1);
         else if (e.key === 'Escape' && pseudoActivo()) salirPseudoPantallaCompleta();
       });
-      window.addEventListener('resize', medirAltura);
+      window.addEventListener('resize', function () { medirAltura(); posicionarBotonesLaterales(); });
 
       if (esTactil && mqLandscapeMovil.addEventListener) {
         mqLandscapeMovil.addEventListener('change', function (e) {
