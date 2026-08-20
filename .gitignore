@@ -5,3 +5,8 @@ __pycache__/
 
 # Los PDF sin marca de agua no se publican
 /originales/
+
+# Clave privada de la firma digital: se genera localmente con
+# proteger.py (ver la función firma_certificado en ese archivo) y
+# nunca debe subirse al repositorio.
+/firma/
