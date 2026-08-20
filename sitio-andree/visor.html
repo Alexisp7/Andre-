@@ -65,6 +65,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
       </button>
     </div>
+    <p class="visor-giro-aviso" id="vGiroAviso" hidden>Para mayor resolución, gira tu teléfono</p>
     <p class="visor-pie">
       <span class="visor-pie-copy"><span class="visor-pie-nombre">Dr. Andreé Salvatierra</span><span class="visor-pie-sep"> | </span><span class="visor-pie-material">Material académico de uso educativo</span></span>
     </p>
@@ -128,14 +129,15 @@
       function pseudoActivo() { return viewport.classList.contains('pseudo-fullscreen'); }
       function enPantallaCompleta() { return document.fullscreenElement === viewport || pseudoActivo(); }
 
-      /* En horizontal, la página se ve con márgenes vacíos a los lados o
-         arriba (según si es más angosta o más baja que la pantalla), o
-         sin ninguno si la llena; los tres botones se acomodan pegados a
-         esos márgenes reales del apunte, no a los bordes de la pantalla. */
+      /* Anterior/siguiente quedan en una posición FIJA a los costados
+         (ver CSS): recalcularla por página hacía que "viajaran" de un
+         lado a otro según el ancho de cada PPT, que se sentía como que
+         se arrastraban solos. Fijos y semitransparentes se leen bien
+         igual, aunque queden montados sobre el borde de la página.
+         Solo la X de salir sigue pegada al margen real de arriba (ahí sí
+         se ve mejor pegada al apunte que en una esquina fija). */
       function posicionarBotonesLaterales() {
         if (!(enPantallaCompleta() && landscapeMovilActivo())) {
-          vPrev.style.left = '';
-          vNext.style.right = '';
           vPantallaCompleta.style.top = '';
           vPantallaCompleta.style.right = '';
           return;
@@ -145,14 +147,11 @@
         if (!lienzo) return;
         var rc = lienzo.getBoundingClientRect();
         if (!rc.width || !rc.height) return;
-        var anchoBtn = vPrev.getBoundingClientRect().width || 38;
+        var anchoBtn = vPantallaCompleta.getBoundingClientRect().width || 38;
         var altoX = vPantallaCompleta.getBoundingClientRect().height || 38;
-        var margenIzq = rc.left;
         var margenDer = window.innerWidth - rc.right;
         var margenArriba = rc.top;
-        var BORDE_MIN = 6;
-        vPrev.style.left = Math.max(BORDE_MIN, (margenIzq - anchoBtn) / 2) + 'px';
-        vNext.style.right = Math.max(BORDE_MIN, (margenDer - anchoBtn) / 2) + 'px';
+        var BORDE_MIN = 14;
         vPantallaCompleta.style.right = Math.max(BORDE_MIN, (margenDer - anchoBtn) / 2) + 'px';
         vPantallaCompleta.style.top = Math.max(BORDE_MIN, (margenArriba - altoX) / 2) + 'px';
       }
@@ -222,15 +221,52 @@
       }
       function salirPantallaCompletaCualquiera() {
         if (document.fullscreenElement) {
-          if (document.exitFullscreen) document.exitFullscreen();
-        } else if (pseudoActivo()) {
-          salirPseudoPantallaCompleta();
+          return document.exitFullscreen ? document.exitFullscreen() : Promise.resolve();
         }
+        if (pseudoActivo()) salirPseudoPantallaCompleta();
+        return Promise.resolve();
+      }
+
+      /* En el teléfono del cliente, la Fullscreen API solo "agarra" bien
+         si se pide estando ya en la orientación final: si se activó en
+         vertical y luego se gira a horizontal, el navegador la deja a
+         medias (cubre solo el ancho de la página web, no el teléfono
+         entero). Cerrarla y volver a pedirla, ya en horizontal, fuerza a
+         que el navegador la aplique de nuevo — y esta vez sí, completa. */
+      function reingresarPantallaCompleta() {
+        Promise.resolve(salirPantallaCompletaCualquiera()).then(
+          function () { setTimeout(entrarPantallaCompleta, 80); },
+          function () { setTimeout(entrarPantallaCompleta, 80); }
+        );
+      }
+
+      var vGiroAviso = document.getElementById('vGiroAviso');
+      var avisoGiroTimeout = null;
+      function mostrarAvisoGiro() {
+        if (!vGiroAviso) return;
+        vGiroAviso.hidden = false;
+        requestAnimationFrame(function () { vGiroAviso.classList.add('visor-giro-aviso--visible'); });
+        clearTimeout(avisoGiroTimeout);
+        avisoGiroTimeout = setTimeout(ocultarAvisoGiro, 4000);
+      }
+      function ocultarAvisoGiro() {
+        if (!vGiroAviso) return;
+        clearTimeout(avisoGiroTimeout);
+        vGiroAviso.classList.remove('visor-giro-aviso--visible');
+        setTimeout(function () { vGiroAviso.hidden = true; }, 400);
       }
 
       vPantallaCompleta.addEventListener('click', function () {
-        if (!enPantallaCompleta()) entrarPantallaCompleta();
-        else salirPantallaCompletaCualquiera();
+        if (!enPantallaCompleta()) {
+          entrarPantallaCompleta();
+          /* Al activarla en vertical, se avisa que conviene girar el
+             teléfono para más resolución; el propio giro dispara el
+             cierre-y-reapertura de arriba. */
+          if (esTactil && window.innerWidth < 930 && !mqLandscapeMovil.matches) mostrarAvisoGiro();
+        } else {
+          salirPantallaCompletaCualquiera();
+          ocultarAvisoGiro();
+        }
       });
       document.addEventListener('fullscreenchange', function () {
         if (!pseudoActivo()) actualizarBoton();
@@ -245,8 +281,13 @@
       if (esTactil && mqLandscapeMovil.addEventListener) {
         mqLandscapeMovil.addEventListener('change', function (e) {
           if (totalPaginas) {
-            if (e.matches && !enPantallaCompleta()) entrarPantallaCompleta();
-            else if (!e.matches && enPantallaCompleta()) salirPantallaCompletaCualquiera();
+            if (e.matches) {
+              if (enPantallaCompleta()) reingresarPantallaCompleta();
+              else entrarPantallaCompleta();
+              ocultarAvisoGiro();
+            } else if (enPantallaCompleta()) {
+              salirPantallaCompletaCualquiera();
+            }
           }
           actualizarBoton();
         });
