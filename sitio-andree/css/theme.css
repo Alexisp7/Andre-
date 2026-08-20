@@ -1756,9 +1756,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .hero-nombre-linea {
   display: flex;
   align-items: center;
-  gap: 26px;
-  width: clamp(220px, 26vw, 400px);
-  margin-bottom: 16px;
+  gap: 20px;
+  width: clamp(160px, 20vw, 300px);
+  margin-bottom: 14px;
 }
 .hero-nombre-linea-seg {
   flex: 1;
@@ -1789,14 +1789,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
   font-style: normal;
 }
-.hero-nombre-texto.hero-nombre-final {
-  font-family: 'Cambria', Georgia, 'Times New Roman', serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: clamp(52px, 7.5vw, 100px);
-  letter-spacing: 0;
-}
-
 .library-hero .hero-eyebrow {
   color: var(--gold);
   justify-content: center;

@@ -56,7 +56,7 @@
       var el = document.getElementById('heroNombreTexto');
       if (!el) return;
 
-      var ESPANOL = { texto: 'Neurona', clase: 'hero-nombre-final' };
+      var ESPANOL = { texto: 'Neurona', clase: '' };
       var IDIOMAS = [
         { texto: 'Neuron',    clase: '' },
         { texto: 'Neurone',   clase: '' },
@@ -81,7 +81,7 @@
       var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reducido) {
         el.textContent = ESPANOL.texto;
-        el.classList.add(ESPANOL.clase);
+        if (ESPANOL.clase) el.classList.add(ESPANOL.clase);
         return;
       }
 
