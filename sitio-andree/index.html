@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=Inter:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&amp;text=%E7%A5%9E%E7%BB%8F%E5%85%83&amp;display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/theme.css"/>
 </head>
 <body>
@@ -37,11 +38,55 @@
     </video>
     <div class="library-hero-overlay" aria-hidden="true"></div>
     <div class="library-hero-inner">
-      <h1 class="library-hero-name">
-        <img src="img/logo-completo.webp" alt="Neurona" width="900" height="844"/>
+      <img class="library-hero-emblem" src="img/logo-emblema.webp" alt="" aria-hidden="true" width="775" height="718"/>
+      <h1 class="library-hero-name" aria-label="Neurona">
+        <span class="hero-nombre-texto" id="heroNombreTexto" aria-hidden="true">Neuron</span>
       </h1>
     </div>
   </section>
+
+  <script>
+    (function () {
+      var el = document.getElementById('heroNombreTexto');
+      if (!el) return;
+
+      var IDIOMAS = [
+        { texto: 'Neuron',      clase: '' },
+        { texto: 'Neurone',     clase: '' },
+        { texto: 'Νευρώνας',    clase: '' },
+        { texto: 'Neurônio',    clase: '' },
+        { texto: '神经元',       clase: 'hero-nombre-zh' }
+      ];
+      var FINAL = { texto: 'Neurona', clase: 'hero-nombre-final' };
+
+      var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reducido) {
+        el.textContent = FINAL.texto;
+        el.classList.add(FINAL.clase);
+        return;
+      }
+
+      var i = 0;
+      function mostrar(item) {
+        el.classList.add('hero-nombre-fade');
+        setTimeout(function () {
+          el.className = 'hero-nombre-texto' + (item.clase ? ' ' + item.clase : '');
+          el.textContent = item.texto;
+          el.classList.remove('hero-nombre-fade');
+        }, 260);
+      }
+
+      var intervalo = setInterval(function () {
+        i++;
+        if (i < IDIOMAS.length) {
+          mostrar(IDIOMAS[i]);
+        } else {
+          clearInterval(intervalo);
+          mostrar(FINAL);
+        }
+      }, 950);
+    })();
+  </script>
 
   <section id="sobre">
     <div class="section">
