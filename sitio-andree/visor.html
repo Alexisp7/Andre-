@@ -32,18 +32,18 @@
 
   <section class="visor-cab">
     <div class="visor-cab-inner">
-      <a href="apuntes.html" class="visor-volver" id="vVolver" aria-label="Volver">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
-      </a>
+      <div class="visor-titulo-fila">
+        <a href="apuntes.html" class="visor-volver" id="vVolver" aria-label="Volver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+        </a>
+        <h1 class="visor-titulo" id="vTitulo">Cargando…</h1>
+      </div>
       <div class="visor-titulos">
-        <div class="visor-titulo-fila">
-          <h1 class="visor-titulo" id="vTitulo">Cargando…</h1>
-          <div class="visor-vistas" id="vVistas" hidden>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
-            <span id="vVistasNum"></span>
-          </div>
-        </div>
         <p class="visor-meta" id="vMeta"></p>
+        <div class="visor-vistas" id="vVistas" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span id="vVistasNum"></span>
+        </div>
       </div>
     </div>
   </section>
@@ -129,15 +129,15 @@
       function pseudoActivo() { return viewport.classList.contains('pseudo-fullscreen'); }
       function enPantallaCompleta() { return document.fullscreenElement === viewport || pseudoActivo(); }
 
-      /* Anterior/siguiente quedan en una posición FIJA a los costados
-         (ver CSS): recalcularla por página hacía que "viajaran" de un
-         lado a otro según el ancho de cada PPT, que se sentía como que
-         se arrastraban solos. Fijos y semitransparentes se leen bien
-         igual, aunque queden montados sobre el borde de la página.
-         Solo la X de salir sigue pegada al margen real de arriba (ahí sí
-         se ve mejor pegada al apunte que en una esquina fija). */
+      /* Los tres botones quedan pegados al borde real de la página:
+         el centro del botón se alinea con el propio borde de la PPT, así
+         que la mitad queda montada encima y la otra mitad afuera, en vez
+         de flotar lejos en el margen negro cuando la página es angosta. */
+      var BORDE_MIN = 6;
       function posicionarBotonesLaterales() {
         if (!(enPantallaCompleta() && landscapeMovilActivo())) {
+          vPrev.style.left = '';
+          vNext.style.right = '';
           vPantallaCompleta.style.top = '';
           vPantallaCompleta.style.right = '';
           return;
@@ -147,13 +147,16 @@
         if (!lienzo) return;
         var rc = lienzo.getBoundingClientRect();
         if (!rc.width || !rc.height) return;
-        var anchoBtn = vPantallaCompleta.getBoundingClientRect().width || 38;
+        var anchoBtn = vPrev.getBoundingClientRect().width || 38;
+        var anchoX = vPantallaCompleta.getBoundingClientRect().width || 38;
         var altoX = vPantallaCompleta.getBoundingClientRect().height || 38;
+        var margenIzq = rc.left;
         var margenDer = window.innerWidth - rc.right;
         var margenArriba = rc.top;
-        var BORDE_MIN = 14;
-        vPantallaCompleta.style.right = Math.max(BORDE_MIN, (margenDer - anchoBtn) / 2) + 'px';
-        vPantallaCompleta.style.top = Math.max(BORDE_MIN, (margenArriba - altoX) / 2) + 'px';
+        vPrev.style.left = Math.max(BORDE_MIN, margenIzq - anchoBtn / 2) + 'px';
+        vNext.style.right = Math.max(BORDE_MIN, margenDer - anchoBtn / 2) + 'px';
+        vPantallaCompleta.style.right = Math.max(BORDE_MIN, margenDer - anchoX / 2) + 'px';
+        vPantallaCompleta.style.top = Math.max(BORDE_MIN, margenArriba - altoX / 2) + 'px';
       }
 
       /* La transición a :fullscreen real no siempre termina de acomodar
