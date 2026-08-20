@@ -2334,10 +2334,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* El nombre del autor, protagonista */
 .autor-nombre {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(38px, 4.6vw, 60px);
-  font-weight: 700; font-style: italic; line-height: 1.05;
-  color: var(--gold); letter-spacing: -0.02em;
-  margin-bottom: 12px;
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 600; font-style: normal; line-height: 1.15;
+  color: var(--black);
+  margin-bottom: 18px;
 }
 .autor-nombre-regla {
   width: 56px; height: 2px;
@@ -2347,6 +2347,63 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .autor-cargos { font-size: 18px; margin-bottom: 30px; }
 
 .about-body { text-align: justify; }
+
+/* Ficha "Sobre el autor": revelado al hacer scroll */
+.eyebrow {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+[data-reveal] {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+[data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+.swept-heading { position: relative; display: inline-block; overflow: hidden; }
+.swept-heading::after {
+  content: ''; position: absolute; inset: 0; background: var(--gold);
+  transform-origin: left center; transform: scaleX(0);
+}
+.swept-heading.is-visible::after { animation: sweep 1s cubic-bezier(0.65,0,0.35,1) 0.1s forwards; }
+@keyframes sweep {
+  0% { transform: scaleX(0); transform-origin: left center; }
+  50% { transform: scaleX(1); transform-origin: left center; }
+  50.001% { transform-origin: right center; }
+  100% { transform: scaleX(0); transform-origin: right center; }
+}
+
+.retrato-cortina {
+  position: absolute; inset: 0; background: var(--bg-off);
+  transform-origin: bottom; transform: scaleY(1);
+  transition: transform 1.1s cubic-bezier(0.16,1,0.3,1);
+}
+.autor-retrato.is-visible .retrato-cortina { transform: scaleY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { transition: none; opacity: 1; transform: none; }
+  .swept-heading::after { display: none; }
+  .retrato-cortina { transition: none; transform: scaleY(0); }
+}
+
+/* Indicador de scroll en el hero */
+.scroll-cue {
+  position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%); z-index: 3;
+  width: 22px; height: 36px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 12px;
+}
+.scroll-cue::before {
+  content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; border-radius: 2px;
+  background: var(--gold-light); transform: translateX(-50%);
+  animation: scroll-cue-anim 1.8s ease-in-out infinite;
+}
+@keyframes scroll-cue-anim {
+  0%, 100% { opacity: 1; top: 7px; }
+  60% { opacity: 0.2; top: 17px; }
+}
+@media (prefers-reduced-motion: reduce) { .scroll-cue::before { animation: none; } }
 
 /* Botones de perfil, algo mayores */
 .perfil { padding: 13px 20px 13px 16px; font-size: 9.5px; }

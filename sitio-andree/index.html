@@ -49,6 +49,7 @@
         <span class="hero-nombre-texto" id="heroNombreTexto" aria-hidden="true">Neuron</span>
       </h1>
     </div>
+    <span class="scroll-cue" aria-hidden="true"></span>
   </section>
 
   <script>
@@ -126,19 +127,21 @@
   <section id="sobre">
     <div class="section">
       <div class="autor-grid">
-        <div class="autor-retrato">
+        <div class="autor-retrato" data-reveal>
           <img src="img/autor.webp" alt="Dr. Andreé Salvatierra Baldeón"
                width="480" height="760" loading="lazy" decoding="async"/>
+          <span class="retrato-cortina" aria-hidden="true"></span>
         </div>
 
         <div class="autor-texto">
-          <h2 class="autor-nombre">Andreé Salvatierra Baldeón</h2>
+          <p class="eyebrow" data-reveal>§ Sobre el autor</p>
+          <h2 class="autor-nombre" data-reveal style="--i:1"><span class="swept-heading" data-sweep>Andreé Salvatierra Baldeón</span></h2>
 
-          <p class="about-body">Estancia posdoctoral en la unidad de cognición y conducta del Instituto Nacional de Neurología y Neurocirugía de México. Doctor en neurociencias por la Facultad de Medicina de la Universidad Nacional Mayor de San Marcos, especialista en neuropsicología por la Universidad Nacional Federico Villarreal, máster en psicofarmacología por la Universidad de Valencia, máster en farmacología por la Facultad de Medicina de la Universidad Autónoma de Barcelona y psicólogo por la Universidad Continental.</p>
+          <p class="about-body" data-reveal style="--i:2">Estancia posdoctoral en la unidad de cognición y conducta del Instituto Nacional de Neurología y Neurocirugía de México. Doctor en neurociencias por la Facultad de Medicina de la Universidad Nacional Mayor de San Marcos, especialista en neuropsicología por la Universidad Nacional Federico Villarreal, máster en psicofarmacología por la Universidad de Valencia, máster en farmacología por la Facultad de Medicina de la Universidad Autónoma de Barcelona y psicólogo por la Universidad Continental.</p>
 
-          <p class="about-body">Estancias de investigación y formación en el departamento de salud pública y la escuela profesional de neurociencias de la UNAM, en la Universidad Pedagógica Nacional de México y en la unidad de ensayos clínicos del Instituto Hospital del Mar de Investigaciones Médicas. Pasantías en el departamento de psicología de la Universidad de Antioquia y en la Facultad de Psicología de la UNAM; rotante en el centro de investigaciones cerebrales y la unidad de neuroimagen del INNN.</p>
+          <p class="about-body" data-reveal style="--i:3">Estancias de investigación y formación en el departamento de salud pública y la escuela profesional de neurociencias de la UNAM, en la Universidad Pedagógica Nacional de México y en la unidad de ensayos clínicos del Instituto Hospital del Mar de Investigaciones Médicas. Pasantías en el departamento de psicología de la Universidad de Antioquia y en la Facultad de Psicología de la UNAM; rotante en el centro de investigaciones cerebrales y la unidad de neuroimagen del INNN.</p>
 
-          <p class="autor-registros">
+          <p class="autor-registros" data-reveal style="--i:4">
             <span>CPsP <strong>32563</strong></span>
             <span>RNE <strong>622</strong></span>
             <span>RENACYT <strong>P0093916</strong></span>
@@ -334,6 +337,26 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') cerrar();
       });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll('[data-reveal], [data-sweep]');
+      if (!items.length) return;
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (i) { i.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+      items.forEach(function (i) { io.observe(i); });
     })();
   </script>
 </body>
