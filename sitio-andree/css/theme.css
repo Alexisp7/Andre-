@@ -105,10 +105,18 @@ hr.thin-line {
    HEADER
 ──────────────────────────────── */
 .header {
-  background: var(--white);
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+/* El contenido visual vive en este envoltorio, no directamente en
+   .header: así la caja sticky (sin transformar) sigue reservando su
+   espacio con normalidad, y el envoltorio es libre de animarse
+   entrando/saliendo con el scroll de la portada sin que ese transform
+   choque con su propio position:sticky. */
+.header-deslizable {
+  background: var(--white);
 }
 
 /* Franja griega superior */
@@ -1751,7 +1759,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   align-items: center;
   gap: 20px;
   width: clamp(160px, 20vw, 300px);
-  margin-bottom: 14px;
+  margin-top: 18px;
 }
 .hero-nombre-linea-seg {
   flex: 1;
@@ -1767,7 +1775,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(42px, 5.5vw, 72px);
+  font-size: clamp(48px, 6.5vw, 86px);
   letter-spacing: 0.01em;
 }
 .hero-letra { display: inline-block; }
@@ -1783,6 +1791,42 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
   font-style: normal;
 }
+
+/* Nav flotante y transparente sobre el video de la portada: ocupa el
+   lugar del encabezado mientras este permanece oculto arriba, y se
+   desvanece a medida que el encabezado real baja con el scroll. */
+.hero-nav-flotante {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+  display: flex; align-items: center; justify-content: center;
+  gap: 0;
+  padding: 22px 48px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.14);
+}
+.hero-nav-flotante a {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  padding: 8px 20px;
+  transition: color 0.28s ease;
+}
+.hero-nav-flotante a:hover,
+.hero-nav-flotante a.active { color: var(--white); }
+.hero-nav-flotante .hero-nav-sep {
+  font-family: 'Cormorant Garamond', serif;
+  color: rgba(232, 213, 163, 0.65);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  user-select: none;
+}
+@media (max-width: 900px) { .hero-nav-flotante { display: none; } }
 
 .library-hero .hero-eyebrow {
   color: var(--gold);
@@ -1969,7 +2013,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-viewport:fullscreen .visor-hoja canvas,
 .visor-viewport:-webkit-full-screen .visor-hoja canvas {
-  width: auto; height: auto;
+  /* !important porque el canvas trae width:100%/height:auto puestos en
+     línea por JS para la vista normal; sin esto, ese estilo en línea le
+     gana por especificidad y la página se estira sin dejar márgenes. */
+  width: auto !important; height: auto !important;
   max-width: 100%; max-height: 100%;
   object-fit: contain;
 }
@@ -1990,7 +2037,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   border: none; box-shadow: none; background: transparent;
 }
 .visor-viewport.pseudo-fullscreen .visor-hoja canvas {
-  width: auto; height: auto;
+  width: auto !important; height: auto !important;
   max-width: 100%; max-height: 100%;
   object-fit: contain;
 }
