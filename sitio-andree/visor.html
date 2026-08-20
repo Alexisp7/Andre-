@@ -18,16 +18,6 @@
   <header class="header">
     <div class="header-inner">
       <a href="index.html" class="logo-group logo-link" aria-label="Ir al inicio">
-        <span class="logo-neuron">
-          <svg viewBox="0 0 32 32" fill="none" stroke="#C8A96E" stroke-width="1.2" stroke-linecap="round">
-            <circle cx="13" cy="15" r="4.5"/>
-            <circle cx="13" cy="15" r="1.6" fill="#C8A96E" stroke="none"/>
-            <path d="M17.5 15h6.5M24 15l3.5-3M24 15l3.5 3"/>
-            <path d="M9.4 11.8 5.5 7.5M8.5 15H3.5M9.4 18.2 5.5 22.5M13 19.5v5M13 10.5v-5"/>
-            <circle cx="27.5" cy="12" r="1.2" fill="#C8A96E" stroke="none"/>
-            <circle cx="27.5" cy="18" r="1.2" fill="#C8A96E" stroke="none"/>
-          </svg>
-        </span>
         <div class="site-logo">
           <span class="marca-neurona site-logo-marca">Neurona</span>
           <span class="site-logo-subtitle">Dr. Andreé Salvatierra</span>
@@ -43,7 +33,7 @@
 
   <section class="visor-cab">
     <div class="visor-cab-inner">
-      <a href="apuntes.html" class="visor-volver">Volver al catálogo</a>
+      <a href="apuntes.html" class="visor-volver" id="vVolver">Volver al catálogo</a>
       <div class="visor-titulos">
         <div class="visor-titulo-fila">
           <h1 class="visor-titulo" id="vTitulo">Cargando…</h1>
@@ -140,6 +130,11 @@
       titulo.textContent = ficha.titulo;
       meta.textContent = ficha.curso + ' · ' + ficha.unidad;
       document.title = ficha.titulo + ' — Neurona';
+
+      var vVolver = document.getElementById('vVolver');
+      var paginaCurso = doc.split('/')[0] + '.html';
+      vVolver.href = paginaCurso;
+      vVolver.textContent = 'Volver a ' + ficha.curso;
 
       /* Contador de vistas (requiere el backend de Vercel; en GitHub Pages
          u otro hosting estático simplemente no aparece). */
