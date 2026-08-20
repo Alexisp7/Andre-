@@ -1849,14 +1849,50 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   line-height: 1;
   user-select: none;
 }
-/* En celular no hay espacio para el mismo tamaño: se achica en vez de
-   ocultarse, para que las pestañas de la portada sigan visibles antes
-   de bajar el scroll (ahí no hay ningún otro menú a la vista). */
+
+/* El botón circular solo existe para el celular; en escritorio el
+   envoltorio de los enlaces se "vuelve invisible" como agrupador
+   (display:contents) para que sigan siendo hijos directos del flex del
+   nav, exactamente como antes. */
+.hero-nav-boton { display: none; }
+.hero-nav-links { display: contents; }
+
+/* En celular no caben las 4 pestañas cómodas y a la vista todo el
+   tiempo: se esconden detrás de un botón circular, moderno y discreto,
+   que las despliega en una fila centrada (casi lineal) al tocarlo. */
 @media (max-width: 900px) {
-  .hero-nav-flotante { padding: 14px 10px; flex-wrap: wrap; row-gap: 4px; }
-  .hero-nav-flotante a { font-size: 8px; letter-spacing: 0.11em; padding: 6px 7px; }
-  .hero-nav-flotante a::after { left: 7px; right: 7px; }
-  .hero-nav-flotante .hero-nav-sep { font-size: 13px; }
+  .hero-nav-flotante {
+    flex-direction: column; padding: 10px 16px 12px; gap: 10px;
+  }
+  .hero-nav-boton {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px;
+    width: 32px; height: 32px; margin: 0 auto;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.10);
+    border: 0.5px solid rgba(255, 255, 255, 0.28);
+    cursor: pointer;
+  }
+  .hero-nav-boton span {
+    display: block; width: 12px; height: 1px;
+    background: rgba(255, 255, 255, 0.85);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton span:nth-child(2) { opacity: 0; }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-boton span:nth-child(3) { transform: translateY(-4px) rotate(-45deg); }
+
+  .hero-nav-links {
+    display: none;
+    width: 100%;
+    flex-wrap: wrap; justify-content: center; align-items: center; row-gap: 2px;
+  }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-links { display: flex; }
+  .hero-nav-flotante a { font-size: 9px; letter-spacing: 0.11em; padding: 7px 10px; }
+  .hero-nav-flotante .hero-nav-sep { font-size: 14px; }
   /* Sin hover real en táctil, el desplegable de Cursos no tiene forma
      limpia de abrirse aquí (y hereda estilos pensados para el panel del
      encabezado real): "Cursos" queda como enlace directo, sin submenú.
@@ -1864,9 +1900,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
      línea — se revierte a un enlace corto normal. */
   .hero-nav-flotante .nav-submenu { display: none; }
   .hero-nav-flotante .nav-desplegable { width: auto; flex-direction: row; }
-  /* No caben las 4 pestañas en una sola línea: se parte siempre en el
-     mismo punto (Inicio/Cursos arriba, Investigación/Noticias abajo) en
-     vez de dejar que el navegador decida dónde, que quedaba disparejo. */
+  /* Si aun así no caben las 4 en una fila, se parte siempre en el mismo
+     punto (Inicio/Cursos arriba, Investigación/Noticias abajo) en vez de
+     dejar que el navegador decida dónde, que quedaba disparejo. */
   .hero-nav-flotante .hero-nav-break { flex-basis: 100%; height: 0; margin: 0; overflow: hidden; }
 }
 

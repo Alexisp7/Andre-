@@ -33,13 +33,18 @@
   </header>
 
   <nav class="hero-nav-flotante" id="heroNavFlotante" aria-label="Navegación de la portada">
-    <a href="index.html" class="active">Inicio</a>
-    <span class="hero-nav-sep">|</span>
-    <span class="nav-desplegable"><a href="materiales.html">Cursos</a><span class="nav-submenu"><a href="psicofarmacologia.html">Psicofarmacología</a></span></span>
-    <span class="hero-nav-sep hero-nav-break">|</span>
-    <a href="investigacion.html">Investigación</a>
-    <span class="hero-nav-sep">|</span>
-    <a href="noticias.html">Noticias</a>
+    <button type="button" class="hero-nav-boton" id="heroNavBoton" aria-label="Abrir menú" aria-expanded="false" aria-controls="heroNavLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="hero-nav-links" id="heroNavLinks">
+      <a href="index.html" class="active">Inicio</a>
+      <span class="hero-nav-sep">|</span>
+      <span class="nav-desplegable"><a href="materiales.html">Cursos</a><span class="nav-submenu"><a href="psicofarmacologia.html">Psicofarmacología</a></span></span>
+      <span class="hero-nav-sep hero-nav-break">|</span>
+      <a href="investigacion.html">Investigación</a>
+      <span class="hero-nav-sep">|</span>
+      <a href="noticias.html">Noticias</a>
+    </div>
   </nav>
 
   <section class="library-hero" id="portada">
@@ -102,6 +107,25 @@
       actualizar();
       window.addEventListener('scroll', pedirActualizacion, { passive: true });
       window.addEventListener('resize', function () { medirAltoEncabezado(); pedirActualizacion(); });
+
+      /* En celular el nav flotante se abre/cierra con el circulito: no
+         caben las 4 pestañas cómodas todo el tiempo ahí arriba. */
+      var heroNavBoton = document.getElementById('heroNavBoton');
+      var heroNavLinks = document.getElementById('heroNavLinks');
+      if (heroNavBoton && heroNav) {
+        heroNavBoton.addEventListener('click', function () {
+          var abierto = heroNav.classList.toggle('hero-nav-abierto');
+          heroNavBoton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+        });
+        if (heroNavLinks) {
+          heroNavLinks.addEventListener('click', function (e) {
+            if (e.target.tagName === 'A') {
+              heroNav.classList.remove('hero-nav-abierto');
+              heroNavBoton.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+      }
     })();
   </script>
 
