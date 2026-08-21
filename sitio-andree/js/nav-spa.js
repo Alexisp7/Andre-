@@ -16,9 +16,11 @@
    "subiera" (se encoge hasta la franja) o "bajara" (vuelve a pantalla
    completa) — es el mismo elemento, solo más o menos recortado.
 
-   visor.html queda fuera a propósito: no tiene franja de video y su
-   propia lógica (pdf.js) es demasiado particular como para
-   revalidarla dentro de este esquema.
+   visor.html también entra: su cabecera ahora es la misma franja
+   .page-hero. Su propio script (pdf.js) se desmonta y se vuelve a
+   montar solo en cada visita (ver el desmontaje al principio de ese
+   script en visor.html) para no ir acumulando listeners globales al
+   ver varios apuntes seguidos sin recargar la página real.
 
    Si algo no cuadra (fetch falla, la página no tiene la estructura
    esperada, JS deshabilitado), todo cae de vuelta a una navegación
@@ -29,7 +31,7 @@
   var PAGINAS = [
     'index.html', 'materiales.html', 'investigacion.html', 'noticias.html',
     'apuntes.html', 'contacto.html', 'biopsicologia.html', 'neuroanatomia.html',
-    'neuropsicologia.html', 'psicofarmacologia.html'
+    'neuropsicologia.html', 'psicofarmacologia.html', 'visor.html'
   ];
 
   // Qué pestaña(s) del menú marcar como activa para cada página.
@@ -41,7 +43,8 @@
     'noticias.html': { noticias: true },
     'biopsicologia.html': { cursos: true },
     'neuroanatomia.html': { cursos: true },
-    'neuropsicologia.html': { cursos: true }
+    'neuropsicologia.html': { cursos: true },
+    'visor.html': { cursos: true }
   };
 
   var HERO_SEL = '.page-hero-inner';
@@ -88,11 +91,19 @@
   /* Los <script> insertados vía innerHTML no se ejecutan solos — hay
      que reemplazar cada uno por un elemento <script> recién creado
      para que el navegador sí los corra (misma técnica que usan pjax y
-     turbo). */
+     turbo). Un <script src="..."> creado así, por defecto, el
+     navegador lo trata como si tuviera "async": se ejecuta en cuanto
+     termina de descargar, sin esperar su turno — así que si depués
+     viene un <script> propio que asume que la librería externa ya
+     cargó (como pdf.js en visor.html), puede correr primero y
+     encontrarla todavía sin definir. async=false antes de insertarlo
+     hace que el navegador respete el orden del documento, igual que
+     con un <script> normal del HTML original. */
   function ejecutarScripts(contenedor) {
     var scripts = contenedor.querySelectorAll('script');
     scripts.forEach(function (viejo) {
       var nuevo = document.createElement('script');
+      nuevo.async = false;
       for (var i = 0; i < viejo.attributes.length; i++) {
         nuevo.setAttribute(viejo.attributes[i].name, viejo.attributes[i].value);
       }
@@ -102,7 +113,7 @@
   }
 
   function moverFoco(heroActual) {
-    var titulo = heroActual.querySelector('.page-hero-title') || heroActual.querySelector('.library-hero-name');
+    var titulo = heroActual.querySelector('.page-hero-title') || heroActual.querySelector('.library-hero-name') || heroActual.querySelector('.visor-titulo');
     if (!titulo) return;
     if (!titulo.hasAttribute('tabindex')) titulo.setAttribute('tabindex', '-1');
     titulo.focus({ preventScroll: true });

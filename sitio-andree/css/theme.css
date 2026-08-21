@@ -2054,12 +2054,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    VISOR DE APUNTES
    ══════════════════════════════════════════ */
 
-.visor-cab {
-  background: var(--ink);
-  border-bottom: 0.5px solid rgba(255,255,255,0.10);
-}
+/* .visor-cab-inner vive dentro de .page-hero-inner (misma franja de
+   video que las demás páginas, ver más arriba) — ya no necesita fondo,
+   ancho máximo ni relleno propios, solo su acomodo en columna. */
 .visor-cab-inner {
-  max-width: 1180px; margin: 0 auto; padding: 26px 48px;
   display: flex; flex-direction: column; gap: 10px;
 }
 .visor-volver {
@@ -2311,7 +2309,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 
 @media (max-width: 860px) {
-  .visor-cab-inner { padding: 20px 24px; gap: 8px; }
+  .visor-cab-inner { gap: 8px; }
   .visor-titulo { font-size: 20px; }
   .visor-titulo-fila { gap: 12px; }
   .visor-zona { padding: 24px 14px 48px; }
@@ -2664,7 +2662,12 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 }
 
 /* Indicador de scroll en el hero */
-.scroll-cue {
+/* Vive fuera de .page-hero-inner (no se toca en la navegación SPA),
+   así que sin esto se quedaría pegado para siempre en cuanto se
+   navegara una sola vez desde la portada — solo debe verse ahí. */
+.scroll-cue { display: none; }
+.page-hero--portada .scroll-cue {
+  display: block;
   position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%); z-index: 3;
   width: 22px; height: 36px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 12px;
 }
