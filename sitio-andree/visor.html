@@ -70,7 +70,7 @@
 
   <section class="visor-zona">
     <div class="visor-aviso" id="vAviso" hidden></div>
-    <div class="visor-viewport" id="vViewport" oncontextmenu="return false">
+    <div class="visor-viewport cargando" id="vViewport" oncontextmenu="return false">
       <div class="visor-carrusel" id="vLienzos"></div>
     </div>
     <p class="visor-indicador" id="vIndicador"></p>
@@ -124,7 +124,12 @@
       function medirAltura() {
         if (document.fullscreenElement === viewport || viewport.classList.contains('pseudo-fullscreen')) return;
         var activa = hojas[indice];
-        if (activa) viewport.style.height = activa.offsetHeight + 'px';
+        if (activa) {
+          viewport.style.height = activa.offsetHeight + 'px';
+          // Ya hay una altura real que mostrar: se quita el espacio
+          // reservado de "cargando" (ver theme.css .visor-viewport.cargando).
+          viewport.classList.remove('cargando');
+        }
       }
 
       function irA(n) {

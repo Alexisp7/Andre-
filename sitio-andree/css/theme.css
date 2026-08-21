@@ -2103,6 +2103,14 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   -webkit-user-select: none; user-select: none;
   transition: height 0.32s cubic-bezier(0.65, 0, 0.35, 1);
 }
+/* Mientras pdf.js todavía no termina de traer y dibujar la primera
+   página, .visor-carrusel está vacío y el visor mide casi nada — el
+   pie de página quedaba pegado justo debajo del header y luego
+   saltaba de golpe hacia abajo en cuanto la página cargaba. Este
+   espacio reservado de antemano evita el salto; JS le quita esta
+   clase (ver medirAltura() en visor.html) en cuanto hay una altura
+   real que medir. */
+.visor-viewport.cargando { min-height: 60vh; }
 .visor-carrusel {
   display: flex; align-items: flex-start;
   transition: transform 0.32s cubic-bezier(0.65, 0, 0.35, 1);
@@ -2460,9 +2468,15 @@ html.visor-modo-presentacion .visor-pie { display: none; }
    NOTICIAS
    ══════════════════════════════════════════ */
 
+/* min-height fijo mientras carga (el JSON de noticias.json, después
+   las imágenes) para que el pie de página no suba pegado al header y
+   luego salte de golpe hacia abajo en cuanto entra el contenido real
+   — con este espacio reservado de antemano, lo único que se ve es que
+   el bloque se rellena, sin que nada más se mueva. */
 .noticias {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 56px 36px;
+  min-height: 60vh;
 }
 
 .noticia {
@@ -2516,6 +2530,9 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 
 .noticias-vacio {
+  grid-column: 1 / -1;
+  min-height: calc(60vh - 80px);
+  display: flex; align-items: center; justify-content: center;
   padding: 40px 0; text-align: center; color: var(--gray-light);
   font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
 }
