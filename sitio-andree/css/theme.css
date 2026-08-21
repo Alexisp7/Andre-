@@ -3187,6 +3187,7 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 }
 @keyframes nrn-contenido-entra {
   from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ══════════════════════════════════════════

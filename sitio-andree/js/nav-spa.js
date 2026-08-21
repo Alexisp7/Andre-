@@ -112,6 +112,29 @@
     });
   }
 
+  /* Quita la clase de la animación de entrada en cuanto termina de
+     jugar, en vez de dejarla puesta para siempre. Con fill-mode
+     "both" el navegador mantiene fijo el transform del último
+     fotograma incluso después de terminar — y aunque ese transform
+     sea "sin mover nada" (translateY(0)), su valor calculado sigue
+     siendo una matriz, no la palabra "none": eso convierte al
+     elemento en el "containing block" de cualquier descendiente
+     position:fixed suyo (como los controles del visor en pantalla
+     completa simulada), que dejan de anclarse a la pantalla real y
+     pasan a anclarse a este elemento en su lugar. Sacando la clase
+     una vez terminada la animación, el elemento vuelve a quedar sin
+     transform de ningún tipo. */
+  function reiniciarAnimacion(el, clase) {
+    el.classList.remove(clase);
+    void el.offsetWidth; // fuerza reflow para reiniciar la animación
+    el.classList.add(clase);
+    el.addEventListener('animationend', function fin(e) {
+      if (e.target !== el) return;
+      el.classList.remove(clase);
+      el.removeEventListener('animationend', fin);
+    });
+  }
+
   function moverFoco(heroActual) {
     var titulo = heroActual.querySelector('.page-hero-title') || heroActual.querySelector('.library-hero-name') || heroActual.querySelector('.visor-titulo');
     if (!titulo) return;
@@ -172,12 +195,8 @@
         moverFoco(heroActual);
 
         heroActual.classList.remove('spa-hero-sale');
-        void heroActual.offsetWidth; // fuerza reflow para reiniciar la animación
-        heroActual.classList.add('spa-hero-entra');
-
-        mainActual.classList.remove('spa-main-entra');
-        void mainActual.offsetWidth;
-        mainActual.classList.add('spa-main-entra');
+        reiniciarAnimacion(heroActual, 'spa-hero-entra');
+        reiniciarAnimacion(mainActual, 'spa-main-entra');
       }, DURACION_SALIDA);
     }).catch(function () {
       irReal(url.href);
