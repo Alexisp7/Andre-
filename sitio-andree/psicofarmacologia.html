@@ -14,19 +14,37 @@
 </head>
 <body>
 
-  <header class="header">
-    <div class="header-deslizable" id="headerDeslizable">
-      <div class="header-inner">
-        <nav class="main-nav" id="mainNav"><a href="index.html">Inicio</a><span class="nav-sep">|</span><span class="nav-desplegable"><a href="materiales.html">Cursos</a><span class="nav-submenu"><a href="psicofarmacologia.html" class="sub-activa">Psicofarmacología</a></span></span><span class="nav-sep">|</span><a href="investigacion.html">Investigación</a><span class="nav-sep">|</span><a href="noticias.html">Noticias</a></nav>
-        <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-      <div class="header-border"></div>
+  <nav class="hero-nav-flotante" id="heroNavFlotante" aria-label="Navegación">
+    <button type="button" class="hero-nav-boton" id="heroNavBoton" aria-label="Abrir menú" aria-expanded="false" aria-controls="heroNavLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="hero-nav-links" id="heroNavLinks">
+      <span class="hero-nav-mitad">
+        <a href="index.html">Inicio</a>
+        <span class="hero-nav-sep">|</span>
+        <span class="nav-desplegable">
+          <a href="materiales.html">Cursos</a>
+          <span class="nav-submenu">
+            <a href="psicofarmacologia.html" class="sub-activa">Psicofarmacología</a>
+          </span>
+        </span>
+      </span>
+      <span class="hero-nav-sep hero-nav-break">|</span>
+      <span class="hero-nav-espaciador" aria-hidden="true"></span>
+      <span class="hero-nav-mitad">
+        <a href="investigacion.html">Investigación</a>
+        <span class="hero-nav-sep">|</span>
+        <a href="noticias.html">Noticias</a>
+      </span>
     </div>
-  </header>
+  </nav>
 
   <section class="page-hero">
+    <video class="page-hero-video" autoplay muted loop playsinline
+           poster="img/hero-neuronas-poster.webp" aria-hidden="true">
+      <source src="img/hero-neuronas.mp4" type="video/mp4"/>
+    </video>
+    <div class="page-hero-overlay" aria-hidden="true"></div>
     <div class="page-hero-inner">
       <h1 class="page-hero-title">Psico<em>farmacología</em></h1>
     </div>
@@ -243,45 +261,38 @@
 
   <script>
     (function () {
-      var btn = document.getElementById('navToggle');
-      var nav = document.getElementById('mainNav');
-      if (!btn || !nav) return;
-      function cerrar() {
-        document.body.classList.remove('nav-open');
-        btn.setAttribute('aria-expanded', 'false');
-      }
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var abierto = document.body.classList.toggle('nav-open');
-        btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
-      });
-      document.addEventListener('click', function (e) {
-        if (document.body.classList.contains('nav-open') && !nav.contains(e.target) && e.target !== btn) cerrar();
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') cerrar();
-      });
+      var heroNav = document.getElementById('heroNavFlotante');
+      var heroNavBoton = document.getElementById('heroNavBoton');
+      var heroNavLinks = document.getElementById('heroNavLinks');
+      if (!heroNav || !heroNavBoton) return;
 
-      /* En tablets, el hover de "Cursos" no siempre es confiable al
-         tocar (depende del navegador): con un toque se abre el
-         submenú sin navegar todavía; un segundo toque sobre "Cursos"
-         (o tocar fuera) lo cierra o sigue el enlace con normalidad. */
-      var cursosDesplegable = nav.querySelector('.nav-desplegable');
-      if (cursosDesplegable) {
-        var cursosLink = cursosDesplegable.querySelector('a');
-        cursosLink.addEventListener('click', function (e) {
-          if (window.matchMedia('(min-width: 901px)').matches &&
-              !cursosDesplegable.classList.contains('nav-desplegable--abierto')) {
-            e.preventDefault();
-            cursosDesplegable.classList.add('nav-desplegable--abierto');
-          }
-        });
-        document.addEventListener('click', function (e) {
-          if (!cursosDesplegable.contains(e.target)) {
-            cursosDesplegable.classList.remove('nav-desplegable--abierto');
+      heroNavBoton.addEventListener('click', function () {
+        var abierto = heroNav.classList.toggle('hero-nav-abierto');
+        heroNavBoton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+      });
+      if (heroNavLinks) {
+        heroNavLinks.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            heroNav.classList.remove('hero-nav-abierto');
+            heroNavBoton.setAttribute('aria-expanded', 'false');
           }
         });
       }
+
+      /* Igual que en la portada: las columnas del menú móvil se ajustan
+         al contenido y el bloque se centra por CSS, así que la X se
+         reposiciona aquí al centro real del hueco entre las dos
+         mitades (ver comentario largo en index.html). */
+      var heroNavMitades = heroNavLinks ? heroNavLinks.querySelectorAll('.hero-nav-mitad') : [];
+      function centrarBotonNav() {
+        if (heroNavMitades.length !== 2 || !heroNavBoton || !heroNav) return;
+        var flotanteLeft = heroNav.getBoundingClientRect().left;
+        var huecoIzq = heroNavMitades[0].getBoundingClientRect().right;
+        var huecoDer = heroNavMitades[1].getBoundingClientRect().left;
+        heroNavBoton.style.left = ((huecoIzq + huecoDer) / 2 - flotanteLeft) + 'px';
+      }
+      centrarBotonNav();
+      window.addEventListener('resize', centrarBotonNav);
     })();
   </script>
 

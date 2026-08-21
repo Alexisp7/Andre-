@@ -1281,6 +1281,19 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   background: var(--blue); position:relative; overflow:hidden;
   padding:72px 48px 64px; border-bottom:0.5px solid #222;
 }
+/* Mismo video de fondo que la portada, en la franja azul de cada
+   página — con el menú flotante (fixed, fuera del flujo) encima la
+   franja ya arranca en el verdadero borde superior, sin hueco. */
+.page-hero-video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  pointer-events: none;
+}
+.page-hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: rgba(20, 35, 61, 0.62);
+  pointer-events: none;
+}
 .page-hero-inner { max-width:1280px; margin:0 auto; position:relative; z-index:2; }
 .page-hero-title {
   font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:500;
@@ -1770,7 +1783,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   position: fixed; top: 0; left: 0; right: 0; z-index: 90;
   display: flex; align-items: center; justify-content: center;
   gap: 0;
-  padding: 20px 48px;
+  padding: 16px 48px;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -1826,7 +1839,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    importar que "Investigación" sea mucho más larga que "Inicio". */
 @media (max-width: 900px) {
   .hero-nav-flotante {
-    padding: 8px 16px; min-height: 48px;
+    padding: 6px 16px; min-height: 44px;
   }
   /* El botón queda centrado y fijo (no forma parte del flujo del
      grid), para que las pestañas se abran a sus dos costados en vez de
@@ -3066,3 +3079,40 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
   box-shadow: none;
 }
 .contacto-perfiles .perfil:hover .perfil-icono { color: var(--black); }
+
+/* ══════════════════════════════════════════
+   TRANSICIÓN ENTRE PÁGINAS
+   Solo la aplican los navegadores compatibles con transiciones de
+   documento cruzado (hoy Chrome/Edge de escritorio; en los demás la
+   navegación ocurre normal, sin animar — nada se rompe). El menú se
+   marca como el MISMO elemento entre una página y la siguiente (no se
+   mueve), la franja de video se desliza a la izquierda, y el
+   contenido de abajo entra un poco después con un fundido.
+   ══════════════════════════════════════════ */
+@view-transition {
+  navigation: auto;
+}
+
+.hero-nav-flotante { view-transition-name: site-nav; }
+.page-hero, .library-hero { view-transition-name: site-hero; }
+
+::view-transition-old(site-hero),
+::view-transition-new(site-hero) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+::view-transition-old(site-hero) { animation-name: nrn-hero-sale; }
+::view-transition-new(site-hero) { animation-name: nrn-hero-entra; }
+@keyframes nrn-hero-sale { to { transform: translateX(-100%); } }
+@keyframes nrn-hero-entra { from { transform: translateX(100%); } }
+
+/* El resto del contenido (tarjetas, listas) no tiene un nombre propio
+   por página — cae en el grupo raíz genérico. Se retrasa un poco para
+   que llegue después de que la franja termine de deslizar. */
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) {
+  animation: nrn-contenido-entra 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s backwards;
+}
+@keyframes nrn-contenido-entra {
+  from { opacity: 0; transform: translateY(18px); }
+}
