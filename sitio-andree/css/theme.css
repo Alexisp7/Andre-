@@ -24,7 +24,7 @@
   --ink: #14233D;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -33,6 +33,13 @@ body {
   font-size: 15px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  /* Red de seguridad para animaciones que entran deslizándose desde
+     fuera de la pantalla (las noticias en tren, tarjetas, etc.):
+     mientras están a medio camino, el elemento vive momentáneamente
+     más allá del borde derecho, y sin esto el navegador ensancha la
+     página entera y deja un scroll horizontal fantasma durante ese
+     instante, sobre todo notorio en celular. */
+  overflow-x: hidden;
 }
 
 .gold { color: var(--gold); }
@@ -2619,7 +2626,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 
 @media (max-width: 900px) {
-  .noticias { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 32px 20px; }
+  .noticias { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 88px 20px; }
   .noticias-grid { grid-template-columns: 1fr; gap: 36px; }
   .noticias-lateral { position: static; }
   .publicacion { grid-template-columns: 56px minmax(0, 1fr); gap: 14px; }
@@ -3187,6 +3194,7 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 }
 @keyframes nrn-contenido-entra {
   from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ══════════════════════════════════════════
