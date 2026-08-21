@@ -3081,47 +3081,20 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 .contacto-perfiles .perfil:hover .perfil-icono { color: var(--black); }
 
 /* ══════════════════════════════════════════
-   TRANSICIÓN ENTRE PÁGINAS
-   Solo la aplican los navegadores compatibles con transiciones de
-   documento cruzado (hoy Chrome/Edge de escritorio; en los demás la
-   navegación ocurre normal, sin animar — nada se rompe). El video de
-   fondo es el MISMO en todas las páginas, así que se queda inmutable
-   (no se desvanece ni desliza, como el menú) — lo único que se anima
-   es el texto: el título/descripción de la página actual desaparece
-   primero, y el de la nueva llega deslizando desde la izquierda.
+   Animaciones de entrada/salida del texto de la franja y del
+   contenido de abajo, reutilizadas por la navegación SPA (más abajo).
+   Antes también las usaba una transición de documento cruzado
+   (@view-transition) para los saltos hacia/desde la portada, pero esa
+   animación de tamaño por defecto del grupo raíz (nunca desactivada)
+   hacía que el contenido de la página se viera "contraerse" y dejaba
+   ver el pie de página de golpe durante el cambio — se quitó esa
+   transición: esos saltos (los únicos que no cubre el SPA) navegan
+   ahora normal y directo, sin intento de animación a medias.
    ══════════════════════════════════════════ */
-@view-transition {
-  navigation: auto;
-}
-
-.hero-nav-flotante { view-transition-name: site-nav; }
-.page-hero-video, .library-hero-video { view-transition-name: site-hero-bg; }
-.page-hero-inner, .library-hero-inner { view-transition-name: site-hero-text; }
-
-::view-transition-group(site-hero-bg),
-::view-transition-old(site-hero-bg),
-::view-transition-new(site-hero-bg) {
-  animation: none;
-}
-
-::view-transition-old(site-hero-text) {
-  animation: nrn-texto-sale 0.2s ease both;
-}
-::view-transition-new(site-hero-text) {
-  animation: nrn-texto-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-}
 @keyframes nrn-texto-sale { to { opacity: 0; } }
 @keyframes nrn-texto-entra {
   from { opacity: 0; transform: translateX(-60px); }
   to { opacity: 1; transform: translateX(0); }
-}
-
-/* El resto del contenido (tarjetas, listas) no tiene un nombre propio
-   por página — cae en el grupo raíz genérico. Se retrasa un poco para
-   que llegue después de que el texto del título termine de entrar. */
-::view-transition-old(root) { animation: none; }
-::view-transition-new(root) {
-  animation: nrn-contenido-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.45s backwards;
 }
 @keyframes nrn-contenido-entra {
   from { opacity: 0; transform: translateY(18px); }
@@ -3132,9 +3105,8 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
    Solo entre las páginas con .page-hero (la portada queda fuera, ver
    el comentario grande en nav-spa.js). El video de fondo vive en esa
    sección, que nunca se toca — solo su interior (el texto) y #spaMain
-   se reemplazan. Mismas animaciones que la transición de arriba, pero
-   disparadas por JS con clases en vez de por navegación real: así el
-   video jamás se recarga, sin importar el navegador. */
+   se reemplazan, disparado por JS con clases: así el video jamás se
+   recarga, sin importar el navegador. */
 .spa-hero-sale { animation: nrn-texto-sale 0.2s ease both; }
 .spa-hero-entra { animation: nrn-texto-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .spa-main-entra { animation: nrn-contenido-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
