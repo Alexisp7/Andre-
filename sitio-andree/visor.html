@@ -431,58 +431,77 @@
         })
         .catch(function () { /* sin backend disponible: no se muestra */ });
 
-      if (typeof pdfjsLib === 'undefined') {
-        fallo('No se pudo cargar el visor. Comprueba tu conexión.'); return;
+      /* pdf.js se trae con un <script src="..."> aparte, insertado justo
+         antes de este — normalmente ya terminó de cargar para cuando se
+         llega hasta acá, pero en una conexión lenta (sobre todo la
+         primera vez, sin nada en caché todavía) puede que la librería
+         externa siga en camino. Antes esto se revisaba una sola vez y,
+         si no estaba lista, se rendía enseguida con "no se pudo cargar
+         el visor" — aunque medio segundo después sí hubiera cargado. En
+         vez de eso, se reintenta cada 150ms hasta 8 segundos antes de
+         darse por vencido de verdad. */
+      function esperarPdfjs(intentosRestantes) {
+        if (typeof pdfjsLib !== 'undefined') { cargarPdf(); return; }
+        if (intentosRestantes <= 0) {
+          fallo('No se pudo cargar el visor. Comprueba tu conexión.');
+          return;
+        }
+        setTimeout(function () { esperarPdfjs(intentosRestantes - 1); }, 150);
       }
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-      var escala = Math.min(2, (window.devicePixelRatio || 1) * 1.25);
+      function cargarPdf() {
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-      pdfjsLib.getDocument({ url: 'apuntes/' + doc, password: '' }).promise.then(function (pdf) {
-        var ancho = zona.clientWidth || 900;
-        totalPaginas = pdf.numPages;
-        var cadena = Promise.resolve();
-        for (var n = 1; n <= pdf.numPages; n++) {
-          (function (n) {
-            cadena = cadena.then(function () {
-              return pdf.getPage(n).then(function (pagina) {
-                var base = pagina.getViewport({ scale: 1 });
-                var vista = pagina.getViewport({ scale: (ancho / base.width) * escala });
+        var escala = Math.min(2, (window.devicePixelRatio || 1) * 1.25);
 
-                var hoja = document.createElement('div');
-                hoja.className = 'visor-hoja';
-                var lienzo = document.createElement('canvas');
-                lienzo.width = vista.width; lienzo.height = vista.height;
-                lienzo.style.width = '100%'; lienzo.style.height = 'auto';
-                hoja.appendChild(lienzo);
+        pdfjsLib.getDocument({ url: 'apuntes/' + doc, password: '' }).promise.then(function (pdf) {
+          var ancho = zona.clientWidth || 900;
+          totalPaginas = pdf.numPages;
+          var cadena = Promise.resolve();
+          for (var n = 1; n <= pdf.numPages; n++) {
+            (function (n) {
+              cadena = cadena.then(function () {
+                return pdf.getPage(n).then(function (pagina) {
+                  var base = pagina.getViewport({ scale: 1 });
+                  var vista = pagina.getViewport({ scale: (ancho / base.width) * escala });
 
-                /* El dibujo pasa TODO antes de que la hoja toque el DOM
-                   (por eso hoja.appendChild(lienzo) va arriba pero
-                   zona.appendChild(hoja) recién abajo, después de
-                   render()) — así nunca se alcanza a ver el rectángulo
-                   blanco del canvas vacío; cuando aparece, ya está
-                   dibujada. La primera página además "sube" desde abajo
-                   hasta su sitio en cuanto está lista (.visor-hoja--entra
-                   en theme.css) — las demás no lo necesitan, no son la
-                   que se ve primero. */
-                return pagina.render({
-                  canvasContext: lienzo.getContext('2d', { alpha: false }),
-                  viewport: vista
-                }).promise.then(function () {
-                  if (n === 1) hoja.classList.add('visor-hoja--entra');
-                  zona.appendChild(hoja);
-                  hojas[n - 1] = hoja;
-                  if (n === 1) irA(0);
+                  var hoja = document.createElement('div');
+                  hoja.className = 'visor-hoja';
+                  var lienzo = document.createElement('canvas');
+                  lienzo.width = vista.width; lienzo.height = vista.height;
+                  lienzo.style.width = '100%'; lienzo.style.height = 'auto';
+                  hoja.appendChild(lienzo);
+
+                  /* El dibujo pasa TODO antes de que la hoja toque el DOM
+                     (por eso hoja.appendChild(lienzo) va arriba pero
+                     zona.appendChild(hoja) recién abajo, después de
+                     render()) — así nunca se alcanza a ver el rectángulo
+                     blanco del canvas vacío; cuando aparece, ya está
+                     dibujada. La primera página además "sube" desde abajo
+                     hasta su sitio en cuanto está lista (.visor-hoja--entra
+                     en theme.css) — las demás no lo necesitan, no son la
+                     que se ve primero. */
+                  return pagina.render({
+                    canvasContext: lienzo.getContext('2d', { alpha: false }),
+                    viewport: vista
+                  }).promise.then(function () {
+                    if (n === 1) hoja.classList.add('visor-hoja--entra');
+                    zona.appendChild(hoja);
+                    hojas[n - 1] = hoja;
+                    if (n === 1) irA(0);
+                  });
                 });
               });
-            });
-          })(n);
-        }
-        return cadena;
-      }).catch(function () {
-        fallo('No se pudo abrir el apunte.');
-      });
+            })(n);
+          }
+          return cadena;
+        }).catch(function () {
+          fallo('No se pudo abrir el apunte.');
+        });
+      } // fin cargarPdf()
+
+      esperarPdfjs(53); // ~8s (53 * 150ms) antes de rendirse
 
       /* Fricción: ni menú contextual, ni arrastrar, ni atajos de guardado. */
       function onContextMenu(e) { e.preventDefault(); }
