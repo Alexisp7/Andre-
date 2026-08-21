@@ -3019,11 +3019,16 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 .noticia-cuerpo { display: flex; flex-direction: column; align-items: flex-start; flex: 1; }
 
 /* Tarjeta: la imagen se muestra completa, a su proporción real (nada
-   de recortarla ni forzarla a un cuadrado); cada tarjeta mide lo que
-   necesite su flyer. */
+   de recortarla ni forzarla a un cuadrado) — pero el marco SÍ reserva
+   de antemano una proporción fija (la típica de estos flyers, ~2:3),
+   así el bloque ya mide lo que va a medir antes de que la imagen
+   siquiera empiece a cargar y el texto de abajo no se corre cuando
+   por fin llega; si algún flyer tiene otra proporción, queda con un
+   poco de aire arriba/abajo (contain), nunca recortado. */
 .noticia-media {
   position: relative;
   margin: 0 0 18px; width: 100%;
+  aspect-ratio: 2 / 3;
   border: 0.5px solid var(--border);
   border-radius: 10px;
   background: var(--bg-off);
@@ -3033,7 +3038,7 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 }
 .noticia-media img,
 .noticia-media video {
-  display: block; width: 100%; height: auto;
+  display: block; width: 100%; height: 100%; object-fit: contain;
   transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
 }
 .noticia-media::after {
