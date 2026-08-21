@@ -267,13 +267,29 @@
       }
 
       function entrarPantallaCompleta() {
-        /* En algunos navegadores (sobre todo Android dentro de apps o
-           WebViews, o navegadores con bloqueadores tipo Brave) la
-           Fullscreen API existe pero está deshabilitada, o su promesa se
-           rechaza: si eso pasa, se simula el mismo modo con una
-           superposición fija por CSS. Mientras se identifica por qué la
-           rechaza el navegador del cliente, se avisa en pantalla el
-           motivo exacto (se quita en cuanto se sepa la causa real). */
+        /* En táctil/celular se usa siempre la alternativa simulada por
+           CSS, nunca la Fullscreen API nativa: en varios navegadores de
+           iPhone (Safari, Brave) esa API "funciona" solo a medias — la
+           promesa se resuelve y document.fullscreenElement queda puesto,
+           pero la promoción visual real nunca ocurre, y como el CSS de
+           :fullscreen depende de que el navegador sí la haga, el header
+           se queda viendo encima y los controles (posicionados para
+           flotar sobre la pantalla completa) terminan mal ubicados. La
+           alternativa simulada la controla enteramente nuestro propio
+           CSS (position:fixed puesto por una clase, no por el navegador)
+           y es la única que se puede probar y confiar de verdad — así
+           que en celular ni se intenta la real. */
+        if (esTactil) {
+          activarPseudoPantallaCompleta();
+          return;
+        }
+        /* En algunos navegadores de escritorio (bloqueadores tipo Brave,
+           políticas restrictivas) la Fullscreen API existe pero está
+           deshabilitada, o su promesa se rechaza: si eso pasa, se simula
+           el mismo modo con una superposición fija por CSS. Mientras se
+           identifica por qué la rechaza el navegador del cliente, se
+           avisa en pantalla el motivo exacto (se quita en cuanto se sepa
+           la causa real). */
         if (!document.fullscreenEnabled) {
           mostrarAviso('Sin fullscreen real: fullscreenEnabled=false', 6000);
           activarPseudoPantallaCompleta();
@@ -323,8 +339,10 @@
         if (!enPantallaCompleta()) {
           entrarPantallaCompleta();
           /* Al activarla en vertical, se avisa que conviene girar el
-             teléfono para más resolución. */
-          if (esTactil && window.innerWidth < 930 && !mqLandscapeMovil.matches) mostrarAvisoGiro();
+             teléfono para más resolución — solo si de verdad quedó
+             activa (en táctil, activarPseudoPantallaCompleta() es
+             síncrona, así que esto ya refleja el resultado real). */
+          if (esTactil && window.innerWidth < 930 && !mqLandscapeMovil.matches && enPantallaCompleta()) mostrarAvisoGiro();
         } else {
           salirPantallaCompletaCualquiera();
           ocultarAvisoGiro();
