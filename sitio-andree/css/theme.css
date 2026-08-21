@@ -1399,6 +1399,12 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
   border: 0.5px solid var(--border);
 }
+/* Grilla de 2 columnas para materiales.html (un curso por fila cuando
+   solo hay dos): en su propia clase, no en style inline, para que la
+   regla mobile de abajo (grid-template-columns:1fr) pueda ganarle por
+   especificidad y las tarjetas se apilen en celular. */
+.library-grid--cursos { grid-template-columns: repeat(2, 1fr); max-width: 720px; }
+.library-grid--cursos .shelf-card:nth-child(2n) { border-right: none; }
 .shelf-card {
   border-right: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
   padding: 40px 34px 36px; position: relative; overflow: hidden;
@@ -2145,10 +2151,20 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    no tienen la proporción habitual del PDF y podían quedar más altas
    que la pantalla. En pantalla completa se contienen enteras dentro
    del alto disponible, con márgenes oscuros a los lados en vez de
-   recortarse. */
+   recortarse.
+   El position:fixed se fuerza a mano en vez de confiar en que el
+   navegador promueva el elemento a la "capa superior" por su cuenta:
+   en algunos móviles (Safari/Brave en iPhone, sobre todo) la promesa
+   de requestFullscreen se resuelve y :fullscreen llega a calzar, pero
+   la promoción real nunca ocurre — sin esto, el visor se queda
+   flotando en el flujo normal de la página (enorme, 100vw × 100vh,
+   pero no fijo), el header se sigue viendo encima, y los controles
+   (que sí son fixed) terminan cayendo a la mitad de esa caja gigante
+   en vez de quedar debajo de todo el apunte. */
 .visor-viewport:fullscreen,
 .visor-viewport:-webkit-full-screen {
-  max-width: none; width: 100vw; height: 100vh;
+  position: fixed; inset: 0; z-index: 999;
+  max-width: none; width: 100vw; height: 100vh; height: 100dvh;
   display: flex; align-items: center; justify-content: center;
   background: var(--dark);
 }
