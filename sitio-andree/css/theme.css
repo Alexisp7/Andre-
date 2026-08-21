@@ -2208,7 +2208,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
     background: rgba(17, 17, 17, 0.3); backdrop-filter: blur(7px);
     border-color: transparent; border-radius: 10px;
     color: rgba(255,255,255,0.8);
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
   }
   html.visor-modo-presentacion .visor-nav:active {
     background: var(--blue); color: var(--white);
