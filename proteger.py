@@ -79,7 +79,12 @@ def asegurar_certificado():
             encryption_algorithm=serialization.BestAvailableEncryption(FIRMA_CLAVE),
         ))
 
-# A qué curso va cada archivo
+# A qué curso va cada archivo. El valor normalmente es solo el nombre
+# del curso (el archivo de salida se llama igual que el de entrada);
+# si hace falta un nombre de salida distinto (por ejemplo para evitar
+# que dos cursos con archivos de origen del mismo nombre se pisen
+# entre sí dentro de esta MISMA carpeta plana ./originales/), el valor
+# puede ser (curso, nombre_de_salida).
 DESTINOS = {
     "01-introduccion-psicofarmacologia.pdf": "psicofarmacologia",
     "02-psicofarmacologia.pdf":              "psicofarmacologia",
@@ -101,6 +106,18 @@ DESTINOS = {
     "18-psicoestimulantes.pdf":              "psicofarmacologia",
     "19-toxicomanias.pdf":                   "psicofarmacologia",
     "20-etica.pdf":                          "psicofarmacologia",
+
+    "01-introduccion-neurociencias.pdf":        "biopsicologia",
+    "02-desarrollo-historico-neurociencia.pdf": "biopsicologia",
+    "03-biologia-celular-bp.pdf":     ("biopsicologia", "03-biologia-celular.pdf"),
+    "04-metodos-investigacion.pdf":             "biopsicologia",
+    "05-neuroembriologia.pdf":                  "biopsicologia",
+    "06-snp.pdf":                               "biopsicologia",
+    "07-snc.pdf":                               "biopsicologia",
+    "08-celulas-sn.pdf":                        "biopsicologia",
+    "09-comunicacion-neuronal.pdf":             "biopsicologia",
+    "10-corteza-cerebral.pdf":                  "biopsicologia",
+    "11-sistema-limbico.pdf":                   "biopsicologia",
 }
 
 AUTOR = "Dr. Andreé Salvatierra"
@@ -261,14 +278,15 @@ def firmar(ruta):
 if __name__ == "__main__":
     print("Protegiendo los apuntes…")
     total = 0
-    for archivo, curso in sorted(DESTINOS.items()):
+    for archivo, valor in sorted(DESTINOS.items()):
+        curso, archivo_salida = valor if isinstance(valor, tuple) else (valor, archivo)
         origen = os.path.join(ORIG, archivo)
         if not os.path.exists(origen):
             print("  ! falta %s en originales/" % archivo)
             continue
-        destino = os.path.join(BASE, "sitio-andree", "apuntes", curso, archivo)
+        destino = os.path.join(BASE, "sitio-andree", "apuntes", curso, archivo_salida)
         n = proteger(origen, destino)
         kb = os.path.getsize(destino) / 1024
-        print("  ✓ %-42s %3d pág · %5.0f KB" % (archivo, n, kb))
+        print("  ✓ %-42s %3d pág · %5.0f KB" % (archivo_salida, n, kb))
         total += n
     print("Listo. %d páginas marcadas y cifradas." % total)
