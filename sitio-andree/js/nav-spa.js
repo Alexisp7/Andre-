@@ -41,7 +41,7 @@
     'psicofarmacologia.html': { subActiva: true },
     'investigacion.html': { investigacion: true },
     'noticias.html': { noticias: true },
-    'biopsicologia.html': { cursos: true },
+    'biopsicologia.html': { subActiva: true },
     'neuroanatomia.html': { cursos: true },
     'neuropsicologia.html': { cursos: true },
     'visor.html': { cursos: true }
@@ -83,7 +83,7 @@
       if (a) a.classList.add('active');
     });
     if (cfg.subActiva) {
-      var sub = nav.querySelector('.nav-submenu a[href="psicofarmacologia.html"]');
+      var sub = nav.querySelector('.nav-submenu a[href="' + archivo + '"]');
       if (sub) sub.classList.add('sub-activa');
     }
   }

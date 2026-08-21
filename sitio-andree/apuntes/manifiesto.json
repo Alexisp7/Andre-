@@ -2,69 +2,69 @@
   "biopsicologia": [
     {
       "codigo": "BP-01",
-      "titulo": "La neurona y la glía: estructura y función",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Introducción a las neurociencias",
+      "archivo": "01-introduccion-neurociencias.pdf",
+      "paginas": 23
     },
     {
       "codigo": "BP-02",
-      "titulo": "Potencial de membrana y potencial de acción",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Desarrollo histórico de la neurociencia",
+      "archivo": "02-desarrollo-historico-neurociencia.pdf",
+      "paginas": 10
     },
     {
       "codigo": "BP-03",
-      "titulo": "Sinapsis y neurotransmisores",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Nociones generales en biología celular",
+      "archivo": "03-biologia-celular.pdf",
+      "paginas": 20
     },
     {
       "codigo": "BP-04",
-      "titulo": "Sistema nervioso central y periférico",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Métodos de investigación en neurociencias",
+      "archivo": "04-metodos-investigacion.pdf",
+      "paginas": 12
     },
     {
       "codigo": "BP-05",
-      "titulo": "Sistema nervioso autónomo",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Neuroembriología",
+      "archivo": "05-neuroembriologia.pdf",
+      "paginas": 20
     },
     {
       "codigo": "BP-06",
-      "titulo": "Desarrollo y plasticidad del sistema nervioso",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Sistema nervioso periférico (SNP)",
+      "archivo": "06-snp.pdf",
+      "paginas": 39
     },
     {
       "codigo": "BP-07",
-      "titulo": "Visión, audición y sentidos químicos",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Sistema nervioso central (SNC)",
+      "archivo": "07-snc.pdf",
+      "paginas": 27
     },
     {
       "codigo": "BP-08",
-      "titulo": "Control motor y movimiento",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Células del sistema nervioso",
+      "archivo": "08-celulas-sn.pdf",
+      "paginas": 21
     },
     {
       "codigo": "BP-09",
-      "titulo": "Sueño y ritmos biológicos",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Comunicación neuronal",
+      "archivo": "09-comunicacion-neuronal.pdf",
+      "paginas": 30
     },
     {
       "codigo": "BP-10",
-      "titulo": "Hormonas, emoción y estrés",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Corteza cerebral",
+      "archivo": "10-corteza-cerebral.pdf",
+      "paginas": 34
     },
     {
       "codigo": "BP-11",
-      "titulo": "Aprendizaje y memoria",
-      "archivo": null,
-      "paginas": 0
+      "titulo": "Sistema límbico",
+      "archivo": "11-sistema-limbico.pdf",
+      "paginas": 15
     }
   ],
   "neuroanatomia": [
