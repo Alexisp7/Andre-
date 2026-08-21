@@ -111,23 +111,35 @@
       function irA(n) {
         if (!totalPaginas) return;
         indice = Math.max(0, Math.min(totalPaginas - 1, n));
+        /* Antes de deslizar, si el ancho de la nueva página va a mover
+           los botones, se ocultan: así nunca se alcanza a ver el salto
+           a la posición vieja/intermedia mientras el carrusel todavía
+           se está moviendo — solo reaparecen ya en su sitio definitivo
+           (ver transitionend más abajo). */
+        if (enPantallaCompleta() && landscapeMovilActivo()) {
+          vPrev.style.opacity = '0';
+          vNext.style.opacity = '0';
+        }
         zona.style.transform = 'translateX(-' + (indice * 100) + '%)';
         vPrev.disabled = indice <= 0;
         vNext.disabled = indice >= totalPaginas - 1;
         vIndicador.textContent = (indice + 1) + ' / ' + totalPaginas;
         medirAltura();
         observarCanvasActivo();
-        posicionarBotonesLaterales();
       }
 
       /* El carrusel desliza con transición (transform 0.32s en CSS): si
          se recalcula la posición de los botones apenas se cambia de
          página, se mide el borde de la página TODAVÍA a medio deslizar,
          no el definitivo — eso era lo que los hacía verse "arrastrar".
-         Al terminar la transición se vuelve a medir, ya con la página
-         asentada en su lugar final. */
+         Se espera a que la transición termine para medir (ya con la
+         página asentada en su lugar final) y recién ahí se muestran de
+         nuevo los botones, ya en su posición correcta. */
       zona.addEventListener('transitionend', function (e) {
-        if (e.propertyName === 'transform') posicionarBotonesLaterales();
+        if (e.propertyName !== 'transform') return;
+        posicionarBotonesLaterales();
+        vPrev.style.opacity = '';
+        vNext.style.opacity = '';
       });
 
       vPrev.addEventListener('click', function () { irA(indice - 1); });
