@@ -25,7 +25,12 @@
       <span class="hero-nav-mitad">
         <a href="index.html" class="active">Inicio</a>
         <span class="hero-nav-sep">|</span>
-        <a href="materiales.html">Cursos</a>
+        <span class="nav-desplegable">
+          <a href="materiales.html">Cursos</a>
+          <span class="nav-submenu">
+            <a href="psicofarmacologia.html">Psicofarmacología</a>
+          </span>
+        </span>
       </span>
       <span class="hero-nav-sep hero-nav-break">|</span>
       <span class="hero-nav-espaciador" aria-hidden="true"></span>
@@ -100,6 +105,24 @@
           });
         }
       }
+
+      /* Las columnas se ajustan al contenido real y el bloque entero se
+         centra (CSS), así que los dos márgenes exteriores quedan
+         iguales — pero como "Investigación·Noticias" pesa más que
+         "Inicio·Cursos", ese bloque centrado no cae exacto a la mitad
+         de la pantalla. La X, en vez de ir fija al 50% por CSS, se
+         reposiciona aquí al centro real del hueco entre las dos
+         mitades, para que quede en medio de ellas de verdad. */
+      var heroNavMitades = heroNavLinks ? heroNavLinks.querySelectorAll('.hero-nav-mitad') : [];
+      function centrarBotonNav() {
+        if (heroNavMitades.length !== 2 || !heroNavBoton || !heroNav) return;
+        var flotanteLeft = heroNav.getBoundingClientRect().left;
+        var huecoIzq = heroNavMitades[0].getBoundingClientRect().right;
+        var huecoDer = heroNavMitades[1].getBoundingClientRect().left;
+        heroNavBoton.style.left = ((huecoIzq + huecoDer) / 2 - flotanteLeft) + 'px';
+      }
+      centrarBotonNav();
+      window.addEventListener('resize', centrarBotonNav);
     })();
   </script>
 
