@@ -3084,34 +3084,44 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
    TRANSICIÓN ENTRE PÁGINAS
    Solo la aplican los navegadores compatibles con transiciones de
    documento cruzado (hoy Chrome/Edge de escritorio; en los demás la
-   navegación ocurre normal, sin animar — nada se rompe). El menú se
-   marca como el MISMO elemento entre una página y la siguiente (no se
-   mueve), la franja de video se desliza a la izquierda, y el
-   contenido de abajo entra un poco después con un fundido.
+   navegación ocurre normal, sin animar — nada se rompe). El video de
+   fondo es el MISMO en todas las páginas, así que se queda inmutable
+   (no se desvanece ni desliza, como el menú) — lo único que se anima
+   es el texto: el título/descripción de la página actual desaparece
+   primero, y el de la nueva llega deslizando desde la izquierda.
    ══════════════════════════════════════════ */
 @view-transition {
   navigation: auto;
 }
 
 .hero-nav-flotante { view-transition-name: site-nav; }
-.page-hero, .library-hero { view-transition-name: site-hero; }
+.page-hero-video, .library-hero-video { view-transition-name: site-hero-bg; }
+.page-hero-inner, .library-hero-inner { view-transition-name: site-hero-text; }
 
-::view-transition-old(site-hero),
-::view-transition-new(site-hero) {
-  animation-duration: 0.5s;
-  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+::view-transition-group(site-hero-bg),
+::view-transition-old(site-hero-bg),
+::view-transition-new(site-hero-bg) {
+  animation: none;
 }
-::view-transition-old(site-hero) { animation-name: nrn-hero-sale; }
-::view-transition-new(site-hero) { animation-name: nrn-hero-entra; }
-@keyframes nrn-hero-sale { to { transform: translateX(-100%); } }
-@keyframes nrn-hero-entra { from { transform: translateX(100%); } }
+
+::view-transition-old(site-hero-text) {
+  animation: nrn-texto-sale 0.2s ease both;
+}
+::view-transition-new(site-hero-text) {
+  animation: nrn-texto-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+@keyframes nrn-texto-sale { to { opacity: 0; } }
+@keyframes nrn-texto-entra {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
 /* El resto del contenido (tarjetas, listas) no tiene un nombre propio
    por página — cae en el grupo raíz genérico. Se retrasa un poco para
-   que llegue después de que la franja termine de deslizar. */
+   que llegue después de que el texto del título termine de entrar. */
 ::view-transition-old(root) { animation: none; }
 ::view-transition-new(root) {
-  animation: nrn-contenido-entra 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s backwards;
+  animation: nrn-contenido-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.45s backwards;
 }
 @keyframes nrn-contenido-entra {
   from { opacity: 0; transform: translateY(18px); }
