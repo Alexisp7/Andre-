@@ -2534,8 +2534,13 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 .nav-submenu a::before { display: none; }
 .nav-submenu a:last-child { border-bottom: none; }
-.nav-submenu a:hover { background: var(--bg-off); color: var(--blue); padding-left: 24px; }
-.nav-submenu a.sub-activa { color: var(--black); }
+/* Especificidad reforzada con "nav.main-nav": el enlace del submenú
+   también es descendiente de nav.main-nav, así que sin esto perdía
+   contra "nav.main-nav a:hover { color: var(--white) }" (pensada para
+   los enlaces de primer nivel, con su propio fondo oscuro deslizante) —
+   texto blanco sobre el fondo casi blanco del submenú, invisible. */
+nav.main-nav .nav-submenu a:hover { background: var(--bg-off); color: var(--blue); padding-left: 24px; }
+nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 .nav-submenu a.sub-activa::after {
   content: '·'; color: var(--gold); margin-left: 8px;
 }
