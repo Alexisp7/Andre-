@@ -119,14 +119,7 @@
     var mainActual = document.querySelector(MAIN_SEL);
     if (!heroActual || !mainActual) { irReal(url.href); return; }
 
-    /* El <video> de fondo vive en la sección .page-hero de afuera,
-       que nunca se toca ni se destruye — solo se le agrega o quita
-       el modificador de portada. Esto se hace YA, al hacer clic, para
-       que el video empiece a "subir" o "bajar" de inmediato: la
-       transición de altura por CSS y el desvanecido del texto quedan
-       corriendo en paralelo. */
     var heroSeccion = heroActual.closest('.page-hero');
-    if (heroSeccion) heroSeccion.classList.toggle('page-hero--portada', esPortada);
 
     fetch(url.href, { credentials: 'same-origin' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -148,6 +141,17 @@
 
       setTimeout(function () {
         if (miGeneracion !== generacion) return;
+
+        /* El <video> de fondo vive en la sección .page-hero de afuera,
+           que nunca se toca ni se destruye — solo se le agrega o quita
+           el modificador de portada, y eso es lo que anima su altura
+           ("sube"/"baja"). Se hace justo AQUÍ, recién con el texto
+           viejo ya invisible (terminó .spa-hero-sale), no al hacer
+           clic: .page-hero--portada también centra y angosta
+           .page-hero-inner, así que cambiarlo antes hacía que el
+           título todavía visible saltara al centro y se quedara ahí
+           un instante antes de desvanecerse — se veía mal. */
+        if (heroSeccion) heroSeccion.classList.toggle('page-hero--portada', esPortada);
 
         heroActual.innerHTML = nuevoHero.innerHTML;
         mainActual.innerHTML = nuevoMain.innerHTML;
