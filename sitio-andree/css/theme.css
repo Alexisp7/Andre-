@@ -24,7 +24,7 @@
   --ink: #14233D;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -33,6 +33,13 @@ body {
   font-size: 15px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  /* Red de seguridad para animaciones que entran deslizándose desde
+     fuera de la pantalla (las noticias en tren, tarjetas, etc.):
+     mientras están a medio camino, el elemento vive momentáneamente
+     más allá del borde derecho, y sin esto el navegador ensancha la
+     página entera y deja un scroll horizontal fantasma durante ese
+     instante, sobre todo notorio en celular. */
+  overflow-x: hidden;
 }
 
 .gold { color: var(--gold); }
