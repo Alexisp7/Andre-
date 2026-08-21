@@ -155,7 +155,7 @@ hr.thin-line {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 48px;
+  padding: 11px 48px;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -1093,7 +1093,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
    RESPONSIVE
 ──────────────────────────────── */
 @media (max-width: 900px) {
-  .header-inner { padding: 8px 24px; position: relative; }
+  .header-inner { padding: 11px 24px; position: relative; }
   .nav-toggle { display: flex; }
 
   nav.main-nav {
@@ -1770,7 +1770,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   position: fixed; top: 0; left: 0; right: 0; z-index: 90;
   display: flex; align-items: center; justify-content: center;
   gap: 0;
-  padding: 22px 48px;
+  padding: 20px 48px;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -1826,7 +1826,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    importar que "Investigación" sea mucho más larga que "Inicio". */
 @media (max-width: 900px) {
   .hero-nav-flotante {
-    padding: 10px 16px; min-height: 52px;
+    padding: 8px 16px; min-height: 48px;
   }
   /* El botón queda centrado y fijo (no forma parte del flujo del
      grid), para que las pestañas se abran a sus dos costados en vez de
@@ -1961,12 +1961,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* ── Navegación con siete entradas: se aprieta antes de romperse ── */
 @media (max-width: 1420px) {
   nav.main-nav a { padding: 8px 13px; letter-spacing: 0.12em; }
-  .header-inner { padding: 8px 32px; }
+  .header-inner { padding: 11px 32px; }
 }
 @media (max-width: 1180px) {
   nav.main-nav a { padding: 8px 9px; font-size: 9px; letter-spacing: 0.08em; }
   nav.main-nav .nav-sep { display: none; }
-  .header-inner { padding: 8px 24px; }
+  .header-inner { padding: 11px 24px; }
 }
 
 /* ── Rejilla de cinco cursos: la última fila no lleva línea inferior ── */
