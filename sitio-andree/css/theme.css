@@ -155,7 +155,7 @@ hr.thin-line {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 48px;
+  padding: 11px 48px;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -1093,7 +1093,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
    RESPONSIVE
 ──────────────────────────────── */
 @media (max-width: 900px) {
-  .header-inner { padding: 8px 24px; position: relative; }
+  .header-inner { padding: 11px 24px; position: relative; }
   .nav-toggle { display: flex; }
 
   nav.main-nav {
@@ -1770,7 +1770,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   position: fixed; top: 0; left: 0; right: 0; z-index: 90;
   display: flex; align-items: center; justify-content: center;
   gap: 0;
-  padding: 22px 48px;
+  padding: 20px 48px;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -1826,7 +1826,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    importar que "Investigación" sea mucho más larga que "Inicio". */
 @media (max-width: 900px) {
   .hero-nav-flotante {
-    padding: 10px 16px; min-height: 52px;
+    padding: 8px 16px; min-height: 48px;
   }
   /* El botón queda centrado y fijo (no forma parte del flujo del
      grid), para que las pestañas se abran a sus dos costados en vez de
@@ -1856,19 +1856,35 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
   /* Una sola fila con la X en medio: dos pestañas a cada lado, en vez
      de las cuatro amontonadas debajo del botón. El espaciador central
-     reserva el hueco exacto del botón para que las dos mitades queden
-     pegadas a sus costados y el conjunto se mantenga centrado. */
+     reserva el hueco exacto del botón, y cada mitad se centra dentro de
+     su propia columna (en vez de pegarse al espaciador) para que el
+     conjunto se vea equilibrado aunque "Investigación" sea más larga
+     que "Inicio". */
   .hero-nav-links {
-    display: none;
-    position: relative;
+    display: grid;
+    /* Fuera del flujo (como el botón): así, cerrado, no infla el alto
+       de la barra — solo el botón la define. */
+    position: absolute; left: 16px; right: 16px; top: 50%;
+    transform: translateY(-50%);
     align-items: center;
     grid-template-columns: 1fr auto 1fr;
     column-gap: 6px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.32s;
   }
-  .hero-nav-flotante.hero-nav-abierto .hero-nav-links { display: grid; }
-  .hero-nav-mitad { display: flex; align-items: center; gap: 6px; min-width: 0; }
-  .hero-nav-links .hero-nav-mitad:first-child { justify-self: end; }
-  .hero-nav-links .hero-nav-mitad:last-child { justify-self: start; }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-links {
+    opacity: 1; visibility: visible; pointer-events: auto;
+  }
+  .hero-nav-mitad {
+    display: flex; align-items: center; gap: 6px; min-width: 0;
+    justify-self: center;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Cerrado, las dos mitades quedan recogidas debajo del botón; al
+     abrir, se deslizan hacia sus costados como si salieran de la X. */
+  .hero-nav-links .hero-nav-mitad:first-child { transform: translateX(52px); }
+  .hero-nav-links .hero-nav-mitad:last-child { transform: translateX(-52px); }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-mitad { transform: translateX(0); }
   .hero-nav-espaciador { display: block; width: 30px; }
   .hero-nav-flotante a { font-size: 9px; letter-spacing: 0.11em; padding: 6px 6px; }
   .hero-nav-flotante .hero-nav-sep { font-size: 14px; }
@@ -1876,70 +1892,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
      reemplaza. Se oculta (sigue contando como el 3er separador de la
      fila de escritorio, donde el wrapper es "contents"). */
   .hero-nav-flotante .hero-nav-break { display: none; }
-  .hero-nav-flotante .nav-desplegable { width: auto; flex-direction: row; position: static; }
-  /* "Cursos" se subraya igual que una pestaña activa mientras su
-     submenú está abierto, para conectarlos visualmente sin depender de
-     una forma que los una. El submenú cuelga centrado bajo todo el
-     bloque de pestañas (no bajo "Cursos" en particular, que al estar en
-     la columna derecha lo sacaba de la pantalla). */
-  .hero-nav-flotante .nav-desplegable--abierto > a {
-    color: var(--white);
-  }
-  .hero-nav-flotante .nav-desplegable--abierto > a::after {
-    transform: scaleX(1);
-  }
-  .hero-nav-flotante .nav-submenu {
-    position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-6px);
-    margin-top: 12px;
-    opacity: 0; visibility: hidden; pointer-events: none;
-    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
-  }
-  /* Especificidad reforzada con el id: sin esto, la regla genérica
-     ".nav-desplegable:focus-within .nav-submenu" (que el propio toque
-     dispara, al enfocar el enlace) empata en especificidad y gana por
-     venir después en la hoja de estilos, pisando el translateX(-50%) y
-     dejando el submenú pegado a su ancla sin recentrar — la causa real
-     de que se fuera fuera de pantalla. */
-  #heroNavFlotante .nav-desplegable--abierto .nav-submenu {
-    opacity: 1; visibility: visible; pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-/* El desplegable de "Cursos" hereda el mismo estilo blanco sólido del
-   encabezado real, que aquí sobre el video se ve fuera de lugar: se le
-   da el mismo tratamiento de vidrio esmerilado que el resto del nav
-   flotante, con un brillo apenas insinuado (mucho más sutil que el de
-   noticias) al pasar el mouse. */
-.hero-nav-flotante .nav-submenu {
-  position: absolute;
-  /* Casi opaco: con menos alfa se veía lo de atrás superpuesto (el
-     texto de las otras pestañas atravesándolo), aunque tuviera blur. */
-  background: rgba(15, 26, 46, 0.94);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 0.5px solid rgba(255, 255, 255, 0.16);
-  border-top: 1px solid var(--gold);
-  overflow: hidden;
-}
-.hero-nav-flotante .nav-submenu a {
-  color: rgba(255, 255, 255, 0.75);
-  border-bottom-color: rgba(255, 255, 255, 0.12);
-}
-.hero-nav-flotante .nav-submenu a:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--white);
-}
-.hero-nav-flotante .nav-submenu::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.07) 50%, transparent 58%);
-  transform: translateX(-120%);
-  pointer-events: none;
-}
-.hero-nav-flotante .nav-desplegable:hover .nav-submenu::after {
-  transform: translateX(120%);
-  transition: transform 1s ease;
 }
 
 .library-hero .hero-eyebrow {
@@ -1961,12 +1913,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 /* ── Navegación con siete entradas: se aprieta antes de romperse ── */
 @media (max-width: 1420px) {
   nav.main-nav a { padding: 8px 13px; letter-spacing: 0.12em; }
-  .header-inner { padding: 8px 32px; }
+  .header-inner { padding: 11px 32px; }
 }
 @media (max-width: 1180px) {
   nav.main-nav a { padding: 8px 9px; font-size: 9px; letter-spacing: 0.08em; }
   nav.main-nav .nav-sep { display: none; }
-  .header-inner { padding: 8px 24px; }
+  .header-inner { padding: 11px 24px; }
 }
 
 /* ── Rejilla de cinco cursos: la última fila no lleva línea inferior ── */

@@ -25,12 +25,7 @@
       <span class="hero-nav-mitad">
         <a href="index.html" class="active">Inicio</a>
         <span class="hero-nav-sep">|</span>
-        <span class="nav-desplegable" id="cursosDesplegable">
-          <a href="materiales.html">Cursos</a>
-          <span class="nav-submenu">
-            <a href="psicofarmacologia.html">Psicofarmacología</a>
-          </span>
-        </span>
+        <a href="materiales.html">Cursos</a>
       </span>
       <span class="hero-nav-sep hero-nav-break">|</span>
       <span class="hero-nav-espaciador" aria-hidden="true"></span>
@@ -95,7 +90,6 @@
         heroNavBoton.addEventListener('click', function () {
           var abierto = heroNav.classList.toggle('hero-nav-abierto');
           heroNavBoton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
-          cursosDesplegable && cursosDesplegable.classList.remove('nav-desplegable--abierto');
         });
         if (heroNavLinks) {
           heroNavLinks.addEventListener('click', function (e) {
@@ -105,22 +99,6 @@
             }
           });
         }
-      }
-
-      /* Sin hover real en táctil, "Cursos" se abre con un toque: el
-         submenú se superpone (no empuja al resto) centrado bajo todo
-         el bloque de pestañas, y "Cursos" se subraya mientras está
-         abierto para dejar claro a qué pestaña pertenece. */
-      var cursosDesplegable = document.getElementById('cursosDesplegable');
-      if (cursosDesplegable) {
-        var cursosLink = cursosDesplegable.querySelector('a');
-        cursosLink.addEventListener('click', function (e) {
-          if (window.matchMedia('(max-width: 900px)').matches) {
-            e.preventDefault();
-            e.stopPropagation();
-            cursosDesplegable.classList.toggle('nav-desplegable--abierto');
-          }
-        });
       }
     })();
   </script>
