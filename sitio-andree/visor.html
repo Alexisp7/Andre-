@@ -88,7 +88,7 @@
     </div>
     <p class="visor-giro-aviso" id="vGiroAviso" hidden>Para mayor resolución, gira tu teléfono</p>
     <p class="visor-pie">
-      <span class="visor-pie-copy"><span class="visor-pie-nombre">Dr. Andreé Salvatierra</span><span class="visor-pie-sep"> | </span><span class="visor-pie-material">Material académico de uso educativo</span></span>
+      <span class="visor-pie-copy"><span class="visor-pie-nombre">Dr. Andreé Salvatierra Baldeón</span><span class="visor-pie-sep"> | </span><span class="visor-pie-material">Material académico de uso educativo</span></span>
     </p>
   </section>
 
@@ -450,22 +450,30 @@
                 var vista = pagina.getViewport({ scale: (ancho / base.width) * escala });
 
                 var hoja = document.createElement('div');
-                // La primera página "sube" desde abajo hasta su sitio en
-                // cuanto está lista (ver .visor-hoja--entra en theme.css) —
-                // las demás no lo necesitan, no son la que se ve primero.
-                hoja.className = 'visor-hoja' + (n === 1 ? ' visor-hoja--entra' : '');
+                hoja.className = 'visor-hoja';
                 var lienzo = document.createElement('canvas');
                 lienzo.width = vista.width; lienzo.height = vista.height;
                 lienzo.style.width = '100%'; lienzo.style.height = 'auto';
                 hoja.appendChild(lienzo);
-                zona.appendChild(hoja);
-                hojas[n - 1] = hoja;
-                if (n === 1) irA(0);
 
+                /* El dibujo pasa TODO antes de que la hoja toque el DOM
+                   (por eso hoja.appendChild(lienzo) va arriba pero
+                   zona.appendChild(hoja) recién abajo, después de
+                   render()) — así nunca se alcanza a ver el rectángulo
+                   blanco del canvas vacío; cuando aparece, ya está
+                   dibujada. La primera página además "sube" desde abajo
+                   hasta su sitio en cuanto está lista (.visor-hoja--entra
+                   en theme.css) — las demás no lo necesitan, no son la
+                   que se ve primero. */
                 return pagina.render({
                   canvasContext: lienzo.getContext('2d', { alpha: false }),
                   viewport: vista
-                }).promise;
+                }).promise.then(function () {
+                  if (n === 1) hoja.classList.add('visor-hoja--entra');
+                  zona.appendChild(hoja);
+                  hojas[n - 1] = hoja;
+                  if (n === 1) irA(0);
+                });
               });
             });
           })(n);

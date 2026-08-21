@@ -2317,10 +2317,12 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   position: relative; z-index: 6;
 }
 .visor-pie-copy {
-  display: block; margin-top: 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  margin-top: 4px;
   font-size: 8px; font-weight: 400; letter-spacing: 0.08em;
   text-transform: none; color: var(--gray-light);
 }
+.visor-pie-sep { display: none; }
 
 /* Al imprimir no sale nada */
 @media print {
@@ -2341,8 +2343,6 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   .visor-nav svg { width: 14px; height: 14px; }
   .visor-nav--inicio { width: 40px; height: 40px; }
   .visor-nav--inicio svg { width: 16px; height: 16px; }
-  .visor-pie-copy { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .visor-pie-sep { display: none; }
 }
 
 
