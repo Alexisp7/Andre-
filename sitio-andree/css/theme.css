@@ -1856,19 +1856,35 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 
   /* Una sola fila con la X en medio: dos pestañas a cada lado, en vez
      de las cuatro amontonadas debajo del botón. El espaciador central
-     reserva el hueco exacto del botón para que las dos mitades queden
-     pegadas a sus costados y el conjunto se mantenga centrado. */
+     reserva el hueco exacto del botón, y cada mitad se centra dentro de
+     su propia columna (en vez de pegarse al espaciador) para que el
+     conjunto se vea equilibrado aunque "Investigación" sea más larga
+     que "Inicio". */
   .hero-nav-links {
-    display: none;
-    position: relative;
+    display: grid;
+    /* Fuera del flujo (como el botón): así, cerrado, no infla el alto
+       de la barra — solo el botón la define. */
+    position: absolute; left: 16px; right: 16px; top: 50%;
+    transform: translateY(-50%);
     align-items: center;
     grid-template-columns: 1fr auto 1fr;
     column-gap: 6px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.32s;
   }
-  .hero-nav-flotante.hero-nav-abierto .hero-nav-links { display: grid; }
-  .hero-nav-mitad { display: flex; align-items: center; gap: 6px; min-width: 0; }
-  .hero-nav-links .hero-nav-mitad:first-child { justify-self: end; }
-  .hero-nav-links .hero-nav-mitad:last-child { justify-self: start; }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-links {
+    opacity: 1; visibility: visible; pointer-events: auto;
+  }
+  .hero-nav-mitad {
+    display: flex; align-items: center; gap: 6px; min-width: 0;
+    justify-self: center;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Cerrado, las dos mitades quedan recogidas debajo del botón; al
+     abrir, se deslizan hacia sus costados como si salieran de la X. */
+  .hero-nav-links .hero-nav-mitad:first-child { transform: translateX(52px); }
+  .hero-nav-links .hero-nav-mitad:last-child { transform: translateX(-52px); }
+  .hero-nav-flotante.hero-nav-abierto .hero-nav-mitad { transform: translateX(0); }
   .hero-nav-espaciador { display: block; width: 30px; }
   .hero-nav-flotante a { font-size: 9px; letter-spacing: 0.11em; padding: 6px 6px; }
   .hero-nav-flotante .hero-nav-sep { font-size: 14px; }
