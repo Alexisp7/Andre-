@@ -2664,7 +2664,12 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 }
 
 /* Indicador de scroll en el hero */
-.scroll-cue {
+/* Vive fuera de .page-hero-inner (no se toca en la navegación SPA),
+   así que sin esto se quedaría pegado para siempre en cuanto se
+   navegara una sola vez desde la portada — solo debe verse ahí. */
+.scroll-cue { display: none; }
+.page-hero--portada .scroll-cue {
+  display: block;
   position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%); z-index: 3;
   width: 22px; height: 36px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 12px;
 }
