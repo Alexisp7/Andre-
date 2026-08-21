@@ -89,7 +89,7 @@
       }
       entradas.sort(function (a, b) { return (b.fecha || '').localeCompare(a.fecha || ''); });
       if (tope) entradas = entradas.slice(0, tope);
-      destino.innerHTML = entradas.map(function (n) {
+      destino.innerHTML = entradas.map(function (n, i) {
         var enlace = n.enlace
           ? '<a class="noticia-enlace" href="' + limpiar(n.enlace) +
             '" target="_blank" rel="noopener noreferrer">Ver la publicación: ' +
@@ -112,8 +112,8 @@
                   '</figure>';
         }
 
-        return '<article class="noticia' + (media ? ' noticia--con-media' : '') +
-                 (n.enlace ? ' noticia--con-enlace' : '') + '">' +
+        return '<article class="noticia noticia-entra' + (media ? ' noticia--con-media' : '') +
+                 (n.enlace ? ' noticia--con-enlace' : '') + '" style="--i:' + i + '">' +
                  media +
                  '<div class="noticia-cuerpo">' +
                    '<div class="noticia-meta">' +
