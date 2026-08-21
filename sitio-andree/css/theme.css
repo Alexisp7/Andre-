@@ -1866,6 +1866,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     border: 0.5px solid rgba(255, 255, 255, 0.28);
     cursor: pointer;
     z-index: 1;
+    transition: left 0.32s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
   }
   .hero-nav-boton span {
     display: block; width: 12px; height: 1px;
