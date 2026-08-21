@@ -6,13 +6,17 @@
    video sigue reproduciéndose sin cortes de una "página" a la
    siguiente.
 
-   La portada (index.html) queda fuera a propósito: su franja
-   (.library-hero) es una sección con clases y proporciones propias,
-   distinta de .page-hero de las demás — no es el mismo elemento que
-   se pueda "seguir mostrando" al cambiar de página, así que intentarlo
-   solo cambiaría el texto de adentro dejando el marco de afuera
-   equivocado. Los enlaces hacia o desde la portada navegan normal,
-   de verdad; lo mismo visor.html, que no tiene franja de video y cuya
+   La portada (index.html) usa la MISMA sección .page-hero que las
+   demás páginas, solo que con el modificador .page-hero--portada
+   (pantalla completa en vez de franja) — así que el mismo <video>,
+   nunca destruido, sirve para ambos casos: al navegar hacia o desde
+   la portada simplemente se agrega/quita esa clase, y como el video
+   queda anclado abajo y la sección tiene overflow:hidden, la
+   transición de altura por CSS hace que se vea como si el video
+   "subiera" (se encoge hasta la franja) o "bajara" (vuelve a pantalla
+   completa) — es el mismo elemento, solo más o menos recortado.
+
+   visor.html queda fuera a propósito: no tiene franja de video y su
    propia lógica (pdf.js) es demasiado particular como para
    revalidarla dentro de este esquema.
 
@@ -23,13 +27,14 @@
   'use strict';
 
   var PAGINAS = [
-    'materiales.html', 'investigacion.html', 'noticias.html',
+    'index.html', 'materiales.html', 'investigacion.html', 'noticias.html',
     'apuntes.html', 'contacto.html', 'biopsicologia.html', 'neuroanatomia.html',
     'neuropsicologia.html', 'psicofarmacologia.html'
   ];
 
   // Qué pestaña(s) del menú marcar como activa para cada página.
   var ACTIVOS = {
+    'index.html': { inicio: true },
     'materiales.html': { cursos: true },
     'psicofarmacologia.html': { subActiva: true },
     'investigacion.html': { investigacion: true },
@@ -97,7 +102,7 @@
   }
 
   function moverFoco(heroActual) {
-    var titulo = heroActual.querySelector('.page-hero-title');
+    var titulo = heroActual.querySelector('.page-hero-title') || heroActual.querySelector('.library-hero-name');
     if (!titulo) return;
     if (!titulo.hasAttribute('tabindex')) titulo.setAttribute('tabindex', '-1');
     titulo.focus({ preventScroll: true });
@@ -108,10 +113,20 @@
   function navegar(url, conHistoria) {
     var miGeneracion = ++generacion;
     var archivo = archivoDe(url);
+    var esPortada = archivo === 'index.html';
 
     var heroActual = document.querySelector(HERO_SEL);
     var mainActual = document.querySelector(MAIN_SEL);
     if (!heroActual || !mainActual) { irReal(url.href); return; }
+
+    /* El <video> de fondo vive en la sección .page-hero de afuera,
+       que nunca se toca ni se destruye — solo se le agrega o quita
+       el modificador de portada. Esto se hace YA, al hacer clic, para
+       que el video empiece a "subir" o "bajar" de inmediato: la
+       transición de altura por CSS y el desvanecido del texto quedan
+       corriendo en paralelo. */
+    var heroSeccion = heroActual.closest('.page-hero');
+    if (heroSeccion) heroSeccion.classList.toggle('page-hero--portada', esPortada);
 
     fetch(url.href, { credentials: 'same-origin' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -182,4 +197,40 @@
     if (!esElegible(archivoDe(url))) return;
     navegar(url, false);
   });
+
+  /* El nav flotante se desvanece con el scroll SOLO mientras la franja
+     de arriba está en modo portada (pantalla completa) — en las demás
+     páginas, angostas, se queda siempre visible. Esto vive acá (y no
+     en un <script> propio de index.html) porque la sección .page-hero
+     es persistente entre navegaciones SPA: si el usuario entra al
+     sitio por cualquier página que no sea index.html y luego navega a
+     "Inicio", ese <script> de index.html nunca se volvería a ejecutar
+     (queda fuera de .page-hero-inner y #spaMain, las únicas zonas que
+     se reemplazan) — así que el desvanecido tiene que quedar
+     conectado una sola vez, acá, de forma global. */
+  var heroNavGlobal = document.getElementById('heroNavFlotante');
+  var heroSeccionGlobal = document.querySelector('.page-hero');
+  if (heroNavGlobal && heroSeccionGlobal) {
+    var desvaneciendo = false;
+    function actualizarDesvanecido() {
+      desvaneciendo = false;
+      if (!heroSeccionGlobal.classList.contains('page-hero--portada')) {
+        heroNavGlobal.style.opacity = '';
+        heroNavGlobal.style.pointerEvents = '';
+        return;
+      }
+      var alto = heroSeccionGlobal.offsetHeight || 1;
+      var progreso = Math.min(1, Math.max(0, window.scrollY / alto));
+      heroNavGlobal.style.opacity = String(1 - progreso);
+      heroNavGlobal.style.pointerEvents = progreso > 0.85 ? 'none' : 'auto';
+    }
+    function pedirDesvanecido() {
+      if (desvaneciendo) return;
+      desvaneciendo = true;
+      requestAnimationFrame(actualizarDesvanecido);
+    }
+    actualizarDesvanecido();
+    window.addEventListener('scroll', pedirDesvanecido, { passive: true });
+    window.addEventListener('resize', pedirDesvanecido);
+  }
 })();

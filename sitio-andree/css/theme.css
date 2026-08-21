@@ -1276,25 +1276,26 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 .slide-link:hover { background: var(--gold); color: var(--black); }
 
-/* ── PAGE HERO ── */
+/* ── PAGE HERO ──
+   .site-hero-video siempre "mide" 100vh y se ancla al borde inferior
+   (ver más abajo, en el bloque de la portada): al ser esta franja más
+   baja que 100vh y tener overflow:hidden, solo se alcanza a ver el
+   pedazo inferior de ese video — el mismo que se ve completo en la
+   portada. Eso permite que la altura de .page-hero (aquí, fija) sea
+   animable con transition, y de la portada (100vh) a esta franja el
+   efecto sea el video "subiendo" hasta encajar en su pedazo, en vez
+   de una franja y un video totalmente aparte que hay que recargar. */
 .page-hero {
   background: var(--blue); position:relative; overflow:hidden;
-  padding:72px 48px 64px; border-bottom:0.5px solid #222;
+  height: 320px;
+  display: flex; align-items: center;
+  border-bottom:0.5px solid #222;
+  transition: height 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
-/* Mismo video de fondo que la portada, en la franja azul de cada
-   página — con el menú flotante (fixed, fuera del flujo) encima la
-   franja ya arranca en el verdadero borde superior, sin hueco. */
-.page-hero-video {
-  position: absolute; inset: 0; z-index: 0;
-  width: 100%; height: 100%; object-fit: cover;
-  pointer-events: none;
+.page-hero-inner {
+  max-width:1280px; margin:0 auto; position:relative; z-index:2;
+  width: 100%; padding: 0 48px;
 }
-.page-hero-overlay {
-  position: absolute; inset: 0; z-index: 1;
-  background: rgba(20, 35, 61, 0.62);
-  pointer-events: none;
-}
-.page-hero-inner { max-width:1280px; margin:0 auto; position:relative; z-index:2; }
 .page-hero-title {
   font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:500;
   font-style:italic; color:var(--gold); letter-spacing:-0.02em; line-height:1.05; margin-bottom:16px;
@@ -1590,7 +1591,8 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   .library-hero-inner { grid-template-columns: 1fr; padding: 60px 24px; gap: 44px; }
   .library-hero-stats { gap: 28px; flex-wrap: wrap; }
   .library-photo { max-width: 280px; }
-  .page-hero { padding: 52px 24px 44px; }
+  .page-hero { height: 260px; }
+  .page-hero-inner { padding: 0 24px; }
   .page-hero-title { font-size: 40px; }
   .page-hero-ornament { display: none; }
   .note-row { grid-template-columns: 1fr; gap: 12px; padding-left: 20px; }
@@ -1699,30 +1701,40 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    a los lados, tenues. El nombre en el centro.
    ══════════════════════════════════════════ */
 
-.library-hero {
-  min-height: 100vh;
-  min-height: 100svh;
+/* .page-hero--portada: la franja de la portada es la misma sección
+   .page-hero de las demás páginas, con este modificador que la hace
+   ocupar toda la pantalla en vez de una banda — así el <video> es
+   literalmente el mismo elemento en las 11 páginas del sitio (nunca
+   se recarga) y solo cambia de tamaño con la transición de height
+   heredada de .page-hero, dando el efecto de "subir" o "bajar". */
+.page-hero--portada {
+  height: 100vh;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
   background: var(--ink);
+  border-bottom: none;
 }
 
-.library-hero-video {
-  position: absolute; inset: 0; z-index: 0;
-  width: 100%; height: 100%; object-fit: cover;
+/* El video siempre "mide" 100vh y se ancla abajo, sin importar qué
+   tan baja sea la sección que lo recorta con overflow:hidden — así,
+   de la portada (100vh) a la franja de una página (mucho más baja),
+   lo que se ve es que el video "sube" hasta encajar en su pedazo
+   inferior, en vez de dos videos distintos que hay que recargar. */
+.page-hero-video {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 0;
+  width: 100%; height: 100vh; height: 100svh;
+  object-fit: cover;
   pointer-events: none;
 }
-.library-hero-overlay {
+.page-hero-overlay {
   position: absolute; inset: 0; z-index: 1;
   background: rgba(20, 35, 61, 0.62);
   pointer-events: none;
 }
 
-.library-hero-inner {
-  position: relative; z-index: 2;
+.page-hero--portada .page-hero-inner {
   max-width: 980px; margin: 0 auto; width: 100%;
   padding: 64px 48px;
   text-align: center;
@@ -1954,19 +1966,19 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   transition: transform 1s ease;
 }
 
-.library-hero .hero-eyebrow {
+.page-hero--portada .hero-eyebrow {
   color: var(--gold);
   justify-content: center;
   margin-bottom: 26px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .library-hero-video { display: none; }
+  .page-hero-video { display: none; }
 }
 
 @media (max-width: 760px) {
-  .library-hero { min-height: 76vh; }
-  .library-hero-inner { padding: 56px 24px; }
+  .page-hero--portada { height: 76vh; }
+  .page-hero--portada .page-hero-inner { padding: 56px 24px; }
 }
 
 
