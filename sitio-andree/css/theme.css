@@ -2126,6 +2126,21 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 }
 .visor-hoja canvas { display: block; pointer-events: none; width: 100%; height: auto; }
 
+/* La primera página, apenas está lista, "sube" desde abajo hasta su
+   sitio en vez de simplemente aparecer — así el tiempo que demoró en
+   cargar queda oculto en el espacio en blanco reservado (ver
+   .visor-viewport.cargando) y lo único visible es esta entrada. */
+@keyframes visor-hoja-entra {
+  from { opacity: 0; transform: translateY(48px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.visor-hoja--entra {
+  animation: visor-hoja-entra 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .visor-hoja--entra { animation: none; }
+}
+
 /* Pantalla completa: algunas páginas (diapositivas exportadas de PPT)
    no tienen la proporción habitual del PDF y podían quedar más altas
    que la pantalla. En pantalla completa se contienen enteras dentro
@@ -2472,11 +2487,31 @@ html.visor-modo-presentacion .visor-pie { display: none; }
    las imágenes) para que el pie de página no suba pegado al header y
    luego salte de golpe hacia abajo en cuanto entra el contenido real
    — con este espacio reservado de antemano, lo único que se ve es que
-   el bloque se rellena, sin que nada más se mueva. */
+   el bloque se rellena, sin que nada más se mueva. Fondo crema (no
+   blanco puro, igual que el resto del sitio) para que ese espacio
+   reservado no se note como un bloque en blanco aparte. */
 .noticias {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 56px 36px;
   min-height: 60vh;
+  background: var(--bg-off);
+  border-radius: 12px;
+}
+
+/* Cada noticia "llega" desde la derecha, en cadena una tras otra (ver
+   --i puesto por JS en noticias.html), en vez de aparecer todas de
+   golpe apenas termina de cargar — así no se siente como que algo
+   sigue cargando después de que ya cargó. */
+@keyframes noticia-entra {
+  from { opacity: 0; transform: translateX(46px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.noticia-entra {
+  animation: noticia-entra 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: min(calc(var(--i, 0) * 90ms), 900ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .noticia-entra { animation: none; }
 }
 
 .noticia {

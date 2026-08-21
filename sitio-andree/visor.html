@@ -449,7 +449,10 @@
                 var vista = pagina.getViewport({ scale: (ancho / base.width) * escala });
 
                 var hoja = document.createElement('div');
-                hoja.className = 'visor-hoja';
+                // La primera página "sube" desde abajo hasta su sitio en
+                // cuanto está lista (ver .visor-hoja--entra en theme.css) —
+                // las demás no lo necesitan, no son la que se ve primero.
+                hoja.className = 'visor-hoja' + (n === 1 ? ' visor-hoja--entra' : '');
                 var lienzo = document.createElement('canvas');
                 lienzo.width = vista.width; lienzo.height = vista.height;
                 lienzo.style.width = '100%'; lienzo.style.height = 'auto';
