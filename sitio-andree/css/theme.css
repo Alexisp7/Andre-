@@ -3126,3 +3126,15 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 @keyframes nrn-contenido-entra {
   from { opacity: 0; transform: translateY(18px); }
 }
+
+/* ══════════════════════════════════════════
+   NAVEGACIÓN SPA (js/nav-spa.js)
+   Solo entre las páginas con .page-hero (la portada queda fuera, ver
+   el comentario grande en nav-spa.js). El video de fondo vive en esa
+   sección, que nunca se toca — solo su interior (el texto) y #spaMain
+   se reemplazan. Mismas animaciones que la transición de arriba, pero
+   disparadas por JS con clases en vez de por navegación real: así el
+   video jamás se recarga, sin importar el navegador. */
+.spa-hero-sale { animation: nrn-texto-sale 0.2s ease both; }
+.spa-hero-entra { animation: nrn-texto-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.spa-main-entra { animation: nrn-contenido-entra 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
