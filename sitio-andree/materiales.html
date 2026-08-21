@@ -114,27 +114,35 @@
       heroNavBoton.addEventListener('click', function () {
         var abierto = heroNav.classList.toggle('hero-nav-abierto');
         heroNavBoton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+        centrarBotonNav();
       });
       if (heroNavLinks) {
         heroNavLinks.addEventListener('click', function (e) {
           if (e.target.tagName === 'A') {
             heroNav.classList.remove('hero-nav-abierto');
             heroNavBoton.setAttribute('aria-expanded', 'false');
+            centrarBotonNav();
           }
         });
       }
 
-      /* Igual que en la portada: las columnas del menú móvil se ajustan
-         al contenido y el bloque se centra por CSS, así que la X se
-         reposiciona aquí al centro real del hueco entre las dos
-         mitades (ver comentario largo en index.html). */
-      var heroNavMitades = heroNavLinks ? heroNavLinks.querySelectorAll('.hero-nav-mitad') : [];
+      /* Cerrado, el botón queda exactamente centrado (CSS, left:50%).
+         Solo al abrirse se desliza al centro real del hueco entre las
+         dos mitades — que no es el 50% exacto de la pantalla porque
+         "Investigación·Noticias" pesa más que "Inicio·Cursos" y el
+         bloque centrado por CSS no cae parejo. Se mide el espaciador
+         central (que no tiene transform, a diferencia de las mitades)
+         para que el valor sea el correcto esté el menú abierto o no. */
+      var heroNavEspaciador = heroNavLinks ? heroNavLinks.querySelector('.hero-nav-espaciador') : null;
       function centrarBotonNav() {
-        if (heroNavMitades.length !== 2 || !heroNavBoton || !heroNav) return;
+        if (!heroNavEspaciador || !heroNavBoton || !heroNav) return;
+        if (!heroNav.classList.contains('hero-nav-abierto')) {
+          heroNavBoton.style.left = '';
+          return;
+        }
         var flotanteLeft = heroNav.getBoundingClientRect().left;
-        var huecoIzq = heroNavMitades[0].getBoundingClientRect().right;
-        var huecoDer = heroNavMitades[1].getBoundingClientRect().left;
-        heroNavBoton.style.left = ((huecoIzq + huecoDer) / 2 - flotanteLeft) + 'px';
+        var hueco = heroNavEspaciador.getBoundingClientRect();
+        heroNavBoton.style.left = ((hueco.left + hueco.right) / 2 - flotanteLeft) + 'px';
       }
       centrarBotonNav();
       window.addEventListener('resize', centrarBotonNav);
