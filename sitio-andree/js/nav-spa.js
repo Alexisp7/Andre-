@@ -253,6 +253,7 @@
         heroNavGlobal.style.opacity = '';
         heroNavGlobal.style.pointerEvents = '';
         heroSeccionGlobal.style.removeProperty('--progreso-salida');
+        heroSeccionGlobal.style.removeProperty('--blur-fondo');
         return;
       }
       var alto = heroSeccionGlobal.offsetHeight || 1;
@@ -265,6 +266,15 @@
          fondo — todo por CSS (ver .page-hero--portada en theme.css), acá
          solo se pone el número. */
       heroSeccionGlobal.style.setProperty('--progreso-salida', String(progreso));
+      /* El desenfoque del fondo, en cambio, sigue creciendo más allá de
+         ese primer tramo — el video ahora es un fondo fijo detrás de
+         TODA la página (biografía, formación, contacto), así que tiene
+         que seguir reaccionando mientras se sigue bajando, no solo
+         dentro del primer alto de pantalla. Llega al máximo (16px) tras
+         bajar aprox. 2.2 pantallas, y nunca lo supera: el video siempre
+         se tiene que seguir reconociendo, nunca un bloque plano. */
+      var progresoBlur = Math.min(1, Math.max(0, window.scrollY / (alto * 2.2)));
+      heroSeccionGlobal.style.setProperty('--blur-fondo', (progresoBlur * 16).toFixed(2) + 'px');
     }
     function pedirDesvanecido() {
       if (desvaneciendo) return;

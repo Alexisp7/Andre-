@@ -1747,6 +1747,32 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   pointer-events: none;
 }
 
+/* Toda la portada como un lienzo continuo: el video, su capa oscura y
+   la constelación dejan de estar confinados a la caja de .page-hero
+   (230px de franja en las demás páginas) y pasan a position:fixed,
+   cubriendo la pantalla entera detrás de TODO el contenido de abajo
+   (biografía, formación, contacto) mientras se hace scroll — un solo
+   fondo persistente, no uno nuevo por sección. z-index negativo para
+   quedar detrás de #spaMain y el pie de página, que no llevan z-index
+   propio. Como siguen siendo hijos de .page-hero en el DOM (aunque ya
+   no visualmente confinados a su caja), heredan sin problema las
+   variables --progreso-salida/--blur-fondo que nav-spa.js les pone ahí
+   mismo. Se escapa de .page-hero pese a su overflow:hidden porque
+   position:fixed ignora el overflow de ancestros salvo que tengan
+   transform/filter/etc — .page-hero no tiene ninguno. */
+/* .page-hero--portada ya no necesita su propio fondo opaco (--ink):
+   con el video/overlay/constelación en position:fixed y z-index
+   negativo, el color de fondo propio de esta caja (que sigue existiendo
+   en el flujo normal, reservando 100vh de alto) pintaría ENCIMA de
+   ellos (z-index:auto > -3) dentro de ese primer tramo, tapando el
+   fondo fijo justo donde más se necesita verlo. */
+.page-hero--portada { background: transparent; }
+.page-hero--portada .page-hero-video {
+  position: fixed; inset: 0; bottom: auto; z-index: -3;
+  filter: blur(var(--blur-fondo, 0px));
+}
+.page-hero--portada .page-hero-overlay { position: fixed; z-index: -2; }
+
 /* Red de puntos tipo constelación, detrás del título de la portada:
    solo se ve/anima ahí (ver .page-hero--portada más abajo), nunca en
    la franja angosta de las demás páginas — nav-spa.js la arranca y la
@@ -1754,7 +1780,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 .hero-constelacion { display: none; }
 .page-hero--portada .hero-constelacion {
   display: block;
-  position: absolute; inset: 0; z-index: 1;
+  position: fixed; inset: 0; z-index: -1;
   width: 100%; height: 100%;
   pointer-events: none;
 }
@@ -1781,6 +1807,41 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
 @media (prefers-reduced-motion: reduce) {
   .page-hero--portada .page-hero-inner,
   .page-hero--portada .page-hero-video { opacity: 1; filter: none; transform: none; }
+}
+
+/* Con el fondo neuronal ahora fijo detrás de TODA la portada (ver
+   .page-hero-video/.page-hero-overlay/.hero-constelacion arriba), el
+   body deja de pintar blanco sólido en index.html — si no, taparía ese
+   fondo apenas se sale de la sección .page-hero. :has() detecta que
+   estamos en la portada sin necesitar una clase aparte en <body>; se
+   apaga solo al navegar a otra página (donde .page-hero--portada deja
+   de existir) porque la regla se re-evalúa en vivo. */
+body:has(.page-hero--portada) { background: transparent; }
+
+/* Biografía y Contacto pasan de fondo claro con texto oscuro a texto
+   claro sobre el mismo fondo neuronal desenfocado — una sola atmósfera
+   continua, no un bloque blanco nuevo por sección. La capa oscura
+   semitransparente es solo un colchón de contraste (no una "tarjeta"
+   opaca): el desenfoque del fondo, creciente con el scroll, es lo que
+   de verdad hace legible el texto. */
+#sobre {
+  background: rgba(8, 14, 24, 0.42);
+  position: relative; z-index: 1;
+}
+#sobre .autor-nombre { color: var(--white); }
+#sobre .autor-cargos { color: rgba(255, 255, 255, 0.65); }
+#sobre .about-body { color: rgba(255, 255, 255, 0.78); }
+#sobre .autor-registros { color: rgba(255, 255, 255, 0.55); border-top-color: rgba(255, 255, 255, 0.2); }
+#sobre .autor-registros strong { color: var(--white); }
+#sobre .autor-retrato { background: rgba(255, 255, 255, 0.06); }
+#sobre .retrato-cortina { background: var(--blue); }
+#sobre .escudos-titulo { color: var(--white); }
+#sobre .escudos-titulo::after { background: rgba(255, 255, 255, 0.2); }
+#sobre .escudo figcaption { color: rgba(255, 255, 255, 0.85); }
+
+#contactame.contacto-seccion {
+  background: rgba(8, 14, 24, 0.42);
+  position: relative; z-index: 1;
 }
 
 .library-hero-name {
@@ -2505,6 +2566,17 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   transition-delay: calc(var(--i, 0) * 90ms);
 }
 .escudo.is-visible img { filter: blur(0); opacity: 1; transform: scale(1); }
+
+/* Escudo por escudo, algunos vienen con líneas oscuras o negras (pensados
+   para verse sobre blanco) que casi desaparecen contra el fondo oscuro
+   de esta sección — se les da una chapita clara pareja a todos, así se
+   leen igual de bien sin importar el color propio de cada logo. */
+#sobre .escudo img {
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 10px;
+  padding: 12px;
+  box-sizing: border-box;
+}
 .escudo:hover img { transform: scale(1.05); }
 @media (prefers-reduced-motion: reduce) {
   .escudo img { transition: transform 0.35s ease; opacity: 1; filter: none; transform: none; }
