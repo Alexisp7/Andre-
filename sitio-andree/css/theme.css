@@ -1409,37 +1409,83 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 
 
-/* ── TARJETAS DE CURSO (biblioteca) ── */
-.library-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-  border: 0.5px solid var(--border);
+/* ── TARJETAS DE CURSO: COVERFLOW (materiales.html) ──
+   En celular se quedan apiladas, simples (.coverflow-carta como
+   bloque normal, ver más abajo). Desde escritorio (901px) se acomodan
+   en perspectiva 3D: la primera queda de frente y centrada, la
+   segunda recede de lado e inclinada — y basta poner el mouse encima
+   de la que está de lado para que se intercambien. Todo en CSS puro
+   (transform + :hover + :has), sin JS: cada tarjeta sigue siendo un
+   <a> normal que navega directo al curso en cualquier momento, sin
+   truco de "primer click no navega". */
+.cursos-coverflow { max-width: 900px; margin: 0 auto; }
+.coverflow-carta {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--white); border: 0.5px solid var(--border);
+  transition: box-shadow 0.4s ease;
 }
-/* Grilla de 2 columnas para materiales.html (un curso por fila cuando
-   solo hay dos): en su propia clase, no en style inline, para que la
-   regla mobile de abajo (grid-template-columns:1fr) pueda ganarle por
-   especificidad y las tarjetas se apilen en celular. */
-.library-grid--cursos { grid-template-columns: repeat(2, 1fr); max-width: 720px; }
-.library-grid--cursos .shelf-card:nth-child(2n) { border-right: none; }
-.shelf-card {
-  border-right: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
-  padding: 40px 34px 36px; position: relative; overflow: hidden;
-  text-decoration: none; display: block; color: inherit;
-  transition: background 0.35s ease;
+.coverflow-carta:hover { box-shadow: 0 20px 40px -20px var(--blue-shadow-strong); }
+.coverflow-carta-img { aspect-ratio: 16/10; overflow: hidden; background: var(--bg-off); }
+.coverflow-carta-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.coverflow-carta-texto { padding: 30px 32px 32px; }
+.coverflow-carta + .coverflow-carta { margin-top: 28px; }
+.coverflow-carta:hover .shelf-cta::after { transform: translateX(5px); }
+
+@media (min-width: 901px) {
+  .coverflow-pista {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 460px;
+    perspective: 1600px;
+  }
+  .coverflow-carta {
+    position: absolute;
+    width: 400px;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px var(--blue-shadow-strong);
+    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease, box-shadow 0.5s ease;
+  }
+  .coverflow-carta + .coverflow-carta { margin-top: 0; }
+
+  /* posición de reposo: la primera de frente y al centro, la segunda
+     recede a la derecha, inclinada en 3D para "mirar" hacia la de
+     frente (mismo criterio que la referencia: el borde de la tarjeta
+     más cercano al centro siempre avanza, el más lejano recede). */
+  .coverflow-carta:first-child {
+    transform: translateX(-34%) translateZ(0) rotateY(0deg) scale(1);
+    z-index: 2;
+  }
+  .coverflow-carta:last-child {
+    transform: translateX(48%) translateZ(-220px) rotateY(32deg) scale(0.78);
+    opacity: 0.55;
+    z-index: 1;
+  }
+
+  /* con el mouse encima de la que está de lado, se intercambian */
+  .coverflow-pista:has(.coverflow-carta:last-child:hover) .coverflow-carta:first-child {
+    transform: translateX(-48%) translateZ(-220px) rotateY(-32deg) scale(0.78);
+    opacity: 0.55;
+    z-index: 1;
+    box-shadow: 0 20px 45px -25px var(--blue-shadow);
+  }
+  .coverflow-pista:has(.coverflow-carta:last-child:hover) .coverflow-carta:last-child {
+    transform: translateX(34%) translateZ(0) rotateY(0deg) scale(1);
+    opacity: 1;
+    z-index: 2;
+    box-shadow: 0 40px 70px -25px var(--blue-shadow-strong);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .coverflow-carta { transition: none; }
+  }
 }
-.shelf-card:nth-child(3n) { border-right: none; }
-.shelf-card:hover { background: var(--bg-off); }
-.shelf-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--gold); transform: scaleX(0); transform-origin: left center;
-  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-}
-.shelf-card:hover::before { transform: scaleX(1); }
+
 .shelf-num {
   font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 700;
   font-style: italic; color: var(--border); line-height: 1;
   position: absolute; top: 26px; right: 30px; transition: color 0.35s ease;
 }
-.shelf-card:hover .shelf-num { color: var(--gold-light); }
 .shelf-icon {
   width: 52px; height: 52px; border: 0.5px solid var(--gold);
   display: flex; align-items: center; justify-content: center;
@@ -1474,7 +1520,6 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--black);
 }
 .shelf-cta::after { content: '→'; color: var(--gold); font-size: 13px; transition: transform 0.3s ease; }
-.shelf-card:hover .shelf-cta::after { transform: translateX(5px); }
 
 /* ── ÍNDICE DE APUNTES (lista tipo catálogo) ── */
 .notes-toolbar {
@@ -1603,8 +1648,6 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 
 /* ── responsive ── */
 @media (max-width: 1000px) {
-  .library-grid { grid-template-columns: 1fr; }
-  .shelf-card { border-right: none; }
   .syllabus-grid { grid-template-columns: 1fr; gap: 40px; }
   .syllabus-aside { position: static; }
 }
@@ -1638,23 +1681,9 @@ nav.main-nav a.active::before { background: var(--black); }
 .courses-tabs a:hover { color: var(--blue); }
 
 /* Tarjetas de curso */
-.shelf-card {
-  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
-}
-.shelf-card::before { background: var(--gold); }
-.shelf-card:hover {
-  background: var(--blue);
-  box-shadow: 0 20px 40px -16px var(--blue-shadow-strong);
-  transform: translateY(-3px);
-}
 .shelf-title, .shelf-desc, .shelf-cta {
   transition: color 0.35s ease;
 }
-.shelf-card:hover .shelf-title,
-.shelf-card:hover .shelf-desc,
-.shelf-card:hover .shelf-cta { color: var(--white); }
-.shelf-card:hover .shelf-num { color: rgba(255,255,255,0.18); }
-.shelf-card:hover .shelf-cta::after { color: var(--gold); }
 
 /* Filas del catálogo */
 .note-row {
@@ -2240,15 +2269,6 @@ body:has(.page-hero--portada) { background: transparent; }
   nav.main-nav a { padding: 8px 9px; font-size: 9px; letter-spacing: 0.08em; }
   nav.main-nav .nav-sep { display: none; }
   .header-inner { padding: 11px 24px; }
-}
-
-/* ── Rejilla de cinco cursos: la última fila no lleva línea inferior ── */
-.library-grid { grid-auto-rows: 1fr; }
-.shelf-card:nth-child(n+4) { border-bottom: none; }
-
-@media (max-width: 1000px) {
-  .shelf-card { border-right: none; border-bottom: 0.5px solid var(--border); }
-  .shelf-card:last-child { border-bottom: none; }
 }
 
 /* ── Pestañas de curso: cinco caben justas ── */
@@ -2942,10 +2962,6 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 /* ══════════════════════════════════════════
    AJUSTES DE ESTA VERSIÓN
    ══════════════════════════════════════════ */
-
-/* Tarjetas de curso sin numeración ni etiqueta */
-.shelf-card { padding: 40px 34px 34px; }
-.shelf-card .shelf-title { margin-top: 4px; }
 
 /* El nombre del autor, protagonista */
 .autor-nombre {
