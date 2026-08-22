@@ -280,6 +280,8 @@
   var heroSeccionGlobal = document.querySelector('.page-hero');
   if (heroNavGlobal && heroSeccionGlobal) {
     var desvaneciendo = false;
+    var tiempoQuietoRiel = null;
+    var prefiereReducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function actualizarDesvanecido() {
       desvaneciendo = false;
       if (!heroSeccionGlobal.classList.contains('page-hero--portada')) {
@@ -375,6 +377,20 @@
         items[j].classList.toggle('es-activo', j === activo);
       }
       riel.classList.toggle('riel-secciones--interactivo', progresoTitulo > 0.05);
+
+      /* Mientras se está scrolleando, las etiquetas de texto se ven -
+         apenas el scroll se detiene un rato, se desvanecen solas y
+         quedan solo los puntitos (ver .riel-secciones--quieto en
+         theme.css). Cada llamada de esta función implica que hubo
+         scroll hace instantes, así que sirve como "todavía en
+         movimiento": reinicia el temporizador de quietud en cada una. */
+      if (!prefiereReducido) {
+        riel.classList.remove('riel-secciones--quieto');
+        clearTimeout(tiempoQuietoRiel);
+        tiempoQuietoRiel = setTimeout(function () {
+          riel.classList.add('riel-secciones--quieto');
+        }, 900);
+      }
     }
     function pedirDesvanecido() {
       if (desvaneciendo) return;

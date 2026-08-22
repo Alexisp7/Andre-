@@ -170,8 +170,8 @@ hr.thin-line {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 48px;
-  max-width: 1280px;
+  padding: 11px 36px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -262,9 +262,9 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
    HERO
 ──────────────────────────────── */
 .hero {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 88px 48px 80px;
+  padding: 88px 36px 80px;
   display: grid;
   grid-template-columns: 1fr 420px;
   gap: 80px;
@@ -466,8 +466,8 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
    SECTION COMMON
 ──────────────────────────────── */
 .section {
-  padding: 88px 48px;
-  max-width: 1280px;
+  padding: 88px 36px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -639,9 +639,9 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .projects-inner {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 0 36px;
 }
 
 .projects-inner .section-eyebrow {
@@ -1015,9 +1015,9 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .footer {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 56px 48px;
+  padding: 56px 36px;
 }
 
 .footer-top {
@@ -1308,8 +1308,8 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   transition: height 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .page-hero-inner {
-  max-width:1280px; margin:0 auto; position:relative; z-index:2;
-  width: 100%; padding: 0 48px 34px;
+  max-width:1440px; margin:0 auto; position:relative; z-index:2;
+  width: 100%; padding: 0 36px 34px;
 }
 .page-hero-title {
   font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:500;
@@ -1335,7 +1335,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   position:sticky; top:61px; z-index:90;
 }
 .courses-tabs {
-  max-width:1280px; margin:0 auto; padding:0 48px;
+  max-width:1440px; margin:0 auto; padding:0 36px;
   display:flex; align-items:center; gap:0;
   border-top:0.5px solid var(--border);
 }
@@ -1368,7 +1368,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 /* ── HERO de la biblioteca (portada) ── */
 .library-hero { background: var(--black); position: relative; overflow: hidden; }
 .library-hero-inner {
-  max-width: 1280px; margin: 0 auto; padding: 128px 48px 118px;
+  max-width: 1440px; margin: 0 auto; padding: 128px 36px 118px;
   position: relative; z-index: 2;
 }
 .library-hero .hero-eyebrow { color: var(--gold); }
@@ -2002,7 +2002,16 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
     letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap;
     color: rgba(255, 255, 255, 0.45);
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, opacity 0.6s ease;
+  }
+  /* Al dejar de hacer scroll un rato, las etiquetas de texto se
+     desvanecen y solo quedan los puntitos - vuelven a aparecer apenas
+     se vuelve a scrollear (ver sincronizarRielSecciones en nav-spa.js)
+     o si se pasa el mouse por encima. */
+  .riel-secciones--quieto .riel-etiqueta { opacity: 0; }
+  .riel-secciones:hover .riel-etiqueta { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .riel-secciones--quieto .riel-etiqueta { opacity: 1; }
   }
   .riel-punto {
     width: 7px; height: 7px; border-radius: 50%; flex: none;
@@ -2882,41 +2891,38 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 
 .riel-escudo-item {
   flex: 0 0 auto;
-  width: 230px;
+  width: 300px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 14px;
-  padding: 24px 20px;
-  border-right: 0.5px solid rgba(255, 255, 255, 0.14);
+  gap: 20px;
+  padding: 34px 28px;
+  background: #fff;
+  border-right: 1px solid var(--border);
   border-radius: 0;
   transform: scale(1);
   position: relative;
   z-index: 1;
-  transition: background 0.4s cubic-bezier(0.16,1,0.3,1), border-radius 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  transition: background 0.4s cubic-bezier(0.16,1,0.3,1), border-radius 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease;
 }
 .riel-escudo-item:hover {
   background: #000;
+  border-color: transparent;
   border-radius: 28px;
   transform: scale(1.08);
   z-index: 2;
 }
 
 .riel-escudo-item img {
-  height: 64px; width: auto; max-width: 150px; object-fit: contain;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 8px;
-  padding: 10px 14px;
-  box-sizing: border-box;
-  transition: background 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+  height: 136px; width: auto; max-width: 240px; object-fit: contain;
+  transition: filter 0.4s ease, transform 0.4s ease;
 }
 .riel-escudo-item:hover img {
-  background: transparent;
   filter: invert(1) brightness(1.6);
   transform: scale(1.05);
 }
 
 .riel-escudo-etiqueta {
   font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px;
-  font-weight: 500; letter-spacing: 0.01em; color: rgba(255, 255, 255, 0.72);
+  font-weight: 500; letter-spacing: 0.01em; color: rgba(17, 17, 17, 0.78);
   text-align: center;
   transition: color 0.3s ease;
 }
