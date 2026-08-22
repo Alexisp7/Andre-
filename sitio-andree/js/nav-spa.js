@@ -251,12 +251,19 @@
       if (!heroSeccionGlobal.classList.contains('page-hero--portada')) {
         heroNavGlobal.style.opacity = '';
         heroNavGlobal.style.pointerEvents = '';
+        heroSeccionGlobal.style.removeProperty('--progreso-salida');
         return;
       }
       var alto = heroSeccionGlobal.offsetHeight || 1;
       var progreso = Math.min(1, Math.max(0, window.scrollY / alto));
       heroNavGlobal.style.opacity = String(1 - progreso);
       heroNavGlobal.style.pointerEvents = progreso > 0.85 ? 'none' : 'auto';
+      /* Mismo progreso (0 a 1, ya medido para desvanecer el nav) para que
+         el título de la portada se vaya desvaneciendo/desenfocando a
+         medida que se hace scroll, con un ligero zoom del vídeo de
+         fondo — todo por CSS (ver .page-hero--portada en theme.css), acá
+         solo se pone el número. */
+      heroSeccionGlobal.style.setProperty('--progreso-salida', String(progreso));
     }
     function pedirDesvanecido() {
       if (desvaneciendo) return;
