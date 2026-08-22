@@ -1849,15 +1849,36 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     position: relative;
     height: 240vh;
   }
+  /* Contacto es la última diapositiva: no hay una siguiente a la que
+     soltarle el paso, así que no le hace falta el mismo "recorrido" de
+     sobra que a las demás. */
+  #contactame-wrap { height: 160vh; }
   .slide-pin {
     position: sticky; top: 0;
     height: 100vh; height: 100dvh;
     display: flex; align-items: center; justify-content: center;
   }
-  /* Sin combinador directo (>): en Contacto .section queda un nivel más
-     adentro (.slide-pin > section.contacto-seccion > .section) que en
-     biografía/formación — así alcanza a ambos casos por igual. */
-  .slide-pin .section { max-height: 92vh; overflow-y: auto; overflow-x: hidden; }
+
+  /* El "despegue" de una diapositiva pegada (sticky), al final, SIEMPRE
+     se come de recorrido extra exactamente la altura de lo que venga
+     después en el documento (aquí, el pie de página) — no importa
+     cuánto mida .slide-wrap, ese sobrante termina siendo el mismo, y por
+     eso el recorte de Contacto era independiente de cuánto midiera esta
+     diapositiva. El pie mide ~359px, más de lo que le sobra de aire a
+     Contacto dentro de su propia diapositiva - por eso, aunque se
+     "recoja" ese sobrante con un margen negativo (para que Contacto
+     llegue completo hasta el final real de la página), la caja del pie
+     termina metiéndose por debajo del propio contenido de Contacto.
+     Como Contacto tiene que seguir viéndose completo hasta el final,
+     nunca hay un momento "seguro" para mostrar el pie en esta
+     diapositiva - se queda oculto (visibility, no display: así su alto
+     sigue contando para el cálculo de arriba) solo en la portada. */
+  #contactame-wrap {
+    margin-bottom: -390px;
+  }
+  body:has(.page-hero--portada) .footer-wrap {
+    visibility: hidden;
+  }
 
   /* El título es la primera diapositiva: en vez de sus 100vh normales
      recibe el mismo recorrido extra, y su contenido (ya tenía el
@@ -1877,37 +1898,45 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     padding: 0 48px;
   }
 
-  /* ── Entradas ligadas al --slide-progreso local de cada diapositiva ── */
+  /* ── Entradas ligadas al --slide-progreso local de cada diapositiva ──
+     --local sube en línea recta con el scroll; --ease es esa misma
+     curva pero suavizada (desaceleración tipo ease-out, x*(2-x)) para
+     que el movimiento no se sienta mecánico. El escalonado entre
+     elementos (--i * 0.035) se solapa bastante y cada uno tarda una
+     buena porción del recorrido en resolverse (/1.7): así el siguiente
+     ya viene entrando mientras el anterior todavía se está asentando,
+     en vez de sentirse como hechos sueltos, uno y después el otro. */
   .slide-pin [data-reveal] {
-    --local: clamp(0, calc((var(--slide-progreso, 0) - var(--i, 0) * 0.06) * 3.4), 1);
-    opacity: var(--local) !important;
+    --local: clamp(0, calc((var(--slide-progreso, 0) - var(--i, 0) * 0.035) * 1.7), 1);
+    --ease: calc(var(--local) * (2 - var(--local)));
+    opacity: var(--ease) !important;
     transition: none !important;
   }
   .slide-pin [data-reveal="blur"] {
-    filter: blur(calc((1 - var(--local, 0)) * 12px)) !important;
+    filter: blur(calc((1 - var(--ease, 0)) * 12px)) !important;
   }
   /* Sin dirección explícita: sube desde abajo (comportamiento por
      defecto, el mismo que ya usaba el resto del sitio). */
   .slide-pin [data-reveal]:not([data-dir]) {
-    transform: translateY(calc((1 - var(--local, 0)) * 28px)) !important;
+    transform: translateY(calc((1 - var(--ease, 0)) * 28px)) !important;
   }
   /* La foto entra desde la izquierda. */
   .slide-pin [data-dir="left"] {
-    transform: translateX(calc((1 - var(--local, 0)) * -90px)) !important;
+    transform: translateX(calc((1 - var(--ease, 0)) * -90px)) !important;
   }
   /* Los datos de contacto suben desde abajo (igual que el default, pero
      explícito para que quede claro que es a propósito, no por omisión). */
   .slide-pin [data-dir="up"] {
-    transform: translateY(calc((1 - var(--local, 0)) * 36px)) !important;
+    transform: translateY(calc((1 - var(--ease, 0)) * 36px)) !important;
   }
   /* Los campos del formulario entran desde la derecha. */
   .slide-pin [data-dir="right"] {
-    transform: translateX(calc((1 - var(--local, 0)) * 90px)) !important;
+    transform: translateX(calc((1 - var(--ease, 0)) * 90px)) !important;
   }
   /* La cortina de la foto también se liga al progreso local en vez de
      a .is-visible, para que sea igual de reversible que todo lo demás. */
   .slide-pin .autor-retrato[data-reveal] .retrato-cortina {
-    transform: scaleY(calc(1 - var(--local, 0))) !important;
+    transform: scaleY(calc(1 - var(--ease, 0))) !important;
     transition: none !important;
   }
 
@@ -1916,6 +1945,11 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     .slide-pin, .page-hero--portada .page-hero-inner { position: static; height: auto; }
     .slide-pin [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
     .slide-pin .autor-retrato[data-reveal] .retrato-cortina { transform: scaleY(0) !important; }
+    /* Sin sticky ni recorrido de sobra (todo vuelve a flujo normal), el
+       margen negativo y el ocultamiento del pie ya no tienen sentido -
+       si se dejaran, el pie (oculto) nunca volvería a mostrarse. */
+    #contactame-wrap { margin-bottom: 0; }
+    .footer-wrap { visibility: visible; }
   }
 }
 
