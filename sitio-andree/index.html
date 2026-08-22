@@ -298,6 +298,63 @@
           </div>
         </div>
 
+        <script>
+          (function () {
+            /* Gira la rueda de escudos por JS (en vez de una animación
+               CSS de transform) para poder calcular, cuadro a cuadro,
+               qué tan de frente está cada uno - los que están casi de
+               frente (parte delantera del círculo) quedan sólidos, y
+               los que se van hacia los costados/atrás se van
+               transparentando hasta desaparecer del todo a los 90°
+               (ahí es donde backface-visibility los oculta igual, por
+               si esto no llegara a correr). Va como <script> suelto
+               adentro de #formacion (no en nav-spa.js) porque
+               #spaMain se reemplaza entero en cada navegación por SPA
+               - así se re-ejecuta solo, con los elementos nuevos, cada
+               vez (ver ejecutarScripts en nav-spa.js). */
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            var pistas = document.querySelectorAll('#formacion .riel-pista');
+            var GRADOS_POR_MS = 360 / 24000; // misma velocidad que tenía la animación CSS (24s/vuelta)
+
+            pistas.forEach(function (pista) {
+              var envoltorio = pista.closest('.riel-escudos');
+              var items = Array.prototype.slice.call(pista.querySelectorAll('.riel-escudo-item'));
+              var total = items.length;
+              if (!total) return;
+              var paso = 360 / total;
+              var angulo = 0;
+              var pausado = false;
+              var itemFlotado = null;
+
+              envoltorio.addEventListener('mouseenter', function () { pausado = true; });
+              envoltorio.addEventListener('mouseleave', function () { pausado = false; });
+              items.forEach(function (it) {
+                it.addEventListener('mouseenter', function () { itemFlotado = it; });
+                it.addEventListener('mouseleave', function () { if (itemFlotado === it) itemFlotado = null; });
+              });
+
+              var ultimoCuadro = null;
+              function cuadro(t) {
+                if (!pista.isConnected) return; // el SPA ya reemplazó este contenido
+                if (ultimoCuadro === null) ultimoCuadro = t;
+                var dt = t - ultimoCuadro;
+                ultimoCuadro = t;
+                if (!pausado) angulo = (angulo + GRADOS_POR_MS * dt) % 360;
+                pista.style.transform = 'rotateY(' + angulo + 'deg)';
+                items.forEach(function (it, i) {
+                  if (it === itemFlotado) { it.style.opacity = '1'; return; }
+                  var relativo = ((i * paso + angulo) % 360 + 360) % 360;
+                  if (relativo > 180) relativo = 360 - relativo;
+                  var opacidad = Math.max(0, Math.cos(relativo * Math.PI / 180));
+                  it.style.opacity = String(opacidad);
+                });
+                requestAnimationFrame(cuadro);
+              }
+              requestAnimationFrame(cuadro);
+            });
+          })();
+        </script>
+
         <!-- Grilla simple para mobile: mismos escudos, sin duplicar ni
              animar (el riel entero queda oculto ahí, ver theme.css). -->
         <p class="escudos-titulo escudos-titulo--mobile" data-reveal>Formación</p>

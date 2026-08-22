@@ -2949,12 +2949,10 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   min-width: min(1280px, calc(100vw - 72px));
   height: 250px;
   transform-style: preserve-3d;
-  animation: mk-rueda-girar 24s linear infinite;
-}
-.riel-escudos:hover .riel-pista { animation-play-state: paused; }
-@keyframes mk-rueda-girar {
-  from { transform: rotateY(0deg); }
-  to   { transform: rotateY(360deg); }
+  /* El giro (y la opacidad de cada escudo según qué tan de frente
+     está) los calcula un <script> cuadro a cuadro, junto al propio
+     HTML del riel más abajo - así puede leer el ángulo real de cada
+     uno en vez de solo poder distinguir visible/oculto. */
 }
 
 .riel-escudo-item {
