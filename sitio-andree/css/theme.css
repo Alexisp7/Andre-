@@ -2856,13 +2856,35 @@ html.visor-modo-presentacion .visor-pie { display: none; }
    luego salte de golpe hacia abajo en cuanto entra el contenido real
    — con este espacio reservado de antemano, lo único que se ve es que
    el bloque se rellena, sin que nada más se mueva. */
+/* Todo el espacio de noticias, no solo la retícula de tarjetas, oscuro
+   en vez de blanco — como una continuación de la portada. body:has(...)
+   detecta que estamos en noticias.html (#listaNoticias es único de esa
+   página) sin necesitar una clase aparte. */
+body:has(#listaNoticias) { background: var(--ink); color: var(--white); }
+
+/* Oscuro con un resplandor difuminado detrás, como una continuación
+   de la portada, en vez del blanco liso de antes. */
 .noticias {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 56px 36px;
   min-height: 60vh;
-  background: var(--white);
+  background: rgba(8, 14, 24, 0.94);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  padding: 48px 40px;
 }
+.noticias::before {
+  content: '';
+  position: absolute; top: -15%; left: 50%;
+  width: 55%; aspect-ratio: 1;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(200, 169, 110, 0.16), transparent 70%);
+  filter: blur(70px);
+  pointer-events: none;
+}
+.noticia, .noticias-vacio { position: relative; z-index: 1; }
 
 /* Cada noticia "llega" desde la derecha, en cadena una tras otra (ver
    --i puesto por JS en noticias.html), en vez de aparecer todas de
@@ -2880,38 +2902,44 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   .noticia-entra { animation: none; }
 }
 
+/* El contorno reemplaza al recorte blanco liso de antes: cada tarjeta
+   es su propio bloque, con borde visible, sobre el fondo oscuro de
+   .noticias. */
 .noticia {
   display: flex; flex-direction: column;
   position: relative;
-  padding: 14px;
-  margin: -14px;
+  padding: 20px;
+  margin: -14px -6px;
+  border: 0.5px solid rgba(255, 255, 255, 0.14);
   border-radius: 12px;
-  transition: background 0.25s ease;
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 0.25s ease, border-color 0.3s ease;
 }
 .noticia--con-enlace:hover,
-.noticia--con-enlace:focus-within { background: var(--blue); cursor: pointer; }
+.noticia--con-enlace:focus-within { background: var(--blue); border-color: var(--gold); cursor: pointer; }
 
 .noticia-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .noticia-meta time {
   font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light);
+  letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
   transition: color 0.25s ease;
 }
 .noticia-etiqueta {
   font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--white);
-  background: var(--blue); padding: 4px 10px; border-radius: 4px;
-  transition: color 0.25s ease, background 0.25s ease;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light);
+  background: transparent; border: 0.5px solid rgba(200, 169, 110, 0.4);
+  padding: 4px 10px; border-radius: 4px;
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
 
 .noticia-titulo {
   font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 600;
-  color: var(--black); line-height: 1.3; margin-bottom: 10px;
+  color: var(--white); line-height: 1.3; margin-bottom: 10px;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
   transition: color 0.25s ease;
 }
 .noticia-texto {
-  font-size: 13.5px; line-height: 1.75; color: var(--gray);
+  font-size: 13.5px; line-height: 1.75; color: rgba(255, 255, 255, 0.65);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
   transition: color 0.25s ease;
 }
@@ -2927,14 +2955,14 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   color: var(--white);
 }
 .noticia--con-enlace:hover .noticia-etiqueta {
-  color: var(--white); background: var(--gold);
+  color: var(--white); background: var(--gold); border-color: var(--gold);
 }
 
 .noticias-vacio {
   grid-column: 1 / -1;
   min-height: calc(60vh - 80px);
   display: flex; align-items: center; justify-content: center;
-  padding: 40px 0; text-align: center; color: var(--gray-light);
+  padding: 40px 0; text-align: center; color: rgba(255, 255, 255, 0.5);
   font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
 }
 
@@ -2972,8 +3000,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   /* Una sola columna siempre (antes, con auto-fill, un teléfono ancho
      o apaisado alcanzaba a meter 2 columnas con apenas 20px entre
      ellas — casi sin separación visible). */
-  .noticias { grid-template-columns: 1fr; gap: 56px; }
-  .noticia + .noticia { border-top: 1px solid var(--border); }
+  .noticias { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
   .noticias-grid { grid-template-columns: 1fr; gap: 36px; }
   .noticias-lateral { position: static; }
   .publicacion { grid-template-columns: 56px minmax(0, 1fr); gap: 14px; }
@@ -3405,9 +3432,9 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
   position: relative;
   margin: 0 0 18px; width: 100%;
   aspect-ratio: 2 / 3;
-  border: 0.5px solid var(--border);
+  border: 0.5px solid rgba(255, 255, 255, 0.14);
   border-radius: 10px;
-  background: var(--bg-off);
+  background: rgba(255, 255, 255, 0.04);
   overflow: hidden;
   line-height: 0;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -3424,8 +3451,8 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
   pointer-events: none;
 }
 .noticia:hover .noticia-media {
-  border-color: var(--blue-soft);
-  box-shadow: 0 14px 34px -18px rgba(20, 35, 61, 0.5);
+  border-color: var(--gold);
+  box-shadow: 0 14px 34px -18px rgba(0, 0, 0, 0.6);
 }
 .noticia:hover .noticia-media img { transform: scale(1.05); }
 .noticia:hover .noticia-media::after { transform: translateX(120%); transition: transform 0.8s ease; }
