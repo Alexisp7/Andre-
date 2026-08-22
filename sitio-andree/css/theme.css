@@ -171,7 +171,7 @@ hr.thin-line {
   align-items: center;
   justify-content: center;
   padding: 11px 36px;
-  max-width: 1440px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -262,7 +262,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
    HERO
 ──────────────────────────────── */
 .hero {
-  max-width: 1440px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 88px 36px 80px;
   display: grid;
@@ -467,7 +467,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 ──────────────────────────────── */
 .section {
   padding: 88px 36px;
-  max-width: 1440px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -639,7 +639,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .projects-inner {
-  max-width: 1440px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 36px;
 }
@@ -1015,7 +1015,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 .footer {
-  max-width: 1440px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 56px 36px;
 }
@@ -1308,7 +1308,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   transition: height 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .page-hero-inner {
-  max-width:1440px; margin:0 auto; position:relative; z-index:2;
+  max-width:1280px; margin:0 auto; position:relative; z-index:2;
   width: 100%; padding: 0 36px 34px;
 }
 .page-hero-title {
@@ -1335,7 +1335,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   position:sticky; top:61px; z-index:90;
 }
 .courses-tabs {
-  max-width:1440px; margin:0 auto; padding:0 36px;
+  max-width:1280px; margin:0 auto; padding:0 36px;
   display:flex; align-items:center; gap:0;
   border-top:0.5px solid var(--border);
 }
@@ -1368,7 +1368,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
 /* ── HERO de la biblioteca (portada) ── */
 .library-hero { background: var(--black); position: relative; overflow: hidden; }
 .library-hero-inner {
-  max-width: 1440px; margin: 0 auto; padding: 128px 36px 118px;
+  max-width: 1280px; margin: 0 auto; padding: 128px 36px 118px;
   position: relative; z-index: 2;
 }
 .library-hero .hero-eyebrow { color: var(--gold); }
@@ -2895,9 +2895,9 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 20px;
   padding: 34px 28px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.82);
   border-right: 1px solid var(--border);
-  border-radius: 0;
+  border-radius: 18px;
   transform: scale(1);
   position: relative;
   z-index: 1;
@@ -2910,6 +2910,30 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   transform: scale(1.08);
   z-index: 2;
 }
+
+/* Mismo aro de luz que .noticia--con-enlace (ver arriba, @keyframes
+   mk-beam-girar), pero sin color: acá el tono es blanco neutro, para
+   que se lea bien contra el negro en el que se convierte la tarjeta
+   al pasar el mouse. */
+.riel-escudo-item::before {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--mk-beam-angulo, 0deg),
+    transparent 0deg, transparent 270deg,
+    rgba(255, 255, 255, 0.75) 328deg, rgba(255, 255, 255, 1) 344deg, rgba(255, 255, 255, 0.75) 356deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  animation: mk-beam-girar 3.6s linear infinite paused;
+}
+.riel-escudo-item:hover::before { opacity: 1; animation-play-state: running; }
 
 .riel-escudo-item img {
   height: 136px; width: auto; max-width: 240px; object-fit: contain;
@@ -2931,6 +2955,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .riel-pista { animation: none; }
   .riel-escudo-item, .riel-escudo-item img { transition: none; }
+  .riel-escudo-item::before { animation: none; }
 }
 
 @media (min-width: 901px) {
@@ -2970,16 +2995,24 @@ body:has(#listaNoticias) { background: var(--ink); color: var(--white); }
    nunca protagonista, así que las tarjetas se siguen notando encima.
    Sin recorrido de altura del que colgarse (a diferencia de la
    portada, esta franja no crece: sigue siendo la franja angosta de
-   siempre) para escalonar la entrada, así que el salto de
-   position:absolute recortado a position:fixed a pantalla completa se
-   disimula con un fundido de opacidad — arranca en 0, invisible, así
-   que ese salto nunca llega a pintarse. */
-body:has(#listaNoticias) .page-hero-video {
+   siempre), así que no hay transición de altura de la cual esperar el
+   fin. Por eso, igual que .page-hero--fijo en la portada,
+   position:fixed queda detrás de la clase .pagina-noticias--fijo, que
+   nav-spa.js agrega recién cuando la franja compacta ya terminó de
+   asentarse (mismo patrón transitionend + setTimeout de red de
+   seguridad que usa la portada) — así, al entrar a noticias por SPA,
+   el video primero hace el mismo "sube hasta encajar en su franja"
+   que cualquier otra página, y solo después se vuelve fondo fijo de
+   toda la página. En la carga directa (sin SPA) la clase ya viene
+   puesta en el propio HTML, sin nada que animar. El salto de
+   position:absolute a position:fixed, aun así escalonado, se
+   disimula igual con un fundido de opacidad por las dudas. */
+body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video {
   position: fixed; inset: 0; bottom: auto; z-index: -3;
   filter: blur(18px);
   animation: mk-fondo-noticias-entra 0.9s ease both;
 }
-body:has(#listaNoticias) .page-hero-overlay {
+body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
   position: fixed; z-index: -2;
   animation: mk-fondo-noticias-entra 0.9s ease both;
 }
@@ -2988,8 +3021,8 @@ body:has(#listaNoticias) .page-hero-overlay {
   to   { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  body:has(#listaNoticias) .page-hero-video,
-  body:has(#listaNoticias) .page-hero-overlay { animation: none; }
+  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video,
+  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay { animation: none; }
 }
 
 /* Oscuro con un resplandor difuminado detrás, como una continuación
@@ -3048,7 +3081,52 @@ body:has(#listaNoticias) .page-hero-overlay {
   transition: background 0.25s ease, border-color 0.3s ease;
 }
 .noticia--con-enlace:hover,
-.noticia--con-enlace:focus-within { background: var(--blue); border-color: var(--gold); cursor: pointer; }
+.noticia--con-enlace:focus-within { background: var(--blue); border-color: rgba(200, 169, 110, 0.35); cursor: pointer; }
+
+/* Anillo de luz recorriendo el borde al pasar el mouse, en vez del
+   golpe seco de borde dorado sólido de antes (que se veía muy
+   chillón) — mismo espíritu visual que un "border beam", pero hecho
+   en CSS puro (conic-gradient girando + mask de solo el aro), sin
+   ninguna dependencia. Ver también @property/--mk-beam-angulo y
+   @keyframes mk-beam-girar más abajo, junto a .riel-escudo-item, que
+   comparten esta misma técnica sin color. */
+.noticia--con-enlace::before {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--mk-beam-angulo, 0deg),
+    transparent 0deg, transparent 270deg,
+    rgba(200, 169, 110, 0.85) 328deg, rgba(235, 214, 175, 1) 344deg, rgba(200, 169, 110, 0.85) 356deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  animation: mk-beam-girar 3.6s linear infinite paused;
+}
+.noticia--con-enlace:hover::before,
+.noticia--con-enlace:focus-within::before { opacity: 1; animation-play-state: running; }
+@media (prefers-reduced-motion: reduce) {
+  .noticia--con-enlace::before { animation: none; }
+}
+
+/* Ángulo animable del aro de luz (ver arriba y .riel-escudo-item más
+   abajo) — sin @property, un custom property animado por keyframes no
+   interpola: salta de golpe al valor final en vez de girar. Donde no
+   se soporte @property, el aro simplemente queda quieto en su ángulo
+   inicial: se degrada a un borde fijo, nunca se rompe. */
+@property --mk-beam-angulo {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes mk-beam-girar {
+  to { --mk-beam-angulo: 360deg; }
+}
 
 .noticia-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .noticia-meta time {

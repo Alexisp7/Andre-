@@ -216,6 +216,35 @@
           } else {
             heroSeccion.classList.remove('page-hero--fijo');
           }
+
+          /* Mismo patrón para noticias.html: .pagina-noticias--fijo
+             (video de fondo fijo y difuminado sobre toda la página,
+             ver theme.css) se agrega recién cuando la franja
+             compacta ya terminó de asentarse, no de una - si no, el
+             video saltaría directo a fijo en vez de hacer primero el
+             mismo "sube hasta encajar en su franja" que cualquier
+             otra página. Entre dos páginas compactas la altura nunca
+             cambia (siempre 230px), así que transitionend no llega a
+             disparar solo: el setTimeout de red de seguridad termina
+             siendo el camino normal acá, no una excepción. */
+          var esNoticias = archivo === 'noticias.html';
+          if (esNoticias) {
+            var miGenN = miGeneracion;
+            var fijadoN = false;
+            var fijarN = function () {
+              if (fijadoN || miGenN !== generacion) return;
+              fijadoN = true;
+              heroSeccion.classList.add('pagina-noticias--fijo');
+            };
+            heroSeccion.addEventListener('transitionend', function alFinCrecerN(e) {
+              if (e.target !== heroSeccion || e.propertyName !== 'height') return;
+              heroSeccion.removeEventListener('transitionend', alFinCrecerN);
+              fijarN();
+            });
+            setTimeout(fijarN, 700);
+          } else {
+            heroSeccion.classList.remove('pagina-noticias--fijo');
+          }
         }
         if (window.__sincronizarConstelacion) window.__sincronizarConstelacion();
         if (esPortada && window.__iniciarAutoAvancePortada) window.__iniciarAutoAvancePortada();
