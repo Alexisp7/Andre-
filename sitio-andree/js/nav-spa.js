@@ -295,14 +295,34 @@
     var reducidoConstelacion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function medirConstelacion() {
+      /* Se mide el propio <canvas> (clientWidth/Height, su tamaño real
+         ya renderizado), no heroSeccionGlobal ni el viewport: .page-hero
+         anima su alto con transition (0.6s) al entrar/salir de la
+         portada, y el tamaño en pantalla del canvas (height:100% de esa
+         sección) va cambiando cuadro a cuadro mientras dura. Leer una
+         sola vez, al togglear la clase, agarraba un valor a medio
+         camino de esa animación — el buffer quedaba fijo con ese alto
+         viejo mientras CSS seguía estirando el elemento hasta el alto
+         final: los puntos salían ovalados, y con los nodos apretados en
+         esa franja chica pero el mouse medido en coordenadas ya
+         completas, la distancia contra ellos daba cualquier cosa,
+         marcando de más como "cerca" (dorado) en vez de azules. Por eso
+         esta función se vuelve a llamar en cada tick de
+         ResizeObserverConstelacion (ver más abajo), no solo una vez: así
+         el buffer nunca queda desincronizado del tamaño real en pantalla,
+         ni siquiera a mitad de la transición. */
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      anchoConstelacion = heroSeccionGlobal.offsetWidth;
-      altoConstelacion = heroSeccionGlobal.offsetHeight;
+      anchoConstelacion = canvasConstelacion.clientWidth;
+      altoConstelacion = canvasConstelacion.clientHeight;
+      if (!anchoConstelacion || !altoConstelacion) return; // todavía oculto (display:none), nada que medir
       canvasConstelacion.width = anchoConstelacion * dpr;
       canvasConstelacion.height = altoConstelacion * dpr;
       ctxConstelacion.setTransform(dpr, 0, 0, dpr, 0, 0);
       armarNodos();
     }
+    var resizeObserverConstelacion = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(function () { medirConstelacion(); })
+      : null;
 
     var ESPACIADO = 64;
     function armarNodos() {
@@ -331,13 +351,12 @@
       mouseConstelacion.x = -1000;
       mouseConstelacion.y = -1000;
     }
-    function onResizeConstelacion() { medirConstelacion(); }
 
     var RADIO_MOUSE = 200;
     var DIST_MAX_CONEXION = ESPACIADO * 1.35;
     var RESORTE = 18;
     var AMORTIGUACION = 0.82;
-    var AZUL = '90, 130, 190'; // azul, más claro que var(--blue) para que se distinga del fondo oscuro de la portada
+    var AZUL = '60, 100, 165'; // azul medio oscuro, más claro que var(--blue) solo lo justo para distinguirse del fondo
     var DORADO = '200, 169, 110'; // var(--gold), a mano: no se puede leer una variable CSS calculada desde acá sin costo extra por frame
 
     function dibujarFrame(ahora) {
@@ -411,7 +430,7 @@
       medirConstelacion();
       window.addEventListener('mousemove', onMouseMoveConstelacion);
       window.addEventListener('mouseleave', onMouseLeaveConstelacion);
-      window.addEventListener('resize', onResizeConstelacion);
+      if (resizeObserverConstelacion) resizeObserverConstelacion.observe(canvasConstelacion);
       ultimoTiempo = performance.now();
       rafConstelacion = requestAnimationFrame(dibujarFrame);
     }
@@ -420,7 +439,7 @@
       rafConstelacion = null;
       window.removeEventListener('mousemove', onMouseMoveConstelacion);
       window.removeEventListener('mouseleave', onMouseLeaveConstelacion);
-      window.removeEventListener('resize', onResizeConstelacion);
+      if (resizeObserverConstelacion) resizeObserverConstelacion.disconnect();
       if (ctxConstelacion) ctxConstelacion.clearRect(0, 0, anchoConstelacion, altoConstelacion);
     }
     function sincronizarConstelacion() {
