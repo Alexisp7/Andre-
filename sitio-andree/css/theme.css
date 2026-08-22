@@ -24,7 +24,14 @@
   --ink: #14233D;
 }
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
+/* overflow-x (no overflow-y) en html/body: clip, no hidden — con hidden
+   el navegador computa el otro eje (overflow-y, que nunca se declaró)
+   como auto, y eso vuelve a body/html "contenedores de scroll" propios,
+   lo que rompe position:sticky de cualquier descendiente (el scroll
+   real sigue pasando en html, pero sticky terminaba calculándose contra
+   la caja de body, que nunca se mueve sola). clip no dispara esa regla:
+   recorta igual el sangrado horizontal sin crear ese contenedor. */
+html { scroll-behavior: smooth; overflow-x: clip; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -38,8 +45,9 @@ body {
      mientras están a medio camino, el elemento vive momentáneamente
      más allá del borde derecho, y sin esto el navegador ensancha la
      página entera y deja un scroll horizontal fantasma durante ese
-     instante, sobre todo notorio en celular. */
-  overflow-x: hidden;
+     instante, sobre todo notorio en celular. clip (no hidden): ver el
+     comentario en html más arriba — hidden rompía position:sticky. */
+  overflow-x: clip;
 }
 
 .gold { color: var(--gold); }
@@ -1728,6 +1736,13 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   justify-content: center;
   background: var(--ink);
   border-bottom: none;
+  /* .page-hero (el elemento base) trae overflow:hidden para recortar el
+     video anclado abajo en la franja angosta de las demás páginas — acá
+     ya no hace falta: el video en la portada escapa por su cuenta con
+     position:fixed (ver más abajo), y overflow:hidden en un ancestro
+     rompe position:sticky en sus descendientes (el título deja de
+     quedarse fijo). */
+  overflow: visible;
 }
 
 /* El video siempre "mide" 100vh y se ancla abajo, sin importar qué
@@ -1809,6 +1824,101 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   .page-hero--portada .page-hero-video { opacity: 1; filter: none; transform: none; }
 }
 
+/* ══════════════════════════════════════════
+   PORTADA COMO PASE DE DIAPOSITIVAS (solo escritorio)
+   ══════════════════════════════════════════
+   No es una página que se desplaza como un papelógrafo: cada tramo
+   (título, biografía, formación, contacto) ocupa la pantalla entera y
+   se queda fijo (position:sticky) mientras su propio contenido se va
+   armando con el scroll, como al pasar diapositivas — recién cuando
+   ese tramo termina de "armarse" el scroll lo suelta y empieza el
+   siguiente. En mobile (ya aprobado tal cual estaba) se deja el flujo
+   normal de toda la vida, sin diapositivas ni fijado: por eso todo
+   esto vive detrás de min-width:901px.
+
+   Mecanismo: .slide-wrap es más alto que la pantalla (100vh visibles +
+   "recorrido" de scroll extra); adentro, .slide-pin se queda pegado
+   arriba (sticky) todo ese recorrido. nav-spa.js mide, para cada
+   .slide-wrap, cuánto se lleva recorrido de ese extra (0 a 1) y lo deja
+   en --slide-progreso; con eso, cada elemento [data-reveal] de adentro
+   calcula su propia opacidad/desenfoque/traslado — nada de
+   IntersectionObserver ni de "aparece si sí o si no": es 100%
+   reversible, ligado al número real de scroll, en cualquier dirección. */
+@media (min-width: 901px) {
+  .slide-wrap {
+    position: relative;
+    height: 240vh;
+  }
+  .slide-pin {
+    position: sticky; top: 0;
+    height: 100vh; height: 100dvh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* Sin combinador directo (>): en Contacto .section queda un nivel más
+     adentro (.slide-pin > section.contacto-seccion > .section) que en
+     biografía/formación — así alcanza a ambos casos por igual. */
+  .slide-pin .section { max-height: 92vh; overflow-y: auto; overflow-x: hidden; }
+
+  /* El título es la primera diapositiva: en vez de sus 100vh normales
+     recibe el mismo recorrido extra, y su contenido (ya tenía el
+     desvanecido de --progreso-salida) se fija arriba para que ese
+     desvanecido se sienta completo antes de soltar paso a la
+     biografía. */
+  /* display:block en vez del flex/align-items:center de base: un
+     align-items:center en el padre pelea con position:sticky del hijo
+     (el centrado por flex del eje transversal termina ganándole al
+     desplazamiento sticky) — el centrado del título pasa a hacerlo
+     .page-hero-inner con su propio flex, ya de por sí sticky. */
+  .page-hero--portada { height: 240vh; display: block; }
+  .page-hero--portada .page-hero-inner {
+    position: sticky; top: 0;
+    height: 100vh; height: 100dvh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 0 48px;
+  }
+
+  /* ── Entradas ligadas al --slide-progreso local de cada diapositiva ── */
+  .slide-pin [data-reveal] {
+    --local: clamp(0, calc((var(--slide-progreso, 0) - var(--i, 0) * 0.06) * 3.4), 1);
+    opacity: var(--local) !important;
+    transition: none !important;
+  }
+  .slide-pin [data-reveal="blur"] {
+    filter: blur(calc((1 - var(--local, 0)) * 12px)) !important;
+  }
+  /* Sin dirección explícita: sube desde abajo (comportamiento por
+     defecto, el mismo que ya usaba el resto del sitio). */
+  .slide-pin [data-reveal]:not([data-dir]) {
+    transform: translateY(calc((1 - var(--local, 0)) * 28px)) !important;
+  }
+  /* La foto entra desde la izquierda. */
+  .slide-pin [data-dir="left"] {
+    transform: translateX(calc((1 - var(--local, 0)) * -90px)) !important;
+  }
+  /* Los datos de contacto suben desde abajo (igual que el default, pero
+     explícito para que quede claro que es a propósito, no por omisión). */
+  .slide-pin [data-dir="up"] {
+    transform: translateY(calc((1 - var(--local, 0)) * 36px)) !important;
+  }
+  /* Los campos del formulario entran desde la derecha. */
+  .slide-pin [data-dir="right"] {
+    transform: translateX(calc((1 - var(--local, 0)) * 90px)) !important;
+  }
+  /* La cortina de la foto también se liga al progreso local en vez de
+     a .is-visible, para que sea igual de reversible que todo lo demás. */
+  .slide-pin .autor-retrato[data-reveal] .retrato-cortina {
+    transform: scaleY(calc(1 - var(--local, 0))) !important;
+    transition: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide-wrap, .page-hero--portada { height: auto; }
+    .slide-pin, .page-hero--portada .page-hero-inner { position: static; height: auto; }
+    .slide-pin [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .slide-pin .autor-retrato[data-reveal] .retrato-cortina { transform: scaleY(0) !important; }
+  }
+}
+
 /* Con el fondo neuronal ahora fijo detrás de TODA la portada (ver
    .page-hero-video/.page-hero-overlay/.hero-constelacion arriba), el
    body deja de pintar blanco sólido en index.html — si no, taparía ese
@@ -1824,7 +1934,7 @@ body:has(.page-hero--portada) { background: transparent; }
    semitransparente es solo un colchón de contraste (no una "tarjeta"
    opaca): el desenfoque del fondo, creciente con el scroll, es lo que
    de verdad hace legible el texto. */
-#sobre {
+#sobre, #formacion {
   background: rgba(8, 14, 24, 0.42);
   position: relative; z-index: 1;
 }
@@ -1835,9 +1945,9 @@ body:has(.page-hero--portada) { background: transparent; }
 #sobre .autor-registros strong { color: var(--white); }
 #sobre .autor-retrato { background: rgba(255, 255, 255, 0.06); }
 #sobre .retrato-cortina { background: var(--blue); }
-#sobre .escudos-titulo { color: var(--white); }
-#sobre .escudos-titulo::after { background: rgba(255, 255, 255, 0.2); }
-#sobre .escudo figcaption { color: rgba(255, 255, 255, 0.85); }
+#formacion .escudos-titulo { color: var(--white); }
+#formacion .escudos-titulo::after { background: rgba(255, 255, 255, 0.2); }
+#formacion .escudo figcaption { color: rgba(255, 255, 255, 0.85); }
 
 #contactame.contacto-seccion {
   background: rgba(8, 14, 24, 0.42);
@@ -2571,7 +2681,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
    para verse sobre blanco) que casi desaparecen contra el fondo oscuro
    de esta sección — se les da una chapita clara pareja a todos, así se
    leen igual de bien sin importar el color propio de cada logo. */
-#sobre .escudo img {
+#formacion .escudo img {
   background: rgba(255, 255, 255, 0.94);
   border-radius: 10px;
   padding: 12px;

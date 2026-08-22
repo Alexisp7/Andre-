@@ -197,10 +197,11 @@
 
   <main id="spaMain">
 
-  <section id="sobre">
+  <div class="slide-wrap" id="sobre">
+   <div class="slide-pin">
     <div class="section">
       <div class="autor-grid">
-        <div class="autor-retrato" data-reveal>
+        <div class="autor-retrato" data-reveal data-dir="left">
           <img src="img/autor.webp" alt="Dr. Andreé Salvatierra Baldeón"
                width="480" height="760" loading="lazy" decoding="async"/>
           <span class="retrato-cortina" aria-hidden="true"></span>
@@ -220,7 +221,13 @@
           </p>
         </div>
       </div>
+    </div>
+   </div>
+  </div>
 
+  <div class="slide-wrap" id="formacion">
+   <div class="slide-pin">
+    <div class="section">
       <div class="escudos-bloque">
         <p class="escudos-titulo" data-reveal>Formación</p>
         <div class="escudos escudos--seis">
@@ -250,40 +257,40 @@
             </figure>
         </div>
 
-        <p class="escudos-titulo" data-reveal>Estancias e investigación</p>
+        <p class="escudos-titulo" data-reveal style="--i:6">Estancias e investigación</p>
         <div class="escudos escudos--cuatro">
-            <figure class="escudo" data-reveal style="--i:1">
+            <figure class="escudo" data-reveal style="--i:7">
               <img src="img/escudos/unam.webp" alt="UNAM · CDMX" loading="lazy" decoding="async"/>
             </figure>
-            <figure class="escudo" data-reveal style="--i:2">
+            <figure class="escudo" data-reveal style="--i:8">
               <img src="img/escudos/imim.webp" alt="IMIM · Barcelona" loading="lazy" decoding="async"/>
             </figure>
-            <figure class="escudo" data-reveal style="--i:3">
+            <figure class="escudo" data-reveal style="--i:9">
               <img src="img/escudos/innn.webp" alt="INNN · CDMX" loading="lazy" decoding="async"/>
             </figure>
-            <figure class="escudo" data-reveal style="--i:4">
+            <figure class="escudo" data-reveal style="--i:10">
               <img src="img/escudos/antioquia.webp" alt="U. de Antioquia · Medellín" loading="lazy" decoding="async"/>
             </figure>
         </div>
       </div>
-
-
-
     </div>
-  </section>
+   </div>
+  </div>
 
 
-  <section id="contactame" class="contacto-seccion">
+  <div class="slide-wrap" id="contactame-wrap">
+   <div class="slide-pin">
+    <section class="contacto-seccion" id="contactame">
     <div class="section">
       <div class="contacto contacto--abierto">
         <div class="contacto-cabecera">
-          <span class="contacto-cabecera-textos">
+          <span class="contacto-cabecera-textos" data-reveal data-dir="up">
             <span class="contacto-titulo">Contacto</span>
           </span>
         </div>
 
         <div class="contacto-cuerpo">
-          <div class="contacto-datos">
+          <div class="contacto-datos" data-reveal data-dir="up" style="--i:1">
             <p class="contacto-nombre">Dr. Andreé Salvatierra Baldeón</p>
 
             <dl class="contacto-lista">
@@ -303,29 +310,31 @@
           </div>
 
           <form class="contacto-form" id="formContacto" novalidate>
-            <label class="campo">
+            <label class="campo" data-reveal data-dir="right" style="--i:1">
               <span>Nombre <em>*</em></span>
               <input type="text" name="nombre" required autocomplete="name"/>
             </label>
-            <label class="campo">
+            <label class="campo" data-reveal data-dir="right" style="--i:2">
               <span>Correo <em>*</em></span>
               <input type="email" name="correo" required autocomplete="email"/>
             </label>
-            <label class="campo">
+            <label class="campo" data-reveal data-dir="right" style="--i:3">
               <span>Asunto</span>
               <input type="text" name="asunto"/>
             </label>
-            <label class="campo">
+            <label class="campo" data-reveal data-dir="right" style="--i:4">
               <span>Mensaje</span>
               <textarea name="mensaje" rows="6"></textarea>
             </label>
             <p class="contacto-aviso" id="avisoContacto" hidden></p>
-            <button type="submit" class="btn-enviar">Enviar</button>
+            <button type="submit" class="btn-enviar" data-reveal data-dir="right" style="--i:5">Enviar</button>
           </form>
         </div>
       </div>
     </div>
-  </section>
+    </section>
+   </div>
+  </div>
 
   <script>
     (function () {

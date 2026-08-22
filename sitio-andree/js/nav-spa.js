@@ -256,7 +256,18 @@
         heroSeccionGlobal.style.removeProperty('--blur-fondo');
         return;
       }
-      var alto = heroSeccionGlobal.offsetHeight || 1;
+      /* En escritorio el título queda sticky (ver theme.css,
+         min-width:901px): se suelta apenas se scrollea (altoCaja -
+         altoVentana), no al completar toda la caja — el progreso tiene
+         que llegar a 1 justo ahí, si no, el desvanecido se corta a la
+         mitad porque el título ya se está yendo con el scroll normal
+         antes de haber terminado de desvanecerse. En mobile la caja
+         mide justo 100vh (nunca quedó sticky), así que ahí se sigue
+         usando su alto entero. */
+      var esEscritorio = window.innerWidth >= 901;
+      var alto = esEscritorio
+        ? Math.max(1, heroSeccionGlobal.offsetHeight - window.innerHeight)
+        : (heroSeccionGlobal.offsetHeight || 1);
       var progreso = Math.min(1, Math.max(0, window.scrollY / alto));
       heroNavGlobal.style.opacity = String(1 - progreso);
       heroNavGlobal.style.pointerEvents = progreso > 0.85 ? 'none' : 'auto';
@@ -266,15 +277,39 @@
          fondo — todo por CSS (ver .page-hero--portada en theme.css), acá
          solo se pone el número. */
       heroSeccionGlobal.style.setProperty('--progreso-salida', String(progreso));
-      /* El desenfoque del fondo, en cambio, sigue creciendo más allá de
-         ese primer tramo — el video ahora es un fondo fijo detrás de
-         TODA la página (biografía, formación, contacto), así que tiene
-         que seguir reaccionando mientras se sigue bajando, no solo
-         dentro del primer alto de pantalla. Llega al máximo (16px) tras
-         bajar aprox. 2.2 pantallas, y nunca lo supera: el video siempre
-         se tiene que seguir reconociendo, nunca un bloque plano. */
-      var progresoBlur = Math.min(1, Math.max(0, window.scrollY / (alto * 2.2)));
+      /* El desenfoque se queda cerca de 0 mientras se está todavía
+         dentro del propio alto del título (sea 100vh en mobile o los
+         240vh de recorrido que tiene en escritorio como "diapositiva")
+         y recién ahí empieza a crecer, alcanzando el máximo (16px) 1.2
+         pantallas después — así el título se ve nítido durante todo su
+         propio tramo, y el fondo se termina de desenfocar rápido apenas
+         se entra al contenido, sin importar cuánto dure el tramo del
+         título. Nunca llega a bloque plano: el video siempre se tiene
+         que seguir reconociendo. */
+      var progresoBlur = Math.min(1, Math.max(0, (window.scrollY - alto) / (window.innerHeight * 1.2)));
       heroSeccionGlobal.style.setProperty('--blur-fondo', (progresoBlur * 16).toFixed(2) + 'px');
+      sincronizarDiapositivas();
+    }
+    /* Cada .slide-wrap (y el propio título) es más alto que la pantalla
+       a propósito: mientras se scrollea por ese "recorrido" extra,
+       queda fijo en pantalla (position:sticky, ver theme.css) y esto
+       mide cuánto de ese recorrido ya se hizo, 0 a 1 — con eso, cada
+       elemento [data-reveal] de adentro arma su propia entrada por CSS
+       (ver .slide-pin [data-reveal] en theme.css). Solo aplica en
+       escritorio: en mobile se pidió dejar el flujo normal de siempre,
+       sin diapositivas ni fijado (min-width:901px, igual que en el
+       CSS). Se vuelve a consultar el DOM en cada llamada en vez de
+       guardar una lista una sola vez porque #spaMain se reemplaza
+       entero en cada navegación por SPA. */
+    function sincronizarDiapositivas() {
+      if (window.innerWidth < 901) return;
+      var wraps = document.querySelectorAll('.slide-wrap');
+      for (var i = 0; i < wraps.length; i++) {
+        var wrap = wraps[i];
+        var alto = wrap.offsetHeight - window.innerHeight;
+        var progreso = alto > 0 ? Math.min(1, Math.max(0, -wrap.getBoundingClientRect().top / alto)) : 1;
+        wrap.style.setProperty('--slide-progreso', String(progreso));
+      }
     }
     function pedirDesvanecido() {
       if (desvaneciendo) return;
