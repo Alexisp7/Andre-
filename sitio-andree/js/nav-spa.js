@@ -256,17 +256,19 @@
         heroSeccionGlobal.style.removeProperty('--blur-fondo');
         return;
       }
-      /* En escritorio el título queda sticky (ver theme.css,
-         min-width:901px): se suelta apenas se scrollea (altoCaja -
-         altoVentana), no al completar toda la caja — el progreso tiene
-         que llegar a 1 justo ahí, si no, el desvanecido se corta a la
-         mitad porque el título ya se está yendo con el scroll normal
-         antes de haber terminado de desvanecerse. En mobile la caja
-         mide justo 100vh (nunca quedó sticky), así que ahí se sigue
-         usando su alto entero. */
+      /* En escritorio el título queda fijo (position:fixed, ver
+         theme.css min-width:901px) mientras dura el recorrido de sobra
+         de #tituloDwell — el desvanecido tiene que llegar a 1 justo al
+         completar ESE recorrido (alto propio de .page-hero, 100vh, más
+         el de #tituloDwell), no antes ni después. .page-hero se queda
+         siempre en 100vh (ver el porqué en theme.css) — no restarle acá
+         el alto de ventana como si estuviera agrandado. En mobile no
+         existe #tituloDwell (el título nunca queda fijo ahí) así que
+         se sigue usando el alto entero de la propia caja. */
       var esEscritorio = window.innerWidth >= 901;
+      var tituloDwellEl = document.getElementById('tituloDwell');
       var alto = esEscritorio
-        ? Math.max(1, heroSeccionGlobal.offsetHeight - window.innerHeight)
+        ? Math.max(1, heroSeccionGlobal.offsetHeight + (tituloDwellEl ? tituloDwellEl.offsetHeight : 0))
         : (heroSeccionGlobal.offsetHeight || 1);
       var progreso = Math.min(1, Math.max(0, window.scrollY / alto));
       heroNavGlobal.style.opacity = String(1 - progreso);
@@ -388,7 +390,18 @@
     }
 
     function onMouseMoveConstelacion(e) {
-      var rc = heroSeccionGlobal.getBoundingClientRect();
+      /* Contra el propio <canvas> (fixed, inset:0 — su rect es siempre
+         el viewport), no contra heroSeccionGlobal: esa sección mide
+         240vh en escritorio (el "pase de diapositivas") y va
+         desplazándose con el scroll, así que su rect.top se vuelve muy
+         negativo apenas se baja un poco. Medir contra ella desincroniza
+         la posición del mouse que ve la física de los nodos frente a
+         dónde está el cursor de verdad en pantalla — y como esto solo
+         se recalcula cuando SÍ hay un mousemove, un solo movimiento de
+         mouse mientras se está bajando o subiendo deja ese desfase
+         "congelado" hasta el siguiente mousemove, con los nodos
+         empujados hacia un punto fantasma en vez de volver a su sitio. */
+      var rc = canvasConstelacion.getBoundingClientRect();
       mouseConstelacion.x = e.clientX - rc.left;
       mouseConstelacion.y = e.clientY - rc.top;
     }
