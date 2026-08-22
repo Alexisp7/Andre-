@@ -2545,7 +2545,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 56px 36px;
   min-height: 60vh;
-  background: var(--bg-off);
+  background: var(--white);
   border-radius: 12px;
 }
 
@@ -2658,6 +2658,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
      o apaisado alcanzaba a meter 2 columnas con apenas 20px entre
      ellas — casi sin separación visible). */
   .noticias { grid-template-columns: 1fr; gap: 56px; }
+  .noticia + .noticia { border-top: 1px solid var(--border); }
   .noticias-grid { grid-template-columns: 1fr; gap: 36px; }
   .noticias-lateral { position: static; }
   .publicacion { grid-template-columns: 56px minmax(0, 1fr); gap: 14px; }
@@ -2765,14 +2766,6 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 }
 [data-reveal="blur"].is-visible { filter: blur(0); }
 
-[data-reveal="scale"] {
-  opacity: 0; transform: scale(0.94) translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1);
-  transition-delay: calc(var(--i, 0) * 90ms);
-  filter: blur(6px);
-}
-[data-reveal="scale"].is-visible { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-
 .retrato-cortina {
   position: absolute; inset: 0; background: var(--bg-off);
   transform-origin: bottom; transform: scaleY(1);
@@ -2781,7 +2774,7 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 .autor-retrato.is-visible .retrato-cortina { transform: scaleY(0); }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal], [data-reveal="blur"], [data-reveal="scale"] { transition: none; opacity: 1; transform: none; filter: none; }
+  [data-reveal], [data-reveal="blur"] { transition: none; opacity: 1; transform: none; filter: none; }
   .retrato-cortina { transition: none; transform: scaleY(0); }
 }
 
@@ -2872,21 +2865,6 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
   display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: 56px; padding: 8px 4px 56px;
   animation: contactoAbre 0.45s cubic-bezier(0.22,1,0.36,1);
-}
-/* Tarjeta de vidrio esmerilado sobre el azul, para que el bloque de
-   contacto no quede plano contra el fondo — se activa solo donde el
-   fondo es sólido (ver "CONTACTO SOBRE FONDO AZUL" más abajo, que le
-   agrega el relleno real). */
-.contacto-cuerpo--vidrio {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border: 0.5px solid rgba(255, 255, 255, 0.14);
-  border-radius: 20px;
-  padding: 44px;
-}
-@media (max-width: 900px) {
-  .contacto-cuerpo--vidrio { padding: 30px 24px; }
 }
 @keyframes contactoAbre {
   from { opacity: 0; transform: translateY(-10px); }

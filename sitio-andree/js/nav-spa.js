@@ -379,7 +379,7 @@
           var distCuad = ndx * ndx + ndy * ndy;
           if (distCuad < distMaxCuad) {
             var distReal = Math.sqrt(distCuad);
-            var alpha = (1 - distReal / DIST_MAX_CONEXION) * 0.12;
+            var alpha = (1 - distReal / DIST_MAX_CONEXION) * 0.24;
             ctxConstelacion.strokeStyle = 'rgba(' + AZUL + ', ' + alpha + ')';
             ctxConstelacion.lineWidth = 0.7;
             ctxConstelacion.beginPath();
@@ -395,7 +395,7 @@
         var pdx = mouseConstelacion.x - pt.x;
         var pdy = mouseConstelacion.y - pt.y;
         var cerca = Math.sqrt(pdx * pdx + pdy * pdy) < RADIO_MOUSE;
-        var alphaBase = cerca ? 0.85 : 0.16 + Math.sin(pt.pulso) * 0.06;
+        var alphaBase = cerca ? 0.85 : 0.36 + Math.sin(pt.pulso) * 0.08;
         var radioActual = cerca ? pt.radio * 2 : pt.radio + Math.sin(pt.pulso) * 0.25;
         ctxConstelacion.fillStyle = 'rgba(' + (cerca ? DORADO : AZUL) + ', ' + alphaBase + ')';
         ctxConstelacion.beginPath();
