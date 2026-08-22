@@ -2916,37 +2916,63 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   .escudo img { height: 72px; }
 }
 
-/* ── Riel de escudos (desktop): tiras anchas separadas por líneas finas,
-   en movimiento continuo hacia la derecha; al pasar el mouse se detiene
-   y el cuadrito activo se vuelve negro con bordes redondeados. ── */
+/* ── Riel de escudos (desktop): carrusel 3D, no una tira plana - cada
+   escudo se ubica con rotateY()+translateZ() alrededor de un círculo
+   completo (--ri = su posición, --total = cuántos son, puestos por
+   cada <figure>/.riel-pista en el HTML) y toda la rueda gira despacio
+   sin parar. Con backface-visibility oculto, los que quedan "de
+   espaldas" (más de 90° del frente) desaparecen solos - así en todo
+   momento solo se ve el arco de enfrente, "medio circular" en vez de
+   la vuelta entera. Al pasar el mouse, la rueda entera se detiene y
+   el cuadrito activo se vuelve negro con bordes redondeados. */
 .riel-escudos {
   overflow: hidden;
   width: 100%;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
+  /* Ver min-width en .riel-pista: sin él, esta caja termina angosta. */
+  perspective: 1400px;
 }
 .riel-pista {
-  display: flex;
-  width: max-content;
-  animation: mk-riel-mover 34s linear infinite;
+  position: relative;
+  /* Los escudos van todos con position:absolute (para poder ubicarse
+     en el círculo con rotateY/translateZ), así que no aportan ancho
+     propio al flujo normal - y .slide-pin (ver theme.css, más
+     arriba) es un flex que centra en vez de estirar a su .section,
+     así que sin este min-width toda la cadena de contenedores se
+     encoge a casi nada en vez de llegar al max-width real de
+     .section (1280px). Con esto, vuelve a comportarse igual que
+     antes (cuando la pista angosta era, de hecho, mucho más ancha
+     que eso por su propio contenido en fila). Acotado con
+     calc(100vw - 72px) - los 36px de padding de .section a cada
+     lado - para que en pantallas angostas (justo arriba de los
+     901px del quiebre mobile) no pida más ancho del que en verdad
+     cabe y desborde la página. */
+  min-width: min(1280px, calc(100vw - 72px));
+  height: 250px;
+  transform-style: preserve-3d;
+  animation: mk-rueda-girar 24s linear infinite;
 }
 .riel-escudos:hover .riel-pista { animation-play-state: paused; }
-@keyframes mk-riel-mover {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
+@keyframes mk-rueda-girar {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
 }
 
 .riel-escudo-item {
-  flex: 0 0 auto;
-  width: 300px;
+  --mk-angulo: calc(var(--ri, 0) * (360deg / var(--total, 1)));
+  --mk-radio: 320px;
+  position: absolute; left: 50%; top: 50%;
+  width: 200px; height: 200px;
+  margin-left: -100px; margin-top: -100px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 20px;
-  padding: 34px 28px;
+  gap: 14px;
+  padding: 22px 18px;
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.82);
-  border-right: 1px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 18px;
-  transform: scale(1);
-  position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(var(--mk-angulo)) translateZ(var(--mk-radio)) scale(1);
   z-index: 1;
   -webkit-backdrop-filter: url(#mk-glass-filter);
   backdrop-filter: url(#mk-glass-filter);
@@ -2960,7 +2986,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   background: #000;
   border-color: transparent;
   border-radius: 28px;
-  transform: scale(1.08);
+  transform: rotateY(var(--mk-angulo)) translateZ(var(--mk-radio)) scale(1.12);
   z-index: 2;
   box-shadow:
     inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.25),
@@ -2993,7 +3019,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 .riel-escudo-item:hover::before { opacity: 1; animation-play-state: running; }
 
 .riel-escudo-item img {
-  height: 136px; width: auto; max-width: 240px; object-fit: contain;
+  height: 84px; width: auto; max-width: 150px; object-fit: contain;
   transition: filter 0.4s ease, transform 0.4s ease;
 }
 .riel-escudo-item:hover img {
@@ -3002,15 +3028,31 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 
 .riel-escudo-etiqueta {
-  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px;
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 12.5px;
   font-weight: 500; letter-spacing: 0.01em; color: rgba(17, 17, 17, 0.78);
-  text-align: center;
+  text-align: center; line-height: 1.25;
   transition: color 0.3s ease;
 }
 .riel-escudo-item:hover .riel-escudo-etiqueta { color: var(--white); }
 
+/* Con la rueda detenida (sin animación) solo se vería el arco de
+   enfrente - la mitad de los escudos, ocultos por backface-visibility,
+   quedarían invisibles para siempre. Con movimiento reducido se cae a
+   una grilla simple y estática en su lugar, con todos los escudos a
+   la vista de una. */
 @media (prefers-reduced-motion: reduce) {
-  .riel-pista { animation: none; }
+  .riel-pista {
+    animation: none;
+    position: static; height: auto; transform: none;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 16px;
+  }
+  .riel-escudo-item {
+    position: static; margin: 0;
+    transform: none !important;
+    backface-visibility: visible; -webkit-backface-visibility: visible;
+  }
+  .riel-escudo-item:hover { transform: scale(1.05) !important; }
   .riel-escudo-item, .riel-escudo-item img { transition: none; }
   .riel-escudo-item::before { animation: none; }
 }
