@@ -1820,10 +1820,21 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    fondo fijo justo donde más se necesita verlo. */
 .page-hero--portada { background: transparent; }
 .page-hero--portada .page-hero-video {
-  position: fixed; inset: 0; bottom: auto; z-index: -3;
   filter: blur(var(--blur-fondo, 0px));
 }
-.page-hero--portada .page-hero-overlay { position: fixed; z-index: -2; }
+/* .page-hero--fijo (no --portada): nav-spa.js la agrega recién cuando
+   la transición de altura de .page-hero termina de verdad, no junto
+   con --portada. Si el video/velo pasaran a position:fixed apenas se
+   agrega --portada, saltarían de golpe a pantalla completa mientras
+   la caja recién arranca a crecer desde los 230px de la franja —
+   mientras tanto se quedan con su position:absolute de siempre
+   (bottom:0, alto fijo en 100vh) y, como .page-hero--portada ya viene
+   con overflow:visible, se ven "deslizar" hacia su lugar a la par de
+   ese crecimiento en vez de dar el salto. */
+.page-hero--fijo .page-hero-video {
+  position: fixed; inset: 0; bottom: auto; z-index: -3;
+}
+.page-hero--fijo .page-hero-overlay { position: fixed; z-index: -2; }
 
 /* Red de puntos tipo constelación, detrás del título de la portada:
    solo se ve/anima ahí (ver .page-hero--portada más abajo), nunca en

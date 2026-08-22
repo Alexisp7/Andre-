@@ -185,7 +185,38 @@
            .page-hero-inner, así que cambiarlo antes hacía que el
            título todavía visible saltara al centro y se quedara ahí
            un instante antes de desvanecerse — se veía mal. */
-        if (heroSeccion) heroSeccion.classList.toggle('page-hero--portada', esPortada);
+        if (heroSeccion) {
+          heroSeccion.classList.toggle('page-hero--portada', esPortada);
+          if (esPortada) {
+            /* Al ENTRAR a la portada, .page-hero--fijo (position:fixed
+               para el video/velo, ver theme.css) se agrega recién
+               cuando la transición de altura (230px -> 100vh) termina
+               de verdad, no junto con --portada: si se agregara de
+               una, el video saltaría de golpe a pantalla completa
+               mientras la caja recién arranca a crecer, en vez de
+               verse crecer con ella. transitionend es lo normal; el
+               setTimeout es solo una red de seguridad por si no
+               llegara a disparar (pestaña en segundo plano, etc). Al
+               SALIR no hace falta ninguno de los dos: ahí la caja
+               arranca ya en 100vh (recién se achica después), así que
+               sacar --fijo junto con --portada no da ningún salto. */
+            var miGen = miGeneracion;
+            var fijado = false;
+            var fijar = function () {
+              if (fijado || miGen !== generacion) return;
+              fijado = true;
+              heroSeccion.classList.add('page-hero--fijo');
+            };
+            heroSeccion.addEventListener('transitionend', function alFinCrecer(e) {
+              if (e.target !== heroSeccion || e.propertyName !== 'height') return;
+              heroSeccion.removeEventListener('transitionend', alFinCrecer);
+              fijar();
+            });
+            setTimeout(fijar, 700);
+          } else {
+            heroSeccion.classList.remove('page-hero--fijo');
+          }
+        }
         if (window.__sincronizarConstelacion) window.__sincronizarConstelacion();
 
         heroActual.innerHTML = nuevoHero.innerHTML;
