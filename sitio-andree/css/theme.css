@@ -2114,7 +2114,24 @@ body:has(.page-hero--portada) { background: transparent; }
 #sobre .about-body { color: rgba(255, 255, 255, 0.78); }
 #sobre .autor-registros { color: rgba(255, 255, 255, 0.55); border-top-color: rgba(255, 255, 255, 0.2); }
 #sobre .autor-registros strong { color: var(--white); }
-#sobre .autor-retrato { background: rgba(255, 255, 255, 0.06); }
+/* El retrato queda "enmarcado" en vidrio: un bisel translúcido
+   alrededor de la foto (padding, así el propio recuadro deja ver su
+   fondo) con el mismo filtro de vidrio líquido de los botones - pero
+   solo en ese borde, nunca sobre la foto en sí (que se queda nítida,
+   sin distorsión ni blur encima de la cara). */
+#sobre .autor-retrato {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 12px;
+  box-sizing: border-box;
+  -webkit-backdrop-filter: url(#mk-glass-filter);
+  backdrop-filter: url(#mk-glass-filter);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.5),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.35),
+    inset 0 0 10px 10px rgba(255, 255, 255, 0.04),
+    0 20px 50px -20px rgba(0, 0, 0, 0.6);
+}
+#sobre .autor-retrato img { border-radius: 2px; }
 #sobre .retrato-cortina { background: var(--blue); }
 #formacion .escudos-titulo { color: var(--white); }
 #formacion .escudos-titulo::after { background: rgba(255, 255, 255, 0.2); }
@@ -2251,6 +2268,12 @@ body:has(.page-hero--portada) { background: transparent; }
     border: 0.5px solid rgba(255, 255, 255, 0.28);
     cursor: pointer;
     z-index: 1;
+    -webkit-backdrop-filter: url(#mk-glass-filter);
+    backdrop-filter: url(#mk-glass-filter);
+    box-shadow:
+      inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.7),
+      inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.25),
+      inset 0 0 6px 4px rgba(255, 255, 255, 0.05);
     transition: left 0.32s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
   }
   .hero-nav-boton span {
@@ -2440,17 +2463,23 @@ body:has(.page-hero--portada) { background: transparent; }
   text-decoration: none;
   display: inline-flex; align-items: center; justify-content: center;
   width: 38px; height: 38px; flex: none;
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.75);
   border-radius: 50%;
   border: 1.5px solid transparent;
   color: var(--blue);
-  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  -webkit-backdrop-filter: url(#mk-glass-filter);
+  backdrop-filter: url(#mk-glass-filter);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.9),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.08);
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.22s ease;
 }
 .visor-volver svg { width: 18px; height: 18px; }
 .visor-volver:hover {
   background: var(--blue);
   border-color: var(--gold);
   color: var(--white);
+  transform: scale(1.06);
 }
 
 /* Fila fija: la flecha y el título siempre empiezan juntos, uno al lado
@@ -2662,14 +2691,20 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   flex: none;
   width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--bg-off);
+  background: rgba(255, 255, 255, 0.55);
   border: 0.5px solid var(--border);
   color: var(--gray); cursor: pointer;
-  transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease, opacity 0.22s ease;
+  -webkit-backdrop-filter: url(#mk-glass-filter);
+  backdrop-filter: url(#mk-glass-filter);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.9),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.06);
+  transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease, opacity 0.22s ease, transform 0.22s ease;
 }
 .visor-nav svg { width: 15px; height: 15px; }
 .visor-nav:hover:not(:disabled) {
   color: var(--white); border-color: var(--blue); background: var(--blue);
+  transform: scale(1.06);
 }
 .visor-nav:disabled { opacity: 0.3; cursor: default; }
 
@@ -2678,6 +2713,9 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 .visor-nav--inicio {
   width: 44px; height: 44px;
   background: var(--gray); border-color: var(--gray); color: var(--white);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.35),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.25);
 }
 .visor-nav--inicio svg { width: 17px; height: 17px; }
 .visor-nav--inicio:hover:not(:disabled) { background: var(--blue); border-color: var(--blue); }
@@ -2795,13 +2833,22 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--gray); text-decoration: none;
-  transition: color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+  -webkit-backdrop-filter: url(#mk-glass-filter);
+  backdrop-filter: url(#mk-glass-filter);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.6),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.06);
+  transition: color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease, transform 0.25s ease;
 }
 .perfil-icono { display: block; width: 19px; height: 19px; color: var(--gold); }
 .perfil-icono svg { width: 100%; height: 100%; display: block; }
 .perfil:hover {
   color: var(--blue); border-color: var(--blue-mid);
-  box-shadow: 0 6px 16px -8px var(--blue-shadow-strong);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.6),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.06),
+    0 6px 16px -8px var(--blue-shadow-strong);
+  transform: scale(1.03);
 }
 .perfil:hover .perfil-icono { color: var(--blue-mid); }
 
@@ -2901,7 +2948,13 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   transform: scale(1);
   position: relative;
   z-index: 1;
-  transition: background 0.4s cubic-bezier(0.16,1,0.3,1), border-radius 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease;
+  -webkit-backdrop-filter: url(#mk-glass-filter);
+  backdrop-filter: url(#mk-glass-filter);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.8),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.08),
+    inset 0 0 8px 8px rgba(255, 255, 255, 0.05);
+  transition: background 0.4s cubic-bezier(0.16,1,0.3,1), border-radius 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 .riel-escudo-item:hover {
   background: #000;
@@ -2909,6 +2962,10 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   border-radius: 28px;
   transform: scale(1.08);
   z-index: 2;
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.25),
+    inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.1),
+    inset 0 0 8px 8px rgba(255, 255, 255, 0.03);
 }
 
 /* Mismo aro de luz que .noticia--con-enlace (ver arriba, @keyframes
@@ -3474,8 +3531,14 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
   color: var(--black); background: none;
   border: 0.5px solid var(--border);
   padding: 14px 34px; cursor: pointer;
-  transition: color 0.28s ease, border-color 0.28s ease;
+  -webkit-backdrop-filter: url(#mk-glass-filter);
+  backdrop-filter: url(#mk-glass-filter);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.5),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.08);
+  transition: color 0.28s ease, border-color 0.28s ease, transform 0.25s ease;
 }
+.btn-enviar:hover { transform: scale(1.03); }
 .btn-enviar::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
   background: var(--blue);
@@ -3757,12 +3820,17 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 .contacto-perfiles .perfil {
   color: rgba(255,255,255,0.75);
   border-color: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.06);
+  box-shadow:
+    inset 1px 1px 1px -0.5px rgba(255,255,255,0.35),
+    inset -1px -1px 1px -0.5px rgba(0,0,0,0.2),
+    inset 0 0 6px 4px rgba(255,255,255,0.04);
 }
 .contacto-perfiles .perfil-icono { color: var(--gold); }
 .contacto-perfiles .perfil:hover {
   color: var(--black); border-color: var(--white);
   background: var(--white);
-  box-shadow: none;
+  box-shadow: 0 6px 16px -8px rgba(0,0,0,0.35);
 }
 .contacto-perfiles .perfil:hover .perfil-icono { color: var(--black); }
 
