@@ -1756,7 +1756,17 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    ocupar toda la pantalla en vez de una banda — así el <video> es
    literalmente el mismo elemento en las 11 páginas del sitio (nunca
    se recarga) y solo cambia de tamaño con la transición de height
-   heredada de .page-hero, dando el efecto de "subir" o "bajar". */
+   heredada de .page-hero, dando el efecto de "subir" o "bajar" al
+   entrar o salir de la portada por SPA.
+
+   IMPORTANTE: este alto tiene que quedarse en 100vh. Se probó a
+   agrandarlo (240vh) para darle recorrido de sobra a la diapositiva
+   del título, y esa ilusión de "video que sube/baja" se rompía: el
+   video queda anclado abajo de ESTA caja, así que si arranca 240vh en
+   vez de 100vh, al soltar la portada el video pasa la mayor parte de
+   la transición fuera de pantalla (por abajo) y recién aparece de
+   golpe casi al final, en vez de encogerse a la vista. El recorrido
+   de sobra para el título vive aparte, en #tituloDwell (más abajo). */
 .page-hero--portada {
   height: 100vh;
   height: 100svh;
@@ -1768,9 +1778,7 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   /* .page-hero (el elemento base) trae overflow:hidden para recortar el
      video anclado abajo en la franja angosta de las demás páginas — acá
      ya no hace falta: el video en la portada escapa por su cuenta con
-     position:fixed (ver más abajo), y overflow:hidden en un ancestro
-     rompe position:sticky en sus descendientes (el título deja de
-     quedarse fijo). */
+     position:fixed (ver más abajo). */
   overflow: visible;
 }
 
@@ -1909,23 +1917,24 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     visibility: hidden;
   }
 
-  /* El título es la primera diapositiva: en vez de sus 100vh normales
-     recibe el mismo recorrido extra, y su contenido (ya tenía el
-     desvanecido de --progreso-salida) se fija arriba para que ese
-     desvanecido se sienta completo antes de soltar paso a la
-     biografía. */
-  /* display:block en vez del flex/align-items:center de base: un
-     align-items:center en el padre pelea con position:sticky del hijo
-     (el centrado por flex del eje transversal termina ganándole al
-     desplazamiento sticky) — el centrado del título pasa a hacerlo
-     .page-hero-inner con su propio flex, ya de por sí sticky. */
-  .page-hero--portada { height: 240vh; display: block; }
+  /* El título es la primera diapositiva: recibe el mismo recorrido
+     extra que las demás para que su desvanecido (--progreso-salida,
+     ya existía desde antes de las diapositivas) se sienta completo
+     antes de soltar paso a la biografía. Ese recorrido de sobra NO
+     sale de agrandar .page-hero--portada (que se probó y quedó en
+     100vh a propósito, ver más abajo) sino de #tituloDwell, un
+     .slide-wrap vacío y aparte, y el título se fija con
+     position:fixed (inset:0, iguales que el video/velo/constelación
+     de fondo) en vez de sticky: así se queda quieto en pantalla
+     mientras dura ese recorrido, sin que .page-hero necesite crecer
+     para dárselo. */
   .page-hero--portada .page-hero-inner {
-    position: sticky; top: 0;
+    position: fixed; inset: 0;
     height: 100vh; height: 100dvh;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 0 48px;
   }
+  #tituloDwell { height: 140vh; }
 
   /* ── Entradas ligadas al --slide-progreso local de cada diapositiva ──
      --local sube en línea recta con el scroll; --ease es esa misma
@@ -1970,7 +1979,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .slide-wrap, .page-hero--portada { height: auto; }
+    /* Un selector por ID (#tituloDwell, #contactame-wrap) pesa más que
+       uno por clase (.slide-wrap) sin importar el orden en el archivo,
+       así que la regla de arriba sola no les gana su propio alto fijo
+       — sin este resto, quedaban con su recorrido de sobra intacto
+       (140vh/160vh de hueco vacío) aunque ya no lo usara nadie. */
+    .slide-wrap, #tituloDwell, #contactame-wrap { height: auto; }
     .slide-pin, .page-hero--portada .page-hero-inner { position: static; height: auto; }
     .slide-pin [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
     .slide-pin .autor-retrato[data-reveal] .retrato-cortina { transform: scaleY(0) !important; }
