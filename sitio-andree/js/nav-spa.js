@@ -356,8 +356,8 @@
     var DIST_MAX_CONEXION = ESPACIADO * 1.35;
     var RESORTE = 18;
     var AMORTIGUACION = 0.82;
-    var AZUL = '60, 100, 165'; // azul medio oscuro, más claro que var(--blue) solo lo justo para distinguirse del fondo
-    var DORADO = '200, 169, 110'; // var(--gold), a mano: no se puede leer una variable CSS calculada desde acá sin costo extra por frame
+    var AZUL = '35, 48, 68'; // casi el mismo azul que el video/overlay de fondo (var(--blue): 20,35,61) — la malla en reposo casi no debe notarse
+    var ACENTO = '85, 100, 125'; // gris azulado apagado para el efecto cerca del mouse — nada vivo ni cálido
 
     function dibujarFrame(ahora) {
       var dt = Math.min((ahora - ultimoTiempo) / 1000, 0.05) || 0.016;
@@ -398,7 +398,7 @@
           var distCuad = ndx * ndx + ndy * ndy;
           if (distCuad < distMaxCuad) {
             var distReal = Math.sqrt(distCuad);
-            var alpha = (1 - distReal / DIST_MAX_CONEXION) * 0.24;
+            var alpha = (1 - distReal / DIST_MAX_CONEXION) * 0.1;
             ctxConstelacion.strokeStyle = 'rgba(' + AZUL + ', ' + alpha + ')';
             ctxConstelacion.lineWidth = 0.7;
             ctxConstelacion.beginPath();
@@ -414,9 +414,9 @@
         var pdx = mouseConstelacion.x - pt.x;
         var pdy = mouseConstelacion.y - pt.y;
         var cerca = Math.sqrt(pdx * pdx + pdy * pdy) < RADIO_MOUSE;
-        var alphaBase = cerca ? 0.85 : 0.36 + Math.sin(pt.pulso) * 0.08;
+        var alphaBase = cerca ? 0.6 : 0.14 + Math.sin(pt.pulso) * 0.05;
         var radioActual = cerca ? pt.radio * 2 : pt.radio + Math.sin(pt.pulso) * 0.25;
-        ctxConstelacion.fillStyle = 'rgba(' + (cerca ? DORADO : AZUL) + ', ' + alphaBase + ')';
+        ctxConstelacion.fillStyle = 'rgba(' + (cerca ? ACENTO : AZUL) + ', ' + alphaBase + ')';
         ctxConstelacion.beginPath();
         ctxConstelacion.arc(pt.x, pt.y, Math.max(0.5, radioActual), 0, Math.PI * 2);
         ctxConstelacion.fill();
