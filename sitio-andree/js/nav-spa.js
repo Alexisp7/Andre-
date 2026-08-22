@@ -186,6 +186,7 @@
            título todavía visible saltara al centro y se quedara ahí
            un instante antes de desvanecerse — se veía mal. */
         if (heroSeccion) heroSeccion.classList.toggle('page-hero--portada', esPortada);
+        if (window.__sincronizarConstelacion) window.__sincronizarConstelacion();
 
         heroActual.innerHTML = nuevoHero.innerHTML;
         mainActual.innerHTML = nuevoMain.innerHTML;
@@ -273,5 +274,163 @@
     actualizarDesvanecido();
     window.addEventListener('scroll', pedirDesvanecido, { passive: true });
     window.addEventListener('resize', pedirDesvanecido);
+  }
+
+  /* Red de puntos tipo constelación, de fondo detrás del título de la
+     portada (ver .hero-constelacion en theme.css): nodos en grilla que
+     se apartan del mouse con un resorte (Hooke) y vuelven solos a su
+     sitio, con líneas finas entre los que quedan cerca. Solo corre
+     mientras la portada esté activa — se arranca/para desde navegar()
+     al entrar o salir de ella, y una sola vez acá para la primera
+     carga real si esta ya es la portada. */
+  var canvasConstelacion = document.getElementById('heroConstelacion');
+  if (canvasConstelacion && heroSeccionGlobal) {
+    var ctxConstelacion = canvasConstelacion.getContext('2d', { alpha: true });
+    var nodosConstelacion = [];
+    var anchoConstelacion = 0;
+    var altoConstelacion = 0;
+    var rafConstelacion = null;
+    var ultimoTiempo = 0;
+    var mouseConstelacion = { x: -1000, y: -1000 };
+    var reducidoConstelacion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function medirConstelacion() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      anchoConstelacion = heroSeccionGlobal.offsetWidth;
+      altoConstelacion = heroSeccionGlobal.offsetHeight;
+      canvasConstelacion.width = anchoConstelacion * dpr;
+      canvasConstelacion.height = altoConstelacion * dpr;
+      ctxConstelacion.setTransform(dpr, 0, 0, dpr, 0, 0);
+      armarNodos();
+    }
+
+    /* Espaciado amplio a propósito: pocos puntos, discretos, no una
+       telaraña densa que compita con el vídeo o el título. */
+    var ESPACIADO = 90;
+    function armarNodos() {
+      nodosConstelacion = [];
+      var cols = Math.ceil(anchoConstelacion / ESPACIADO) + 1;
+      var filas = Math.ceil(altoConstelacion / ESPACIADO) + 1;
+      for (var i = 0; i < cols; i++) {
+        for (var j = 0; j < filas; j++) {
+          var x = i * ESPACIADO;
+          var y = j * ESPACIADO;
+          nodosConstelacion.push({
+            x: x, y: y, vx: 0, vy: 0, baseX: x, baseY: y,
+            radio: Math.random() * 1.1 + 1.1,
+            pulso: Math.random() * Math.PI * 2
+          });
+        }
+      }
+    }
+
+    function onMouseMoveConstelacion(e) {
+      var rc = heroSeccionGlobal.getBoundingClientRect();
+      mouseConstelacion.x = e.clientX - rc.left;
+      mouseConstelacion.y = e.clientY - rc.top;
+    }
+    function onMouseLeaveConstelacion() {
+      mouseConstelacion.x = -1000;
+      mouseConstelacion.y = -1000;
+    }
+    function onResizeConstelacion() { medirConstelacion(); }
+
+    var RADIO_MOUSE = 200;
+    var DIST_MAX_CONEXION = ESPACIADO * 1.35;
+    var RESORTE = 18;
+    var AMORTIGUACION = 0.82;
+    var BLANCO = '255, 255, 255';
+    var DORADO = '200, 169, 110'; // var(--gold), a mano: no se puede leer una variable CSS calculada desde acá sin costo extra por frame
+
+    function dibujarFrame(ahora) {
+      var dt = Math.min((ahora - ultimoTiempo) / 1000, 0.05) || 0.016;
+      ultimoTiempo = ahora;
+
+      ctxConstelacion.clearRect(0, 0, anchoConstelacion, altoConstelacion);
+
+      for (var n = 0; n < nodosConstelacion.length; n++) {
+        var nodo = nodosConstelacion[n];
+        nodo.pulso += dt * 3;
+
+        var dx = mouseConstelacion.x - nodo.x;
+        var dy = mouseConstelacion.y - nodo.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < RADIO_MOUSE && dist > 0) {
+          var potencia = 1 - dist / RADIO_MOUSE;
+          var fuerza = potencia * 900;
+          var angulo = Math.atan2(dy, dx);
+          nodo.vx -= Math.cos(angulo) * fuerza * dt;
+          nodo.vy -= Math.sin(angulo) * fuerza * dt;
+        }
+
+        nodo.vx += (nodo.baseX - nodo.x) * RESORTE * dt;
+        nodo.vy += (nodo.baseY - nodo.y) * RESORTE * dt;
+        nodo.vx *= AMORTIGUACION;
+        nodo.vy *= AMORTIGUACION;
+        nodo.x += nodo.vx * dt * 60;
+        nodo.y += nodo.vy * dt * 60;
+      }
+
+      var distMaxCuad = DIST_MAX_CONEXION * DIST_MAX_CONEXION;
+      for (var a = 0; a < nodosConstelacion.length; a++) {
+        var na = nodosConstelacion[a];
+        for (var b = a + 1; b < nodosConstelacion.length; b++) {
+          var nb = nodosConstelacion[b];
+          var ndx = na.x - nb.x;
+          var ndy = na.y - nb.y;
+          var distCuad = ndx * ndx + ndy * ndy;
+          if (distCuad < distMaxCuad) {
+            var distReal = Math.sqrt(distCuad);
+            var alpha = (1 - distReal / DIST_MAX_CONEXION) * 0.12;
+            ctxConstelacion.strokeStyle = 'rgba(' + BLANCO + ', ' + alpha + ')';
+            ctxConstelacion.lineWidth = 0.7;
+            ctxConstelacion.beginPath();
+            ctxConstelacion.moveTo(na.x, na.y);
+            ctxConstelacion.lineTo(nb.x, nb.y);
+            ctxConstelacion.stroke();
+          }
+        }
+      }
+
+      for (var m = 0; m < nodosConstelacion.length; m++) {
+        var pt = nodosConstelacion[m];
+        var pdx = mouseConstelacion.x - pt.x;
+        var pdy = mouseConstelacion.y - pt.y;
+        var cerca = Math.sqrt(pdx * pdx + pdy * pdy) < RADIO_MOUSE;
+        var alphaBase = cerca ? 0.85 : 0.16 + Math.sin(pt.pulso) * 0.06;
+        var radioActual = cerca ? pt.radio * 2 : pt.radio + Math.sin(pt.pulso) * 0.25;
+        ctxConstelacion.fillStyle = 'rgba(' + (cerca ? DORADO : BLANCO) + ', ' + alphaBase + ')';
+        ctxConstelacion.beginPath();
+        ctxConstelacion.arc(pt.x, pt.y, Math.max(0.5, radioActual), 0, Math.PI * 2);
+        ctxConstelacion.fill();
+      }
+
+      rafConstelacion = requestAnimationFrame(dibujarFrame);
+    }
+
+    function iniciarConstelacion() {
+      if (rafConstelacion !== null || reducidoConstelacion) return;
+      medirConstelacion();
+      window.addEventListener('mousemove', onMouseMoveConstelacion);
+      window.addEventListener('mouseleave', onMouseLeaveConstelacion);
+      window.addEventListener('resize', onResizeConstelacion);
+      ultimoTiempo = performance.now();
+      rafConstelacion = requestAnimationFrame(dibujarFrame);
+    }
+    function detenerConstelacion() {
+      if (rafConstelacion !== null) cancelAnimationFrame(rafConstelacion);
+      rafConstelacion = null;
+      window.removeEventListener('mousemove', onMouseMoveConstelacion);
+      window.removeEventListener('mouseleave', onMouseLeaveConstelacion);
+      window.removeEventListener('resize', onResizeConstelacion);
+      if (ctxConstelacion) ctxConstelacion.clearRect(0, 0, anchoConstelacion, altoConstelacion);
+    }
+    function sincronizarConstelacion() {
+      if (heroSeccionGlobal.classList.contains('page-hero--portada')) iniciarConstelacion();
+      else detenerConstelacion();
+    }
+
+    window.__sincronizarConstelacion = sincronizarConstelacion;
+    sincronizarConstelacion();
   }
 })();
