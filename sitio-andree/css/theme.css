@@ -1820,10 +1820,21 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
    fondo fijo justo donde más se necesita verlo. */
 .page-hero--portada { background: transparent; }
 .page-hero--portada .page-hero-video {
-  position: fixed; inset: 0; bottom: auto; z-index: -3;
   filter: blur(var(--blur-fondo, 0px));
 }
-.page-hero--portada .page-hero-overlay { position: fixed; z-index: -2; }
+/* .page-hero--fijo (no --portada): nav-spa.js la agrega recién cuando
+   la transición de altura de .page-hero termina de verdad, no junto
+   con --portada. Si el video/velo pasaran a position:fixed apenas se
+   agrega --portada, saltarían de golpe a pantalla completa mientras
+   la caja recién arranca a crecer desde los 230px de la franja —
+   mientras tanto se quedan con su position:absolute de siempre
+   (bottom:0, alto fijo en 100vh) y, como .page-hero--portada ya viene
+   con overflow:visible, se ven "deslizar" hacia su lugar a la par de
+   ese crecimiento en vez de dar el salto. */
+.page-hero--fijo .page-hero-video {
+  position: fixed; inset: 0; bottom: auto; z-index: -3;
+}
+.page-hero--fijo .page-hero-overlay { position: fixed; z-index: -2; }
 
 /* Red de puntos tipo constelación, detrás del título de la portada:
    solo se ve/anima ahí (ver .page-hero--portada más abajo), nunca en
@@ -1860,6 +1871,11 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   .page-hero--portada .page-hero-inner,
   .page-hero--portada .page-hero-video { opacity: 1; filter: none; transform: none; }
 }
+
+/* El riel de secciones es cosa del pase de diapositivas de escritorio
+   (ver más abajo) — en mobile, con scroll normal de toda la vida, no
+   tiene sentido. */
+.riel-secciones { display: none; }
 
 /* ══════════════════════════════════════════
    PORTADA COMO PASE DE DIAPOSITIVAS (solo escritorio)
@@ -1935,6 +1951,55 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     padding: 0 48px;
   }
   #tituloDwell { height: 140vh; }
+
+  /* ── Riel de secciones (Título / Biografía / Universidades / Contacto) ──
+     Oculto mientras se ve el título — recién se difumina hacia visible
+     a medida que se hace scroll por el recorrido de #tituloDwell,
+     usando su mismo --slide-progreso (0 a 1) que ya calcula
+     sincronizarDiapositivas() en nav-spa.js. Como es continuo y
+     reversible, subir de vuelta al título lo vuelve a desvanecer solo,
+     sin ningún caso especial. --riel-progreso lo pone esa misma
+     función en <body> (el riel no es descendiente de #tituloDwell, así
+     que no puede leer su variable local directamente). */
+  .riel-secciones {
+    position: fixed; z-index: 40;
+    right: 52px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: flex-end;
+    opacity: var(--riel-progreso, 0);
+    pointer-events: none;
+  }
+  .riel-secciones.riel-secciones--interactivo { pointer-events: auto; }
+  .riel-secciones::before {
+    content: ''; position: absolute; right: 3px;
+    top: 22px; bottom: 22px; width: 0;
+    border-right: 1px dashed rgba(255, 255, 255, 0.22);
+  }
+  .riel-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 15px 0; text-decoration: none;
+  }
+  .riel-etiqueta {
+    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap;
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.3s ease;
+  }
+  .riel-punto {
+    width: 7px; height: 7px; border-radius: 50%; flex: none;
+    background: rgba(255, 255, 255, 0.32);
+    box-shadow: 0 0 0 0 rgba(200, 169, 110, 0);
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .riel-item:hover .riel-punto { background: rgba(255, 255, 255, 0.65); }
+  .riel-item.es-activo .riel-etiqueta { color: var(--white); }
+  .riel-item.es-activo .riel-punto {
+    background: var(--gold);
+    transform: scale(1.7);
+    box-shadow: 0 0 0 6px rgba(200, 169, 110, 0.18);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .riel-punto, .riel-etiqueta { transition: none; }
+  }
 
   /* ── Entradas ligadas al --slide-progreso local de cada diapositiva ──
      --local sube en línea recta con el scroll; --ease es esa misma
