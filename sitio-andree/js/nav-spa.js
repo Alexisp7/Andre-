@@ -218,6 +218,7 @@
           }
         }
         if (window.__sincronizarConstelacion) window.__sincronizarConstelacion();
+        if (esPortada && window.__iniciarAutoAvancePortada) window.__iniciarAutoAvancePortada();
 
         heroActual.innerHTML = nuevoHero.innerHTML;
         mainActual.innerHTML = nuevoMain.innerHTML;
@@ -243,6 +244,7 @@
     if (!a) return;
     if (a.target && a.target !== '_self') return;
     if (a.hasAttribute('download')) return;
+    if (a.hasAttribute('data-riel-ir')) return; // el riel de secciones hace su propio scroll suave, más abajo
 
     var url;
     try { url = new URL(a.href, location.href); } catch (err) { return; }
@@ -337,12 +339,42 @@
     function sincronizarDiapositivas() {
       if (window.innerWidth < 901) return;
       var wraps = document.querySelectorAll('.slide-wrap');
+      var progresoTitulo = 1;
       for (var i = 0; i < wraps.length; i++) {
         var wrap = wraps[i];
         var alto = wrap.offsetHeight - window.innerHeight;
         var progreso = alto > 0 ? Math.min(1, Math.max(0, -wrap.getBoundingClientRect().top / alto)) : 1;
         wrap.style.setProperty('--slide-progreso', String(progreso));
+        if (wrap.id === 'tituloDwell') progresoTitulo = progreso;
       }
+      /* El riel de secciones (ver theme.css) usa este mismo progreso -
+         puesto en <body> porque el riel no es descendiente de
+         #tituloDwell, así que no puede leer su variable local. */
+      document.body.style.setProperty('--riel-progreso', String(progresoTitulo));
+      sincronizarRielSecciones(progresoTitulo);
+    }
+    /* Resalta, de las 4 paradas del riel, la última cuyo comienzo ya se
+       pasó — y solo lo deja clickeable (riel-secciones--interactivo)
+       una vez que ya se empezó a desvanecer hacia visible, para que no
+       se pueda hacer clic en algo con opacidad ~0 sobre el título. Se
+       vuelve a consultar el DOM en cada llamada por la misma razón que
+       sincronizarDiapositivas(): #spaMain se reemplaza entero en cada
+       navegación por SPA. */
+    function sincronizarRielSecciones(progresoTitulo) {
+      var riel = document.getElementById('rielSecciones');
+      if (!riel) return;
+      var items = riel.querySelectorAll('.riel-item');
+      var activo = 0;
+      for (var i = 0; i < items.length; i++) {
+        var destino = items[i].getAttribute('data-riel-ir');
+        var el = destino === 'titulo' ? null : document.getElementById(destino);
+        var inicio = el ? el.offsetTop : 0;
+        if (window.scrollY >= inicio - 2) activo = i;
+      }
+      for (var j = 0; j < items.length; j++) {
+        items[j].classList.toggle('es-activo', j === activo);
+      }
+      riel.classList.toggle('riel-secciones--interactivo', progresoTitulo > 0.05);
     }
     function pedirDesvanecido() {
       if (desvaneciendo) return;
@@ -539,4 +571,54 @@
     window.__sincronizarConstelacion = sincronizarConstelacion;
     sincronizarConstelacion();
   }
+
+  /* Clic en el riel de secciones: scroll suave a la diapositiva
+     elegida (a "título" es scroll a 0). Delegado en document (no en
+     #rielSecciones directamente) porque ese elemento vive dentro de
+     #spaMain y se reemplaza entero en cada navegación por SPA — un
+     listener puesto directo sobre el nodo viejo quedaría huérfano. */
+  document.addEventListener('click', function (e) {
+    var item = e.target && e.target.closest && e.target.closest('.riel-item');
+    if (!item) return;
+    e.preventDefault();
+    var destino = item.getAttribute('data-riel-ir');
+    var el = destino === 'titulo' ? null : document.getElementById(destino);
+    window.scrollTo({ top: el ? el.offsetTop : 0, behavior: 'smooth' });
+  });
+
+  /* A los 5 segundos de llegar al título (recién aterrizado, sin haber
+     tocado el mouse/teclado/rueda todavía), baja solo hasta la
+     biografía — como pasar la primera diapositiva de una
+     presentación. Cualquier intento de scroll manual antes de esos 5
+     segundos cancela el auto-avance (el usuario ya está scrolleando
+     por su cuenta, forzar uno encima se sentiría roto). Solo en
+     escritorio (ahí vive el título fijo/las diapositivas) y nunca con
+     prefers-reduced-motion. Se llama tanto en la carga inicial como
+     desde navegar() cada vez que se entra a la portada por SPA — cada
+     aterrizaje es "la primera vez" de esa visita. */
+  function iniciarAutoAvancePortada() {
+    if (window.innerWidth < 901) return;
+    if (!heroSeccionGlobal || !heroSeccionGlobal.classList.contains('page-hero--portada')) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var temporizador = null;
+    function cancelar() {
+      if (temporizador) { clearTimeout(temporizador); temporizador = null; }
+      window.removeEventListener('wheel', cancelar);
+      window.removeEventListener('touchstart', cancelar);
+      window.removeEventListener('keydown', cancelar);
+    }
+    window.addEventListener('wheel', cancelar, { passive: true });
+    window.addEventListener('touchstart', cancelar, { passive: true });
+    window.addEventListener('keydown', cancelar);
+
+    temporizador = setTimeout(function () {
+      cancelar();
+      if (window.scrollY > 40) return; // ya se movió por otra vía (p.ej. #hash)
+      var sobre = document.getElementById('sobre');
+      if (sobre) window.scrollTo({ top: sobre.offsetTop, behavior: 'smooth' });
+    }, 5000);
+  }
+  window.__iniciarAutoAvancePortada = iniciarAutoAvancePortada;
+  iniciarAutoAvancePortada();
 })();
