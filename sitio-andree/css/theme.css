@@ -1747,6 +1747,18 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   pointer-events: none;
 }
 
+/* Red de puntos tipo constelación, detrás del título de la portada:
+   solo se ve/anima ahí (ver .page-hero--portada más abajo), nunca en
+   la franja angosta de las demás páginas — nav-spa.js la arranca y la
+   detiene al entrar/salir de la portada. */
+.hero-constelacion { display: none; }
+.page-hero--portada .hero-constelacion {
+  display: block;
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
 .page-hero--portada .page-hero-inner {
   max-width: 980px; margin: 0 auto; width: 100%;
   padding: 64px 48px;
