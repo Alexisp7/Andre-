@@ -304,9 +304,7 @@
       armarNodos();
     }
 
-    /* Espaciado amplio a propósito: pocos puntos, discretos, no una
-       telaraña densa que compita con el vídeo o el título. */
-    var ESPACIADO = 90;
+    var ESPACIADO = 64;
     function armarNodos() {
       nodosConstelacion = [];
       var cols = Math.ceil(anchoConstelacion / ESPACIADO) + 1;
@@ -339,7 +337,7 @@
     var DIST_MAX_CONEXION = ESPACIADO * 1.35;
     var RESORTE = 18;
     var AMORTIGUACION = 0.82;
-    var BLANCO = '255, 255, 255';
+    var AZUL = '90, 130, 190'; // azul, más claro que var(--blue) para que se distinga del fondo oscuro de la portada
     var DORADO = '200, 169, 110'; // var(--gold), a mano: no se puede leer una variable CSS calculada desde acá sin costo extra por frame
 
     function dibujarFrame(ahora) {
@@ -382,7 +380,7 @@
           if (distCuad < distMaxCuad) {
             var distReal = Math.sqrt(distCuad);
             var alpha = (1 - distReal / DIST_MAX_CONEXION) * 0.12;
-            ctxConstelacion.strokeStyle = 'rgba(' + BLANCO + ', ' + alpha + ')';
+            ctxConstelacion.strokeStyle = 'rgba(' + AZUL + ', ' + alpha + ')';
             ctxConstelacion.lineWidth = 0.7;
             ctxConstelacion.beginPath();
             ctxConstelacion.moveTo(na.x, na.y);
@@ -399,7 +397,7 @@
         var cerca = Math.sqrt(pdx * pdx + pdy * pdy) < RADIO_MOUSE;
         var alphaBase = cerca ? 0.85 : 0.16 + Math.sin(pt.pulso) * 0.06;
         var radioActual = cerca ? pt.radio * 2 : pt.radio + Math.sin(pt.pulso) * 0.25;
-        ctxConstelacion.fillStyle = 'rgba(' + (cerca ? DORADO : BLANCO) + ', ' + alphaBase + ')';
+        ctxConstelacion.fillStyle = 'rgba(' + (cerca ? DORADO : AZUL) + ', ' + alphaBase + ')';
         ctxConstelacion.beginPath();
         ctxConstelacion.arc(pt.x, pt.y, Math.max(0.5, radioActual), 0, Math.PI * 2);
         ctxConstelacion.fill();
