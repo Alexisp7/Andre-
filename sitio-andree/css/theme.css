@@ -2010,16 +2010,16 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
     letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap;
     color: rgba(255, 255, 255, 0.45);
-    transition: color 0.3s ease, opacity 0.6s ease;
+    opacity: 0;
+    transition: color 0.3s ease, opacity 0.3s ease;
   }
-  /* Al dejar de hacer scroll un rato, las etiquetas de texto se
-     desvanecen y solo quedan los puntitos - vuelven a aparecer apenas
-     se vuelve a scrollear (ver sincronizarRielSecciones en nav-spa.js)
-     o si se pasa el mouse por encima. */
-  .riel-secciones--quieto .riel-etiqueta { opacity: 0; }
+  /* Los puntitos y la línea siguen el scroll como siempre (ver
+     --riel-progreso más abajo); el texto de las etiquetas, en cambio,
+     solo aparece con intención directa - al pasar el mouse por el
+     riel - y no solo por estar scrolleando. */
   .riel-secciones:hover .riel-etiqueta { opacity: 1; }
   @media (prefers-reduced-motion: reduce) {
-    .riel-secciones--quieto .riel-etiqueta { opacity: 1; }
+    .riel-etiqueta { opacity: 1; }
   }
   .riel-punto {
     width: 7px; height: 7px; border-radius: 50%; flex: none;
@@ -3113,19 +3113,9 @@ body:has(#listaNoticias) { background: var(--ink); color: var(--white); }
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video {
   position: fixed; inset: 0; bottom: auto; z-index: -3;
   filter: blur(18px);
-  animation: mk-fondo-noticias-entra 0.9s ease both;
 }
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
   position: fixed; z-index: -2;
-  animation: mk-fondo-noticias-entra 0.9s ease both;
-}
-@keyframes mk-fondo-noticias-entra {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video,
-  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay { animation: none; }
 }
 
 /* Oscuro con un resplandor difuminado detrás, como una continuación
@@ -5031,20 +5021,19 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
   #contactame .contacto-form { padding: 18px; border-radius: 18px; }
 }
 
-/* El velo del riel existe solo mientras sus nombres están visibles. */
+/* El velo del riel existe solo mientras sus nombres están visibles,
+   es decir, solo con el mouse encima (ver .riel-etiqueta más arriba). */
 @media (min-width: 901px) {
   .riel-secciones::after {
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.6s ease;
   }
 
-  .riel-secciones.riel-secciones--quieto::after { opacity: 0; }
-  .riel-secciones.riel-secciones--quieto:hover::after { opacity: 1; }
+  .riel-secciones:hover::after { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) and (min-width: 901px) {
-  .riel-secciones::after { transition: none; }
-  .riel-secciones.riel-secciones--quieto::after { opacity: 1; }
+  .riel-secciones::after { transition: none; opacity: 1; }
 }
 
 /* --------------------------------------------------------------------------
@@ -5576,26 +5565,6 @@ body:has(.syllabus-solo) .syllabus-solo > .section-header {
 body:has(.syllabus-solo) .syllabus-solo > .about-body {
   margin-bottom: 24px !important;
   color: #536777;
-}
-
-/* --------------------------------------------------------------------------
-   RIEL DE SECCIONES · aparece por intención, no por desplazamiento
-
-   En escritorio el riel conserva sus destinos y su foco de teclado, pero se
-   revela únicamente al acercar el cursor a su zona. El scroll ya no vuelve a
-   invadir la lectura con etiquetas, puntos ni velo. */
-@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
-  .riel-secciones {
-    opacity: 0;
-    transition: opacity 0.32s ease;
-  }
-
-  .riel-secciones:hover,
-  .riel-secciones:focus-within { opacity: 1; }
-}
-
-@media (min-width: 901px) and (prefers-reduced-motion: reduce) {
-  .riel-secciones { transition: none; }
 }
 
 /* --------------------------------------------------------------------------
