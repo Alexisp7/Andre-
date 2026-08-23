@@ -1926,6 +1926,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
     height: 100vh; height: 100dvh;
     display: flex; align-items: center; justify-content: center;
   }
+  /* Las insignias no necesitan quedar centradas verticalmente como el
+     resto de diapositivas: al ser más bajas que la pantalla, centrarlas
+     las dejaba con un aire vacío arriba. Se anclan arriba en su lugar. */
+  #formacion .slide-pin { align-items: flex-start; }
 
   /* El "despegue" de una diapositiva pegada (sticky), al final, SIEMPRE
      se come de recorrido extra exactamente la altura de lo que venga
@@ -2055,6 +2059,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   /* La foto entra desde la izquierda. */
   .slide-pin [data-dir="left"] {
     transform: translateX(calc((1 - var(--ease, 0)) * -90px)) !important;
+  }
+  /* La foto queda además ligeramente inclinada de forma permanente (no
+     solo durante la entrada); por eso esta regla, más específica que la
+     genérica de arriba, le suma el rotate al mismo translateX. */
+  .slide-pin .autor-retrato[data-dir="left"] {
+    transform: translateX(calc((1 - var(--ease, 0)) * -90px)) rotate(-3deg) !important;
   }
   /* Los datos de contacto suben desde abajo (igual que el default, pero
      explícito para que quede claro que es a propósito, no por omisión). */
@@ -2800,9 +2810,12 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   position: relative; overflow: hidden;
   background: var(--bg-off);
   aspect-ratio: 600 / 950;
+  transform: rotate(-3deg);
 }
 .autor-retrato img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .autor-retrato .corner-ornament { z-index: 2; }
+
+.autor-texto { max-width: 620px; }
 
 .autor-nombre {
   font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 600;
@@ -2916,51 +2929,31 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   .escudo img { height: 72px; }
 }
 
-/* ── Riel de escudos (desktop): carrusel 3D, no una tira plana - cada
-   escudo se ubica con rotateY()+translateZ() alrededor de un círculo
-   completo (--ri = su posición, --total = cuántos son, puestos por
-   cada <figure>/.riel-pista en el HTML) y toda la rueda gira despacio
-   sin parar. Con backface-visibility oculto, los que quedan "de
-   espaldas" (más de 90° del frente) desaparecen solos - así en todo
-   momento solo se ve el arco de enfrente, "medio circular" en vez de
-   la vuelta entera. Al pasar el mouse, la rueda entera se detiene y
-   el cuadrito activo se vuelve negro con bordes redondeados. */
+/* ── Riel de escudos (desktop): tira estática, sin carrusel - si no
+   caben todas las insignias en el ancho disponible, se deslizan con
+   el mouse/trackpad en vez de girar solas, y se difuminan en los
+   bordes en lugar de cortarse en seco. El cuadrito bajo el cursor se
+   vuelve negro con bordes redondeados. */
 .riel-escudos {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
-  /* Ver min-width en .riel-pista: sin él, esta caja termina angosta. */
-  perspective: 1400px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.riel-escudos::-webkit-scrollbar { display: none; }
 .riel-pista {
-  position: relative;
-  /* Los escudos van todos con position:absolute (para poder ubicarse
-     en el círculo con rotateY/translateZ), así que no aportan ancho
-     propio al flujo normal - y .slide-pin (ver theme.css, más
-     arriba) es un flex que centra en vez de estirar a su .section,
-     así que sin este min-width toda la cadena de contenedores se
-     encoge a casi nada en vez de llegar al max-width real de
-     .section (1280px). Con esto, vuelve a comportarse igual que
-     antes (cuando la pista angosta era, de hecho, mucho más ancha
-     que eso por su propio contenido en fila). Acotado con
-     calc(100vw - 72px) - los 36px de padding de .section a cada
-     lado - para que en pantallas angostas (justo arriba de los
-     901px del quiebre mobile) no pida más ancho del que en verdad
-     cabe y desborde la página. */
-  min-width: min(1280px, calc(100vw - 72px));
-  height: 250px;
-  transform-style: preserve-3d;
-  /* El giro (y la opacidad de cada escudo según qué tan de frente
-     está) los calcula un <script> cuadro a cuadro, junto al propio
-     HTML del riel más abajo - así puede leer el ángulo real de cada
-     uno en vez de solo poder distinguir visible/oculto. */
+  display: flex;
+  width: max-content;
+  gap: 16px;
 }
 
 .riel-escudo-item {
-  --mk-angulo: calc(var(--ri, 0) * (360deg / var(--total, 1)));
-  --mk-radio: 320px;
-  position: absolute; left: 50%; top: 50%;
+  flex: 0 0 auto;
+  position: relative;
   width: 200px; height: 200px;
-  margin-left: -100px; margin-top: -100px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 14px;
   padding: 22px 18px;
@@ -2968,9 +2961,6 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid var(--border);
   border-radius: 18px;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: rotateY(var(--mk-angulo)) translateZ(var(--mk-radio)) scale(1);
   z-index: 1;
   -webkit-backdrop-filter: url(#mk-glass-filter);
   backdrop-filter: url(#mk-glass-filter);
@@ -2984,7 +2974,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   background: #000;
   border-color: transparent;
   border-radius: 28px;
-  transform: rotateY(var(--mk-angulo)) translateZ(var(--mk-radio)) scale(1.12);
+  transform: scale(1.08);
   z-index: 2;
   box-shadow:
     inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.25),
@@ -3033,24 +3023,8 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 .riel-escudo-item:hover .riel-escudo-etiqueta { color: var(--white); }
 
-/* Con la rueda detenida (sin animación) solo se vería el arco de
-   enfrente - la mitad de los escudos, ocultos por backface-visibility,
-   quedarían invisibles para siempre. Con movimiento reducido se cae a
-   una grilla simple y estática en su lugar, con todos los escudos a
-   la vista de una. */
 @media (prefers-reduced-motion: reduce) {
-  .riel-pista {
-    animation: none;
-    position: static; height: auto; transform: none;
-    display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 16px;
-  }
-  .riel-escudo-item {
-    position: static; margin: 0;
-    transform: none !important;
-    backface-visibility: visible; -webkit-backface-visibility: visible;
-  }
-  .riel-escudo-item:hover { transform: scale(1.05) !important; }
+  .riel-escudo-item:hover { transform: none; }
   .riel-escudo-item, .riel-escudo-item img { transition: none; }
   .riel-escudo-item::before { animation: none; }
 }

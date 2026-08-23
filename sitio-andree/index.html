@@ -19,9 +19,6 @@
 <body>
 
   <nav class="hero-nav-flotante" id="heroNavFlotante" aria-label="Navegación de la portada">
-    <button type="button" class="hero-nav-boton" id="heroNavBoton" aria-label="Abrir menú" aria-expanded="false" aria-controls="heroNavLinks">
-      <span></span><span></span><span></span>
-    </button>
     <div class="hero-nav-links" id="heroNavLinks">
       <span class="hero-nav-mitad">
         <a href="index.html" class="active">Inicio</a>
@@ -140,61 +137,6 @@
     <span class="scroll-cue" aria-hidden="true"></span>
   </section>
 
-  <script>
-    (function () {
-      var heroNav = document.getElementById('heroNavFlotante');
-      var hero = document.getElementById('portada');
-      if (!heroNav || !hero) return;
-
-      /* El desvanecido del nav flotante con el scroll ahora vive en
-         js/nav-spa.js (queda conectado una sola vez, de forma global,
-         para que también funcione si el usuario entra al sitio por
-         otra página y navega a "Inicio" después). */
-
-      /* En celular el nav flotante se abre/cierra con el circulito: no
-         caben las 4 pestañas cómodas todo el tiempo ahí arriba. */
-      var heroNavBoton = document.getElementById('heroNavBoton');
-      var heroNavLinks = document.getElementById('heroNavLinks');
-      if (heroNavBoton && heroNav) {
-        heroNavBoton.addEventListener('click', function () {
-          var abierto = heroNav.classList.toggle('hero-nav-abierto');
-          heroNavBoton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
-          centrarBotonNav();
-        });
-        if (heroNavLinks) {
-          heroNavLinks.addEventListener('click', function (e) {
-            if (e.target.tagName === 'A') {
-              heroNav.classList.remove('hero-nav-abierto');
-              heroNavBoton.setAttribute('aria-expanded', 'false');
-              centrarBotonNav();
-            }
-          });
-        }
-      }
-
-      /* Cerrado, el botón queda exactamente centrado (CSS, left:50%).
-         Solo al abrirse se desliza al centro real del hueco entre las
-         dos mitades — que no es el 50% exacto de la pantalla porque
-         "Investigación·Noticias" pesa más que "Inicio·Cursos" y el
-         bloque centrado por CSS no cae parejo. Se mide el espaciador
-         central (que no tiene transform, a diferencia de las mitades)
-         para que el valor sea el correcto esté el menú abierto o no. */
-      var heroNavEspaciador = heroNavLinks ? heroNavLinks.querySelector('.hero-nav-espaciador') : null;
-      function centrarBotonNav() {
-        if (!heroNavEspaciador || !heroNavBoton || !heroNav) return;
-        if (!heroNav.classList.contains('hero-nav-abierto')) {
-          heroNavBoton.style.left = '';
-          return;
-        }
-        var flotanteLeft = heroNav.getBoundingClientRect().left;
-        var hueco = heroNavEspaciador.getBoundingClientRect();
-        heroNavBoton.style.left = ((hueco.left + hueco.right) / 2 - flotanteLeft) + 'px';
-      }
-      centrarBotonNav();
-      window.addEventListener('resize', centrarBotonNav);
-    })();
-  </script>
-
   <main id="spaMain">
 
   <div class="slide-wrap" id="tituloDwell" aria-hidden="true"></div>
@@ -297,63 +239,6 @@
             </figure>
           </div>
         </div>
-
-        <script>
-          (function () {
-            /* Gira la rueda de escudos por JS (en vez de una animación
-               CSS de transform) para poder calcular, cuadro a cuadro,
-               qué tan de frente está cada uno - los que están casi de
-               frente (parte delantera del círculo) quedan sólidos, y
-               los que se van hacia los costados/atrás se van
-               transparentando hasta desaparecer del todo a los 90°
-               (ahí es donde backface-visibility los oculta igual, por
-               si esto no llegara a correr). Va como <script> suelto
-               adentro de #formacion (no en nav-spa.js) porque
-               #spaMain se reemplaza entero en cada navegación por SPA
-               - así se re-ejecuta solo, con los elementos nuevos, cada
-               vez (ver ejecutarScripts en nav-spa.js). */
-            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            var pistas = document.querySelectorAll('#formacion .riel-pista');
-            var GRADOS_POR_MS = 360 / 24000; // misma velocidad que tenía la animación CSS (24s/vuelta)
-
-            pistas.forEach(function (pista) {
-              var envoltorio = pista.closest('.riel-escudos');
-              var items = Array.prototype.slice.call(pista.querySelectorAll('.riel-escudo-item'));
-              var total = items.length;
-              if (!total) return;
-              var paso = 360 / total;
-              var angulo = 0;
-              var pausado = false;
-              var itemFlotado = null;
-
-              envoltorio.addEventListener('mouseenter', function () { pausado = true; });
-              envoltorio.addEventListener('mouseleave', function () { pausado = false; });
-              items.forEach(function (it) {
-                it.addEventListener('mouseenter', function () { itemFlotado = it; });
-                it.addEventListener('mouseleave', function () { if (itemFlotado === it) itemFlotado = null; });
-              });
-
-              var ultimoCuadro = null;
-              function cuadro(t) {
-                if (!pista.isConnected) return; // el SPA ya reemplazó este contenido
-                if (ultimoCuadro === null) ultimoCuadro = t;
-                var dt = t - ultimoCuadro;
-                ultimoCuadro = t;
-                if (!pausado) angulo = (angulo + GRADOS_POR_MS * dt) % 360;
-                pista.style.transform = 'rotateY(' + angulo + 'deg)';
-                items.forEach(function (it, i) {
-                  if (it === itemFlotado) { it.style.opacity = '1'; return; }
-                  var relativo = ((i * paso + angulo) % 360 + 360) % 360;
-                  if (relativo > 180) relativo = 360 - relativo;
-                  var opacidad = Math.max(0, Math.cos(relativo * Math.PI / 180));
-                  it.style.opacity = String(opacidad);
-                });
-                requestAnimationFrame(cuadro);
-              }
-              requestAnimationFrame(cuadro);
-            });
-          })();
-        </script>
 
         <!-- Grilla simple para mobile: mismos escudos, sin duplicar ni
              animar (el riel entero queda oculto ahí, ver theme.css). -->
