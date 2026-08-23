@@ -265,7 +265,6 @@
           }
         }
         if (window.__sincronizarConstelacion) window.__sincronizarConstelacion();
-        if (esPortada && window.__iniciarAutoAvancePortada) window.__iniciarAutoAvancePortada();
 
         heroActual.innerHTML = nuevoHero.innerHTML;
         mainActual.innerHTML = nuevoMain.innerHTML;
@@ -686,39 +685,4 @@
     window.scrollTo({ top: el ? posicionDestinoRiel(el) : 0, behavior: 'smooth' });
   });
 
-  /* A los 5 segundos de llegar al título (recién aterrizado, sin haber
-     tocado el mouse/teclado/rueda todavía), baja solo hasta la
-     biografía — como pasar la primera diapositiva de una
-     presentación. Cualquier intento de scroll manual antes de esos 5
-     segundos cancela el auto-avance (el usuario ya está scrolleando
-     por su cuenta, forzar uno encima se sentiría roto). Solo en
-     escritorio (ahí vive el título fijo/las diapositivas) y nunca con
-     prefers-reduced-motion. Se llama tanto en la carga inicial como
-     desde navegar() cada vez que se entra a la portada por SPA — cada
-     aterrizaje es "la primera vez" de esa visita. */
-  function iniciarAutoAvancePortada() {
-    if (window.innerWidth < 901) return;
-    if (!heroSeccionGlobal || !heroSeccionGlobal.classList.contains('page-hero--portada')) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var temporizador = null;
-    function cancelar() {
-      if (temporizador) { clearTimeout(temporizador); temporizador = null; }
-      window.removeEventListener('wheel', cancelar);
-      window.removeEventListener('touchstart', cancelar);
-      window.removeEventListener('keydown', cancelar);
-    }
-    window.addEventListener('wheel', cancelar, { passive: true });
-    window.addEventListener('touchstart', cancelar, { passive: true });
-    window.addEventListener('keydown', cancelar);
-
-    temporizador = setTimeout(function () {
-      cancelar();
-      if (window.scrollY > 40) return; // ya se movió por otra vía (p.ej. #hash)
-      var sobre = document.getElementById('sobre');
-      if (sobre) window.scrollTo({ top: posicionDocumento(sobre), behavior: 'smooth' });
-    }, 5000);
-  }
-  window.__iniciarAutoAvancePortada = iniciarAutoAvancePortada;
-  iniciarAutoAvancePortada();
 })();
