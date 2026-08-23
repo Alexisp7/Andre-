@@ -3093,9 +3093,11 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 body:has(#listaNoticias) { background: var(--ink); color: var(--white); }
 
 /* El mismo video/velo fijo de fondo que la portada, detrás de TODA la
-   página de noticias (tarjetas incluidas) mientras se hace scroll —
-   pero siempre desenfocado, no nítido: acá el video es solo ambiente,
-   nunca protagonista, así que las tarjetas se siguen notando encima.
+   página de noticias (tarjetas incluidas) mientras se hace scroll, con
+   el mismo filtro que usa la portada en sus propias secciones (nada de
+   blur - eso apagaba demasiado el video, se veía como un bloque negro
+   plano) para que el video sea ambiente pero se note, y las tarjetas
+   se sigan notando encima gracias a su propio fondo.
    Sin recorrido de altura del que colgarse (a diferencia de la
    portada, esta franja no crece: sigue siendo la franja angosta de
    siempre), así que no hay transición de altura de la cual esperar el
@@ -3112,7 +3114,7 @@ body:has(#listaNoticias) { background: var(--ink); color: var(--white); }
    disimula igual con un fundido de opacidad por las dudas. */
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video {
   position: fixed; inset: 0; bottom: auto; z-index: -3;
-  filter: blur(18px);
+  filter: saturate(0.78) contrast(1.1) brightness(0.63);
 }
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
   position: fixed; z-index: -2;
@@ -5589,7 +5591,10 @@ body:has(#listaNoticias) .section:has(.noticias) {
 }
 
 body:has(#listaNoticias) .noticias {
-  background: transparent;
+  /* Mismo velo liviano que .about-body usa sobre el video en la
+     portada (rgba(1,7,13,0.16)) - deja leer las tarjetas sin volver a
+     tapar el video con un fondo casi opaco. */
+  background: rgba(1, 8, 14, 0.16);
   border-color: transparent;
   border-radius: 0;
   box-shadow: none;
