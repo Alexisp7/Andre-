@@ -3115,9 +3115,19 @@ body:has(#listaNoticias) { background: var(--ink); color: var(--white); }
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video {
   position: fixed; inset: 0; bottom: auto; z-index: -3;
   filter: saturate(0.78) contrast(1.1) brightness(0.63);
+  animation: mk-fondo-noticias-entra 0.9s ease both;
 }
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
   position: fixed; z-index: -2;
+  animation: mk-fondo-noticias-entra 0.9s ease both;
+}
+@keyframes mk-fondo-noticias-entra {
+  from { opacity: 0; transform: scale(1.045); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video,
+  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay { animation: none; }
 }
 
 /* Oscuro con un resplandor difuminado detrás, como una continuación
