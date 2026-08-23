@@ -4596,3 +4596,950 @@ textarea:focus-visible {
   .ref,
   .hero-nav-flotante a { transition: none; }
 }
+
+/* --------------------------------------------------------------------------
+   PORTADA CONTINUA · el video es el fondo de toda la experiencia de inicio */
+
+html:has(.page-hero--portada) { background: #02070c; }
+body:has(.page-hero--portada) { background: transparent; }
+
+/* El video no se desvanece al salir del título: acompaña la portada, la
+   trayectoria y la formación como fondo negro vivo, sin un plano azul encima. */
+.page-hero--portada.page-hero--fijo .page-hero-video {
+  position: fixed;
+  inset: 0;
+  bottom: auto;
+  z-index: -3;
+  opacity: 1 !important;
+  filter: saturate(0.78) contrast(1.1) brightness(0.63) !important;
+}
+
+.page-hero--portada.page-hero--fijo .page-hero-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  opacity: 1 !important;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(72, 186, 177, 0.08), transparent 34%),
+    linear-gradient(135deg, rgba(0, 6, 12, 0.3), rgba(0, 6, 12, 0.13) 50%, rgba(0, 6, 12, 0.42)) !important;
+}
+
+.page-hero--portada.page-hero--fijo .hero-constelacion { opacity: 1 !important; }
+
+/* Sin bloques azulados planos: el video queda reconocible entre diapositivas. */
+body:has(.page-hero--portada) #sobre,
+body:has(.page-hero--portada) #formacion,
+body:has(.page-hero--portada) #contactame.contacto-seccion {
+  background: rgba(1, 7, 13, 0.16) !important;
+}
+
+body:has(.page-hero--portada) #formacion .slide-pin,
+body:has(.page-hero--portada) #formacion .section { background: transparent !important; }
+
+/* Una única raya de firma bajo el título. */
+.page-hero--portada .hero-nombre-linea {
+  display: block;
+  width: min(300px, 42vw);
+}
+
+.page-hero--portada .hero-nombre-linea-seg {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(118, 222, 208, 0.16) 8%,
+    var(--blue-soft) 33%,
+    var(--gold-light) 50%,
+    var(--blue-soft) 67%,
+    rgba(118, 222, 208, 0.16) 92%,
+    transparent 100%);
+}
+
+/* --------------------------------------------------------------------------
+   FICHA DEL AUTOR · relieve 3D sobre el video */
+
+#sobre .autor-grid {
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(44px, 6vw, 92px);
+  align-items: center;
+  max-width: 1180px;
+  padding: clamp(26px, 4vw, 54px);
+  border-color: rgba(181, 235, 228, 0.2);
+  background:
+    radial-gradient(circle at 86% 11%, rgba(113, 220, 207, 0.08), transparent 19rem),
+    linear-gradient(124deg, rgba(2, 11, 18, 0.72), rgba(4, 23, 32, 0.43));
+  -webkit-backdrop-filter: blur(12px) saturate(112%);
+  backdrop-filter: blur(12px) saturate(112%);
+}
+
+/* Se eliminan los rótulos auxiliares tachados. */
+#sobre .autor-grid::before,
+#sobre .autor-nombre::before {
+  content: none;
+  display: none;
+}
+
+#sobre .autor-retrato {
+  width: min(100%, 370px);
+  margin-inline: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 26px;
+  background: transparent;
+  box-shadow: none;
+  perspective: 1200px;
+}
+
+#sobre .autor-foto-3d {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 0.69;
+  border: 1px solid rgba(217, 244, 240, 0.24);
+  border-radius: 22px;
+  background: #071522;
+  box-shadow:
+    18px 28px 0 -14px rgba(112, 217, 204, 0.11),
+    28px 42px 46px -30px rgba(0, 4, 12, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: perspective(1200px) rotateY(-8deg) rotateX(2deg) translateZ(0);
+  transform-origin: center;
+  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#sobre .autor-foto-3d::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.22), transparent 22%, transparent 66%, rgba(66, 204, 190, 0.15)),
+    linear-gradient(180deg, transparent 55%, rgba(2, 14, 26, 0.38));
+}
+
+#sobre .autor-foto-3d::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  right: 18px;
+  bottom: 18px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(213, 241, 238, 0.52);
+  border-radius: 50%;
+  background: rgba(8, 37, 52, 0.22);
+  box-shadow: 0 0 0 7px rgba(109, 219, 206, 0.08), 0 0 25px rgba(109, 219, 206, 0.18);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+#sobre .autor-foto-3d img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.92) contrast(1.06);
+  transform: scale(1.055);
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 650ms ease;
+}
+
+#sobre .autor-retrato:hover .autor-foto-3d {
+  box-shadow:
+    26px 36px 0 -18px rgba(112, 217, 204, 0.19),
+    38px 55px 62px -34px rgba(0, 4, 12, 0.96),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transform: perspective(1200px) rotateY(-2deg) rotateX(0deg) translate3d(-5px, -10px, 28px);
+}
+
+#sobre .autor-retrato:hover .autor-foto-3d img {
+  filter: saturate(1.04) contrast(1.03);
+  transform: scale(1.11);
+}
+
+#sobre .retrato-cortina {
+  z-index: 5;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #061522;
+}
+
+#sobre .autor-texto {
+  display: grid;
+  gap: 10px;
+  max-width: 720px;
+  padding: 0;
+}
+
+#sobre .autor-nombre {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--gold-light);
+  font-size: clamp(42px, 4.35vw, 70px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  text-shadow: 0 0 30px rgba(237, 211, 161, 0.13);
+}
+
+#sobre .about-body {
+  position: relative;
+  margin: 0;
+  padding: 18px 22px 18px 24px;
+  border: 1px solid rgba(220, 245, 242, 0.12);
+  border-left: 3px solid rgba(109, 219, 206, 0.65);
+  border-radius: 0 17px 17px 0;
+  background: linear-gradient(105deg, rgba(0, 7, 13, 0.29), rgba(0, 7, 13, 0.1));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  color: rgba(238, 247, 246, 0.84);
+  font-size: clamp(13px, 0.98vw, 15px);
+  line-height: 1.65;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  transition: border-color 350ms ease, background 350ms ease;
+}
+
+#sobre .about-body::before {
+  display: block;
+  margin: 0 0 8px;
+  color: rgba(230, 247, 244, 0.53);
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+#sobre .about-body:nth-of-type(1)::before { content: 'FORMACIÓN Y ESPECIALIDAD'; }
+#sobre .about-body:nth-of-type(2)::before { content: 'ESTANCIAS E INVESTIGACIÓN'; }
+#sobre .about-body:hover {
+  border-color: rgba(118, 224, 211, 0.3);
+  background: linear-gradient(105deg, rgba(0, 12, 20, 0.36), rgba(0, 7, 13, 0.13));
+  transform: none;
+}
+
+#sobre .autor-registros {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 3px 0 0;
+  padding: 13px 0 0;
+  border-top: 1px solid rgba(222, 245, 242, 0.16);
+}
+
+#sobre .autor-registros span {
+  display: inline-flex;
+  align-items: baseline;
+  flex-direction: row;
+  gap: 8px;
+  min-height: 0;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: rgba(219, 245, 241, 0.58);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  transition: none;
+}
+
+#sobre .autor-registros span:first-child { padding-left: 0; }
+#sobre .autor-registros span + span { border-left: 1px solid rgba(222, 245, 242, 0.2); }
+#sobre .autor-registros span:hover { background: transparent; transform: none; }
+#sobre .autor-registros strong { color: var(--gold-light); font-size: 12px; letter-spacing: 0.11em; }
+
+/* --------------------------------------------------------------------------
+   INSIGNIAS · blanco limpio y disposición fija sobre el video */
+
+#formacion .escudos-bloque {
+  width: min(1180px, calc(100% - 48px));
+  margin-inline: auto;
+  padding: clamp(20px, 2.5vw, 32px);
+  border: 1px solid rgba(220, 240, 255, 0.2);
+  border-radius: 28px;
+  background: rgba(0, 8, 15, 0.27);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 28px 64px -42px rgba(0, 7, 18, 0.72);
+  -webkit-backdrop-filter: blur(18px) saturate(118%);
+  backdrop-filter: blur(18px) saturate(118%);
+}
+
+#formacion .escudos-titulo { color: rgba(249, 253, 255, 0.96); text-shadow: 0 2px 18px rgba(0, 6, 16, 0.78); }
+#formacion .escudos-titulo::after { background: linear-gradient(90deg, rgba(236, 249, 255, 0.7), rgba(236, 249, 255, 0.1)); }
+#formacion .riel-escudos { background: transparent !important; border: 0 !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+#formacion .riel-escudos::before, #formacion .riel-escudos::after, #formacion .riel-escudo-item::before { display: none !important; }
+#formacion .riel-escudo-item,
+#formacion .escudo {
+  border: 1px solid #d8e6f0 !important;
+  background: #ffffff !important;
+  box-shadow: 0 15px 30px -25px rgba(0, 10, 22, 0.56), inset 0 1px 0 #ffffff !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  transition: border-color 220ms ease, box-shadow 220ms ease !important;
+}
+#formacion .riel-escudo-etiqueta, #formacion .escudo figcaption { color: #132c40 !important; text-shadow: none !important; }
+#formacion .riel-escudo-item:hover, #formacion .riel-escudo-item:focus-visible, #formacion .escudo:hover, #formacion .riel-escudo-item:hover img, #formacion .escudo:hover img { transform: none !important; }
+
+@media (min-width: 901px) {
+  #formacion .riel-escudos {
+    height: clamp(170px, 15.4vw, 194px);
+    overflow: visible;
+  }
+  #formacion .riel-pista {
+    display: grid !important;
+    width: 100%;
+    height: 100%;
+    gap: clamp(9px, 1.1vw, 15px);
+    animation: none !important;
+    transform: none !important;
+  }
+  #formacion .riel-pista[style*="--total:6"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  #formacion .riel-pista[style*="--total:4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #formacion .riel-escudo-item.riel-escudo-item--duplicado { display: none !important; }
+  #formacion .riel-escudo-item:not(.riel-escudo-item--duplicado) {
+    width: auto;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 14px 10px;
+    gap: 9px;
+    transform: none !important;
+  }
+  #formacion .riel-escudo-item img { height: clamp(48px, 4.8vw, 72px); max-width: 82%; transform: none !important; }
+  #formacion .riel-escudo-etiqueta { opacity: 1; transform: none; font-size: clamp(10px, 0.82vw, 12px); line-height: 1.25; }
+}
+
+/* La guía lateral se lee sobre su propio velo negro y nunca se funde con el texto. */
+@media (min-width: 901px) {
+  .riel-secciones { isolation: isolate; }
+  .riel-secciones::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    inset: -44px -34px -44px -184px;
+    border-radius: 96px 0 0 96px;
+    background: linear-gradient(90deg, rgba(0, 3, 10, 0) 0%, rgba(0, 3, 10, 0.14) 26%, rgba(0, 3, 10, 0.66) 70%, rgba(0, 3, 10, 0.88) 100%);
+    filter: blur(16px);
+  }
+  .riel-secciones .riel-etiqueta { text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9); }
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
+  #sobre .autor-grid { grid-template-columns: minmax(260px, 0.66fr) minmax(0, 1.34fr); gap: clamp(40px, 5vw, 68px); padding: 28px; }
+  #sobre .autor-retrato { width: min(100%, 292px); }
+  #sobre .autor-nombre { font-size: clamp(42px, 4.35vw, 64px); }
+  #sobre .about-body { padding: 16px 20px 16px 24px; font-size: 14px; line-height: 1.62; }
+}
+
+@media (max-width: 900px) {
+  #sobre .autor-grid { grid-template-columns: 1fr; gap: 32px; padding: 42px 24px 30px; }
+  #sobre .autor-retrato { width: min(82vw, 336px); }
+  #sobre .autor-nombre { font-size: clamp(40px, 10.5vw, 62px); }
+  #sobre .about-body { padding: 18px 19px 18px 22px; font-size: 14px; line-height: 1.68; }
+}
+
+@media (max-width: 520px) {
+  #sobre .autor-grid { padding-inline: 17px; }
+  #sobre .autor-registros { gap: 10px 0; padding-top: 12px; }
+  #sobre .autor-registros span { padding-inline: 11px; }
+  #sobre .autor-registros span:first-child { padding-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sobre .autor-foto-3d,
+  #sobre .autor-foto-3d img { transition: none; }
+  #sobre .autor-foto-3d,
+  #sobre .autor-retrato:hover .autor-foto-3d { transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   VIDEO DE PORTADA · cerebro anatómico únicamente detrás de “Neurona” */
+
+/* La película nueva cubre solo el primer lienzo. El video oscuro original
+   sigue intacto detrás de las diapositivas que vienen después. */
+.page-hero--portada .hero-title-video {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  background: #010508;
+  filter: saturate(0.86) contrast(1.08) brightness(0.72);
+}
+
+.page-hero--portada .hero-title-overlay {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 4, 9, 0.5), rgba(0, 4, 9, 0.12) 50%, rgba(0, 4, 9, 0.5)),
+    linear-gradient(180deg, rgba(0, 4, 9, 0.12), rgba(0, 4, 9, 0.38));
+}
+
+.page-hero--portada::before,
+.page-hero--portada .page-hero-inner::before {
+  display: none;
+}
+
+.page-hero--portada .page-hero-inner,
+.page-hero--portada .scroll-cue { z-index: 2; }
+
+/* --------------------------------------------------------------------------
+   CONTACTO · un único contenedor de vidrio oscuro, no campos blancos */
+
+#contactame .contacto-form {
+  position: relative;
+  padding: clamp(18px, 2.2vw, 30px);
+  border: 1px solid rgba(207, 239, 235, 0.18);
+  border-radius: 22px;
+  background: rgba(1, 8, 14, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 24px 55px -42px rgba(0, 0, 0, 0.92);
+  -webkit-backdrop-filter: blur(20px) saturate(118%);
+  backdrop-filter: blur(20px) saturate(118%);
+}
+
+#contactame .campo input,
+#contactame .campo textarea {
+  color: rgba(244, 250, 249, 0.94);
+  border: 1px solid rgba(207, 239, 235, 0.2);
+  border-radius: 11px;
+  background: rgba(3, 13, 21, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.075), 0 10px 28px -24px rgba(0, 0, 0, 0.9);
+  -webkit-backdrop-filter: blur(10px) saturate(112%);
+  backdrop-filter: blur(10px) saturate(112%);
+}
+
+#contactame .campo input::placeholder,
+#contactame .campo textarea::placeholder { color: rgba(232, 245, 243, 0.42); }
+
+#contactame .campo input:focus,
+#contactame .campo textarea:focus {
+  border-color: rgba(118, 222, 208, 0.82);
+  box-shadow: 0 0 0 4px rgba(104, 216, 204, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 680px) {
+  #contactame .contacto-form { padding: 18px; border-radius: 18px; }
+}
+
+/* El velo del riel existe solo mientras sus nombres están visibles. */
+@media (min-width: 901px) {
+  .riel-secciones::after {
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+
+  .riel-secciones.riel-secciones--quieto::after { opacity: 0; }
+  .riel-secciones.riel-secciones--quieto:hover::after { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 901px) {
+  .riel-secciones::after { transition: none; }
+  .riel-secciones.riel-secciones--quieto::after { opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   CONTACTO · segunda capa de vidrio que reúne toda la sección */
+
+#contactame .contacto-cuerpo {
+  position: relative;
+  align-items: stretch;
+  gap: clamp(32px, 4.2vw, 68px);
+  margin-top: 2px;
+  padding: clamp(24px, 3vw, 44px);
+  border: 1px solid rgba(207, 239, 235, 0.17);
+  border-radius: 28px;
+  background: linear-gradient(125deg, rgba(1, 8, 14, 0.34), rgba(1, 8, 14, 0.16));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 30px 64px -48px rgba(0, 0, 0, 0.95);
+  -webkit-backdrop-filter: blur(26px) saturate(115%);
+  backdrop-filter: blur(26px) saturate(115%);
+}
+
+#contactame .contacto-cuerpo::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 28%);
+}
+
+#contactame .contacto-datos,
+#contactame .contacto-form { position: relative; z-index: 1; }
+
+@media (max-width: 900px) {
+  #contactame .contacto-cuerpo {
+    gap: 30px;
+    padding: 24px;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  #contactame .contacto-cuerpo { padding: 18px; border-radius: 18px; }
+}
+
+/* Un poco más de presencia, manteniendo la proporción discreta del título. */
+.page-hero--portada .hero-nombre-linea { width: min(340px, 46vw); }
+
+/* --------------------------------------------------------------------------
+   CONTACTO · una única pieza de vidrio desde el título hasta el formulario */
+
+#contactame .contacto {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: clamp(20px, 2.6vw, 38px);
+  border: 1px solid rgba(207, 239, 235, 0.18);
+  border-radius: 30px;
+  background: linear-gradient(125deg, rgba(1, 8, 14, 0.38), rgba(1, 8, 14, 0.18));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 34px 70px -50px rgba(0, 0, 0, 0.96);
+  -webkit-backdrop-filter: blur(28px) saturate(115%);
+  backdrop-filter: blur(28px) saturate(115%);
+}
+
+#contactame .contacto-cabecera {
+  padding: 0 0 clamp(17px, 2vw, 25px);
+  margin: 0 0 clamp(20px, 2.4vw, 32px);
+  border-bottom: 1px solid rgba(207, 239, 235, 0.13);
+}
+
+/* El primer blur se absorbe en el marco exterior: quedan el marco completo
+   y el panel del formulario, sin un hueco visual entre el título y los datos. */
+#contactame .contacto-cuerpo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+#contactame .contacto-cuerpo::before { content: none; }
+
+@media (max-width: 900px) {
+  #contactame .contacto {
+    padding: 22px;
+    border-radius: 24px;
+  }
+  #contactame .contacto-cabecera { margin-bottom: 24px; }
+}
+
+@media (max-width: 520px) {
+  #contactame .contacto { padding: 18px; border-radius: 19px; }
+}
+
+/* Menos tamaño y sin división automática de palabras: la lectura queda más
+   limpia dentro de los dos textos profesionales. */
+#sobre .about-body {
+  padding: 16px 20px 16px 22px;
+  font-size: clamp(12.5px, 0.9vw, 14px);
+  line-height: 1.6;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  #sobre .about-body {
+    padding: 16px 18px 16px 21px;
+    font-size: 13.5px;
+    line-height: 1.64;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MENÚ DE PORTADA · cristal líquido, amplio y discreto
+
+   Toma la cualidad translúcida de la referencia sin convertir la barra en un
+   botón metálico. Conserva las medidas y la lectura editorial de la versión
+   actual; solo cambia la materia: vidrio oscuro, reflejo interno y profundidad
+   suave sobre el vídeo. */
+
+.hero-nav-flotante {
+  isolation: isolate;
+  border-color: rgba(221, 245, 242, 0.25);
+  background:
+    linear-gradient(118deg,
+      rgba(3, 15, 24, 0.32) 0%,
+      rgba(10, 37, 48, 0.16) 47%,
+      rgba(2, 12, 20, 0.28) 100%);
+  box-shadow:
+    0 18px 46px rgba(0, 3, 9, 0.38),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.24),
+    inset 12px 10px 22px rgba(235, 255, 252, 0.025),
+    inset -15px -11px 24px rgba(0, 0, 0, 0.24);
+  -webkit-backdrop-filter: blur(25px) saturate(145%) contrast(1.06);
+  backdrop-filter: blur(25px) saturate(145%) contrast(1.06);
+}
+
+/* Reflejo contenido, como una capa de vidrio que captura apenas la luz. */
+.hero-nav-flotante::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  inset: 1px;
+  border-radius: inherit;
+  background:
+    linear-gradient(111deg,
+      rgba(255, 255, 255, 0.13) 0%,
+      rgba(225, 255, 251, 0.055) 17%,
+      rgba(255, 255, 255, 0.012) 34%,
+      transparent 55%);
+  opacity: 0.78;
+}
+
+.hero-nav-flotante::before,
+.hero-nav-flotante .hero-nav-links {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-nav-flotante::before {
+  border-color: rgba(239, 213, 154, 0.55);
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 247, 218, 0.12), transparent 35%),
+    rgba(4, 18, 27, 0.16);
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.18),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.3),
+    0 5px 14px rgba(0, 0, 0, 0.22),
+    0 0 16px rgba(235, 207, 145, 0.1);
+}
+
+.hero-nav-flotante a {
+  border: 1px solid transparent;
+  color: rgba(247, 252, 251, 0.78);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.32);
+  transition:
+    color 240ms ease,
+    background-color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    transform 240ms ease;
+}
+
+.hero-nav-flotante a:hover,
+.hero-nav-flotante a:focus-visible,
+.hero-nav-flotante a.active {
+  border-color: rgba(225, 246, 243, 0.13);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035));
+  box-shadow:
+    0 5px 13px rgba(0, 0, 0, 0.18),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.12),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.hero-nav-flotante .hero-nav-sep {
+  color: rgba(213, 239, 235, 0.34);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.44);
+}
+
+.hero-nav-flotante .nav-submenu {
+  border-color: rgba(220, 246, 243, 0.18);
+  border-top-color: rgba(239, 213, 154, 0.62);
+  background: rgba(2, 13, 21, 0.62);
+  box-shadow:
+    0 20px 42px rgba(0, 2, 7, 0.46),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
+  backdrop-filter: blur(26px) saturate(145%);
+}
+
+.hero-nav-flotante .nav-submenu a:hover,
+.hero-nav-flotante .nav-submenu a:focus-visible {
+  transform: none;
+  background: rgba(255, 255, 255, 0.075);
+}
+
+@media (max-width: 900px) {
+  .hero-nav-flotante {
+    border-color: rgba(221, 245, 242, 0.22);
+    box-shadow:
+      0 12px 30px rgba(0, 3, 9, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.22);
+    -webkit-backdrop-filter: blur(20px) saturate(138%);
+    backdrop-filter: blur(20px) saturate(138%);
+  }
+
+  .hero-nav-flotante a:hover,
+  .hero-nav-flotante a:focus-visible,
+  .hero-nav-flotante a.active { transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   CONTACTO · título integrado y datos mejor equilibrados
+
+   “Contacto” funciona como el único título de la pieza. Se elimina el filete
+   que lo aislaba del contenido y se aprovecha el aire lateral para alinear el
+   nombre, correo y perfiles con el centro del formulario. */
+
+#contactame .contacto-cabecera {
+  padding: 0;
+  margin: 0;
+  border-bottom: 0;
+  cursor: default;
+}
+
+#contactame .contacto-cabecera:hover .contacto-titulo { color: #f7f9f7; }
+
+#contactame .contacto-cuerpo {
+  margin-top: clamp(30px, 3.2vw, 48px);
+}
+
+@media (min-width: 901px) {
+  #contactame .contacto-datos {
+    align-self: center;
+    position: relative;
+    top: clamp(-44px, -3.3vw, -22px);
+  }
+}
+
+@media (max-width: 900px) {
+  #contactame .contacto-cuerpo { margin-top: 26px; }
+  #contactame .contacto-datos { align-self: auto; top: auto; }
+}
+
+/* --------------------------------------------------------------------------
+   PORTADA · navegación más limpia y atribución del material anatómico */
+
+/* La marca ya no compite con el título central: el menú queda preciso y
+   perfectamente centrado sobre el video. */
+.hero-nav-flotante::before { content: none; display: none; }
+
+@media (min-width: 901px) {
+  .hero-nav-flotante {
+    width: min(820px, calc(100% - 40px));
+    padding-inline: 22px;
+    justify-content: center;
+  }
+}
+
+/* Cuando el borde inferior de una franja alcanza esta barra, nav-spa.js
+   alimenta estas dos variables. La curva se calcula en JS para que la salida
+   siga exactamente el borde real, no una distancia fija de scroll. */
+.hero-nav-flotante {
+  --nav-opacidad: 1;
+  --nav-desenfoque: 0px;
+  opacity: var(--nav-opacidad);
+  filter: blur(var(--nav-desenfoque));
+  will-change: opacity, filter;
+  transition:
+    opacity 160ms linear,
+    filter 210ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-nav-flotante {
+    filter: none;
+    transition: none;
+  }
+}
+
+/* La raya funciona como una firma del título, no como una segunda franja. */
+.page-hero--portada .library-hero-name { gap: 7px; }
+.page-hero--portada .hero-nombre-linea { margin-top: 0; }
+
+/* Crédito discreto, situado dentro de la propia capa del video. */
+.hero-video-credit {
+  position: absolute;
+  z-index: 3;
+  right: clamp(22px, 3.2vw, 58px);
+  bottom: clamp(24px, 3vw, 46px);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 9px 11px 9px 12px;
+  border-left: 1px solid rgba(235, 210, 151, 0.72);
+  border-radius: 0 10px 10px 0;
+  background: linear-gradient(90deg, rgba(1, 8, 14, 0.28), rgba(1, 8, 14, 0.04));
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.86);
+  color: rgba(234, 244, 242, 0.58);
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-decoration: none;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: color 220ms ease, background 220ms ease, border-color 220ms ease;
+}
+
+.hero-video-credit strong {
+  color: rgba(251, 247, 232, 0.85);
+  font-weight: 700;
+  letter-spacing: 0.055em;
+}
+
+.hero-video-credit:hover,
+.hero-video-credit:focus-visible {
+  border-left-color: var(--gold-light);
+  background: linear-gradient(90deg, rgba(2, 12, 20, 0.48), rgba(2, 12, 20, 0.15));
+  color: rgba(244, 251, 249, 0.82);
+}
+
+.hero-video-credit:focus-visible { outline-offset: 4px; }
+
+@media (max-width: 900px) {
+  .hero-video-credit {
+    right: 16px;
+    bottom: 20px;
+    gap: 5px;
+    padding: 7px 8px 7px 9px;
+    font-size: 7px;
+    letter-spacing: 0.045em;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CONTACTO · composición compacta y centrada
+
+   El título pasa a la columna de los datos: comienza a la misma altura que
+   el formulario y deja de crear una banda superior vacía. Al compactar los
+   campos, la pieza de vidrio recupera una proporción más elegante y se
+   centra naturalmente dentro de la diapositiva. */
+
+#contactame .contacto {
+  width: min(100%, 1180px);
+  margin-inline: auto;
+  padding:
+    clamp(54px, 5vw, 76px)
+    clamp(28px, 3vw, 42px)
+    clamp(28px, 3vw, 40px);
+}
+
+#contactame .contacto-cuerpo {
+  align-items: start;
+  gap: clamp(42px, 4.5vw, 64px);
+  margin-top: 0;
+}
+
+#contactame .contacto-datos {
+  align-self: start;
+  position: relative;
+  top: auto;
+}
+
+#contactame .contacto-cabecera {
+  margin: 0 0 clamp(34px, 3.4vw, 48px);
+  padding: 0;
+}
+
+#contactame .contacto-form {
+  padding: clamp(18px, 1.8vw, 24px);
+  gap: 11px;
+}
+
+#contactame .campo { gap: 5px; }
+
+#contactame .campo input,
+#contactame .campo textarea {
+  padding: 10px 13px;
+  font-size: 13px;
+}
+
+#contactame .campo textarea {
+  height: 110px;
+  min-height: 110px;
+  line-height: 1.55;
+}
+
+#contactame .btn-enviar {
+  margin-top: 3px;
+  padding: 12px 28px;
+}
+
+@media (max-width: 900px) {
+  #contactame .contacto {
+    width: 100%;
+    padding: 30px 22px 26px;
+  }
+
+  #contactame .contacto-cuerpo { gap: 32px; }
+  #contactame .contacto-cabecera { margin-bottom: 26px; }
+  #contactame .campo textarea { height: 126px; min-height: 126px; }
+}
+
+/* --------------------------------------------------------------------------
+   CURSOS · video continuo y vitrina gris translúcida
+
+   La cabecera conserva su velo azul; solo el área que antes era blanca se
+   vuelve transparente para que el mismo video continúe detrás del catálogo.
+   El contenedor de ambos cursos actúa como una pieza de vidrio gris, mientras
+   las tarjetas individuales conservan la lectura clara que ya funcionaba. */
+
+html:has(.cursos-coverflow) { background: #02080e; }
+
+body:has(.cursos-coverflow) { background: transparent; }
+
+body:has(.cursos-coverflow) .page-hero {
+  background: transparent;
+  border-bottom-color: rgba(120, 217, 207, 0.48);
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
+    0 1px 18px rgba(35, 175, 167, 0.11);
+}
+
+/* El video se libera solo en Cursos: arriba recibe el velo azul existente;
+   debajo se ve completo, sin una segunda capa plana que lo oculte. */
+body:has(.cursos-coverflow) .page-hero-video {
+  position: fixed;
+  inset: 0;
+  bottom: auto;
+  z-index: -3;
+  filter: saturate(0.78) contrast(1.08) brightness(0.64);
+}
+
+/* Se elimina exclusivamente la retícula pálida que acompañaba al fondo blanco. */
+body:has(.cursos-coverflow) #spaMain::before { content: none; }
+
+body:has(.cursos-coverflow) .cursos-coverflow {
+  border-color: rgba(231, 239, 238, 0.25);
+  background: linear-gradient(
+    135deg,
+    rgba(154, 160, 163, 0.44) 0%,
+    rgba(73, 82, 88, 0.38) 52%,
+    rgba(35, 45, 52, 0.36) 100%
+  );
+  box-shadow:
+    0 30px 76px -46px rgba(0, 3, 8, 0.78),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22);
+  -webkit-backdrop-filter: blur(22px) saturate(92%);
+  backdrop-filter: blur(22px) saturate(92%);
+}
+
+@media (max-width: 900px) {
+  body:has(.cursos-coverflow) .cursos-coverflow {
+    -webkit-backdrop-filter: blur(15px) saturate(92%);
+    backdrop-filter: blur(15px) saturate(92%);
+  }
+}
+
+/* CONTACTO · el bloque de datos se acerca al título sin mover el formulario. */
+#contactame .contacto-cabecera {
+  margin-bottom: clamp(16px, 1.7vw, 24px);
+}
+
+@media (max-width: 900px) {
+  #contactame .contacto-cabecera { margin-bottom: 16px; }
+}
