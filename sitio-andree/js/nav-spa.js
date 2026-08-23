@@ -265,7 +265,6 @@
           }
         }
         if (window.__sincronizarConstelacion) window.__sincronizarConstelacion();
-        if (esPortada && window.__iniciarAutoAvancePortada) window.__iniciarAutoAvancePortada();
 
         heroActual.innerHTML = nuevoHero.innerHTML;
         mainActual.innerHTML = nuevoMain.innerHTML;
@@ -313,9 +312,9 @@
     navegar(url, false);
   });
 
-  /* El nav flotante se desvanece con el scroll SOLO mientras la franja
-     de arriba está en modo portada (pantalla completa) — en las demás
-     páginas, angostas, se queda siempre visible. Esto vive acá (y no
+  /* El nav flotante se desvanece con el scroll. En portada acompaña el
+     recorrido del título; en las páginas internas comienza a borrarse
+     justo cuando el borde inferior de la franja alcanza la barra. Esto vive acá (y no
      en un <script> propio de index.html) porque la sección .page-hero
      es persistente entre navegaciones SPA: si el usuario entra al
      sitio por cualquier página que no sea index.html y luego navega a
@@ -329,11 +328,30 @@
     var desvaneciendo = false;
     var tiempoQuietoRiel = null;
     var prefiereReducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function limitar01(valor) {
+      return Math.min(1, Math.max(0, valor));
+    }
+    function curvaSuave(valor) {
+      valor = limitar01(valor);
+      return valor * valor * (3 - 2 * valor);
+    }
+    function aplicarSalidaNav(progreso) {
+      var suave = prefiereReducido ? (progreso >= 0.9 ? 1 : 0) : curvaSuave(progreso);
+      heroNavGlobal.style.setProperty('--nav-opacidad', (1 - suave).toFixed(3));
+      heroNavGlobal.style.setProperty('--nav-desenfoque', (suave * 14).toFixed(2) + 'px');
+      heroNavGlobal.style.pointerEvents = suave > 0.84 ? 'none' : 'auto';
+    }
     function actualizarDesvanecido() {
       desvaneciendo = false;
       if (!heroSeccionGlobal.classList.contains('page-hero--portada')) {
-        heroNavGlobal.style.opacity = '';
-        heroNavGlobal.style.pointerEvents = '';
+        /* La salida se mide desde el filete inferior de la franja: al tocar
+           el borde inferior del menú, el progreso es 0; durante el siguiente
+           tramo de unos 100 px se va velando y desenfocando sin saltos. */
+        var rectNav = heroNavGlobal.getBoundingClientRect();
+        var rectHero = heroSeccionGlobal.getBoundingClientRect();
+        var recorridoInterno = Math.max(104, rectNav.height * 1.75);
+        var progresoInterno = limitar01((rectNav.bottom - rectHero.bottom) / recorridoInterno);
+        aplicarSalidaNav(progresoInterno);
         heroSeccionGlobal.style.removeProperty('--progreso-salida');
         heroSeccionGlobal.style.removeProperty('--blur-fondo');
         return;
@@ -352,9 +370,8 @@
       var alto = esEscritorio
         ? Math.max(1, heroSeccionGlobal.offsetHeight + (tituloDwellEl ? tituloDwellEl.offsetHeight : 0))
         : (heroSeccionGlobal.offsetHeight || 1);
-      var progreso = Math.min(1, Math.max(0, window.scrollY / alto));
-      heroNavGlobal.style.opacity = String(1 - progreso);
-      heroNavGlobal.style.pointerEvents = progreso > 0.85 ? 'none' : 'auto';
+      var progreso = limitar01(window.scrollY / alto);
+      aplicarSalidaNav(progreso);
       /* Mismo progreso (0 a 1, ya medido para desvanecer el nav) para que
          el título de la portada se vaya desvaneciendo/desenfocando a
          medida que se hace scroll, con un ligero zoom del vídeo de
@@ -417,7 +434,7 @@
       for (var i = 0; i < items.length; i++) {
         var destino = items[i].getAttribute('data-riel-ir');
         var el = destino === 'titulo' ? null : document.getElementById(destino);
-        var inicio = el ? el.offsetTop : 0;
+        var inicio = el ? posicionDocumento(el) : 0;
         if (window.scrollY >= inicio - 2) activo = i;
       }
       for (var j = 0; j < items.length; j++) {
@@ -635,6 +652,25 @@
     sincronizarConstelacion();
   }
 
+  /* Devuelve la coordenada real del documento. offsetTop no sirve para
+     las diapositivas porque #spaMain es un ancestro posicionado: ahí
+     medía desde el main y hacía que “A. Salvatierra” aterrizara antes
+     de su propia sección. */
+  function posicionDocumento(el) {
+    return Math.round(window.scrollY + el.getBoundingClientRect().top);
+  }
+
+  /* En escritorio cada sección es una diapositiva sticky con un tramo de
+     entrada. El riel llega al punto en que toda su información ya está
+     visible, no al comienzo vacío de esa animación. */
+  function posicionDestinoRiel(el) {
+    var inicio = posicionDocumento(el);
+    if (window.innerWidth < 901 || !el.classList.contains('slide-wrap')) return inicio;
+
+    var recorrido = Math.max(0, el.offsetHeight - window.innerHeight);
+    return Math.round(inicio + recorrido * 0.8);
+  }
+
   /* Clic en el riel de secciones: scroll suave a la diapositiva
      elegida (a "título" es scroll a 0). Delegado en document (no en
      #rielSecciones directamente) porque ese elemento vive dentro de
@@ -646,42 +682,7 @@
     e.preventDefault();
     var destino = item.getAttribute('data-riel-ir');
     var el = destino === 'titulo' ? null : document.getElementById(destino);
-    window.scrollTo({ top: el ? el.offsetTop : 0, behavior: 'smooth' });
+    window.scrollTo({ top: el ? posicionDestinoRiel(el) : 0, behavior: 'smooth' });
   });
 
-  /* A los 5 segundos de llegar al título (recién aterrizado, sin haber
-     tocado el mouse/teclado/rueda todavía), baja solo hasta la
-     biografía — como pasar la primera diapositiva de una
-     presentación. Cualquier intento de scroll manual antes de esos 5
-     segundos cancela el auto-avance (el usuario ya está scrolleando
-     por su cuenta, forzar uno encima se sentiría roto). Solo en
-     escritorio (ahí vive el título fijo/las diapositivas) y nunca con
-     prefers-reduced-motion. Se llama tanto en la carga inicial como
-     desde navegar() cada vez que se entra a la portada por SPA — cada
-     aterrizaje es "la primera vez" de esa visita. */
-  function iniciarAutoAvancePortada() {
-    if (window.innerWidth < 901) return;
-    if (!heroSeccionGlobal || !heroSeccionGlobal.classList.contains('page-hero--portada')) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var temporizador = null;
-    function cancelar() {
-      if (temporizador) { clearTimeout(temporizador); temporizador = null; }
-      window.removeEventListener('wheel', cancelar);
-      window.removeEventListener('touchstart', cancelar);
-      window.removeEventListener('keydown', cancelar);
-    }
-    window.addEventListener('wheel', cancelar, { passive: true });
-    window.addEventListener('touchstart', cancelar, { passive: true });
-    window.addEventListener('keydown', cancelar);
-
-    temporizador = setTimeout(function () {
-      cancelar();
-      if (window.scrollY > 40) return; // ya se movió por otra vía (p.ej. #hash)
-      var sobre = document.getElementById('sobre');
-      if (sobre) window.scrollTo({ top: sobre.offsetTop, behavior: 'smooth' });
-    }, 5000);
-  }
-  window.__iniciarAutoAvancePortada = iniciarAutoAvancePortada;
-  iniciarAutoAvancePortada();
 })();
