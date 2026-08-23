@@ -19,6 +19,9 @@
 <body>
 
   <nav class="hero-nav-flotante" id="heroNavFlotante" aria-label="Navegación de la portada">
+    <button type="button" class="hero-nav-boton" id="heroNavBoton" aria-label="Abrir menú" aria-expanded="false" aria-controls="heroNavLinks">
+      <span></span><span></span><span></span>
+    </button>
     <div class="hero-nav-links" id="heroNavLinks">
       <span class="hero-nav-mitad">
         <a href="index.html" class="active">Inicio</a>
@@ -478,5 +481,50 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var heroNav = document.getElementById('heroNavFlotante');
+      var heroNavBoton = document.getElementById('heroNavBoton');
+      var heroNavLinks = document.getElementById('heroNavLinks');
+      if (!heroNav || !heroNavBoton) return;
+
+      heroNavBoton.addEventListener('click', function () {
+        var abierto = heroNav.classList.toggle('hero-nav-abierto');
+        heroNavBoton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+        centrarBotonNav();
+      });
+      if (heroNavLinks) {
+        heroNavLinks.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            heroNav.classList.remove('hero-nav-abierto');
+            heroNavBoton.setAttribute('aria-expanded', 'false');
+            centrarBotonNav();
+          }
+        });
+      }
+
+      /* Cerrado, el botón queda exactamente centrado (CSS, left:50%).
+         Solo al abrirse se desliza al centro real del hueco entre las
+         dos mitades — que no es el 50% exacto de la pantalla porque
+         "Investigación·Noticias" pesa más que "Inicio·Cursos" y el
+         bloque centrado por CSS no cae parejo. Se mide el espaciador
+         central (que no tiene transform, a diferencia de las mitades)
+         para que el valor sea el correcto esté el menú abierto o no. */
+      var heroNavEspaciador = heroNavLinks ? heroNavLinks.querySelector('.hero-nav-espaciador') : null;
+      function centrarBotonNav() {
+        if (!heroNavEspaciador || !heroNavBoton || !heroNav) return;
+        if (!heroNav.classList.contains('hero-nav-abierto')) {
+          heroNavBoton.style.left = '';
+          return;
+        }
+        var flotanteLeft = heroNav.getBoundingClientRect().left;
+        var hueco = heroNavEspaciador.getBoundingClientRect();
+        heroNavBoton.style.left = ((hueco.left + hueco.right) / 2 - flotanteLeft) + 'px';
+      }
+      centrarBotonNav();
+      window.addEventListener('resize', centrarBotonNav);
+    })();
+  </script>
 </body>
 </html>
