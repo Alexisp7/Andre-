@@ -2960,11 +2960,11 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 }
 .riel-escudos::before {
   left: 0;
-  background: linear-gradient(90deg, rgba(20, 35, 61, 0.9), rgba(20, 35, 61, 0));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--blue) 90%, transparent), transparent);
 }
 .riel-escudos::after {
   right: 0;
-  background: linear-gradient(270deg, rgba(20, 35, 61, 0.9), rgba(20, 35, 61, 0));
+  background: linear-gradient(270deg, color-mix(in srgb, var(--blue) 90%, transparent), transparent);
 }
 .riel-pista {
   display: flex;
