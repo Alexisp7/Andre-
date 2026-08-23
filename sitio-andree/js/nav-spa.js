@@ -343,6 +343,17 @@
       heroNavGlobal.style.setProperty('--nav-opacidad', (1 - suave).toFixed(3));
       heroNavGlobal.style.setProperty('--nav-desenfoque', (suave * 14).toFixed(2) + 'px');
       heroNavGlobal.style.pointerEvents = suave > 0.84 ? 'none' : 'auto';
+
+      /* En Noticias, el título se retira con exactamente la misma curva
+         que el menú al alcanzar el borde de la franja: sin un segundo
+         listener ni una animación distinta que pueda desfasarse. */
+      if (heroSeccionGlobal.classList.contains('pagina-noticias--fijo')) {
+        heroSeccionGlobal.style.setProperty('--noticias-titulo-opacidad', (1 - suave).toFixed(3));
+        heroSeccionGlobal.style.setProperty('--noticias-titulo-desenfoque', (suave * 14).toFixed(2) + 'px');
+      } else {
+        heroSeccionGlobal.style.removeProperty('--noticias-titulo-opacidad');
+        heroSeccionGlobal.style.removeProperty('--noticias-titulo-desenfoque');
+      }
     }
     function actualizarDesvanecido() {
       desvaneciendo = false;
