@@ -2073,10 +2073,10 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   .slide-pin [data-dir="right"] {
     transform: translateX(calc((1 - var(--ease, 0)) * 90px)) !important;
   }
-  /* La cortina de la foto también se liga al progreso local en vez de
-     a .is-visible, para que sea igual de reversible que todo lo demás. */
+  /* La cortina que barría hacia abajo para revelar la foto se quita: la
+     foto aparece completa desde el inicio, sin ese efecto. */
   .slide-pin .autor-retrato[data-reveal] .retrato-cortina {
-    transform: scaleY(calc(1 - var(--ease, 0))) !important;
+    transform: scaleY(0) !important;
     transition: none !important;
   }
 
@@ -2261,7 +2261,7 @@ body:has(.page-hero--portada) { background: transparent; }
    importar que "Investigación" sea mucho más larga que "Inicio". */
 @media (max-width: 900px) {
   .hero-nav-flotante {
-    padding: 6px 16px; min-height: 44px;
+    padding: 6px 10px; min-height: 44px;
   }
   /* El botón queda centrado y fijo (no forma parte del flujo del
      grid), para que las pestañas se abran a sus dos costados en vez de
@@ -2307,33 +2307,24 @@ body:has(.page-hero--portada) { background: transparent; }
      exacto a la mitad de la pantalla, así que el botón se reposiciona
      por JS (index.html) al centro real del hueco entre las dos
      mitades. */
+  /* Las 4 secciones van siempre visibles en una sola fila, sin botón
+     ni estado abierto/cerrado que tocar primero. */
+  .hero-nav-boton { display: none; }
   .hero-nav-links {
     display: grid;
-    /* Fuera del flujo (como el botón): así, cerrado, no infla el alto
-       de la barra — solo el botón la define. */
-    position: absolute; left: 16px; right: 16px; top: 50%;
-    transform: translateY(-50%);
+    position: static;
+    transform: none;
     align-items: center;
     justify-content: center;
     grid-template-columns: max-content auto max-content;
     column-gap: 5px;
-    opacity: 0; visibility: hidden; pointer-events: none;
-    transition: opacity 0.2s ease, visibility 0.32s;
-  }
-  .hero-nav-flotante.hero-nav-abierto .hero-nav-links {
     opacity: 1; visibility: visible; pointer-events: auto;
   }
   .hero-nav-mitad {
     display: flex; align-items: center; gap: 5px; min-width: 0;
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  /* Cerrado, las dos mitades quedan recogidas debajo del botón; al
-     abrir, se deslizan hacia sus costados como si salieran de la X. */
-  .hero-nav-links .hero-nav-mitad:first-child { transform: translateX(52px); }
-  .hero-nav-links .hero-nav-mitad:last-child { transform: translateX(-52px); }
-  .hero-nav-flotante.hero-nav-abierto .hero-nav-mitad { transform: translateX(0); }
-  .hero-nav-espaciador { display: block; width: 30px; }
-  .hero-nav-flotante a { font-size: 9px; letter-spacing: 0.11em; padding: 6px 6px; }
+  .hero-nav-espaciador { display: block; width: 6px; }
+  .hero-nav-flotante a { font-size: 8px; letter-spacing: 0.04em; padding: 6px 3px; }
   .hero-nav-flotante .hero-nav-sep { font-size: 14px; }
   /* Ya no hace falta el separador de quiebre: el espaciador central lo
      reemplaza. Se oculta (sigue contando como el 3er separador de la
@@ -5494,17 +5485,11 @@ body:has(.cursos-coverflow) .page-hero-video {
 body:has(.cursos-coverflow) #spaMain::before { content: none; }
 
 body:has(.cursos-coverflow) .cursos-coverflow {
-  border-color: rgba(231, 239, 238, 0.25);
-  background: linear-gradient(
-    135deg,
-    rgba(154, 160, 163, 0.44) 0%,
-    rgba(73, 82, 88, 0.38) 52%,
-    rgba(35, 45, 52, 0.36) 100%
-  );
+  border-color: rgba(20, 35, 61, 0.1);
+  background: rgba(255, 255, 255, 0.82);
   box-shadow:
-    0 30px 76px -46px rgba(0, 3, 8, 0.78),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.22);
+    0 30px 76px -46px rgba(0, 3, 8, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   -webkit-backdrop-filter: blur(22px) saturate(92%);
   backdrop-filter: blur(22px) saturate(92%);
 }
