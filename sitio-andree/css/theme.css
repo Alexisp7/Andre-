@@ -5579,14 +5579,16 @@ body:has(#listaNoticias) { background: transparent; }
 
 body:has(#listaNoticias) #spaMain::before { content: none; }
 
-body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video {
-  filter: blur(8px) saturate(0.78) contrast(1.08) brightness(0.56);
-}
-
 /* El velo azul queda limitado a la cabecera; no tapa la película del resto. */
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
   position: absolute;
   z-index: 1;
+}
+
+/* Menos aire entre la cabecera y las tarjetas: el padding-top normal de
+   .section (hasta 130px) dejaba un tramo de película sin nada encima. */
+body:has(#listaNoticias) .section:has(.noticias) {
+  padding-top: 48px;
 }
 
 body:has(#listaNoticias) .noticias {
