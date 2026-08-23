@@ -5543,3 +5543,37 @@ body:has(.cursos-coverflow) .cursos-coverflow {
 @media (max-width: 900px) {
   #contactame .contacto-cabecera { margin-bottom: 16px; }
 }
+
+/* --------------------------------------------------------------------------
+   NAVEGACIÓN ENTRE PORTADA Y SECCIONES
+
+   El salto se reconstruye como documento completo desde nav-spa.js; no queda
+   una transición de altura pendiente que pueda hacer visible una capa propia
+   de la portada dentro de las franjas internas. Como seguro adicional, las
+   piezas exclusivas de Inicio nunca participan del layout de un hero interno. */
+.page-hero { transition: none; }
+
+.page-hero:not(.page-hero--portada) > .hero-title-video,
+.page-hero:not(.page-hero--portada) > .hero-title-overlay,
+.page-hero:not(.page-hero--portada) > .hero-video-credit {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   PROGRAMA DE CURSO · lectura compacta y con contraste
+
+   La introducción y el temario se agrupan sin la franja blanca vacía. Solo
+   aplica a los cursos con programa en una sola columna. */
+body:has(.syllabus-solo) #spaMain > section > .section {
+  padding-top: clamp(44px, 5vw, 72px);
+  padding-bottom: clamp(72px, 8vw, 112px);
+}
+
+body:has(.syllabus-solo) .syllabus-solo > .section-header {
+  margin-bottom: 18px !important;
+}
+
+body:has(.syllabus-solo) .syllabus-solo > .about-body {
+  margin-bottom: 24px !important;
+  color: #536777;
+}

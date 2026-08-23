@@ -6,15 +6,12 @@
    video sigue reproduciéndose sin cortes de una "página" a la
    siguiente.
 
-   La portada (index.html) usa la MISMA sección .page-hero que las
-   demás páginas, solo que con el modificador .page-hero--portada
-   (pantalla completa en vez de franja) — así que el mismo <video>,
-   nunca destruido, sirve para ambos casos: al navegar hacia o desde
-   la portada simplemente se agrega/quita esa clase, y como el video
-   queda anclado abajo y la sección tiene overflow:hidden, la
-   transición de altura por CSS hace que se vea como si el video
-   "subiera" (se encoge hasta la franja) o "bajara" (vuelve a pantalla
-   completa) — es el mismo elemento, solo más o menos recortado.
+   La portada (index.html) tiene capas visuales exclusivas — su vídeo
+   de título, velo y crédito — que las franjas internas no usan. Por
+   eso la SPA se mantiene solo entre páginas internas: al cruzar entre
+   Inicio y una sección se hace navegación normal. Así cada extremo
+   reconstruye su propia composición, sin arrastrar capas ni animar la
+   altura del vídeo de la portada.
 
    visor.html también entra: su cabecera ahora es la misma franja
    .page-hero. Su propio script (pdf.js) se desmonta y se vuelve a
@@ -172,6 +169,12 @@
     if (!heroActual || !mainActual) { irReal(url.href); return; }
 
     var heroSeccion = heroActual.closest('.page-hero');
+    var portadaActual = !!(heroSeccion && heroSeccion.classList.contains('page-hero--portada'));
+
+    /* Inicio y las secciones internas no comparten todas las capas del
+       hero. Recargar solo en ese cruce evita que el vídeo de la portada
+       ocupe la franja interna y deje los títulos fuera de vista. */
+    if (portadaActual !== esPortada) { irReal(url.href); return; }
 
     fetch(url.href, { credentials: 'same-origin' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
