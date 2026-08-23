@@ -4057,22 +4057,11 @@ body::selection { background: var(--gold); color: var(--ink); }
   width: max-content;
   max-width: 100%;
   margin-bottom: 10px;
-  color: #f6f8f5;
+  color: var(--gold-light);
   font-size: clamp(55px, 5vw, 78px);
   font-weight: 600;
   letter-spacing: -0.045em;
   text-shadow: 0 12px 32px rgba(1, 11, 21, 0.45);
-}
-
-.page-hero-title::after {
-  content: '';
-  position: absolute;
-  right: -43px;
-  bottom: 7px;
-  width: 28px;
-  height: 1px;
-  background: var(--blue-soft);
-  box-shadow: 0 0 15px rgba(120, 217, 207, 0.8);
 }
 
 .page-hero-title em { color: var(--gold-light); }
@@ -4562,7 +4551,6 @@ textarea:focus-visible {
   .page-hero { height: 238px; }
   .page-hero-inner { padding: 0 26px 31px; }
   .page-hero-title { font-size: clamp(46px, 14vw, 64px); }
-  .page-hero-title::after { right: -28px; width: 18px; }
   .section { padding: 66px 24px; }
   .cursos-coverflow { padding: 13px; border-radius: 20px; }
   .coverflow-carta-texto { padding: 26px; }
