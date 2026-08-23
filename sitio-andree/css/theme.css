@@ -5579,6 +5579,15 @@ body:has(#listaNoticias) { background: transparent; }
 
 body:has(#listaNoticias) #spaMain::before { content: none; }
 
+/* .page-hero trae su propio fondo opaco (--ink) para cuando el video es
+   position:absolute (como en las demás páginas, sin scroll fijo). Acá
+   el video pasa a position:fixed con z-index negativo (ver arriba), así
+   que ese fondo opaco pintaba encima y lo tapaba por completo - mismo
+   ajuste que ya lleva .page-hero--portada más arriba. */
+body:has(#listaNoticias) .page-hero.pagina-noticias--fijo {
+  background: transparent;
+}
+
 /* El velo azul queda limitado a la cabecera; no tapa la película del resto. */
 body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
   position: absolute;
