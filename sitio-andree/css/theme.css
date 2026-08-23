@@ -2064,12 +2064,6 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   .slide-pin [data-dir="left"] {
     transform: translateX(calc((1 - var(--ease, 0)) * -90px)) !important;
   }
-  /* La foto queda además ligeramente inclinada de forma permanente (no
-     solo durante la entrada); por eso esta regla, más específica que la
-     genérica de arriba, le suma el rotate al mismo translateX. */
-  .slide-pin .autor-retrato[data-dir="left"] {
-    transform: translateX(calc((1 - var(--ease, 0)) * -90px)) rotate(-3deg) !important;
-  }
   /* Los datos de contacto suben desde abajo (igual que el default, pero
      explícito para que quede claro que es a propósito, no por omisión). */
   .slide-pin [data-dir="up"] {
@@ -2814,7 +2808,6 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   position: relative; overflow: hidden;
   background: var(--bg-off);
   aspect-ratio: 600 / 950;
-  transform: rotate(-3deg);
 }
 .autor-retrato img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .autor-retrato .corner-ornament { z-index: 2; }
@@ -4651,7 +4644,7 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
 #sobre .autor-grid {
   grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
   gap: clamp(44px, 6vw, 92px);
-  align-items: center;
+  align-items: start;
   max-width: 1180px;
   padding: clamp(26px, 4vw, 54px);
   border-color: rgba(181, 235, 228, 0.2);
@@ -4689,12 +4682,11 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
   border-radius: 22px;
   background: #071522;
   box-shadow:
-    18px 28px 0 -14px rgba(112, 217, 204, 0.11),
-    28px 42px 46px -30px rgba(0, 4, 12, 0.9),
+    0 14px 0 -14px rgba(112, 217, 204, 0.11),
+    0 24px 46px -26px rgba(0, 4, 12, 0.9),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transform: perspective(1200px) rotateY(-8deg) rotateX(2deg) translateZ(0);
-  transform-origin: center;
-  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 720ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: none;
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #sobre .autor-foto-3d::before {
@@ -4737,10 +4729,10 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
 
 #sobre .autor-retrato:hover .autor-foto-3d {
   box-shadow:
-    26px 36px 0 -18px rgba(112, 217, 204, 0.19),
-    38px 55px 62px -34px rgba(0, 4, 12, 0.96),
+    0 18px 0 -18px rgba(112, 217, 204, 0.19),
+    0 30px 62px -30px rgba(0, 4, 12, 0.96),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  transform: perspective(1200px) rotateY(-2deg) rotateX(0deg) translate3d(-5px, -10px, 28px);
+  transform: translateY(-8px);
 }
 
 #sobre .autor-retrato:hover .autor-foto-3d img {
