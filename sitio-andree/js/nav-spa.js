@@ -28,6 +28,24 @@
 (function () {
   'use strict';
 
+  /* Filtro SVG de "vidrio líquido" (turbulencia + desplazamiento,
+     igual técnica que backdrop-filter:url(#id) usa cualquier
+     framework) para el efecto de vidrio de botones, escudos y el
+     retrato del autor (ver .mk-glass* en theme.css) — puro SVG, sin
+     ninguna dependencia, inyectado una sola vez acá porque cada
+     página es HTML estático aparte y backdrop-filter:url(#id) solo
+     encuentra el filtro si vive en el mismo documento. */
+  if (!document.getElementById('mk-glass-filter')) {
+    document.body.insertAdjacentHTML('afterbegin',
+      '<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">' +
+      '<filter id="mk-glass-filter" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">' +
+      '<feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="1" seed="7" result="mkTurb"/>' +
+      '<feGaussianBlur in="mkTurb" stdDeviation="2" result="mkTurbBlur"/>' +
+      '<feDisplacementMap in="SourceGraphic" in2="mkTurbBlur" scale="18" xChannelSelector="R" yChannelSelector="B"/>' +
+      '</filter>' +
+      '</svg>');
+  }
+
   var PAGINAS = [
     'index.html', 'materiales.html', 'investigacion.html', 'noticias.html',
     'apuntes.html', 'contacto.html', 'biopsicologia.html', 'neuroanatomia.html',
