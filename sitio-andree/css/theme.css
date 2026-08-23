@@ -1928,8 +1928,12 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   }
   /* Las insignias no necesitan quedar centradas verticalmente como el
      resto de diapositivas: al ser más bajas que la pantalla, centrarlas
-     las dejaba con un aire vacío arriba. Se anclan arriba en su lugar. */
+     las dejaba con un aire vacío arriba. Se anclan arriba en su lugar,
+     con menos aire propio (el padding/margen normales dejaban todavía
+     bastante espacio antes del título). */
   #formacion .slide-pin { align-items: flex-start; }
+  #formacion .section { padding-top: 32px; }
+  #formacion .escudos-bloque { margin-top: 28px; }
 
   /* El "despegue" de una diapositiva pegada (sticky), al final, SIEMPRE
      se come de recorrido extra exactamente la altura de lo que venga
@@ -2929,25 +2933,27 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   .escudo img { height: 72px; }
 }
 
-/* ── Riel de escudos (desktop): tira estática, sin carrusel - si no
-   caben todas las insignias en el ancho disponible, se deslizan con
-   el mouse/trackpad en vez de girar solas, y se difuminan en los
-   bordes en lugar de cortarse en seco. El cuadrito bajo el cursor se
-   vuelve negro con bordes redondeados. */
+/* ── Riel de escudos (desktop): tira en movimiento continuo hacia la
+   derecha (sin la rueda 3D de antes), que se difumina en los bordes en
+   vez de cortarse en seco. El cuadrito bajo el cursor mantiene el
+   vidrio líquido del resto del sitio - ya no se pone negro, solo se
+   resalta el borde y aparece el aro de luz. */
 .riel-escudos {
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   width: 100%;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
-.riel-escudos::-webkit-scrollbar { display: none; }
 .riel-pista {
   display: flex;
   width: max-content;
   gap: 16px;
+  animation: mk-riel-mover 34s linear infinite;
+}
+.riel-escudos:hover .riel-pista { animation-play-state: paused; }
+@keyframes mk-riel-mover {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
 }
 
 .riel-escudo-item {
@@ -2968,24 +2974,23 @@ html.visor-modo-presentacion .visor-pie { display: none; }
     inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.8),
     inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.08),
     inset 0 0 8px 8px rgba(255, 255, 255, 0.05);
-  transition: background 0.4s cubic-bezier(0.16,1,0.3,1), border-radius 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease;
+  transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
 }
 .riel-escudo-item:hover {
-  background: #000;
-  border-color: transparent;
-  border-radius: 28px;
+  border-color: var(--blue-mid);
   transform: scale(1.08);
   z-index: 2;
   box-shadow:
-    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.25),
-    inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.1),
-    inset 0 0 8px 8px rgba(255, 255, 255, 0.03);
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.8),
+    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.08),
+    inset 0 0 8px 8px rgba(255, 255, 255, 0.05),
+    0 10px 24px -12px var(--blue-shadow-strong);
 }
 
 /* Mismo aro de luz que .noticia--con-enlace (ver arriba, @keyframes
-   mk-beam-girar), pero sin color: acá el tono es blanco neutro, para
-   que se lea bien contra el negro en el que se convierte la tarjeta
-   al pasar el mouse. */
+   mk-beam-girar), en el mismo tono dorado - acá la tarjeta se queda
+   clara al pasar el mouse, así que el aro blanco (pensado para leerse
+   contra negro) ya no funcionaba. */
 .riel-escudo-item::before {
   content: '';
   position: absolute; inset: -1px;
@@ -2993,7 +2998,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   padding: 1.5px;
   background: conic-gradient(from var(--mk-beam-angulo, 0deg),
     transparent 0deg, transparent 270deg,
-    rgba(255, 255, 255, 0.75) 328deg, rgba(255, 255, 255, 1) 344deg, rgba(255, 255, 255, 0.75) 356deg,
+    rgba(200, 169, 110, 0.85) 328deg, rgba(235, 214, 175, 1) 344deg, rgba(200, 169, 110, 0.85) 356deg,
     transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -3008,10 +3013,9 @@ html.visor-modo-presentacion .visor-pie { display: none; }
 
 .riel-escudo-item img {
   height: 84px; width: auto; max-width: 150px; object-fit: contain;
-  transition: filter 0.4s ease, transform 0.4s ease;
+  transition: transform 0.4s ease;
 }
 .riel-escudo-item:hover img {
-  filter: invert(1) brightness(1.6);
   transform: scale(1.05);
 }
 
@@ -3021,9 +3025,15 @@ html.visor-modo-presentacion .visor-pie { display: none; }
   text-align: center; line-height: 1.25;
   transition: color 0.3s ease;
 }
-.riel-escudo-item:hover .riel-escudo-etiqueta { color: var(--white); }
+.riel-escudo-item:hover .riel-escudo-etiqueta { color: var(--blue); }
 
+/* Con movimiento reducido la tira no se desplaza sola: se cae a una
+   fila estática (sin las copias que solo servían para el loop) que se
+   puede recorrer con el mouse/trackpad si no caben todas. */
 @media (prefers-reduced-motion: reduce) {
+  .riel-escudos { overflow-x: auto; }
+  .riel-pista { animation: none; }
+  .riel-escudo-item.riel-escudo-item--duplicado { display: none; }
   .riel-escudo-item:hover { transform: none; }
   .riel-escudo-item, .riel-escudo-item img { transition: none; }
   .riel-escudo-item::before { animation: none; }
