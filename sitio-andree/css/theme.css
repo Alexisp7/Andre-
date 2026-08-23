@@ -5577,3 +5577,82 @@ body:has(.syllabus-solo) .syllabus-solo > .about-body {
   margin-bottom: 24px !important;
   color: #536777;
 }
+
+/* --------------------------------------------------------------------------
+   RIEL DE SECCIONES · aparece por intención, no por desplazamiento
+
+   En escritorio el riel conserva sus destinos y su foco de teclado, pero se
+   revela únicamente al acercar el cursor a su zona. El scroll ya no vuelve a
+   invadir la lectura con etiquetas, puntos ni velo. */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .riel-secciones {
+    opacity: 0;
+    transition: opacity 0.32s ease;
+  }
+
+  .riel-secciones:hover,
+  .riel-secciones:focus-within { opacity: 1; }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: reduce) {
+  .riel-secciones { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   NOTICIAS · película ambiental detrás de las tarjetas
+
+   La cabecera mantiene su tinte propio. Fuera de ella, el vídeo ya existente
+   toma el fondo completo y las noticias se leen como piezas de vidrio, no
+   dentro de un gran rectángulo azul. */
+html:has(#listaNoticias) { background: #02070c; }
+
+body:has(#listaNoticias) { background: transparent; }
+
+body:has(#listaNoticias) #spaMain::before { content: none; }
+
+body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video {
+  filter: blur(8px) saturate(0.78) contrast(1.08) brightness(0.56);
+}
+
+/* El velo azul queda limitado a la cabecera; no tapa la película del resto. */
+body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
+  position: absolute;
+  z-index: 1;
+}
+
+body:has(#listaNoticias) .noticias {
+  background: transparent;
+  border-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+body:has(#listaNoticias) .noticias::before { display: none; }
+
+body:has(#listaNoticias) .noticia {
+  background: rgba(1, 8, 14, 0.3);
+  border-color: rgba(217, 239, 236, 0.19);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 22px 44px -36px rgba(0, 0, 0, 0.9);
+  -webkit-backdrop-filter: blur(12px) saturate(108%);
+  backdrop-filter: blur(12px) saturate(108%);
+}
+
+/* El título se disuelve junto al menú cuando toca su mismo límite. */
+body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-inner {
+  opacity: var(--noticias-titulo-opacidad, 1);
+  filter: blur(var(--noticias-titulo-desenfoque, 0px));
+  will-change: opacity, filter;
+  transition:
+    opacity 160ms linear,
+    filter 210ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-inner {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
