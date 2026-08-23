@@ -5534,3 +5534,12 @@ body:has(.cursos-coverflow) .cursos-coverflow {
     backdrop-filter: blur(15px) saturate(92%);
   }
 }
+
+/* CONTACTO · el bloque de datos se acerca al título sin mover el formulario. */
+#contactame .contacto-cabecera {
+  margin-bottom: clamp(16px, 1.7vw, 24px);
+}
+
+@media (max-width: 900px) {
+  #contactame .contacto-cabecera { margin-bottom: 16px; }
+}
