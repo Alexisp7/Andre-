@@ -5462,3 +5462,48 @@ body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-inner {
     transition: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   MENÚ MÓVIL · sin vidrio, solo las pestañas sobre un velo azul
+
+   En celular el "cristal líquido" (fondo, borde, sombra y desenfoque) se ve
+   como una caja pesada flotando encima del video: en esta sección se anula
+   por completo y solo quedan las pestañas centradas, de punta a punta de la
+   pantalla, sin tarjeta ni margen propio. Para que el texto siga legible
+   sobre un video que cambia de brillo todo el rato, se deja un velo azul
+   detrás que se apaga hacia abajo — no es una caja aparte, vive dentro del
+   propio menú (su padding-bottom), así que el video se ve limpio justo
+   debajo, sin nada ajeno tapándolo. El padding vertical de cada pestaña
+   también crece para que el dedo tenga más margen de error al tocarlas. */
+@media (max-width: 900px) {
+  .hero-nav-flotante {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-height: 0;
+    transform: none;
+    border: none;
+    border-radius: 0;
+    isolation: auto;
+    padding: max(14px, env(safe-area-inset-top)) 8px 26px;
+    background: linear-gradient(to bottom, rgba(13, 34, 55, 0.78) 0%, rgba(13, 34, 55, 0.34) 65%, transparent 100%);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .hero-nav-flotante::after {
+    content: none;
+    display: none;
+  }
+  .hero-nav-flotante a {
+    padding: 14px 12px;
+  }
+  .hero-nav-flotante a:hover,
+  .hero-nav-flotante a:focus-visible,
+  .hero-nav-flotante a.active {
+    background: none;
+    box-shadow: none;
+    transform: none;
+  }
+}
