@@ -5650,3 +5650,95 @@ html.visor-modo-presentacion .hero-nav-flotante {
     transform: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   INSIGNIAS DE FORMACIÓN · sin cuadro propio, solo al pasar el mouse
+
+   Cada escudo tenía su tarjeta blanca siempre puesta. Se apaga por defecto
+   (transparente, sin borde ni sombra) y solo aparece al pasar el mouse o
+   enfocar con teclado — el logo queda suelto sobre el fondo, la tarjeta es
+   apenas un realce de interacción. */
+#formacion .riel-escudo-item,
+#formacion .escudo {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease !important;
+}
+#formacion .riel-escudo-item:hover,
+#formacion .riel-escudo-item:focus-visible,
+#formacion .escudo:hover,
+#formacion .escudo:focus-visible {
+  border-color: #d8e6f0 !important;
+  background: #ffffff !important;
+  box-shadow: 0 15px 30px -25px rgba(0, 10, 22, 0.56), inset 0 1px 0 #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   MENÚ MÓVIL · las 4 pestañas en una sola fila de verdad
+
+   .hero-nav-links armaba dos "mitades" con un hueco en medio pensado para
+   un botón de hamburguesa que ya no existe (las 4 pestañas están siempre
+   visibles). Ese hueco sin separador se veía como un corte partiendo el
+   menú en dos grupos de 2. Se aplana a una sola fila: las mitades se vuelven
+   invisibles como agrupadoras (display:contents) para que sus hijos queden
+   sueltos en el mismo flex, se muestra el separador que faltaba en el medio
+   y se apaga el hueco — los 4 enlaces y sus 3 separadores quedan parejos. */
+@media (max-width: 900px) {
+  .hero-nav-links {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+  .hero-nav-mitad { display: contents; }
+  .hero-nav-flotante .hero-nav-break { display: inline; }
+  .hero-nav-espaciador { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   SOBRE EL AUTOR · sin aire muerto abajo
+
+   La foto es más alta que el bloque de texto, y con align-items:start el
+   texto quedaba pegado arriba, dejando todo ese sobrante como aire vacío
+   solo debajo del texto. Centrado, el texto baja al medio de la fila y el
+   sobrante se reparte arriba y abajo por igual — se nota mucho menos. */
+#sobre .autor-grid {
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   CONTACTO EN MÓVIL · un respiro antes del pie
+
+   #contactame-wrap terminaba exactamente donde arrancaba el pie de página,
+   sin ningún margen entre el botón de enviar y el pie — se sentía
+   apretado. Esto es aparte del truco de margen negativo para la
+   diapositiva fija de escritorio (min-width:901px): en mobile no hay
+   diapositivas, así que no hay nada que compensar. */
+@media (max-width: 900px) {
+  #contactame-wrap {
+    padding-bottom: 48px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TÍTULOS DE SECCIÓN EN MÓVIL · un poco menos de aire
+
+   .section-header dejaba 52px antes del contenido en cualquier ancho; en
+   celular, con menos alto de pantalla disponible, se sentía como demasiado
+   antes de llegar a lo importante. */
+@media (max-width: 900px) {
+  .section-header {
+    margin-bottom: 32px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ETIQUETAS "FORMACIÓN" / "ESTANCIAS E INVESTIGACIÓN" · menos aire
+
+   Mismo pedido que arriba pero para las etiquetas de los escudos
+   (.escudos-titulo), que no usan .section-header: menos espacio antes de
+   la fila de escudos y entre un grupo de escudos y el siguiente. */
+.escudos-titulo { margin-bottom: 18px; }
+.escudos-titulo:not(:first-child) { margin-top: 32px; }
