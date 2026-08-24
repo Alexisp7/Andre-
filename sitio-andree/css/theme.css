@@ -5861,3 +5861,31 @@ body:has(.investigacion-sola) .progressive-blur > div:nth-child(8) {
   -webkit-mask-image: linear-gradient(to bottom, transparent 87.5%, black 100%);
   mask-image: linear-gradient(to bottom, transparent 87.5%, black 100%);
 }
+
+/* --------------------------------------------------------------------------
+   SIN SUBRAYADO AL NAVEGAR · el foco por accesibilidad no debe verse
+
+   nav-spa.js mueve el foco al título de la página nueva después de cada
+   navegación (moverFoco(), para que el lector de pantalla anuncie el
+   cambio) - correcto para accesibilidad, pero sin estilo propio de foco
+   el navegador dibuja su indicador por defecto encima del título. Se
+   apaga solo lo visual; el foco programático (y su beneficio para
+   lectores de pantalla) sigue intacto. */
+.page-hero-title:focus,
+.page-hero-sub:focus,
+.library-hero-name:focus,
+.visor-titulo:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   NOMBRE DEL AUTOR EN MÓVIL · una sola línea
+
+   El piso de 40px del clamp era más grande que lo que "Andreé Salvatierra
+   Baldeón" necesita para entrar en una sola línea en el ancho disponible
+   (probado: a 40px pide ~372px, el bloque de texto en mobile mide ~307px)
+   — se partía en dos líneas. Un piso de 8vw/26px lo deja entero. */
+@media (max-width: 900px) {
+  #sobre .autor-nombre { font-size: clamp(26px, 8vw, 62px); }
+}
