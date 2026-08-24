@@ -5764,6 +5764,21 @@ body:has(.investigacion-sola) #spaMain::before {
 }
 
 /* --------------------------------------------------------------------------
+   CURSOS Y NOTICIAS · fondo blanco sólido, sin la cuadrícula
+
+   Mismo pedido que Investigación: se apaga la cuadrícula de #spaMain::before
+   y, además, el fondo general de body (que trae un degradado suave con un
+   resplandor turquesa) se fuerza a blanco puro en estas dos páginas. */
+body:has(.cursos-coverflow) #spaMain::before,
+body:has(#listaNoticias) #spaMain::before {
+  content: none;
+}
+body:has(.cursos-coverflow),
+body:has(#listaNoticias) {
+  background: var(--white) !important;
+}
+
+/* --------------------------------------------------------------------------
    REFERENCIAS DE INVESTIGACIÓN · sombreado azul, con el dorado como acento
 
    El degradado del hover era verdoso/turquesa (#0b5661→#123c57), fuera de
@@ -5798,7 +5813,7 @@ body:has(.investigacion-sola) #spaMain::before {
 body:has(.investigacion-sola) .progressive-blur {
   position: fixed;
   left: 0; right: 0; bottom: 0;
-  height: 24vh;
+  height: 12vh;
   pointer-events: none;
   z-index: 60;
 }
@@ -5807,42 +5822,42 @@ body:has(.investigacion-sola) .progressive-blur > div {
   inset: 0;
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(1) {
-  backdrop-filter: blur(0.5px); -webkit-backdrop-filter: blur(0.5px);
+  backdrop-filter: blur(0.25px); -webkit-backdrop-filter: blur(0.25px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12.5%, black 25%, transparent 37.5%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 12.5%, black 25%, transparent 37.5%);
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(2) {
-  backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(0.5px); -webkit-backdrop-filter: blur(0.5px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 12.5%, black 25%, black 37.5%, transparent 50%);
   mask-image: linear-gradient(to bottom, transparent 12.5%, black 25%, black 37.5%, transparent 50%);
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(3) {
-  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 25%, black 37.5%, black 50%, transparent 62.5%);
   mask-image: linear-gradient(to bottom, transparent 25%, black 37.5%, black 50%, transparent 62.5%);
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(4) {
-  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(1.5px); -webkit-backdrop-filter: blur(1.5px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 37.5%, black 50%, black 62.5%, transparent 75%);
   mask-image: linear-gradient(to bottom, transparent 37.5%, black 50%, black 62.5%, transparent 75%);
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(5) {
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 50%, black 62.5%, black 75%, transparent 87.5%);
   mask-image: linear-gradient(to bottom, transparent 50%, black 62.5%, black 75%, transparent 87.5%);
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(6) {
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 62.5%, black 75%, black 87.5%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 62.5%, black 75%, black 87.5%, transparent 100%);
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(7) {
-  backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 75%, black 87.5%, black 100%);
   mask-image: linear-gradient(to bottom, transparent 75%, black 87.5%, black 100%);
 }
 body:has(.investigacion-sola) .progressive-blur > div:nth-child(8) {
-  backdrop-filter: blur(64px); -webkit-backdrop-filter: blur(64px);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 87.5%, black 100%);
   mask-image: linear-gradient(to bottom, transparent 87.5%, black 100%);
 }
