@@ -1978,7 +1978,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
        riel, contacto) incluso ya invisible del todo (opacity 0). */
     pointer-events: none;
   }
-  #tituloDwell { height: 140vh; }
+  /* Antes 140vh: dejaba una sensación de espacio vacío muy larga entre
+     el título y la biografía al bajar. */
+  #tituloDwell { height: 40vh; }
 
   /* ── Riel de secciones (Título / Biografía / Universidades / Contacto) ──
      Oculto mientras se ve el título — recién se difumina hacia visible
@@ -2116,6 +2118,13 @@ body:has(.page-hero--portada) { background: transparent; }
 #sobre, #formacion {
   background: rgba(8, 14, 24, 0.42);
   position: relative; z-index: 1;
+}
+/* "Sobre el autor" aparece completo desde el inicio, sin el fundido
+   ligado al scroll que sí conservan las demás diapositivas. */
+#sobre [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
 }
 #sobre .autor-nombre { color: var(--white); }
 #sobre .autor-cargos { color: rgba(255, 255, 255, 0.65); }
@@ -3074,45 +3083,10 @@ html.visor-modo-presentacion .visor-pie { display: none; }
    en vez de blanco — como una continuación de la portada. body:has(...)
    detecta que estamos en noticias.html (#listaNoticias es único de esa
    página) sin necesitar una clase aparte. */
-body:has(#listaNoticias) { background: var(--ink); color: var(--white); }
-
-/* El mismo video/velo fijo de fondo que la portada, detrás de TODA la
-   página de noticias (tarjetas incluidas) mientras se hace scroll, con
-   el mismo filtro que usa la portada en sus propias secciones (nada de
-   blur - eso apagaba demasiado el video, se veía como un bloque negro
-   plano) para que el video sea ambiente pero se note, y las tarjetas
-   se sigan notando encima gracias a su propio fondo.
-   Sin recorrido de altura del que colgarse (a diferencia de la
-   portada, esta franja no crece: sigue siendo la franja angosta de
-   siempre), así que no hay transición de altura de la cual esperar el
-   fin. Por eso, igual que .page-hero--fijo en la portada,
-   position:fixed queda detrás de la clase .pagina-noticias--fijo, que
-   nav-spa.js agrega recién cuando la franja compacta ya terminó de
-   asentarse (mismo patrón transitionend + setTimeout de red de
-   seguridad que usa la portada) — así, al entrar a noticias por SPA,
-   el video primero hace el mismo "sube hasta encajar en su franja"
-   que cualquier otra página, y solo después se vuelve fondo fijo de
-   toda la página. En la carga directa (sin SPA) la clase ya viene
-   puesta en el propio HTML, sin nada que animar. El salto de
-   position:absolute a position:fixed, aun así escalonado, se
-   disimula igual con un fundido de opacidad por las dudas. */
-body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video {
-  position: fixed; inset: 0; bottom: auto; z-index: -3;
-  filter: saturate(0.78) contrast(1.1) brightness(0.63);
-  animation: mk-fondo-noticias-entra 0.9s ease both;
-}
-body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
-  position: fixed; z-index: -2;
-  animation: mk-fondo-noticias-entra 0.9s ease both;
-}
-@keyframes mk-fondo-noticias-entra {
-  from { opacity: 0; transform: scale(1.045); }
-  to   { opacity: 1; transform: scale(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-video,
-  body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay { animation: none; }
-}
+/* El video vuelve a quedar solo en la franja del encabezado (sin
+   position:fixed): de la franja para abajo la página es blanca, sin
+   el video de fondo detrás de las tarjetas. */
+body:has(#listaNoticias) { background: var(--white); color: var(--dark); }
 
 /* Oscuro con un resplandor difuminado detrás, como una continuación
    de la portada, en vez del blanco liso de antes — bastante
@@ -4374,9 +4348,11 @@ body:not(:has(.page-hero--portada)) #spaMain::before {
   font-size: 16px;
 }
 
-/* El subtítulo "Producción científica" iba en mayúscula por heredar
-   .page-hero-sub; acá se pide en minúscula. */
-body:has(.investigacion-sola) .page-hero-sub {
+/* Los subtítulos de cabecera iban todos en mayúscula por heredar
+   .page-hero-sub; se piden en minúscula. */
+body:has(.investigacion-sola) .page-hero-sub,
+body:has(.cursos-coverflow) .page-hero-sub,
+body:has(#listaNoticias) .page-hero-sub {
   text-transform: none;
 }
 
@@ -4412,19 +4388,6 @@ body:has(.investigacion-sola) .page-hero-sub {
   box-shadow: 0 32px 70px -40px rgba(0, 7, 15, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
-}
-
-.autor-grid::after {
-  content: '';
-  position: absolute;
-  right: -70px;
-  bottom: -70px;
-  width: 230px;
-  aspect-ratio: 1;
-  border: 1px solid rgba(120, 217, 207, 0.18);
-  border-radius: 50%;
-  box-shadow: 0 0 0 36px rgba(120, 217, 207, 0.04), 0 0 0 85px rgba(120, 217, 207, 0.025);
-  pointer-events: none;
 }
 
 .autor-retrato {
@@ -4763,40 +4726,17 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
   text-shadow: 0 0 30px rgba(237, 211, 161, 0.13);
 }
 
+/* Los dos párrafos van seguidos, como texto corrido - sin la tarjeta
+   con borde/fondo ni la etiqueta ("FORMACIÓN Y ESPECIALIDAD" / etc.)
+   que los separaba en dos cajas. */
 #sobre .about-body {
-  position: relative;
-  margin: 0;
-  padding: 18px 22px 18px 24px;
-  border: 1px solid rgba(220, 245, 242, 0.12);
-  border-left: 3px solid rgba(109, 219, 206, 0.65);
-  border-radius: 0 17px 17px 0;
-  background: linear-gradient(105deg, rgba(0, 7, 13, 0.29), rgba(0, 7, 13, 0.1));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  margin: 0 0 18px;
   color: rgba(238, 247, 246, 0.84);
   font-size: clamp(13px, 0.98vw, 15px);
   line-height: 1.65;
   text-align: justify;
   text-justify: inter-word;
   hyphens: auto;
-  transition: border-color 350ms ease, background 350ms ease;
-}
-
-#sobre .about-body::before {
-  display: block;
-  margin: 0 0 8px;
-  color: rgba(230, 247, 244, 0.53);
-  font-family: 'Space Mono', monospace;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-}
-
-#sobre .about-body:nth-of-type(1)::before { content: 'FORMACIÓN Y ESPECIALIDAD'; }
-#sobre .about-body:nth-of-type(2)::before { content: 'ESTANCIAS E INVESTIGACIÓN'; }
-#sobre .about-body:hover {
-  border-color: rgba(118, 224, 211, 0.3);
-  background: linear-gradient(105deg, rgba(0, 12, 20, 0.36), rgba(0, 7, 13, 0.13));
-  transform: none;
 }
 
 #sobre .autor-registros {
@@ -4913,14 +4853,14 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
   #sobre .autor-grid { grid-template-columns: minmax(260px, 0.66fr) minmax(0, 1.34fr); gap: clamp(40px, 5vw, 68px); padding: 28px; }
   #sobre .autor-retrato { width: min(100%, 292px); }
   #sobre .autor-nombre { font-size: clamp(42px, 4.35vw, 64px); }
-  #sobre .about-body { padding: 16px 20px 16px 24px; font-size: 14px; line-height: 1.62; }
+  #sobre .about-body { font-size: 14px; line-height: 1.62; }
 }
 
 @media (max-width: 900px) {
   #sobre .autor-grid { grid-template-columns: 1fr; gap: 32px; padding: 42px 24px 30px; }
   #sobre .autor-retrato { width: min(82vw, 336px); }
   #sobre .autor-nombre { font-size: clamp(40px, 10.5vw, 62px); }
-  #sobre .about-body { padding: 18px 19px 18px 22px; font-size: 14px; line-height: 1.68; }
+  #sobre .about-body { font-size: 14px; line-height: 1.68; }
 }
 
 @media (max-width: 520px) {
@@ -5122,7 +5062,6 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
 /* Menos tamaño y sin división automática de palabras: la lectura queda más
    limpia dentro de los dos textos profesionales. */
 #sobre .about-body {
-  padding: 16px 20px 16px 22px;
   font-size: clamp(12.5px, 0.9vw, 14px);
   line-height: 1.6;
   hyphens: none;
@@ -5133,7 +5072,6 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
 
 @media (max-width: 900px) {
   #sobre .about-body {
-    padding: 16px 18px 16px 21px;
     font-size: 13.5px;
     line-height: 1.64;
   }
@@ -5466,30 +5404,10 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
    El contenedor de ambos cursos actúa como una pieza de vidrio gris, mientras
    las tarjetas individuales conservan la lectura clara que ya funcionaba. */
 
-html:has(.cursos-coverflow) { background: #02080e; }
-
-body:has(.cursos-coverflow) { background: transparent; }
-
-body:has(.cursos-coverflow) .page-hero {
-  background: transparent;
-  border-bottom-color: rgba(120, 217, 207, 0.48);
-  box-shadow:
-    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
-    0 1px 18px rgba(35, 175, 167, 0.11);
-}
-
-/* El video se libera solo en Cursos: arriba recibe el velo azul existente;
-   debajo se ve completo, sin una segunda capa plana que lo oculte. */
-body:has(.cursos-coverflow) .page-hero-video {
-  position: fixed;
-  inset: 0;
-  bottom: auto;
-  z-index: -3;
-  filter: saturate(0.78) contrast(1.08) brightness(0.64);
-}
-
-/* Se elimina exclusivamente la retícula pálida que acompañaba al fondo blanco. */
-body:has(.cursos-coverflow) #spaMain::before { content: none; }
+/* El video vuelve a quedar contenido solo en la franja del encabezado
+   (comportamiento por defecto, sin position:fixed) - de la franja para
+   abajo la página vuelve a ser blanca, sin el video de fondo mareando
+   detrás de las tarjetas. */
 
 body:has(.cursos-coverflow) .cursos-coverflow {
   border-color: rgba(20, 35, 61, 0.1);
@@ -5553,58 +5471,14 @@ body:has(.syllabus-solo) .syllabus-solo > .about-body {
 }
 
 /* --------------------------------------------------------------------------
-   NOTICIAS · película ambiental detrás de las tarjetas
-
-   La cabecera mantiene su tinte propio. Fuera de ella, el vídeo ya existente
-   toma el fondo completo y las noticias se leen como piezas de vidrio, no
-   dentro de un gran rectángulo azul. */
-html:has(#listaNoticias) { background: #02070c; }
-
-body:has(#listaNoticias) { background: transparent; }
-
-body:has(#listaNoticias) #spaMain::before { content: none; }
-
-/* .page-hero trae su propio fondo opaco (--ink) para cuando el video es
-   position:absolute (como en las demás páginas, sin scroll fijo). Acá
-   el video pasa a position:fixed con z-index negativo (ver arriba), así
-   que ese fondo opaco pintaba encima y lo tapaba por completo - mismo
-   ajuste que ya lleva .page-hero--portada más arriba. */
-body:has(#listaNoticias) .page-hero.pagina-noticias--fijo {
-  background: transparent;
-}
-
-/* El velo azul queda limitado a la cabecera; no tapa la película del resto. */
-body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-overlay {
-  position: absolute;
-  z-index: 1;
-}
+   NOTICIAS · la cabecera conserva su video/tinte propio; de ahí para
+   abajo la página es blanca, con el bloque de tarjetas como su propio
+   panel oscuro (igual que antes de probar el video de fondo). */
 
 /* Menos aire entre la cabecera y las tarjetas: el padding-top normal de
-   .section (hasta 130px) dejaba un tramo de película sin nada encima. */
+   .section (hasta 130px) dejaba un tramo vacío antes de la primera. */
 body:has(#listaNoticias) .section:has(.noticias) {
   padding-top: 48px;
-}
-
-body:has(#listaNoticias) .noticias {
-  /* Mismo velo liviano que .about-body usa sobre el video en la
-     portada (rgba(1,7,13,0.16)) - deja leer las tarjetas sin volver a
-     tapar el video con un fondo casi opaco. */
-  background: rgba(1, 8, 14, 0.16);
-  border-color: transparent;
-  border-radius: 0;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-
-body:has(#listaNoticias) .noticias::before { display: none; }
-
-body:has(#listaNoticias) .noticia {
-  background: rgba(1, 8, 14, 0.3);
-  border-color: rgba(217, 239, 236, 0.19);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 22px 44px -36px rgba(0, 0, 0, 0.9);
-  -webkit-backdrop-filter: blur(12px) saturate(108%);
-  backdrop-filter: blur(12px) saturate(108%);
 }
 
 /* El título se disuelve junto al menú cuando toca su mismo límite. */
