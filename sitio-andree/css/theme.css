@@ -5746,3 +5746,40 @@ html.visor-modo-presentacion .hero-nav-flotante {
 /* --------------------------------------------------------------------------
    PORTADA · sin indicador de scroll (mouse animado) */
 .page-hero--portada .scroll-cue { display: none; }
+
+/* --------------------------------------------------------------------------
+   PIE DE PÁGINA · sin círculo decorativo, limpio */
+.footer-wrap::before {
+  content: none;
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   INVESTIGACIÓN · fondo sólido, sin la cuadrícula
+
+   #spaMain::before le pone la cuadrícula tenue a todas las páginas que no
+   son la portada; en Investigación se apaga para que quede un fondo liso. */
+body:has(.investigacion-sola) #spaMain::before {
+  content: none;
+}
+
+/* --------------------------------------------------------------------------
+   REFERENCIAS DE INVESTIGACIÓN · sombreado azul, con el dorado como acento
+
+   El degradado del hover era verdoso/turquesa (#0b5661→#123c57), fuera de
+   paleta; pasa a un azul de la propia paleta del sitio. El año y el lugar
+   ya son dorados en su estado normal — en vez de apagarlos a blanco parejo
+   con el resto del texto al pasar el mouse, se quedan dorados (más claros,
+   var(--gold-light)) como acento sobre el azul, y el filo izquierdo pasa de
+   turquesa a dorado también. */
+.ref:hover,
+.ref:focus-within {
+  background: linear-gradient(105deg, var(--blue), var(--blue-mid)) !important;
+  box-shadow: inset 4px 0 0 var(--gold) !important;
+}
+.ref:hover .ref-anio,
+.ref:hover .ref-lugar,
+.ref:focus-within .ref-anio,
+.ref:focus-within .ref-lugar {
+  color: var(--gold-light) !important;
+}
