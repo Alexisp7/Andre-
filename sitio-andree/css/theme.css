@@ -3936,7 +3936,7 @@ body {
   letter-spacing: 0.005em;
 }
 
-body::selection { background: var(--gold); color: var(--ink); }
+body::selection { background: var(--blue-mid); color: var(--white); }
 
 /* ── Navegación: una barra de vidrio compacta y más clara ── */
 .hero-nav-flotante {
@@ -4365,19 +4365,25 @@ body:not(:has(.page-hero--portada)) #spaMain::before {
 /* Investigación: las referencias pasan a sentirse como un archivo curado */
 .investigacion-sola { max-width: 1000px; }
 
+/* "Publicaciones científicas" quedaba en 10px, más chico que el
+   tamaño base de .escudos-titulo (12px) - se sube bien por encima
+   para que se note como el encabezado de cada bloque que es. */
 .investigacion-sola .escudos-titulo {
   margin-bottom: 16px;
   color: #1b7778;
-  font-size: 10px;
+  font-size: 16px;
 }
 
+/* El subtítulo "Producción científica" iba en mayúscula por heredar
+   .page-hero-sub; acá se pide en minúscula. */
+body:has(.investigacion-sola) .page-hero-sub {
+  text-transform: none;
+}
+
+/* Las cajas con borde/sombra que envolvían cada lista de referencias
+   se quitan - vuelve a ser una lista simple, sin ese recuadro. */
 .refs {
-  overflow: hidden;
-  border: 1px solid rgba(17, 75, 89, 0.12);
-  border-top: 2px solid #2ba8a0;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.79);
-  box-shadow: 0 24px 54px -48px rgba(5, 29, 46, 0.58);
+  overflow: visible;
 }
 
 .ref {
