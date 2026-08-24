@@ -5630,3 +5630,23 @@ body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-inner {
 html.visor-modo-presentacion .hero-nav-flotante {
   display: none;
 }
+
+/* --------------------------------------------------------------------------
+   VISOR EN HORIZONTAL · anterior/siguiente centrados de verdad
+
+   Anterior y siguiente comparten el mismo top:50% + transform:translateY(-50%),
+   así que deberían quedar a la misma altura — pero ese mismo bloque también
+   les pone backdrop-filter (el fondo borroso para que se note dónde tocar), y
+   backdrop-filter combinado con transform en un elemento position:fixed es un
+   bug conocido de Safari/iOS: el navegador pinta el botón desplazado de su
+   caja real. Centrar con márgenes automáticos en vez de transform evita la
+   combinación problemática y dejan de verse descuadrados entre sí. */
+@media (max-width: 930px) and (orientation: landscape) {
+  html.visor-modo-presentacion .visor-nav--prev,
+  html.visor-modo-presentacion .visor-nav--next {
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    transform: none;
+  }
+}
