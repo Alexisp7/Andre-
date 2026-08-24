@@ -5783,3 +5783,66 @@ body:has(.investigacion-sola) #spaMain::before {
 .ref:focus-within .ref-lugar {
   color: var(--gold-light) !important;
 }
+
+/* --------------------------------------------------------------------------
+   INVESTIGACIÓN · desenfoque progresivo sobre el último elemento visible
+
+   Franja fija al pie de la ventana (no del documento): lo que sea que quede
+   cortado por el borde inferior de la pantalla mientras se hace scroll por
+   las listas de referencias se desenfoca de forma progresiva hacia abajo,
+   en vez de cortarse en seco - una pista visual de "hay más, seguí bajando".
+   8 capas superpuestas, cada una con su propio blur y una máscara que solo
+   dibuja una franja horizontal de esa capa: el resultado es un degradado de
+   nitidez a desenfoque total, no un blur parejo. Adaptado de un componente
+   React (ProgressiveBlur) a HTML/CSS plano para este sitio estático. */
+body:has(.investigacion-sola) .progressive-blur {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 24vh;
+  pointer-events: none;
+  z-index: 60;
+}
+body:has(.investigacion-sola) .progressive-blur > div {
+  position: absolute;
+  inset: 0;
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(1) {
+  backdrop-filter: blur(0.5px); -webkit-backdrop-filter: blur(0.5px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12.5%, black 25%, transparent 37.5%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12.5%, black 25%, transparent 37.5%);
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(2) {
+  backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 12.5%, black 25%, black 37.5%, transparent 50%);
+  mask-image: linear-gradient(to bottom, transparent 12.5%, black 25%, black 37.5%, transparent 50%);
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(3) {
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 25%, black 37.5%, black 50%, transparent 62.5%);
+  mask-image: linear-gradient(to bottom, transparent 25%, black 37.5%, black 50%, transparent 62.5%);
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(4) {
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 37.5%, black 50%, black 62.5%, transparent 75%);
+  mask-image: linear-gradient(to bottom, transparent 37.5%, black 50%, black 62.5%, transparent 75%);
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(5) {
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 50%, black 62.5%, black 75%, transparent 87.5%);
+  mask-image: linear-gradient(to bottom, transparent 50%, black 62.5%, black 75%, transparent 87.5%);
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(6) {
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 62.5%, black 75%, black 87.5%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 62.5%, black 75%, black 87.5%, transparent 100%);
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(7) {
+  backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 75%, black 87.5%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 75%, black 87.5%, black 100%);
+}
+body:has(.investigacion-sola) .progressive-blur > div:nth-child(8) {
+  backdrop-filter: blur(64px); -webkit-backdrop-filter: blur(64px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 87.5%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 87.5%, black 100%);
+}
