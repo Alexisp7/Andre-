@@ -5507,3 +5507,78 @@ body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-inner {
     transform: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   CAMPOS DE TEXTO EN MÓVIL · sin zoom automático de iOS
+
+   Safari en iPhone hace zoom de golpe al tocar un campo con letra menor a
+   16px. El formulario de contacto y el buscador de apuntes quedaban todos
+   por debajo de eso (13-14px), pensados para escritorio. */
+@media (max-width: 900px) {
+  .campo input,
+  .campo textarea,
+  #contactame .campo input,
+  #contactame .campo textarea,
+  .notes-search {
+    font-size: 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TEMARIO EN MÓVIL · el programa primero, la ficha después
+
+   En Neuropsicología/Neuroanatomía el aside (ficha + bibliografía) va antes
+   que el programa real en el HTML, así que al colapsar a una columna quedaba
+   arriba de todo, empujando el contenido útil fuera de la pantalla inicial.
+   Mismo ancho que ya usa .syllabus-grid para pasar a una columna (1000px):
+   con dos columnas activas no hay que reordenar nada. */
+@media (max-width: 1000px) {
+  .syllabus-grid > aside.syllabus-aside { order: 2; }
+  .syllabus-grid > div { order: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   APUNTES EN MÓVIL · vuelve el curso y las páginas
+
+   Antes se ocultaban del todo (.note-course/.note-pages en display:none) para
+   que la fila entrara en una columna angosta. Se pierde información real; en
+   vez de esconderla se arma una segunda línea: el título ocupa su propio
+   renglón completo y curso + páginas + "Leer" comparten el de abajo. */
+@media (max-width: 900px) {
+  .note-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 14px;
+    row-gap: 8px;
+  }
+  .note-main { flex: 1 1 100%; }
+  .note-course { display: inline-flex; }
+  .note-pages { display: block; }
+  .note-dl { margin-left: auto; }
+}
+
+/* --------------------------------------------------------------------------
+   CELULARES MUY ANGOSTOS (<400px) · más aire lateral
+
+   .section mantenía el mismo padding lateral de los 900px hasta el celular
+   más chico. Se recorta solo el padding horizontal (nunca el vertical, para
+   no chocar con los varios ajustes de padding-top/bottom que ya existen sobre
+   .section en distintas páginas) justo donde las grillas más densas (apuntes,
+   temario) más lo necesitan. */
+@media (max-width: 400px) {
+  .section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   INVESTIGACIÓN EN CELULARES ANGOSTOS · año arriba de la cita
+
+   .ref mantenía la columna fija del año (58px) hasta en el celular más chico;
+   con el recorte de padding de arriba, el texto de la cita quedaba muy
+   apretado al lado. Se apila en vez de sostener la columna. */
+@media (max-width: 520px) {
+  .ref { grid-template-columns: 1fr; gap: 6px; }
+}
