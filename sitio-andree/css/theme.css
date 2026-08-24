@@ -5742,3 +5742,7 @@ html.visor-modo-presentacion .hero-nav-flotante {
    la fila de escudos y entre un grupo de escudos y el siguiente. */
 .escudos-titulo { margin-bottom: 18px; }
 .escudos-titulo:not(:first-child) { margin-top: 32px; }
+
+/* --------------------------------------------------------------------------
+   PORTADA · sin indicador de scroll (mouse animado) */
+.page-hero--portada .scroll-cue { display: none; }
