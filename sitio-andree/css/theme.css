@@ -5582,3 +5582,51 @@ body:has(#listaNoticias) .page-hero.pagina-noticias--fijo .page-hero-inner {
 @media (max-width: 520px) {
   .ref { grid-template-columns: 1fr; gap: 6px; }
 }
+
+/* --------------------------------------------------------------------------
+   PORTADA EN MÓVIL · la caja del video vuelve a medir la pantalla entera
+
+   .page-hero (238px en mobile, para las franjas angostas de las demás
+   páginas) le estaba ganando a .page-hero--portada (100vh) porque llegaba
+   después en el archivo con la misma especificidad. En la portada, el
+   nombre y el video fijo quedaban atrapados en esos 238px: el nombre se
+   veía centrado pero clavado arriba de todo (tapado a medias por el menú)
+   en vez de centrado en la pantalla completa. El selector compuesto de
+   abajo gana por especificidad, no por orden, así que no importa qué se
+   agregue después. */
+@media (max-width: 900px) {
+  .page-hero.page-hero--portada {
+    height: 100vh;
+    height: 100svh;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   VIDEO DE PORTADA · filtro azul parejo, no solo un rincón
+
+   El velo anterior era un degradado diagonal que en buena parte del cuadro
+   bajaba casi a transparente (hasta 0.1 de opacidad): ahí el negro propio
+   del video quedaba negro puro en vez de teñido. Se pareja a un velo azul
+   consistente en todo el cuadro. */
+.page-hero--portada.page-hero--fijo .page-hero-overlay {
+  background:
+    linear-gradient(180deg, rgba(13, 34, 55, 0.38), rgba(13, 34, 55, 0.5)) !important;
+}
+
+/* --------------------------------------------------------------------------
+   VISOR · el menú desaparece de verdad en pantalla completa
+
+   #spaMain tiene su propio position:relative + z-index:2 (para el fondo de
+   cuadrícula de las páginas normales), y eso crea un contexto de apilamiento
+   propio: aunque .visor-viewport.pseudo-fullscreen tenga z-index:999, ese
+   999 solo compite DENTRO del contexto de #spaMain, nunca contra
+   .hero-nav-flotante (z-index:240 pero fuera de #spaMain, en el <body>) —
+   el menú le sigue ganando y se queda flotando encima del apunte a pantalla
+   completa. Pasa en horizontal y en vertical por igual, porque el problema
+   no es de tamaño de pantalla sino de apilamiento. Más simple y directo que
+   pelear con contextos de apilamiento: ocultar el menú a mano mientras el
+   visor está en modo presentación (real o simulado, ambos activan esta
+   misma clase en <html>). */
+html.visor-modo-presentacion .hero-nav-flotante {
+  display: none;
+}
