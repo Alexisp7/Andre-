@@ -5901,3 +5901,24 @@ body:has(.investigacion-sola) .progressive-blur {
   display: none;
 }
 
+/* --------------------------------------------------------------------------
+   MENÚ DE ARRIBA SIN LA CÁPSULA DE VIDRIO · pantallas anchas
+
+   .hero-nav-flotante venía siendo una cápsula (fondo, borde, sombra y
+   blur) que agrupaba visualmente los 4 enlaces en un solo bloque. Se
+   pide quitar esa cápsula: los enlaces quedan sueltos sobre el video,
+   solo con su raya dorada de activo/hover (ya existente en
+   ".hero-nav-flotante a::after"). El móvil no se toca -- ya tenía su
+   propio velo sin vidrio desde antes. */
+@media (min-width: 901px) {
+  .hero-nav-flotante {
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .hero-nav-flotante::after { content: none; }
+}
+
