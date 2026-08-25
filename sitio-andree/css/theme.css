@@ -1978,9 +1978,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
        riel, contacto) incluso ya invisible del todo (opacity 0). */
     pointer-events: none;
   }
-  /* Antes 140vh: dejaba una sensación de espacio vacío muy larga entre
-     el título y la biografía al bajar. */
-  #tituloDwell { height: 40vh; }
+  /* Antes 140vh, luego 40vh: seguía dejando una sensación de espacio
+     vacío muy larga entre el título y la biografía al bajar. */
+  #tituloDwell { height: 20vh; }
 
   /* ── Riel de secciones (Título / Biografía / Universidades / Contacto) ──
      Oculto mientras se ve el título — recién se difumina hacia visible
