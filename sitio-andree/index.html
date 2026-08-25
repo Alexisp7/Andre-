@@ -97,6 +97,32 @@
       </a>
     </nav>
   </section>
+  <script>
+    (function () {
+      /* Algunos navegadores (Brave con Shields activado, o Safari según
+         la configuración de datos) ignoran el atributo autoplay incluso
+         siendo muted+playsinline y dejan el video pausado en el primer
+         cuadro, con el botón de reproducir nativo encima. Se reintenta
+         .play() explícitamente por script, y de nuevo en el primer toque
+         real del usuario si seguía pausado -- ahí sí lo permiten incluso
+         los navegadores más estrictos. */
+      var video = document.querySelector('.mobile-cover__video');
+      if (!video) return;
+      function intentar() { video.play().catch(function () {}); }
+      intentar();
+      video.addEventListener('loadeddata', intentar);
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && video.paused) intentar();
+      });
+      function intentarUnaVez() {
+        if (video.paused) intentar();
+        document.removeEventListener('touchstart', intentarUnaVez);
+        document.removeEventListener('click', intentarUnaVez);
+      }
+      document.addEventListener('touchstart', intentarUnaVez, { once: true, passive: true });
+      document.addEventListener('click', intentarUnaVez, { once: true });
+    })();
+  </script>
 
   <section class="page-hero page-hero--portada page-hero--fijo" id="portada">
     <video class="page-hero-video" autoplay muted loop playsinline
