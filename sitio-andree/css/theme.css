@@ -6156,3 +6156,30 @@ body:has(.investigacion-sola) .progressive-blur {
   }
 }
 
+/* --------------------------------------------------------------------------
+   TARJETA DEL AUTOR · centrada de nuevo en la diapositiva fija
+
+   #sobre .slide-pin se anclaba arriba (align-items:flex-start) porque en
+   su momento la tarjeta, más alta, dejaba aire arriba al centrarla. Con
+   los recortes recientes (escudos sin caja de alto fijo, credenciales al
+   pie) la tarjeta bajó bastante de alto y anclarla arriba ahora deja
+   todo el aire libre abajo -- se pide centrarla de nuevo.
+
+   Con align-items:center no bastaba: #sobre .section solo pisaba el
+   padding-top (32px) y se quedaba con el padding-bottom de la regla
+   base (hasta 130px) -- esa diferencia por sí sola empujaba la tarjeta
+   visible hacia arriba dentro de su propia caja, aunque .section ya
+   estuviera centrada. Con los dos parejos, la tarjeta queda centrada
+   de verdad. */
+@media (min-width: 901px) {
+  #sobre .slide-pin { align-items: center; }
+  #sobre .section { padding-bottom: 32px; }
+}
+
+/* --------------------------------------------------------------------------
+   RIEL DE SECCIONES · oculto por ahora
+
+   Los puntos laterales (Título/A. Salvatierra/Contáctame) se apagan a
+   pedido -- no se borra el componente, solo se deja de mostrar. */
+.riel-secciones { display: none !important; }
+
