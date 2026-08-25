@@ -5843,3 +5843,30 @@ body:has(.investigacion-sola) .progressive-blur {
 @media (max-width: 900px) {
   #sobre .autor-nombre { font-size: clamp(26px, 8vw, 62px); }
 }
+
+/* --------------------------------------------------------------------------
+   ESCUDOS JUNTO A LA FOTO · lo que antes era su propia sección, ahora vive acá
+
+   La sección aparte de "Formación"/"Estancias e investigación" (con sus
+   títulos y el nombre de cada grado debajo de cada escudo) se quita del
+   todo. Los mismos escudos pasan a una fila simple bajo la foto, sin
+   texto ni caja propia: solo el círculo claro detrás de cada uno para que
+   se lean sobre el fondo oscuro (igual que siempre necesitaron, algunos
+   traen líneas oscuras que desaparecerían sin esa base). */
+#sobre .autor-escudos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+#sobre .autor-escudos img {
+  height: 38px;
+  width: 38px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  padding: 7px;
+  box-sizing: border-box;
+}
