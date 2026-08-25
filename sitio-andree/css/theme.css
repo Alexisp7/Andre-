@@ -5874,3 +5874,23 @@ body:has(.investigacion-sola) .progressive-blur {
   text-shadow: none !important;
 }
 
+/* --------------------------------------------------------------------------
+   CREDENCIALES · una sola fila y el nombre de cada una en dorado
+
+   Con las tres juntas, el padding de 16px por lado a veces no dejaba
+   espacio y "RENACYT P0093916" caía a su propia línea. Se recorta el
+   padding para que quepan siempre en una fila, y el nombre de cada
+   credencial (CPsP, RNE, RENACYT) pasa a dorado como el número, en vez
+   del gris apagado que tenía antes. */
+#sobre .autor-registros span {
+  padding: 0 8px;
+  color: var(--gold-light);
+}
+
+/* --------------------------------------------------------------------------
+   SIN EL CÍRCULO DECORATIVO EN LA FOTO */
+#sobre .autor-foto-3d::after {
+  content: none;
+  display: none;
+}
+
