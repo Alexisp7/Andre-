@@ -5913,9 +5913,14 @@ body:has(.investigacion-sola) .progressive-blur {
    sitio — así la letra usa la fuente ya cargada en vez de depender de que
    el navegador cargue fuentes dentro de una imagen de fondo.
 
-   Solo en pantallas bien anchas (el arco necesita aire a los costados);
-   por debajo de este ancho se seguía usando la pastilla de vidrio de
-   siempre. Nada de esto toca el menú de mobile (ya resuelto aparte). */
+   .nav-orbital (el <svg> y la "A") vive en el HTML de todas las páginas
+   siempre, pero solo se ve dentro del media query de abajo — por defecto
+   queda oculto, para no aparecer fuera de lugar en la pastilla de vidrio
+   de siempre (<1200px), y solo en pantallas bien anchas (el arco necesita
+   aire a los costados). Nada de esto toca el menú de mobile (ya resuelto
+   aparte). */
+.hero-nav-flotante .nav-orbital { display: none; }
+
 @media (min-width: 1200px) {
   .hero-nav-flotante {
     position: fixed;
@@ -5934,24 +5939,32 @@ body:has(.investigacion-sola) .progressive-blur {
     backdrop-filter: none;
     display: block;
   }
-  /* display:block explícito en las dos reglas de abajo: hay un
-     .hero-nav-flotante::before { content:none; display:none; } mucho más
-     arriba en el archivo (mata el viejo círculo con la "N") que es
-     unconditional - sin overridear display acá, ese none se queda puesto
-     aunque content/background se hayan cambiado, y todo el arco queda
-     invisible aunque sus propiedades estén bien puestas. */
-  .hero-nav-flotante::before {
-    content: '';
+  /* El arco + los puntos + el anillo del sello, y la letra "A", ya NO
+     son un fondo SVG en un pseudo-elemento: pasaron a ser elementos
+     reales del HTML (.nav-orbital, con un <svg> real adentro y un
+     <span> para la letra). Los pseudo-elementos ::before/::after sobre
+     .hero-nav-flotante dependían de resolver correctamente su propio
+     posicionamiento absoluto y de no chocar con reglas viejas — dio
+     resultados distintos entre navegadores. Un elemento real de verdad
+     no tiene esa ambigüedad. */
+  .hero-nav-flotante .nav-orbital {
     display: block;
     position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDE5MCI+CiAgPHBhdGggZD0iTTE0MCwxNzggUTUwMCw3NSA4NjAsMTc4IiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGIwNmEiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iMiw3IiBvcGFjaXR5PSIwLjYiLz4KICA8bGluZSB4MT0iNTAwIiB5MT0iMjQiIHgyPSI1MDAiIHkyPSIxMjYiIHN0cm9rZT0iI2Q0YjA2YSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtZGFzaGFycmF5PSIyLDYiIG9wYWNpdHk9IjAuNjUiLz4KICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIxNzgiIHI9IjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Q0YjA2YSIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMTM2IiByPSI5IiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGIwNmEiIHN0cm9rZS13aWR0aD0iMSIvPgogIDxjaXJjbGUgY3g9IjY2MCIgY3k9IjEzNiIgcj0iOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRiMDZhIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8Y2lyY2xlIGN4PSI4NjAiIGN5PSIxNzgiIHI9IjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Q0YjA2YSIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGNpcmNsZSBjeD0iMTQwIiBjeT0iMTc4IiByPSIyLjYiIGZpbGw9IiNkNGIwNmEiLz4KICA8Y2lyY2xlIGN4PSIzNDAiIGN5PSIxMzYiIHI9IjIuNiIgZmlsbD0iI2Q0YjA2YSIvPgogIDxjaXJjbGUgY3g9IjUwMCIgY3k9IjEyNiIgcj0iNCIgZmlsbD0iI2Q0YjA2YSIgb3BhY2l0eT0iMC44Ii8+CiAgPGNpcmNsZSBjeD0iNjYwIiBjeT0iMTM2IiByPSIyLjYiIGZpbGw9IiNkNGIwNmEiLz4KICA8Y2lyY2xlIGN4PSI4NjAiIGN5PSIxNzgiIHI9IjIuNiIgZmlsbD0iI2Q0YjA2YSIvPgogIDxjaXJjbGUgY3g9IjUwMCIgY3k9IjEyIiByPSIxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRiMDZhIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9IjEsNCIvPgo8L3N2Zz4K");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 190px;
     pointer-events: none;
   }
-  .hero-nav-flotante::after {
-    content: 'A';
+  .hero-nav-flotante .nav-orbital-svg {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-nav-flotante .nav-orbital-emblema {
     display: block;
     position: absolute;
     left: 50%;
@@ -5963,7 +5976,6 @@ body:has(.investigacion-sola) .progressive-blur {
     font-size: 21px;
     line-height: 1;
     color: var(--gold-light);
-    pointer-events: none;
   }
   /* .hero-nav-links/.hero-nav-mitad son display:contents en el resto del
      sitio (para que sus hijos cuenten como flex-items directos del nav).
