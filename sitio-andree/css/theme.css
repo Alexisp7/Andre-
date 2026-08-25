@@ -5984,3 +5984,165 @@ body:has(.investigacion-sola) .progressive-blur {
   .page-hero:not(.page-hero--portada) { height: 210px; }
 }
 
+/* --------------------------------------------------------------------------
+   PORTADA MÓVIL · pieza fija exclusiva para celulares angostos (≤767px)
+
+   .mobile-cover vive solo en index.html, junto a la portada de escritorio
+   de siempre (#portada) -- nunca los dos a la vez: por debajo de 768px se
+   apaga #portada y el menú de arriba (.hero-nav-flotante) y se muestra
+   esta pieza en su lugar; de 768px para arriba es al revés. El fondo usa
+   la captura de referencia como imagen fija (uses-reference-fallback):
+   arco, título y marcadores reales quedan en el HTML/SVG por accesibilidad
+   y foco, pero se dejan en opacity:0 porque la captura ya los dibuja --
+   los <a> siguen ahí, tapables, en la posición exacta de cada punto del
+   arco. Si más adelante se agrega un cerebro con fondo transparente
+   (img/mobile-cover-brain.webp), se podría montar la versión editable de
+   verdad en vez de la captura; por ahora esta es la única versión. */
+.mobile-cover { display: none; }
+
+@media (max-width: 767px) {
+  body:has(#portadaMovil) .hero-nav-flotante,
+  body:has(#portadaMovil) .page-hero--portada {
+    display: none;
+  }
+
+  .mobile-cover {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100svh;
+    min-height: 620px;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: #020912;
+    background-image: url("../img/mobile-cover-reference.webp");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .mobile-cover__header {
+    position: absolute;
+    top: calc(5.5svh + env(safe-area-inset-top));
+    left: 17%;
+    right: 11%;
+    z-index: 4;
+    text-align: center;
+    opacity: 0;
+  }
+
+  .mobile-cover__header h1 {
+    margin: 14px 0 0;
+    color: #fff3df;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4.15rem, 17.2vw, 5rem);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.055em;
+    line-height: 0.82;
+  }
+
+  .neuron-emblem {
+    position: relative;
+    width: clamp(70px, 16vw, 78px);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+  }
+  .neuron-emblem svg {
+    position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+    fill: none; stroke: #eeb663; stroke-width: 1.4;
+  }
+  .neuron-emblem svg circle { fill: #eeb663; stroke: none; }
+  .neuron-emblem span {
+    position: relative; top: -1px; color: #fff3df;
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(3.05rem, 11vw, 3.4rem);
+    font-weight: 400; line-height: 1;
+  }
+
+  .mobile-cover__arc {
+    position: absolute; inset: 0; z-index: 2;
+    width: 100%; height: 100%; overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .mobile-cover__arc path {
+    fill: none; stroke: #eeb663; stroke-width: 1.1;
+    vector-effect: non-scaling-stroke; opacity: 0.92;
+  }
+
+  .arc-navigation { position: absolute; inset: 0; z-index: 6; }
+
+  .arc-link {
+    position: absolute;
+    top: var(--y); left: var(--x);
+    display: flex; align-items: center;
+    color: #eeb663;
+    text-decoration: none;
+    transform: translateY(-50%);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .arc-marker {
+    position: relative;
+    width: clamp(22px, 5.75vw, 27px);
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    margin-left: calc(clamp(22px, 5.75vw, 27px) / -2);
+    margin-right: clamp(11px, 3vw, 14px);
+    border: 1.2px solid #eeb663;
+    border-radius: 50%;
+    background: #020912;
+    box-shadow: 0 0 0 4px rgba(2, 9, 18, 0.75);
+    opacity: 0;
+  }
+  .arc-marker::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #eeb663; transform: translate(-50%, -50%);
+  }
+  .arc-link.is-active .arc-marker::after {
+    width: 58%; height: 58%;
+    box-shadow: 0 0 12px rgba(238, 182, 99, 0.55);
+  }
+  .arc-link:active .arc-marker { transform: scale(0.9); }
+  .arc-link:focus-visible {
+    outline: 2px solid #fff3df;
+    outline-offset: 7px;
+    border-radius: 2px;
+  }
+
+  .arc-link__text {
+    display: flex; flex-direction: column; gap: 2px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.055em;
+    white-space: nowrap;
+    opacity: 0;
+  }
+  .arc-link__text small { font-size: clamp(9px, 2.25vw, 11px); line-height: 1; opacity: 0.76; }
+  .arc-link__text strong { font-size: clamp(10px, 2.55vw, 12px); font-weight: 400; line-height: 1.3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-marker, .arc-marker::after { transition: none !important; }
+}
+
+/* --------------------------------------------------------------------------
+   INSIGNIAS EN MÓVIL · sin bisel blanco, con relieve oscuro
+
+   Varios escudos traen fondo claro dentro de la propia imagen; en la
+   tarjeta oscura de "Sobre el autor" se veía como un bisel blanco
+   pegado al logo. Se oscurece y se le da relieve con drop-shadow en vez
+   de tapar el fondo con una tarjeta -- solo en celular, a pedido. */
+@media (max-width: 900px) {
+  #sobre .escudo img {
+    filter:
+      brightness(0.82)
+      contrast(1.3)
+      drop-shadow(-2px -2px 1px rgba(255, 220, 155, 0.21))
+      drop-shadow(3px 4px 2px rgba(0, 0, 0, 0.9))
+      drop-shadow(0 12px 12px rgba(0, 0, 0, 0.40));
+  }
+}
+

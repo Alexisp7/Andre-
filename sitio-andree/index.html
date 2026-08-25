@@ -44,6 +44,53 @@
     </div>
   </nav>
 
+  <!-- Portada exclusiva para celulares angostos (hasta 767px): reemplaza
+       el video + menú de arriba por esta pieza fija (arco dorado con las
+       4 secciones + cerebro). Ver MENÚ/PORTADA MÓVIL en theme.css. En
+       768px o más nunca se muestra -- la portada de escritorio de abajo
+       sigue intacta. -->
+  <section class="mobile-cover uses-reference-fallback" id="portadaMovil" aria-labelledby="coverTituloMovil">
+    <header class="mobile-cover__header">
+      <div class="neuron-emblem" aria-hidden="true">
+        <svg viewBox="0 0 100 100" role="presentation">
+          <path d="M76 18 C94 30 98 55 88 74 C77 94 49 99 28 86 C8 73 4 45 18 25 C31 7 58 5 76 18"/>
+          <path d="M88 74 C82 83 74 89 65 93"/>
+          <circle cx="76" cy="18" r="3.5"/>
+          <circle cx="88" cy="30" r="2.5"/>
+          <circle cx="96" cy="49" r="4.5"/>
+          <circle cx="91" cy="70" r="5.5"/>
+          <circle cx="51" cy="96" r="4"/>
+          <circle cx="18" cy="25" r="2.5"/>
+        </svg>
+        <span>A</span>
+      </div>
+      <h1 id="coverTituloMovil">Neurona</h1>
+    </header>
+
+    <svg class="mobile-cover__arc" viewBox="0 0 941 1672" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M235 -20 C70 160 36 367 50 522 C57 648 61 725 65 774 C72 882 91 980 100 1038 C115 1150 113 1238 100 1284 C84 1390 35 1512 -30 1600"/>
+    </svg>
+
+    <nav class="arc-navigation" aria-label="Navegación principal">
+      <a class="arc-link is-active" href="index.html" aria-current="page" style="--x: 5.3%; --y: 31.25%">
+        <span class="arc-marker" aria-hidden="true"></span>
+        <span class="arc-link__text"><small>01</small><strong>INICIO</strong></span>
+      </a>
+      <a class="arc-link" href="materiales.html" style="--x: 6.9%; --y: 46.3%">
+        <span class="arc-marker" aria-hidden="true"></span>
+        <span class="arc-link__text"><small>02</small><strong>CURSOS</strong></span>
+      </a>
+      <a class="arc-link" href="investigacion.html" style="--x: 10.5%; --y: 62.1%">
+        <span class="arc-marker" aria-hidden="true"></span>
+        <span class="arc-link__text"><small>03</small><strong>INVESTIGACIÓN</strong></span>
+      </a>
+      <a class="arc-link" href="noticias.html" style="--x: 10.6%; --y: 76.8%">
+        <span class="arc-marker" aria-hidden="true"></span>
+        <span class="arc-link__text"><small>04</small><strong>NOTICIAS</strong></span>
+      </a>
+    </nav>
+  </section>
+
   <section class="page-hero page-hero--portada page-hero--fijo" id="portada">
     <video class="page-hero-video" autoplay muted loop playsinline
            poster="img/hero-neuronas-poster.webp" aria-hidden="true">
