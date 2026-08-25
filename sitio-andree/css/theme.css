@@ -5698,14 +5698,21 @@ html.visor-modo-presentacion .hero-nav-flotante {
 }
 
 /* --------------------------------------------------------------------------
-   SOBRE EL AUTOR · sin aire muerto abajo
+   SOBRE EL AUTOR · la foto arriba, no centrada
 
-   La foto es más alta que el bloque de texto, y con align-items:start el
-   texto quedaba pegado arriba, dejando todo ese sobrante como aire vacío
-   solo debajo del texto. Centrado, el texto baja al medio de la fila y el
-   sobrante se reparte arriba y abajo por igual — se nota mucho menos. */
+   Con los escudos ahora adentro, el bloque de texto quedó mucho más alto
+   que la foto — centrarla (como cuando era al revés, la foto más alta que
+   el texto) dejaba un hueco vacío arriba Y abajo de la foto. Alineada
+   arriba, la foto acompaña al nombre y el texto sigue de largo debajo sin
+   ese aire muerto. */
 #sobre .autor-grid {
-  align-items: center;
+  align-items: start;
+}
+
+/* El nombre pasa del dorado más pálido de la paleta a uno un poco más
+   saturado, para que destaque más sobre el fondo oscuro. */
+#sobre .autor-nombre {
+  color: var(--gold);
 }
 
 /* --------------------------------------------------------------------------
