@@ -5845,17 +5845,19 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   ESCUDOS JUNTO A LA FOTO · sin texto, sin fondo, superpuestos en bisel
+   ESCUDOS JUNTO AL NOMBRE · reemplazan la biografía, no van debajo de la foto
 
-   Nada de caption, nada de título de sección, nada de círculo de color
-   detrás: el logo mismo, recortado en círculo, superpuesto sobre el
-   siguiente como una fila de monedas, con un bisel (sombra + brillo en
-   el borde) en vez de un fondo propio. */
+   La biografía en texto contaba lo mismo que ya dicen los escudos (qué
+   universidad, qué grado) - se quita del todo y los escudos ocupan ese
+   lugar, justo debajo del nombre. Nada de caption, nada de título de
+   sección, nada de círculo de color detrás: el logo mismo, recortado en
+   círculo, superpuesto sobre el siguiente como una fila de monedas, con
+   un bisel (sombra + brillo en el borde) en vez de un fondo propio. */
 #sobre .autor-escudos {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+  justify-content: flex-start;
+  margin: 14px 0 6px;
 }
 #sobre .autor-escudos img {
   height: 44px;
