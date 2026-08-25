@@ -5991,9 +5991,11 @@ body:has(.investigacion-sola) .progressive-blur {
    de siempre (#portada) -- nunca los dos a la vez: por debajo de 768px se
    apaga #portada y el menú de arriba (.hero-nav-flotante) y se muestra
    esta pieza en su lugar; de 768px para arriba es al revés. El fondo es
-   el mismo video de la portada de escritorio (.mobile-cover__video, con
-   su propio velo oscuro para que el título/arco dorado se lean encima);
-   arco, título, marcadores y enlaces son HTML/SVG real, no una captura. */
+   el mismo video de cerebro que se ve detrás de "Neurona" en escritorio
+   (hero-cerebro-portada.mp4, .hero-title-video allá), con el mismo
+   filtro de color y su propio velo oscuro para que el título/arco
+   dorado se lean encima; arco, título, marcadores y enlaces son
+   HTML/SVG real, no una captura. */
 .mobile-cover { display: none; }
 
 @media (max-width: 767px) {
@@ -6020,7 +6022,10 @@ body:has(.investigacion-sola) .progressive-blur {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
     pointer-events: none;
+    background: #010508;
+    filter: saturate(0.86) contrast(1.08) brightness(0.72);
   }
 
   .mobile-cover__overlay {
