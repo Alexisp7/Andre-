@@ -5990,14 +5990,10 @@ body:has(.investigacion-sola) .progressive-blur {
    .mobile-cover vive solo en index.html, junto a la portada de escritorio
    de siempre (#portada) -- nunca los dos a la vez: por debajo de 768px se
    apaga #portada y el menú de arriba (.hero-nav-flotante) y se muestra
-   esta pieza en su lugar; de 768px para arriba es al revés. El fondo usa
-   la captura de referencia como imagen fija (uses-reference-fallback):
-   arco, título y marcadores reales quedan en el HTML/SVG por accesibilidad
-   y foco, pero se dejan en opacity:0 porque la captura ya los dibuja --
-   los <a> siguen ahí, tapables, en la posición exacta de cada punto del
-   arco. Si más adelante se agrega un cerebro con fondo transparente
-   (img/mobile-cover-brain.webp), se podría montar la versión editable de
-   verdad en vez de la captura; por ahora esta es la única versión. */
+   esta pieza en su lugar; de 768px para arriba es al revés. El fondo es
+   el mismo video de la portada de escritorio (.mobile-cover__video, con
+   su propio velo oscuro para que el título/arco dorado se lean encima);
+   arco, título, marcadores y enlaces son HTML/SVG real, no una captura. */
 .mobile-cover { display: none; }
 
 @media (max-width: 767px) {
@@ -6014,11 +6010,27 @@ body:has(.investigacion-sola) .progressive-blur {
     min-height: 620px;
     overflow: hidden;
     isolation: isolate;
-    background-color: #020912;
-    background-image: url("../img/mobile-cover-reference.webp");
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: #020912;
+  }
+
+  .mobile-cover__video {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .mobile-cover__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(2, 9, 18, 0.86) 0%, rgba(2, 9, 18, 0.38) 34%, rgba(2, 9, 18, 0.5) 68%, rgba(2, 9, 18, 0.92) 100%),
+      linear-gradient(90deg, rgba(2, 9, 18, 0.55) 0%, transparent 45%);
   }
 
   .mobile-cover__header {
@@ -6028,7 +6040,6 @@ body:has(.investigacion-sola) .progressive-blur {
     right: 11%;
     z-index: 4;
     text-align: center;
-    opacity: 0;
   }
 
   .mobile-cover__header h1 {
@@ -6040,6 +6051,7 @@ body:has(.investigacion-sola) .progressive-blur {
     font-weight: 400;
     letter-spacing: -0.055em;
     line-height: 0.82;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
   }
 
   .neuron-emblem {
@@ -6065,7 +6077,6 @@ body:has(.investigacion-sola) .progressive-blur {
     position: absolute; inset: 0; z-index: 2;
     width: 100%; height: 100%; overflow: visible;
     pointer-events: none;
-    opacity: 0;
   }
   .mobile-cover__arc path {
     fill: none; stroke: #eeb663; stroke-width: 1.1;
@@ -6095,7 +6106,6 @@ body:has(.investigacion-sola) .progressive-blur {
     border-radius: 50%;
     background: #020912;
     box-shadow: 0 0 0 4px rgba(2, 9, 18, 0.75);
-    opacity: 0;
   }
   .arc-marker::after {
     content: ''; position: absolute; top: 50%; left: 50%;
@@ -6118,7 +6128,7 @@ body:has(.investigacion-sola) .progressive-blur {
     font-family: 'Space Mono', monospace;
     letter-spacing: 0.055em;
     white-space: nowrap;
-    opacity: 0;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
   }
   .arc-link__text small { font-size: clamp(9px, 2.25vw, 11px); line-height: 1; opacity: 0.76; }
   .arc-link__text strong { font-size: clamp(10px, 2.55vw, 12px); font-weight: 400; line-height: 1.3; }

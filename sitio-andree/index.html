@@ -46,10 +46,17 @@
 
   <!-- Portada exclusiva para celulares angostos (hasta 767px): reemplaza
        el video + menú de arriba por esta pieza fija (arco dorado con las
-       4 secciones + cerebro). Ver MENÚ/PORTADA MÓVIL en theme.css. En
-       768px o más nunca se muestra -- la portada de escritorio de abajo
-       sigue intacta. -->
-  <section class="mobile-cover uses-reference-fallback" id="portadaMovil" aria-labelledby="coverTituloMovil">
+       4 secciones). Ver MENÚ/PORTADA MÓVIL en theme.css. En 768px o más
+       nunca se muestra -- la portada de escritorio de abajo sigue
+       intacta. El fondo es el mismo video que usa la portada de
+       escritorio (no la foto fija de referencia). -->
+  <section class="mobile-cover" id="portadaMovil" aria-labelledby="coverTituloMovil">
+    <video class="mobile-cover__video" autoplay muted loop playsinline
+           poster="img/hero-neuronas-poster.webp" aria-hidden="true">
+      <source src="img/hero-neuronas.mp4" type="video/mp4"/>
+    </video>
+    <div class="mobile-cover__overlay" aria-hidden="true"></div>
+
     <header class="mobile-cover__header">
       <div class="neuron-emblem" aria-hidden="true">
         <svg viewBox="0 0 100 100" role="presentation">
