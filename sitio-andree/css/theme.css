@@ -1931,9 +1931,9 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
      las dejaba con un aire vacío arriba. Se anclan arriba en su lugar,
      con menos aire propio (el padding/margen normales dejaban todavía
      bastante espacio antes del título). */
-  #formacion .slide-pin { align-items: flex-start; }
-  #formacion .section { padding-top: 32px; }
-  #formacion .escudos-bloque { margin-top: 28px; }
+  #sobre .slide-pin { align-items: flex-start; }
+  #sobre .section { padding-top: 32px; }
+  #sobre .escudos-bloque { margin-top: 28px; }
 
   /* El "despegue" de una diapositiva pegada (sticky), al final, SIEMPRE
      se come de recorrido extra exactamente la altura de lo que venga
@@ -2115,7 +2115,7 @@ body:has(.page-hero--portada) { background: transparent; }
    semitransparente es solo un colchón de contraste (no una "tarjeta"
    opaca): el desenfoque del fondo, creciente con el scroll, es lo que
    de verdad hace legible el texto. */
-#sobre, #formacion {
+#sobre, #sobre {
   background: rgba(8, 14, 24, 0.42);
   position: relative; z-index: 1;
 }
@@ -2150,9 +2150,9 @@ body:has(.page-hero--portada) { background: transparent; }
 }
 #sobre .autor-retrato img { border-radius: 2px; }
 #sobre .retrato-cortina { background: var(--blue); }
-#formacion .escudos-titulo { color: var(--white); }
-#formacion .escudos-titulo::after { background: rgba(255, 255, 255, 0.2); }
-#formacion .escudo figcaption { color: rgba(255, 255, 255, 0.85); }
+#sobre .escudos-titulo { color: var(--white); }
+#sobre .escudos-titulo::after { background: rgba(255, 255, 255, 0.2); }
+#sobre .escudo figcaption { color: rgba(255, 255, 255, 0.85); }
 
 #contactame.contacto-seccion {
   background: rgba(8, 14, 24, 0.42);
@@ -2900,7 +2900,7 @@ html.visor-modo-presentacion .visor-pie { display: none; }
    para verse sobre blanco) que casi desaparecen contra el fondo oscuro
    de esta sección — se les da una chapita clara pareja a todos, así se
    leen igual de bien sin importar el color propio de cada logo. */
-#formacion .escudo img {
+#sobre .escudo img {
   background: rgba(255, 255, 255, 0.94);
   border-radius: 10px;
   padding: 12px;
@@ -4553,13 +4553,13 @@ body:has(.page-hero--portada) { background: transparent; }
 
 /* Sin bloques azulados planos: el video queda reconocible entre diapositivas. */
 body:has(.page-hero--portada) #sobre,
-body:has(.page-hero--portada) #formacion,
+body:has(.page-hero--portada) #sobre,
 body:has(.page-hero--portada) #contactame.contacto-seccion {
   background: rgba(1, 7, 13, 0.16) !important;
 }
 
-body:has(.page-hero--portada) #formacion .slide-pin,
-body:has(.page-hero--portada) #formacion .section { background: transparent !important; }
+body:has(.page-hero--portada) #sobre .slide-pin,
+body:has(.page-hero--portada) #sobre .section { background: transparent !important; }
 
 /* Una única raya de firma bajo el título. */
 .page-hero--portada .hero-nombre-linea {
@@ -4757,7 +4757,7 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
 /* --------------------------------------------------------------------------
    INSIGNIAS · blanco limpio y disposición fija sobre el video */
 
-#formacion .escudos-bloque {
+#sobre .escudos-bloque {
   width: min(1180px, calc(100% - 48px));
   margin-inline: auto;
   padding: clamp(20px, 2.5vw, 32px);
@@ -4770,12 +4770,12 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 28px 64px -42px rgba(0, 7, 18, 0.55);
 }
 
-#formacion .escudos-titulo { color: var(--black); text-shadow: none; }
-#formacion .escudos-titulo::after { background: linear-gradient(90deg, rgba(20, 35, 61, 0.35), rgba(20, 35, 61, 0.05)); }
-#formacion .riel-escudos { background: transparent !important; border: 0 !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-#formacion .riel-escudos::before, #formacion .riel-escudos::after, #formacion .riel-escudo-item::before { display: none !important; }
-#formacion .riel-escudo-item,
-#formacion .escudo {
+#sobre .escudos-titulo { color: var(--black); text-shadow: none; }
+#sobre .escudos-titulo::after { background: linear-gradient(90deg, rgba(20, 35, 61, 0.35), rgba(20, 35, 61, 0.05)); }
+#sobre .riel-escudos { background: transparent !important; border: 0 !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+#sobre .riel-escudos::before, #sobre .riel-escudos::after, #sobre .riel-escudo-item::before { display: none !important; }
+#sobre .riel-escudo-item,
+#sobre .escudo {
   border: 1px solid #d8e6f0 !important;
   background: #ffffff !important;
   box-shadow: 0 15px 30px -25px rgba(0, 10, 22, 0.56), inset 0 1px 0 #ffffff !important;
@@ -4783,15 +4783,15 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
   backdrop-filter: none !important;
   transition: border-color 220ms ease, box-shadow 220ms ease !important;
 }
-#formacion .riel-escudo-etiqueta, #formacion .escudo figcaption { color: #132c40 !important; text-shadow: none !important; }
-#formacion .riel-escudo-item:hover, #formacion .riel-escudo-item:focus-visible, #formacion .escudo:hover, #formacion .riel-escudo-item:hover img, #formacion .escudo:hover img { transform: none !important; }
+#sobre .riel-escudo-etiqueta, #sobre .escudo figcaption { color: #132c40 !important; text-shadow: none !important; }
+#sobre .riel-escudo-item:hover, #sobre .riel-escudo-item:focus-visible, #sobre .escudo:hover, #sobre .riel-escudo-item:hover img, #sobre .escudo:hover img { transform: none !important; }
 
 @media (min-width: 901px) {
-  #formacion .riel-escudos {
+  #sobre .riel-escudos {
     height: clamp(170px, 15.4vw, 194px);
     overflow: visible;
   }
-  #formacion .riel-pista {
+  #sobre .riel-pista {
     display: grid !important;
     width: 100%;
     height: 100%;
@@ -4799,10 +4799,10 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
     animation: none !important;
     transform: none !important;
   }
-  #formacion .riel-pista[style*="--total:6"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  #formacion .riel-pista[style*="--total:4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  #formacion .riel-escudo-item.riel-escudo-item--duplicado { display: none !important; }
-  #formacion .riel-escudo-item:not(.riel-escudo-item--duplicado) {
+  #sobre .riel-pista[style*="--total:6"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  #sobre .riel-pista[style*="--total:4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #sobre .riel-escudo-item.riel-escudo-item--duplicado { display: none !important; }
+  #sobre .riel-escudo-item:not(.riel-escudo-item--duplicado) {
     width: auto;
     height: 100%;
     min-height: 0;
@@ -4811,8 +4811,8 @@ body:has(.page-hero--portada) #formacion .section { background: transparent !imp
     gap: 9px;
     transform: none !important;
   }
-  #formacion .riel-escudo-item img { height: clamp(48px, 4.8vw, 72px); max-width: 82%; transform: none !important; }
-  #formacion .riel-escudo-etiqueta { opacity: 1; transform: none; font-size: clamp(10px, 0.82vw, 12px); line-height: 1.25; }
+  #sobre .riel-escudo-item img { height: clamp(48px, 4.8vw, 72px); max-width: 82%; transform: none !important; }
+  #sobre .riel-escudo-etiqueta { opacity: 1; transform: none; font-size: clamp(10px, 0.82vw, 12px); line-height: 1.25; }
 }
 
 /* La guía lateral se lee sobre su propio velo negro y nunca se funde con el texto. */
@@ -5658,17 +5658,17 @@ html.visor-modo-presentacion .hero-nav-flotante {
    (transparente, sin borde ni sombra) y solo aparece al pasar el mouse o
    enfocar con teclado — el logo queda suelto sobre el fondo, la tarjeta es
    apenas un realce de interacción. */
-#formacion .riel-escudo-item,
-#formacion .escudo {
+#sobre .riel-escudo-item,
+#sobre .escudo {
   border-color: transparent !important;
   background: transparent !important;
   box-shadow: none !important;
   transition: border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease !important;
 }
-#formacion .riel-escudo-item:hover,
-#formacion .riel-escudo-item:focus-visible,
-#formacion .escudo:hover,
-#formacion .escudo:focus-visible {
+#sobre .riel-escudo-item:hover,
+#sobre .riel-escudo-item:focus-visible,
+#sobre .escudo:hover,
+#sobre .escudo:focus-visible {
   border-color: #d8e6f0 !important;
   background: #ffffff !important;
   box-shadow: 0 15px 30px -25px rgba(0, 10, 22, 0.56), inset 0 1px 0 #ffffff !important;
@@ -5842,5 +5842,35 @@ body:has(.investigacion-sola) .progressive-blur {
    — se partía en dos líneas. Un piso de 8vw/26px lo deja entero. */
 @media (max-width: 900px) {
   #sobre .autor-nombre { font-size: clamp(26px, 8vw, 62px); }
+}
+
+/* --------------------------------------------------------------------------
+   ESCUDOS DENTRO DE LA TARJETA DE "SOBRE EL AUTOR" · una sola tarjeta
+
+   .escudos-bloque era su propia caja blanca, pensada para vivir sola sobre
+   el video (sección aparte). Ahora vive DENTRO de la tarjeta de vidrio de
+   "Sobre el autor" junto al nombre — se apaga esa caja propia (si no,
+   quedaría una tarjeta blanca metida dentro de la oscura) y el texto pasa
+   a los tonos claros que ya usa el resto de la tarjeta. */
+#sobre .escudos-bloque {
+  width: auto;
+  margin: 24px 0 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+#sobre .escudos-titulo {
+  color: var(--gold-light);
+  text-shadow: none;
+}
+#sobre .escudos-titulo::after {
+  background: rgba(255, 255, 255, 0.16);
+}
+#sobre .riel-escudo-etiqueta,
+#sobre .escudo figcaption {
+  color: rgba(230, 241, 239, 0.72) !important;
+  text-shadow: none !important;
 }
 
