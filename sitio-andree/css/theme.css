@@ -5922,3 +5922,35 @@ body:has(.investigacion-sola) .progressive-blur {
   .hero-nav-flotante::after { content: none; }
 }
 
+/* --------------------------------------------------------------------------
+   INSIGNIAS DE FORMACIÓN · sin el flash blanco al pasar el mouse
+
+   El realce ".riel-escudo-item:hover" pintaba la tarjeta de blanco sólido
+   -- se pide quitarlo. Mismo selector, mismo !important (para pesar más
+   que la regla que sí lo pinta), pero de vuelta a transparente: el logo
+   sigue suelto sobre el fondo también al pasar el mouse, sin ningún
+   realce de tarjeta. */
+#sobre .riel-escudo-item:hover,
+#sobre .riel-escudo-item:focus-visible,
+#sobre .escudo:hover,
+#sobre .escudo:focus-visible {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   TARJETA "SOBRE EL AUTOR" · menos aire entre bloques, credenciales abajo
+
+   Tres huecos verticales quedaban demasiado sueltos: entre el nombre y
+   "Formación", entre las insignias de Formación y "Estancias e
+   investigación", y al final de la tarjeta. Se recortan los tres. Las
+   credenciales (CPsP/RNE/RENACYT) además se mueven de debajo del nombre
+   a debajo de las insignias -- ver el nuevo orden en el HTML -- como
+   una línea de firma al pie de la tarjeta en vez de aire vacío junto al
+   nombre; conservan su misma raya superior como separador. */
+#sobre .escudos-bloque { margin-top: 12px; }
+#sobre .escudos-titulo:not(:first-child) { margin-top: 14px; }
+#sobre .autor-registros { margin: 20px 0 0; }
+#sobre .autor-grid { padding-bottom: 28px; }
+
