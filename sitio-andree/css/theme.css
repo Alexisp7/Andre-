@@ -5954,3 +5954,33 @@ body:has(.investigacion-sola) .progressive-blur {
 #sobre .autor-registros { margin: 20px 0 0; }
 #sobre .autor-grid { padding-bottom: 28px; }
 
+/* Cada fila de escudos tenía una altura fija (194px) pensada para la
+   sección propia de antes, mucho más alta que el logo + su etiqueta —
+   eso dejaba aire muerto arriba Y abajo del logo dentro de la propia
+   fila, aunque los títulos ya tuvieran poco margen. Alto real del
+   contenido en vez de una caja fija: la fila se ajusta a lo que
+   realmente ocupa cada grupo (Formación con etiqueta, Estancias sin
+   ella, por eso miden distinto y está bien que así sea). */
+@media (min-width: 901px) {
+  #sobre .riel-escudos { height: auto; }
+  #sobre .riel-pista { height: auto; align-items: start; }
+  #sobre .riel-escudo-item:not(.riel-escudo-item--duplicado) { height: auto; }
+}
+
+/* Con las credenciales ya no partiendo la columna de texto, ese lado
+   volvió a quedar bastante más alto que la foto — centrada verticalmente
+   contra las dos mitades del texto en vez de sujeta arriba. */
+#sobre .autor-grid { align-items: center; }
+
+/* --------------------------------------------------------------------------
+   CABECERA DE PÁGINAS INTERNAS · un poco menos de aire arriba del título
+
+   .page-hero (no portada) anda en 262px con el título anclado abajo
+   (align-items:flex-end): un recorte moderado, no tanto como el de la
+   portada, nada más para que el título quede un poco más cerca del
+   menú. Solo escritorio -- min-width:901px, igual que el resto de estos
+   ajustes -- para no pisar el alto propio (238px) que ya tenía mobile. */
+@media (min-width: 901px) {
+  .page-hero:not(.page-hero--portada) { height: 210px; }
+}
+
