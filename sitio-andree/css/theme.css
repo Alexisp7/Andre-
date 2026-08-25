@@ -5845,28 +5845,31 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   ESCUDOS JUNTO A LA FOTO · lo que antes era su propia sección, ahora vive acá
+   ESCUDOS JUNTO A LA FOTO · sin texto, sin fondo, superpuestos en bisel
 
-   La sección aparte de "Formación"/"Estancias e investigación" (con sus
-   títulos y el nombre de cada grado debajo de cada escudo) se quita del
-   todo. Los mismos escudos pasan a una fila simple bajo la foto, sin
-   texto ni caja propia: solo el círculo claro detrás de cada uno para que
-   se lean sobre el fondo oscuro (igual que siempre necesitaron, algunos
-   traen líneas oscuras que desaparecerían sin esa base). */
+   Nada de caption, nada de título de sección, nada de círculo de color
+   detrás: el logo mismo, recortado en círculo, superpuesto sobre el
+   siguiente como una fila de monedas, con un bisel (sombra + brillo en
+   el borde) en vez de un fondo propio. */
 #sobre .autor-escudos {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   margin-top: 20px;
 }
 #sobre .autor-escudos img {
-  height: 38px;
-  width: 38px;
-  object-fit: contain;
-  background: rgba(255, 255, 255, 0.92);
+  height: 44px;
+  width: 44px;
+  object-fit: cover;
+  object-position: center;
   border-radius: 50%;
-  padding: 7px;
-  box-sizing: border-box;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 3px 7px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.45);
+  margin-left: -14px;
+  position: relative;
 }
+#sobre .autor-escudos img:first-child { margin-left: 0; }
