@@ -6144,14 +6144,19 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   INSIGNIAS EN MÓVIL · sin bisel blanco, con relieve oscuro
+   INSIGNIAS EN MÓVIL Y TABLET · sin bisel blanco, con relieve oscuro
 
    Varios escudos traen fondo claro dentro de la propia imagen; en la
    tarjeta oscura de "Sobre el autor" se veía como un bisel blanco
    pegado al logo. Se oscurece y se le da relieve con drop-shadow en vez
-   de tapar el fondo con una tarjeta -- solo en celular, a pedido. */
-@media (max-width: 900px) {
-  #sobre .escudo img {
+   de tapar el fondo con una tarjeta. Hasta 900px es la grilla mobile
+   (.escudo); de 901 a 1024px sigue siendo la tira de escritorio pero en
+   ancho de tablet (.riel-escudo-item) -- el mismo tratamiento en los
+   dos, a pedido. Sin tocar el escritorio de verdad (1025px en
+   adelante). */
+@media (max-width: 1024px) {
+  #sobre .escudo img,
+  #sobre .riel-escudo-item img {
     filter:
       brightness(0.82)
       contrast(1.3)
