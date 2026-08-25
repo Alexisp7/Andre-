@@ -94,8 +94,12 @@
     };
     Object.keys(mapa).forEach(function (clave) {
       if (!cfg[clave]) return;
-      var a = nav.querySelector(mapa[clave]);
-      if (a) a.classList.add('active');
+      /* querySelectorAll (no querySelector): puede haber más de un <a>
+         con el mismo href a la vez -- el menú "orbital" de pantallas
+         anchas y el menú de siempre conviven en el DOM (uno oculto por
+         CSS según el ancho) -- y los dos necesitan marcarse activos. */
+      var enlacesActivos = nav.querySelectorAll(mapa[clave]);
+      enlacesActivos.forEach(function (a) { a.classList.add('active'); });
     });
     if (cfg.subActiva) {
       var sub = nav.querySelector('.nav-submenu a[href="' + archivo + '"]');
