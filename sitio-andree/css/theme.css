@@ -5957,6 +5957,17 @@ body:has(.investigacion-sola) .progressive-blur {
     color: var(--gold-light);
     pointer-events: none;
   }
+  /* .hero-nav-links/.hero-nav-mitad son display:contents en el resto del
+     sitio (para que sus hijos cuenten como flex-items directos del nav).
+     Ese modo tiene soporte inconsistente entre navegadores para resolver
+     el "contenedor de posicionamiento" de un descendiente position:absolute
+     — algunos lo calculan bien contra .hero-nav-flotante, otros no. Para
+     no depender de eso, acá se vuelven cajas normales: así el contenedor
+     de los enlaces absolutos queda inequívoco. */
+  .hero-nav-flotante .hero-nav-links,
+  .hero-nav-flotante .hero-nav-mitad {
+    display: block;
+  }
   .hero-nav-flotante .hero-nav-sep,
   .hero-nav-flotante .hero-nav-espaciador {
     display: none;
