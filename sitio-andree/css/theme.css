@@ -6208,18 +6208,27 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   INSIGNIAS · más grandes de 901px para arriba, se ven legibles de nuevo
+   INSIGNIAS · de alto fijo a ancho fijo (tarjetas horizontales ~1.8:1)
 
-   A clamp(48px,4.8vw,72px) varios escudos con mucho detalle fino (el
-   emblema de Villarreal, el sello de UNMSM) quedaban ilegibles/como
-   manchones. Dos causas, no una: el tamaño en sí, y que los PNG 3D
-   nuevos traían mucho margen transparente propio alrededor del logo
-   (hueco para la sombra) -- a la misma altura de caja, se veía la
-   mitad de chico que el .webp plano de antes, que llegaba borde a
-   borde. Se recortó cada PNG a su contenido real (con margen chico
-   para no cortar la sombra) y encima se sube el alto de la caja. */
-@media (min-width: 901px) {
-  #sobre .riel-escudo-item img { height: clamp(80px, 8.5vw, 125px); }
+   El set de imágenes actual son tarjetas anchas (~1.8:1, fondo propio
+   incluido), muy distintas de proporción a los logos sueltos de antes
+   (más altos que anchos). Fijar el ALTO como se hacía antes chocaba
+   con max-width:82% a este ancho: pedía cerca de 213px de ancho para
+   119px de alto y el navegador terminaba resolviendo un tamaño mucho
+   más chico e impredecible. Con tarjetas anchas tiene más sentido fijar
+   el ANCHO (relativo a la columna de la grilla) y dejar el alto en
+   auto -- el 1.8:1 se mantiene solo, sin pelear con la columna. */
+#sobre .riel-escudo-item img {
+  width: 88%;
+  max-width: none;
+  height: auto;
+}
+@media (max-width: 900px) {
+  #sobre .escudo img {
+    width: 82%;
+    max-width: none;
+    height: auto;
+  }
 }
 
 /* --------------------------------------------------------------------------
