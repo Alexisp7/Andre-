@@ -4421,7 +4421,7 @@ body:has(#listaNoticias) .page-hero-sub {
 .contacto-seccion .section { position: relative; z-index: 1; }
 .contacto-cuerpo { gap: 72px; }
 .contacto-nombre { color: var(--white); font-size: 29px; }
-.contacto-titulo { color: #f7f9f7; }
+.contacto-titulo { color: var(--gold); }
 .contacto-antetitulo { color: var(--blue-soft); }
 .contacto-lista a { color: #f4faf9; }
 .contacto-lista a:hover { color: var(--blue-soft); }
