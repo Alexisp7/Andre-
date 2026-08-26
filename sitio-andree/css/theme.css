@@ -6246,4 +6246,18 @@ body:has(.investigacion-sola) .progressive-blur {
    Sin línea, sin subrayado, sin resplandor: el logo con su relieve 3D
    ya horneado en el PNG es el único tratamiento. */
 
+/* --------------------------------------------------------------------------
+   TÍTULOS DE PORTADA · dorado fuerte en las páginas de navegación principal
+
+   .page-hero-title usa --gold-light (un dorado pálido) en todas las
+   páginas. Se pide el dorado fuerte (--gold, el mismo que "Contacto" en
+   la sección de contacto) específicamente en Cursos, Investigación y
+   Noticias -- las otras páginas (Apuntes, Biopsicología, etc.) no se
+   tocan, por eso va con una clase aparte en vez de cambiar la regla
+   compartida. */
+.page-hero-title.hero-titulo-dorado,
+.page-hero-title.hero-titulo-dorado em {
+  color: var(--gold);
+}
+
 
