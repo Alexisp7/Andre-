@@ -6223,38 +6223,10 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   INSIGNIAS · raya dorada luminosa debajo de cada logo, a pedido
+   INSIGNIAS · sin raya dorada debajo del logo
 
-   .riel-escudo-item/.escudo ya son flex column (img, luego el
-   figcaption si lo hay); el ::after se suma como un tercer "hijo" de
-   ese mismo flex y se reordena entre los dos con order -- así queda
-   siempre pegado al logo y antes del texto, sea cual sea el alto real
-   de cada imagen recortada, sin necesitar posicionar a mano. El brillo
-   es puro box-shadow en capas (ninguna imagen nueva): una línea
-   nítida al centro y dos halos cada vez más difusos alrededor. */
-#sobre .riel-escudo-item img,
-#sobre .escudo img { order: 0; }
-
-#sobre .riel-escudo-item::after,
-#sobre .escudo::after {
-  content: '';
-  order: 1;
-  align-self: center;
-  width: min(74px, 60%);
-  height: 2px;
-  margin-block: 4px 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    var(--gold) 18%,
-    var(--gold-light) 50%,
-    var(--gold) 82%,
-    transparent);
-  box-shadow:
-    0 0 6px 1px rgba(212, 176, 106, 0.85),
-    0 0 22px 8px rgba(212, 176, 106, 0.4),
-    0 0 46px 18px rgba(212, 176, 106, 0.18);
-}
-
-#sobre .riel-escudo-etiqueta,
-#sobre .escudo figcaption { order: 2; }
+   Se había agregado una raya/resplandor dorado (::after, reordenado
+   con flexbox order entre el logo y su etiqueta) -- se pide quitarla.
+   Sin línea, sin subrayado, sin resplandor: el logo con su relieve 3D
+   ya horneado en el PNG es el único tratamiento. */
 
