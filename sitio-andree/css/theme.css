@@ -6230,15 +6230,4 @@ body:has(.investigacion-sola) .progressive-blur {
    Sin línea, sin subrayado, sin resplandor: el logo con su relieve 3D
    ya horneado en el PNG es el único tratamiento. */
 
-/* --------------------------------------------------------------------------
-   IMIM · reemplazado por la versión limpia, sin relieve horneado
-
-   El PNG 3D de IMIM (texto blanco grueso sobre naranja sólido) salía
-   con un ruido/moteado real del propio script de generación -- se usa
-   la versión limpia (sin ese paso) en su lugar. Sombra suave por CSS
-   nada más, para que no quede totalmente plano al lado de los demás
-   escudos, que sí tienen relieve horneado. */
-#sobre img[src*="imim"] {
-  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.55));
-}
 
