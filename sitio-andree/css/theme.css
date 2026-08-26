@@ -6208,26 +6208,33 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   INSIGNIAS · de alto fijo a ancho fijo (tarjetas horizontales ~1.8:1)
+   INSIGNIAS · caja de alto fijo + object-fit (siluetas de proporción variable)
 
-   El set de imágenes actual son tarjetas anchas (~1.8:1, fondo propio
-   incluido), muy distintas de proporción a los logos sueltos de antes
-   (más altos que anchos). Fijar el ALTO como se hacía antes chocaba
-   con max-width:82% a este ancho: pedía cerca de 213px de ancho para
-   119px de alto y el navegador terminaba resolviendo un tamaño mucho
-   más chico e impredecible. Con tarjetas anchas tiene más sentido fijar
-   el ANCHO (relativo a la columna de la grilla) y dejar el alto en
-   auto -- el 1.8:1 se mantiene solo, sin pelear con la columna. */
+   El set anterior eran tarjetas anchas de proporción uniforme (~1.8:1,
+   fondo propio incluido), por eso convenía fijar el ancho. El set actual
+   son siluetas transparentes reales, cada institución con su propia
+   proporción (desde ~0.7:1 hasta ~2.6:1 en UAB, la más ancha) -- fijar
+   solo el ancho las dejaría de alturas muy distintas en la misma fila.
+
+   Fijar alto + max-width en un <img> con width:auto es la combinación
+   ambigua ya vista antes en esta sesión (el navegador puede resolver un
+   tamaño intermedio impredecible cuando ambos chocan, como pasa con UAB
+   en columnas angostas). Se evita fijando ANCHO Y ALTO explícitos (nada
+   en 'auto') más object-fit:contain: la caja queda inequívoca y la
+   imagen se escala adentro sin recortarse ni deformarse, sea cual sea
+   su proporción. */
 #sobre .riel-escudo-item img {
-  width: 88%;
-  max-width: none;
-  height: auto;
+  width: 82%;
+  height: clamp(48px, 4.8vw, 72px);
+  max-width: 82%;
+  object-fit: contain;
 }
 @media (max-width: 900px) {
   #sobre .escudo img {
     width: 82%;
-    max-width: none;
-    height: auto;
+    height: 72px;
+    max-width: 82%;
+    object-fit: contain;
   }
 }
 
