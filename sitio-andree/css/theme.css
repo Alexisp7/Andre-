@@ -6157,16 +6157,20 @@ body:has(.investigacion-sola) .progressive-blur {
    siendo la tira de escritorio pero en ancho de tablet
    (.riel-escudo-item, que nunca tuvo esa tarjeta propia) -- mismo
    filtro en las dos, a pedido. Sin tocar el escritorio real (1025px en
-   adelante). */
+   adelante).
+
+   El contraste/brillo del filtro se suaviza (contrast 1.3→1.14,
+   brightness .82→.9): tan fuerte, sobre los bordes suavizados/con
+   antialiasing del propio logo, se veía borroso en vez de nítido. */
 @media (max-width: 1024px) {
   #sobre .escudo img,
   #sobre .riel-escudo-item img {
     filter:
-      brightness(0.82)
-      contrast(1.3)
-      drop-shadow(-2px -2px 1px rgba(255, 220, 155, 0.21))
-      drop-shadow(3px 4px 2px rgba(0, 0, 0, 0.9))
-      drop-shadow(0 12px 12px rgba(0, 0, 0, 0.40));
+      brightness(0.9)
+      contrast(1.14)
+      drop-shadow(-1px -1px 0 rgba(239, 244, 238, 0.12))
+      drop-shadow(2px 3px 1px rgba(0, 0, 0, 0.76))
+      drop-shadow(0 10px 14px rgba(0, 0, 0, 0.34));
   }
   #sobre .escudo img {
     background: transparent;
