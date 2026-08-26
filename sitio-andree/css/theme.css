@@ -6212,12 +6212,13 @@ body:has(.investigacion-sola) .progressive-blur {
 
    A clamp(48px,4.8vw,72px) varios escudos con mucho detalle fino (el
    emblema de Villarreal, el sello de UNMSM) quedaban ilegibles/como
-   manchones -- no era el filtro, era el tamaño: muy chico para tanto
-   detalle. El filtro de relieve (más arriba) además está pensado para
-   un logo de este porte, no de uno tan chico -- ahí se sentía
-   desproporcionado, como borroso. Sube más cerca del tamaño real de
-   cada escudo. */
+   manchones. Dos causas, no una: el tamaño en sí, y que los PNG 3D
+   nuevos traían mucho margen transparente propio alrededor del logo
+   (hueco para la sombra) -- a la misma altura de caja, se veía la
+   mitad de chico que el .webp plano de antes, que llegaba borde a
+   borde. Se recortó cada PNG a su contenido real (con margen chico
+   para no cortar la sombra) y encima se sube el alto de la caja. */
 @media (min-width: 901px) {
-  #sobre .riel-escudo-item img { height: clamp(64px, 6.5vw, 96px); }
+  #sobre .riel-escudo-item img { height: clamp(72px, 7.5vw, 110px); }
 }
 
