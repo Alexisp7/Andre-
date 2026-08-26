@@ -6219,6 +6219,6 @@ body:has(.investigacion-sola) .progressive-blur {
    borde. Se recortó cada PNG a su contenido real (con margen chico
    para no cortar la sombra) y encima se sube el alto de la caja. */
 @media (min-width: 901px) {
-  #sobre .riel-escudo-item img { height: clamp(72px, 7.5vw, 110px); }
+  #sobre .riel-escudo-item img { height: clamp(80px, 8.5vw, 125px); }
 }
 
