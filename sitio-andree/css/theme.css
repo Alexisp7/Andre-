@@ -6202,3 +6202,22 @@ body:has(.investigacion-sola) .progressive-blur {
    pedido -- no se borra el componente, solo se deja de mostrar. */
 .riel-secciones { display: none !important; }
 
+/* --------------------------------------------------------------------------
+   CONTACTO · casilla enfocada se pinta de blanco entera
+
+   Antes, al enfocar una casilla del formulario oscuro (#contactame), el
+   fondo se quedaba igual y solo cambiaba el borde/una raya clara -- se
+   veía como un simple subrayado blanco. Se pide que en vez de eso la
+   casilla entera se pinte de blanco al escribir. */
+#contactame .campo input:focus,
+#contactame .campo textarea:focus {
+  background: var(--white);
+  color: var(--dark);
+  border-color: var(--white);
+  box-shadow: 0 10px 28px -24px rgba(0, 0, 0, 0.9);
+}
+#contactame .campo input:focus::placeholder,
+#contactame .campo textarea:focus::placeholder {
+  color: rgba(20, 34, 53, 0.4);
+}
+
