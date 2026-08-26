@@ -6144,39 +6144,21 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   INSIGNIAS EN MÓVIL Y TABLET · sin bisel blanco, con relieve oscuro
+   INSIGNIAS · relieve ya incorporado en el propio PNG
 
-   La causa real no era la tarjeta (.escudo/.riel-escudo-item, ya
-   transparente) sino el propio <img> en la grilla mobile:
-   "#sobre .escudo img" traía su propio fondo blanco casi sólido
-   (rgba(255,255,255,.94)) más padding y esquinas redondeadas -- una
-   tarjetita propia, pegada a cada logo, que el filtro de abajo solo
-   oscurecía sin quitar (por eso se seguía viendo, más tenue). Se apaga
-   esa tarjeta del todo y el filtro pasa a ser el único tratamiento.
-   Hasta 900px es la grilla mobile (.escudo); de 901 a 1024px sigue
-   siendo la tira de escritorio pero en ancho de tablet
-   (.riel-escudo-item, que nunca tuvo esa tarjeta propia) -- mismo
-   filtro en las dos, a pedido. Sin tocar el escritorio real (1025px en
-   adelante).
-
-   El contraste/brillo del filtro se suaviza (contrast 1.3→1.14,
-   brightness .82→.9): tan fuerte, sobre los bordes suavizados/con
-   antialiasing del propio logo, se veía borroso en vez de nítido. */
-@media (max-width: 1024px) {
-  #sobre .escudo img,
-  #sobre .riel-escudo-item img {
-    filter:
-      brightness(0.9)
-      contrast(1.14)
-      drop-shadow(-1px -1px 0 rgba(239, 244, 238, 0.12))
-      drop-shadow(2px 3px 1px rgba(0, 0, 0, 0.76))
-      drop-shadow(0 10px 14px rgba(0, 0, 0, 0.34));
-  }
-  #sobre .escudo img {
-    background: transparent;
-    border-radius: 0;
-    padding: 0;
-  }
+   Los nueve escudos pasaron de .webp planos a PNG con relieve 3D ya
+   horneado en el archivo (luz de contorno + sombra direccional +
+   sombra ambiental, sin línea/luz dorada inferior) -- ya no hace falta
+   el filter CSS que imitaba ese relieve encima de la imagen plana; se
+   quita para no duplicar el efecto. Sigue haciendo falta apagar el
+   fondo/padding/radio propios de "#sobre .escudo img" (pensados para
+   la tarjetita blanca de antes): sin esto, aunque el PNG ya sea
+   transparente, esa caja seguiría envolviéndolo en la grilla mobile
+   (hasta 900px). */
+#sobre .escudo img {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
 }
 
 /* --------------------------------------------------------------------------
