@@ -6225,3 +6225,17 @@ body:has(.investigacion-sola) .progressive-blur {
   color: rgba(20, 34, 53, 0.4);
 }
 
+/* --------------------------------------------------------------------------
+   INSIGNIAS · más grandes de 901px para arriba, se ven legibles de nuevo
+
+   A clamp(48px,4.8vw,72px) varios escudos con mucho detalle fino (el
+   emblema de Villarreal, el sello de UNMSM) quedaban ilegibles/como
+   manchones -- no era el filtro, era el tamaño: muy chico para tanto
+   detalle. El filtro de relieve (más arriba) además está pensado para
+   un logo de este porte, no de uno tan chico -- ahí se sentía
+   desproporcionado, como borroso. Sube más cerca del tamaño real de
+   cada escudo. */
+@media (min-width: 901px) {
+  #sobre .riel-escudo-item img { height: clamp(64px, 6.5vw, 96px); }
+}
+
