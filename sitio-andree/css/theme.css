@@ -6338,6 +6338,7 @@ body:has(.investigacion-sola) .progressive-blur {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 8px;
 }
 .pais-bandera {
   width: 18px;
@@ -6408,6 +6409,6 @@ body:has(.investigacion-sola) .progressive-blur {
 /* Continental en blanco sólido quedaba demasiado brillante al lado de
    los demás logos (más grises/tenues) -- se le baja un poco la opacidad. */
 #sobre img[src*="continental.webp"] {
-  opacity: 0.85;
+  opacity: 0.72;
 }
 
