@@ -6324,3 +6324,32 @@ body:has(.investigacion-sola) .progressive-blur {
   font-size: 8px;
 }
 
+/* --------------------------------------------------------------------------
+   ESTANCIAS · país de cada sede (pin + bandera)
+
+   Debajo de los cuatro logos de "Estancias e investigación" (que no
+   llevan descripción de texto, a diferencia de los de Formación), un
+   ícono de ubicación pegado a la bandera del país de esa sede -- chico
+   y simple, sin texto. La bandera es un <span> con el emoji de bandera;
+   el pin es un SVG propio del sitio (mismo estilo de trazo que los
+   íconos de Instagram/LinkedIn en Contacto). */
+.pais-etiqueta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: rgba(230, 241, 239, 0.72);
+}
+.pais-pin {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+}
+/* .escudo figcaption ya trae font-size:8px (pensado para la descripción
+   de texto de Formación) -- se sube solo para el emoji de bandera, que
+   a 8px queda ilegible. */
+#sobre .pais-etiqueta span {
+  font-size: 14px;
+  line-height: 1;
+}
+
