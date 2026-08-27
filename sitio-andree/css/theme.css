@@ -6412,3 +6412,29 @@ body:has(.investigacion-sola) .progressive-blur {
   opacity: 0.72;
 }
 
+/* --------------------------------------------------------------------------
+   VISOR · animación mientras carga el PDF
+
+   El hueco reservado (.visor-viewport.cargando, más arriba) no tenía
+   ningún indicador -- con apuntes de varios MB la espera se sentía
+   como que la página estaba trabada. Un anillo girando, centrado en
+   ese mismo hueco; desaparece solo en cuanto JS quita la clase
+   "cargando" (ver medirAltura() en visor.html). */
+@keyframes visor-spinner-girar {
+  to { transform: rotate(360deg); }
+}
+.visor-viewport.cargando::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 46px; height: 46px;
+  margin: -23px 0 0 -23px;
+  border: 3px solid rgba(20, 34, 53, 0.12);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: visor-spinner-girar 0.85s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .visor-viewport.cargando::before { animation: none; }
+}
+
