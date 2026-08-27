@@ -6314,3 +6314,13 @@ body:has(.investigacion-sola) .progressive-blur {
   text-transform: uppercase;
 }
 
+/* Tras el cruce de tipografías, se pide bajar el tamaño de la
+   descripción del grado y subir el del subtítulo -- un solo valor fijo
+   para ambos (mobile y escritorio) en vez de los clamp/tamaños previos
+   pensados para la letra anterior. */
+#sobre .escudos-titulo { font-size: 16px; }
+#sobre .riel-escudo-etiqueta,
+#sobre .escudo figcaption {
+  font-size: 10px;
+}
+
