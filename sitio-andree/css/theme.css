@@ -6325,32 +6325,26 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 
 /* --------------------------------------------------------------------------
-   ESTANCIAS · país de cada sede (pin + bandera)
+   ESTANCIAS · bandera del país de cada sede
 
    Debajo de los cuatro logos de "Estancias e investigación" (que no
-   llevan descripción de texto, a diferencia de los de Formación), un
-   ícono de ubicación pegado a la bandera del país de esa sede -- chico
-   y simple, sin texto. La bandera es un <span> con el emoji de bandera;
-   el pin es un SVG propio del sitio (mismo estilo de trazo que los
-   íconos de Instagram/LinkedIn en Contacto). */
+   llevan descripción de texto, a diferencia de los de Formación), la
+   bandera del país de esa sede -- chica y simple, sin ícono de ubicación
+   ni texto. El emoji de bandera no se veía en Windows (mostraba el
+   código de país, "MX"/"ES"/"CO", en vez de la bandera) -- se reemplaza
+   por un SVG plano de franjas de colores, que sí se ve en cualquier
+   sistema. */
 .pais-etiqueta {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  color: rgba(230, 241, 239, 0.72);
 }
-.pais-pin {
-  width: 12px;
-  height: 12px;
+.pais-bandera {
+  width: 18px;
+  height: auto;
   flex: 0 0 auto;
-}
-/* .escudo figcaption ya trae font-size:8px (pensado para la descripción
-   de texto de Formación) -- se sube solo para el emoji de bandera, que
-   a 8px queda ilegible. */
-#sobre .pais-etiqueta span {
-  font-size: 14px;
-  line-height: 1;
+  border-radius: 2px;
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.25);
 }
 
 /* --------------------------------------------------------------------------
@@ -6409,5 +6403,11 @@ body:has(.investigacion-sola) .progressive-blur {
 #sobre .escudo img[src*="uab.webp"],
 #sobre .escudo img[src*="antioquia.webp"] {
   transform: scale(1.14) !important;
+}
+
+/* Continental en blanco sólido quedaba demasiado brillante al lado de
+   los demás logos (más grises/tenues) -- se le baja un poco la opacidad. */
+#sobre img[src*="continental.webp"] {
+  opacity: 0.85;
 }
 
