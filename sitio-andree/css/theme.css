@@ -6385,3 +6385,29 @@ body:has(.investigacion-sola) .progressive-blur {
   }
 }
 
+/* --------------------------------------------------------------------------
+   INSIGNIAS · cuatro logos anchos se ven más chicos que el resto
+
+   Con la caja de alto fijo (arriba), un logo mucho más ancho que alto
+   (Villarreal, Valencia, UAB) queda limitado por el ANCHO de su columna
+   antes de llegar al alto completo de la caja -- se ven notablemente más
+   chicos que Continental o UNMSM, que sí llegan al alto completo. A
+   Antioquia (más angosto que alto) no le pasa lo mismo por proporción,
+   pero se pide igual un empujón. Se agranda con transform:scale en vez
+   de tocar el ancho/alto de la caja (que afectaría a los diez por
+   igual) -- un valor moderado (1.14) para no pisar al vecino: con el
+   gap mínimo entre columnas (9px) y dos logos agrandados uno al lado
+   del otro (Villarreal-Valencia, Valencia-UAB), cada uno crece ~4.5px
+   por lado, cabe justo sin solaparse. Hay que pisar el
+   "transform:none!important" que ya traían estas imágenes. */
+#sobre .riel-escudo-item img[src*="villarreal.webp"],
+#sobre .riel-escudo-item img[src*="valencia.webp"],
+#sobre .riel-escudo-item img[src*="uab.webp"],
+#sobre .riel-escudo-item img[src*="antioquia.webp"],
+#sobre .escudo img[src*="villarreal.webp"],
+#sobre .escudo img[src*="valencia.webp"],
+#sobre .escudo img[src*="uab.webp"],
+#sobre .escudo img[src*="antioquia.webp"] {
+  transform: scale(1.14) !important;
+}
+
