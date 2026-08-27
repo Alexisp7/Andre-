@@ -6288,4 +6288,29 @@ body:has(.investigacion-sola) .progressive-blur {
   }
 }
 
+/* --------------------------------------------------------------------------
+   INSIGNIAS · más aire entre Formación y Estancias, tipografías cruzadas
+
+   El hueco entre el final de las insignias de Formación y el subtítulo
+   "ESTANCIAS E INVESTIGACIÓN" se había recortado a 14px en un ajuste
+   anterior -- se pide un poco más.
+
+   Además se cruzan las dos tipografías: el subtítulo (FORMACIÓN /
+   ESTANCIAS E INVESTIGACIÓN) usaba Space Mono mayúscula y la
+   descripción del grado (Psicología, etc.) usaba Cormorant Garamond en
+   cursiva -- ahora el subtítulo pasa a Cormorant Garamond (sin
+   cursiva) y la descripción del grado pasa a Space Mono en mayúscula
+   (tampoco en cursiva). */
+#sobre .escudos-titulo:not(:first-child) { margin-top: 32px; }
+
+#sobre .escudos-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+}
+#sobre .riel-escudo-etiqueta,
+#sobre .escudo figcaption {
+  font-family: 'Space Mono', monospace;
+  font-style: normal;
+  text-transform: uppercase;
+}
 
