@@ -6301,7 +6301,7 @@ body:has(.investigacion-sola) .progressive-blur {
    cursiva -- ahora el subtítulo pasa a Cormorant Garamond (sin
    cursiva) y la descripción del grado pasa a Space Mono en mayúscula
    (tampoco en cursiva). */
-#sobre .escudos-titulo:not(:first-child) { margin-top: 32px; }
+#sobre .escudos-titulo:not(:first-child) { margin-top: 52px; }
 
 #sobre .escudos-titulo {
   font-family: 'Cormorant Garamond', serif;
@@ -6321,6 +6321,6 @@ body:has(.investigacion-sola) .progressive-blur {
 #sobre .escudos-titulo { font-size: 16px; }
 #sobre .riel-escudo-etiqueta,
 #sobre .escudo figcaption {
-  font-size: 10px;
+  font-size: 8px;
 }
 
