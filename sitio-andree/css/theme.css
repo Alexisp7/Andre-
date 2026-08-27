@@ -6233,16 +6233,16 @@ body:has(.investigacion-sola) .progressive-blur {
    imagen se escala adentro sin recortarse ni deformarse, sea cual sea
    su proporción. */
 #sobre .riel-escudo-item img {
-  width: 82%;
-  height: clamp(48px, 4.8vw, 72px);
-  max-width: 82%;
+  width: 90%;
+  height: clamp(56px, 5.6vw, 84px);
+  max-width: 90%;
   object-fit: contain;
 }
 @media (max-width: 900px) {
   #sobre .escudo img {
-    width: 82%;
-    height: 72px;
-    max-width: 82%;
+    width: 90%;
+    height: 84px;
+    max-width: 90%;
     object-fit: contain;
   }
 }
