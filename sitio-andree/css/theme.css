@@ -4305,7 +4305,7 @@ body:not(:has(.page-hero--portada)) #spaMain::before {
   background: linear-gradient(100deg, rgba(224, 246, 242, 0.85), rgba(249, 251, 250, 0.93));
 }
 
-.unit-num { color: #168d88; }
+.unit-num { color: var(--gold); }
 .unit-name, .topic-name { color: #10283b; }
 .topic-row { transition: background 200ms ease, transform 200ms ease; }
 .topic-row:hover { background: rgba(100, 218, 204, 0.1); transform: translateX(5px); }
