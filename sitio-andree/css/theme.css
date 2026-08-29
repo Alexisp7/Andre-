@@ -6438,3 +6438,35 @@ body:has(.investigacion-sola) .progressive-blur {
   .visor-viewport.cargando::before { animation: none; }
 }
 
+/* --------------------------------------------------------------------------
+   TEMARIO · aviso de derechos de autor de imágenes externas
+
+   Al final del temario de cada curso (Biopsicología, Psicofarmacología),
+   un aviso corto sobre imágenes de terceros usadas con fines educativos.
+   Gris legible sobre el fondo claro del temario -- ni tan oscuro que
+   compita con el contenido del curso, ni tan pálido que no se note. */
+.aviso-derechos {
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(19, 74, 88, 0.14);
+  color: #5b6470;
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+.aviso-derechos-titulo {
+  display: block;
+  margin-bottom: 5px;
+  color: #45505c;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.aviso-derechos a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.aviso-derechos a:hover { color: var(--blue); }
+
