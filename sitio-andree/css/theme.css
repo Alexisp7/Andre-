@@ -6418,9 +6418,15 @@ body:has(.investigacion-sola) .progressive-blur {
    logos. Es el último de la fila de Formación (un solo vecino, UNMSM, a
    la izquierda), así que hay margen de sobra para un empujón mayor que
    el de Villarreal/Valencia/UAB/Antioquia sin superponerse. */
-#sobre .riel-escudo-item img[src*="innn.webp"],
+#sobre .riel-escudo-item img[src*="innn.webp"] {
+  transform: scale(2) !important;
+}
+/* En la grilla de mobile (2 columnas) INNN cae en la columna derecha,
+   sin vecino a la derecha -- un mismo scale(2) ahí se sale del viewport
+   por el borde (nada detiene el desborde de un transform). Un valor más
+   conservador que sí cabe en el margen disponible hasta el borde. */
 #sobre .escudo img[src*="innn.webp"] {
-  transform: scale(1.6) !important;
+  transform: scale(1.75) !important;
 }
 
 /* --------------------------------------------------------------------------
