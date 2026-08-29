@@ -6487,3 +6487,26 @@ body:has(.investigacion-sola) .progressive-blur {
 }
 .aviso-derechos a:hover { color: var(--blue); }
 
+/* --------------------------------------------------------------------------
+   CONTACTO · perfiles académicos alineados en columnas parejas
+
+   .perfiles es flex con cada .perfil de ancho según su propio texto
+   ("Instagram" vs "Researchgate" vs "CTI Vitae") -- las dos filas de
+   tres no quedaban alineadas entre sí, cada botón con un ancho distinto
+   al de arriba/abajo. Grid de 3 columnas iguales fuerza el mismo ancho
+   por columna en ambas filas. */
+.contacto-perfiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.contacto-perfiles .perfil {
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 480px) {
+  .contacto-perfiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
