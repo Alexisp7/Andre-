@@ -6421,9 +6421,11 @@ body:has(.investigacion-sola) .progressive-blur {
    a la derecha) un valor más conservador para no salirse del viewport. */
 #sobre .riel-escudo-item img[src*="innn.webp"] {
   transform: scale(1.3) !important;
+  margin-bottom: 12px;
 }
 #sobre .escudo img[src*="innn.webp"] {
   transform: scale(1.2) !important;
+  margin-bottom: 16px;
 }
 
 /* --------------------------------------------------------------------------
