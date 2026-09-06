@@ -6059,15 +6059,14 @@ body:has(.investigacion-sola) .progressive-blur {
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
   }
 
-  /* Emblema recortado del logo real que mandó el usuario (opción con
-     neurona + "A"): se extrajo del PNG de referencia -- letra y neurona
-     tal cual las dibujó el diseñador, no una reconstrucción -- quitando
-     el anillo decorativo y los dos puntos de la circunferencia, y
-     recoloreando (neurona dorada, letra azul marino) para leerse sin
-     fondo propio, directo sobre el video. Ver img/emblema-inicio-movil.webp. */
+  /* Emblema tal cual lo mandó el usuario: el círculo completo de su
+     diseño (sello azul marino con la neurona + "A" en blanco), solo
+     recortado a la circunferencia -- sin recolorear ni quitarle el
+     anillo ni los puntos. El propio círculo azul ya funciona como
+     fondo/marco sobre el video. Ver img/emblema-inicio-movil.webp. */
   .neuron-emblem {
     width: clamp(70px, 16vw, 78px);
-    aspect-ratio: 368 / 387;
+    aspect-ratio: 635 / 665;
     margin: 0 auto;
   }
   .neuron-emblem img {
