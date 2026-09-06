@@ -6059,28 +6059,19 @@ body:has(.investigacion-sola) .progressive-blur {
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
   }
 
-  /* Sin fondo ni anillo: la neurona (cuerpo + dendritas ramificadas, con
-     el núcleo como hueco real vía <mask>) va directo sobre el video,
-     dorada: su propio contorno ya arma el "marco" alrededor de la letra,
-     sin necesidad de un círculo decorativo aparte ni de puntos sueltos
-     en la circunferencia. */
+  /* Emblema recortado del logo real que mandó el usuario (opción con
+     neurona + "A"): se extrajo del PNG de referencia -- letra y neurona
+     tal cual las dibujó el diseñador, no una reconstrucción -- quitando
+     el anillo decorativo y los dos puntos de la circunferencia, y
+     recoloreando (neurona dorada, letra azul marino) para leerse sin
+     fondo propio, directo sobre el video. Ver img/emblema-inicio-movil.webp. */
   .neuron-emblem {
-    position: relative;
     width: clamp(70px, 16vw, 78px);
-    aspect-ratio: 1;
+    aspect-ratio: 368 / 387;
     margin: 0 auto;
-    display: grid;
-    place-items: center;
   }
-  .neuron-emblem svg {
-    position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
-    fill: none; stroke: #eeb663; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round;
-  }
-  .neuron-emblem svg circle.soma { fill: #eeb663; stroke: none; }
-  .neuron-emblem span {
-    position: relative; top: -1px; color: #1c4166;
-    font-family: 'Cormorant Garamond', serif; font-size: clamp(3.05rem, 11vw, 3.4rem);
-    font-weight: 500; line-height: 1;
+  .neuron-emblem img {
+    display: block; width: 100%; height: 100%;
   }
 
   .mobile-cover__arc {
