@@ -60,14 +60,17 @@
     <header class="mobile-cover__header">
       <div class="neuron-emblem" aria-hidden="true">
         <svg viewBox="0 0 100 100" role="presentation">
-          <path d="M76 18 C94 30 98 55 88 74 C77 94 49 99 28 86 C8 73 4 45 18 25 C31 7 58 5 76 18"/>
-          <path d="M88 74 C82 83 74 89 65 93"/>
-          <circle cx="76" cy="18" r="3.5"/>
-          <circle cx="88" cy="30" r="2.5"/>
-          <circle cx="96" cy="49" r="4.5"/>
-          <circle cx="91" cy="70" r="5.5"/>
-          <circle cx="51" cy="96" r="4"/>
-          <circle cx="18" cy="25" r="2.5"/>
+          <defs>
+            <mask id="neuronaNucleo">
+              <rect x="0" y="0" width="100" height="100" fill="#fff"/>
+              <circle cx="41" cy="47" r="5"/>
+            </mask>
+          </defs>
+          <circle class="soma" cx="38" cy="50" r="13" mask="url(#neuronaNucleo)"/>
+          <path class="dendritas" d="M29 40 Q24 30 22 24 M22 24 Q16 18 12 14 M22 24 Q24 16 26 10
+                                      M38 37 Q39 27 40 20 M40 20 Q45 14 48 10 M40 20 Q48 16 54 18
+                                      M25 47 Q16 45 10 44 M10 44 Q5 39 2 36 M10 44 Q6 48 4 52
+                                      M27 60 Q21 65 16 70"/>
         </svg>
         <span>A</span>
       </div>

@@ -6059,12 +6059,11 @@ body:has(.investigacion-sola) .progressive-blur {
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
   }
 
-  /* El emblema pasa de línea dorada suelta sobre el video a una insignia
-     con fondo blanco propio -- así la "A" puede leerse en azul oscuro
-     (sobre el video oscuro sería ilegible) sin depender de un anillo
-     decorativo aparte: el cuerpo de la neurona, que ya envuelve a la
-     letra, cumple esa función de marco. Círculo simple, sin borde ni
-     aro extra. */
+  /* Sin fondo ni anillo: la neurona (cuerpo + dendritas ramificadas, con
+     el núcleo como hueco real vía <mask>) va directo sobre el video,
+     dorada: su propio contorno ya arma el "marco" alrededor de la letra,
+     sin necesidad de un círculo decorativo aparte ni de puntos sueltos
+     en la circunferencia. */
   .neuron-emblem {
     position: relative;
     width: clamp(70px, 16vw, 78px);
@@ -6072,17 +6071,14 @@ body:has(.investigacion-sola) .progressive-blur {
     margin: 0 auto;
     display: grid;
     place-items: center;
-    border-radius: 50%;
-    background: #fdfaf4;
-    box-shadow: 0 6px 18px rgba(2, 9, 18, 0.35);
   }
   .neuron-emblem svg {
-    position: absolute; inset: 7%; width: 86%; height: 86%; overflow: visible;
-    fill: none; stroke: #d9a441; stroke-width: 1.4;
+    position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+    fill: none; stroke: #eeb663; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round;
   }
-  .neuron-emblem svg circle { fill: #d9a441; stroke: none; }
+  .neuron-emblem svg circle.soma { fill: #eeb663; stroke: none; }
   .neuron-emblem span {
-    position: relative; top: -1px; color: #0d2237;
+    position: relative; top: -1px; color: #1c4166;
     font-family: 'Cormorant Garamond', serif; font-size: clamp(3.05rem, 11vw, 3.4rem);
     font-weight: 500; line-height: 1;
   }
