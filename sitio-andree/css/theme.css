@@ -6553,6 +6553,12 @@ body:has(.investigacion-sola) .progressive-blur {
    estilos compartida) y no en un <style> propio de recomendados.html —
    si no, llegar a la página por transición interna la dejaría sin estilos.
    -------------------------------------------------------------------------- */
+/* .section trae hasta 130px de padding-top pensado para separar del hero
+   en paginas con encabezado propio (Investigacion, etc.) — acá, sin nada
+   entre el video y el aviso, se veía como un hueco enorme y vacío. */
+body:has(.recomendados-original) .section {
+  padding-top: 24px;
+}
 .recomendados-original {
   --ro-navy-950: #0a1830;
   --ro-navy-900: #0f2142;
