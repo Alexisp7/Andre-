@@ -6573,7 +6573,7 @@ body:has(.investigacion-sola) .progressive-blur {
   padding: 18px 22px;
   font-size: 0.92rem;
   line-height: 1.6;
-  margin: 16px 0 48px;
+  margin: 8px 0 48px;
   border-left: 4px solid var(--ro-gold-500);
 }
 .recomendados-original .ro-disclaimer strong { color: #fff; }
