@@ -6564,6 +6564,7 @@ body:has(.recomendados-original) .section {
   --ro-navy-900: #0f2142;
   --ro-navy-700: #1f3f77;
   --ro-gold-500: #c39a3f;
+  --ro-gold-400: #d4b25e;
   --ro-gold-100: #f3e8cf;
   --ro-ink-soft: #4a5568;
   max-width: 980px;
@@ -6604,24 +6605,33 @@ body:has(.recomendados-original) .section {
   text-decoration: none; background: #fff;
   border: 1px solid rgba(15, 33, 66, 0.12); border-radius: 8px;
   padding: 14px 16px;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition: border-color 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
 }
 .recomendados-original .ro-link-card:hover {
-  border-color: var(--ro-gold-500);
+  background: var(--ro-navy-900);
+  border-color: var(--ro-navy-900);
   transform: translateY(-1px);
 }
 .recomendados-original .ro-link-icon {
   width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; color: var(--ro-navy-700);
+  transition: color 0.15s ease;
 }
+.recomendados-original .ro-link-card:hover .ro-link-icon { color: var(--ro-gold-400); }
 .recomendados-original .ro-link-body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 .recomendados-original .ro-link-name {
   font-weight: 600; font-size: 0.95rem; color: var(--ro-navy-950);
   display: block; margin-bottom: 2px;
+  transition: color 0.15s ease;
 }
 .recomendados-original .ro-link-desc {
   font-size: 0.82rem; color: var(--ro-ink-soft); line-height: 1.4;
+  transition: color 0.15s ease;
+}
+.recomendados-original .ro-link-card:hover .ro-link-name,
+.recomendados-original .ro-link-card:hover .ro-link-desc {
+  color: #fff;
 }
 @media (max-width: 520px) {
   .recomendados-original .ro-cat-head h2 { font-size: 1rem; }
