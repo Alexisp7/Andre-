@@ -46,7 +46,7 @@
   var PAGINAS = [
     'index.html', 'materiales.html', 'investigacion.html', 'noticias.html',
     'apuntes.html', 'contacto.html', 'biopsicologia.html', 'neuroanatomia.html',
-    'neuropsicologia.html', 'psicofarmacologia.html', 'visor.html'
+    'neuropsicologia.html', 'psicofarmacologia.html', 'visor.html', 'recomendados.html'
   ];
 
   // Qué pestaña(s) del menú marcar como activa para cada página.
@@ -59,7 +59,8 @@
     'biopsicologia.html': { subActiva: true },
     'neuroanatomia.html': { cursos: true },
     'neuropsicologia.html': { cursos: true },
-    'visor.html': { cursos: true }
+    'visor.html': { cursos: true },
+    'recomendados.html': { recomendados: true }
   };
 
   var HERO_SEL = '.page-hero-inner';
@@ -90,7 +91,8 @@
       inicio: 'a[href="index.html"]',
       cursos: 'a[href="materiales.html"]',
       investigacion: 'a[href="investigacion.html"]',
-      noticias: 'a[href="noticias.html"]'
+      noticias: 'a[href="noticias.html"]',
+      recomendados: 'a[href="recomendados.html"]'
     };
     Object.keys(mapa).forEach(function (clave) {
       if (!cfg[clave]) return;

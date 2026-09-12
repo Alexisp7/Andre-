@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recomendados — Andreé Salvatierra Baldeón</title>
+  <meta name="description" content="Enlaces externos recomendados: consulta de medicamentos, atlas neuroanatómicos, bancos de neuroimagen, neurofisiología e histología."/>
+  <link rel="icon" href="favicon.png" sizes="32x32" type="image/png"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=Inter:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/theme.css"/>
+  <script src="js/nav-spa.js" defer></script>
+</head>
+<body>
+
+  <nav class="hero-nav-flotante" id="heroNavFlotante" aria-label="Navegación">
+    <button type="button" class="hero-nav-boton" id="heroNavBoton" aria-label="Abrir menú" aria-expanded="false" aria-controls="heroNavLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="hero-nav-links" id="heroNavLinks">
+      <span class="hero-nav-mitad">
+        <a href="index.html">Inicio</a>
+        <span class="hero-nav-sep">|</span>
+        <span class="nav-desplegable">
+          <a href="materiales.html">Cursos</a>
+          <span class="nav-submenu">
+            <a href="biopsicologia.html">Biopsicología</a>
+            <a href="psicofarmacologia.html">Psicofarmacología</a>
+          </span>
+        </span>
+      </span>
+      <span class="hero-nav-sep hero-nav-break">|</span>
+      <span class="hero-nav-espaciador" aria-hidden="true"></span>
+      <span class="hero-nav-mitad">
+        <a href="investigacion.html">Investigación</a>
+        <span class="hero-nav-sep">|</span>
+        <a href="noticias.html">Noticias</a>
+        <span class="hero-nav-sep">|</span>
+        <a href="recomendados.html" class="active">Recomendados</a>
+      </span>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <video class="page-hero-video" autoplay muted loop playsinline
+           poster="img/hero-neuronas-poster.webp" aria-hidden="true">
+      <source src="img/hero-neuronas.mp4" type="video/mp4"/>
+    </video>
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+    <canvas class="hero-constelacion" id="heroConstelacion" aria-hidden="true"></canvas>
+    <div class="page-hero-inner">
+      <h1 class="page-hero-title hero-titulo-dorado">Recomen<em>dados</em></h1>
+      <p class="page-hero-sub">Recursos externos</p>
+    </div>
+    <span class="scroll-cue" aria-hidden="true"></span>
+  </section>
+
+  <main id="spaMain">
+
+  <section>
+    <div class="section">
+      <div class="investigacion-sola">
+          <p class="about-body" style="margin-bottom:32px;">Enlaces a sitios externos, útiles como recursos de consulta y referencia académica. Son independientes de Neurona; su contenido, servicios y disponibilidad son responsabilidad de sus propios autores.</p>
+
+          <p class="escudos-titulo">Consulta de medicamentos</p>
+          <ul class="refs">
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>CIMA.</b> Centro de Información online de Medicamentos (AEMPS, España).</span><a class="ref-enlace" href="https://cima.aemps.es" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>DIGEMID.</b> Búsqueda directa de registro sanitario y ficha técnica de medicamentos (MINSA, Perú).</span><a class="ref-enlace" href="https://www.digemid.minsa.gob.pe/rsProductosFarmaceuticos/" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          </ul>
+
+          <p class="escudos-titulo">Atlas neuroanatómicos</p>
+          <ul class="refs">
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Neurotorium.</b> Contenido educativo en neurología y psiquiatría, con atlas 3D del cerebro.</span><a class="ref-enlace" href="https://neurotorium.org/tool/brain-atlas/" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>BrainFacts.</b> Divulgación neurocientífica de la Society for Neuroscience.</span><a class="ref-enlace" href="https://www.brainfacts.org/3D-Brain" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>MSD Manual.</b> Manual clínico de referencia para profesionales y estudiantes de salud.</span><a class="ref-enlace" href="https://www.msdmanuals.com/es/hogar/enfermedades-cerebrales-medulares-y-nerviosas/biología-del-sistema-nervioso" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Human Organ Atlas (HOA).</b> Imágenes 3D de órganos humanos por tomografía sincrotrón (ESRF/UCL).</span><a class="ref-enlace" href="https://human-organ-atlas.esrf.fr/explore/organ" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          </ul>
+
+          <p class="escudos-titulo">Bancos de neuroimagen</p>
+          <ul class="refs">
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>IMAIOS.</b> Atlas interactivo de anatomía en TC y RM (e-Anatomy).</span><a class="ref-enlace" href="https://www.imaios.com/es/e-anatomy/cerebro/irm-del-cerebro" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Whole Brain Atlas.</b> Neuroimagen normal y patológica (Harvard Medical School).</span><a class="ref-enlace" href="https://www.med.harvard.edu/aanlib/home.html" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>OpenNeuro.</b> Repositorio abierto de datos de neuroimagen (fMRI, MEG, EEG, etc).</span><a class="ref-enlace" href="https://openneuro.org" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Radiopaedia.</b> Wiki de radiología con casos de neuroimagen.</span><a class="ref-enlace" href="https://radiopaedia.org/articles/neuroanatomy" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          </ul>
+
+          <p class="escudos-titulo">Neurofisiología</p>
+          <ul class="refs">
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>NERVE.</b> Módulos interactivos de neurofisiología (Universidad de Chicago).</span><a class="ref-enlace" href="https://nerve.bsd.uchicago.edu/nervejs/MAP1.html" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Neuron.</b> Simulación interactiva del potencial de acción neuronal (PhET, Univ. de Colorado).</span><a class="ref-enlace" href="https://phet.colorado.edu/sims/html/neuron/latest/neuron_en.html" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          </ul>
+
+          <p class="escudos-titulo">Histología cerebral</p>
+          <ul class="refs">
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Digital Histology.</b> Capítulo 8 — Tejido nervioso, del atlas digital de histología (VCU).</span><a class="ref-enlace" href="https://drive.google.com/open?id=1gBiS3A1vcRgaxhmCOExw2-u6W8WwNPPE" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Histology Guide.</b> Galería de tejido nervioso en el laboratorio virtual de microscopía (Univ. de Minnesota).</span><a class="ref-enlace" href="https://www.histologyguide.com/galleryview/06-nervous-tissue.html" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          <li class="ref"><span class="ref-anio">↗</span><span class="ref-datos"><span class="ref-cita"><b>Its Histology.</b> Atlas de histología del tejido nervioso: neuronas, glía, médula espinal y corteza.</span><a class="ref-enlace" href="https://itshistology.com/t-nervioso/" target="_blank" rel="noopener noreferrer">Visitar</a></span></li>
+          </ul>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <div class="progressive-blur" aria-hidden="true"></div>
+
+  <footer class="footer-wrap" id="contacto">
+    <div class="footer">
+      <div class="footer-top">
+        <div class="footer-logo-group">
+          <div>
+            <div class="footer-logo-sub">Dr. Andreé Salvatierra</div>
+          </div>
+        </div>
+        <div class="footer-links-col">
+          <div class="footer-col">
+            <div class="footer-col-title">Cursos</div>
+            <a href="biopsicologia.html">Biopsicología</a>
+            <a href="psicofarmacologia.html">Psicofarmacología</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Biblioteca</div>
+            <a href="materiales.html">Cursos</a>
+            <a href="investigacion.html">Investigación</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="recomendados.html">Recomendados</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Contacto</div>
+            <a href="mailto:4andree4@gmail.com">4andree4@gmail.com</a>
+            <a href="https://orcid.org/0000-0002-0638-563X" target="_blank" rel="noopener">ORCID</a>
+            <a href="https://scholar.google.com/citations?user=h9P861oAAAAJ&amp;hl=es" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/a-salvatierra" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Dr. Andreé Salvatierra · Apuntes de libre distribución con atribución</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var heroNav = document.getElementById('heroNavFlotante');
+      var heroNavBoton = document.getElementById('heroNavBoton');
+      var heroNavLinks = document.getElementById('heroNavLinks');
+      if (!heroNav || !heroNavBoton) return;
+
+      heroNavBoton.addEventListener('click', function () {
+        var abierto = heroNav.classList.toggle('hero-nav-abierto');
+        heroNavBoton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+        centrarBotonNav();
+      });
+      if (heroNavLinks) {
+        heroNavLinks.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            heroNav.classList.remove('hero-nav-abierto');
+            heroNavBoton.setAttribute('aria-expanded', 'false');
+            centrarBotonNav();
+          }
+        });
+      }
+
+      /* Cerrado, el botón queda exactamente centrado (CSS, left:50%).
+         Solo al abrirse se desliza al centro real del hueco entre las
+         dos mitades — que no es el 50% exacto de la pantalla porque
+         "Investigación·Noticias" pesa más que "Inicio·Cursos" y el
+         bloque centrado por CSS no cae parejo. Se mide el espaciador
+         central (que no tiene transform, a diferencia de las mitades)
+         para que el valor sea el correcto esté el menú abierto o no. */
+      var heroNavEspaciador = heroNavLinks ? heroNavLinks.querySelector('.hero-nav-espaciador') : null;
+      function centrarBotonNav() {
+        if (!heroNavEspaciador || !heroNavBoton || !heroNav) return;
+        if (!heroNav.classList.contains('hero-nav-abierto')) {
+          heroNavBoton.style.left = '';
+          return;
+        }
+        var flotanteLeft = heroNav.getBoundingClientRect().left;
+        var hueco = heroNavEspaciador.getBoundingClientRect();
+        heroNavBoton.style.left = ((hueco.left + hueco.right) / 2 - flotanteLeft) + 'px';
+      }
+      centrarBotonNav();
+      window.addEventListener('resize', centrarBotonNav);
+    })();
+  </script>
+</body>
+</html>
