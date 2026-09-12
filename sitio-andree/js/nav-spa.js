@@ -103,6 +103,19 @@
       var sub = nav.querySelector('.nav-submenu a[href="' + archivo + '"]');
       if (sub) sub.classList.add('sub-activa');
     }
+    centrarPestanaActiva(nav);
+  }
+
+  /* En celular el menú ahora es una tira que se desliza (ver theme.css,
+     "MENÚ MÓVIL · tira deslizable"): sin esto, entrar directo a una
+     pestaña que quedó lejos en la tira (p.ej. "Recomendados") la dejaría
+     fuera de vista, con el menú mostrando el arranque de la tira en vez
+     de resaltar dónde está uno parado. block:'nearest' evita que además
+     mueva el scroll vertical de la página — en escritorio, sin overflow
+     horizontal, esto no hace nada. */
+  function centrarPestanaActiva(nav) {
+    var activo = nav.querySelector('.hero-nav-links a.active, .hero-nav-links a.sub-activa');
+    if (activo) activo.scrollIntoView({ inline: 'center', block: 'nearest' });
   }
 
   /* Los <script> insertados vía innerHTML no se ejecutan solos — hay
@@ -329,6 +342,11 @@
      conectado una sola vez, acá, de forma global. */
   var heroNavGlobal = document.getElementById('heroNavFlotante');
   var heroSeccionGlobal = document.querySelector('.page-hero');
+  /* Misma corrección que en actualizarNav, pero para cuando la página se
+     carga directo (no por SPA) y ya trae su "active" puesto en el HTML —
+     ahí actualizarNav nunca se llama, así que hay que centrar la pestaña
+     acá también. */
+  if (heroNavGlobal) centrarPestanaActiva(heroNavGlobal);
   if (heroNavGlobal && heroSeccionGlobal) {
     var desvaneciendo = false;
     var tiempoQuietoRiel = null;

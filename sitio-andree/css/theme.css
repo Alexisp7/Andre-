@@ -5698,6 +5698,40 @@ html.visor-modo-presentacion .hero-nav-flotante {
 }
 
 /* --------------------------------------------------------------------------
+   MENÚ MÓVIL · tira deslizable en vez de apretar el texto
+
+   Con "Recomendados" ya son 6 pestañas: seguir achicando la letra para que
+   entren todas de una (llegaba a 8px) se veía ilegible en un celular. En vez
+   de eso la fila se vuelve una tira horizontal con scroll nativo — se
+   arrastra con el dedo hacia cualquier lado en Android/iOS sin JS de por
+   medio, overscroll-behavior-x:contain evita que ese arrastre se filtre
+   como scroll vertical de la página, y el difuminado de los bordes
+   (mask-image) avisa que hay más pestañas fuera de vista. */
+@media (max-width: 900px) {
+  .hero-nav-links {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding-inline: 20px;
+    mask-image: linear-gradient(to right, transparent, black 18px, black calc(100% - 18px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 18px, black calc(100% - 18px), transparent);
+  }
+  .hero-nav-links::-webkit-scrollbar { display: none; }
+  .hero-nav-flotante a {
+    font-size: 10.5px;
+    padding: 6px 8px;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .hero-nav-flotante .hero-nav-sep { flex: 0 0 auto; }
+}
+
+/* --------------------------------------------------------------------------
    SOBRE EL AUTOR · la foto arriba, no centrada
 
    Con los escudos ahora adentro, el bloque de texto quedó mucho más alto
@@ -6531,13 +6565,6 @@ body:has(.investigacion-sola) .progressive-blur {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
   color: var(--ro-navy-950);
 }
-.recomendados-original .ro-subhead {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  color: var(--ro-ink-soft);
-  font-size: 0.98rem;
-  max-width: 60ch;
-  margin: 0 0 28px;
-}
 .recomendados-original .ro-disclaimer {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   background: var(--ro-navy-950);
@@ -6546,7 +6573,7 @@ body:has(.investigacion-sola) .progressive-blur {
   padding: 18px 22px;
   font-size: 0.92rem;
   line-height: 1.6;
-  margin-bottom: 48px;
+  margin: 16px 0 48px;
   border-left: 4px solid var(--ro-gold-500);
 }
 .recomendados-original .ro-disclaimer strong { color: #fff; }
