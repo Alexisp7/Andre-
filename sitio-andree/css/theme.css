@@ -6511,3 +6511,86 @@ body:has(.investigacion-sola) .progressive-blur {
   }
 }
 
+/* --------------------------------------------------------------------------
+   RECOMENDADOS · tarjetas de enlaces externos
+   Todo escrito como descendiente de .recomendados-original a propósito:
+   la SPA (nav-spa.js) solo reemplaza #spaMain/.page-hero-inner al navegar,
+   nunca <head>, así que este bloque tiene que vivir aquí (en la hoja de
+   estilos compartida) y no en un <style> propio de recomendados.html —
+   si no, llegar a la página por transición interna la dejaría sin estilos.
+   -------------------------------------------------------------------------- */
+.recomendados-original {
+  --ro-navy-950: #0a1830;
+  --ro-navy-900: #0f2142;
+  --ro-navy-700: #1f3f77;
+  --ro-gold-500: #c39a3f;
+  --ro-gold-100: #f3e8cf;
+  --ro-ink-soft: #4a5568;
+  max-width: 980px;
+  margin: 0 auto;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+  color: var(--ro-navy-950);
+}
+.recomendados-original .ro-subhead {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--ro-ink-soft);
+  font-size: 0.98rem;
+  max-width: 60ch;
+  margin: 0 0 28px;
+}
+.recomendados-original .ro-disclaimer {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--ro-navy-950);
+  color: var(--ro-gold-100);
+  border-radius: 6px;
+  padding: 18px 22px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 48px;
+  border-left: 4px solid var(--ro-gold-500);
+}
+.recomendados-original .ro-disclaimer strong { color: #fff; }
+
+.recomendados-original .ro-categoria { margin-bottom: 44px; }
+.recomendados-original .ro-cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; padding-bottom: 10px;
+  border-bottom: 1px solid rgba(15, 33, 66, 0.15);
+}
+.recomendados-original .ro-cat-head h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 1.05rem; font-weight: 600; letter-spacing: 0.3px;
+  margin: 0; color: var(--ro-navy-900);
+}
+
+.recomendados-original .ro-link-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;
+}
+.recomendados-original .ro-link-card {
+  display: flex; gap: 12px; align-items: flex-start;
+  text-decoration: none; background: #fff;
+  border: 1px solid rgba(15, 33, 66, 0.12); border-radius: 8px;
+  padding: 14px 16px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.recomendados-original .ro-link-card:hover {
+  border-color: var(--ro-gold-500);
+  transform: translateY(-1px);
+}
+.recomendados-original .ro-link-icon {
+  width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; color: var(--ro-navy-700);
+}
+.recomendados-original .ro-link-body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+.recomendados-original .ro-link-name {
+  font-weight: 600; font-size: 0.95rem; color: var(--ro-navy-950);
+  display: block; margin-bottom: 2px;
+}
+.recomendados-original .ro-link-desc {
+  font-size: 0.82rem; color: var(--ro-ink-soft); line-height: 1.4;
+}
+@media (max-width: 520px) {
+  .recomendados-original .ro-cat-head h2 { font-size: 1rem; }
+}
+
