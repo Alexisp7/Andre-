@@ -6664,12 +6664,11 @@ body:has(.recomendados-original) .section {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--ro-accent);
 }
-.recomendados-original .ro-list a:hover .ro-name { color: var(--ro-accent); }
+.recomendados-original .ro-list a:hover,
 .recomendados-original .ro-list a.is-visited {
   background: var(--ro-navy-950);
   color: var(--ro-gold-100);
 }
-.recomendados-original .ro-list a.is-visited:hover .ro-name { color: var(--ro-gold-100); }
 .recomendados-original .ro-desc {
   display: block; font-size: 0.8rem;
   color: inherit; opacity: 0.72;
