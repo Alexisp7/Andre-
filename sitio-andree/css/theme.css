@@ -6671,10 +6671,16 @@ body:has(.recomendados-original) .section {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--ro-accent);
 }
-.recomendados-original .ro-list a:hover,
-.recomendados-original .ro-list a.is-visited {
-  background: var(--ro-navy-950);
-  color: var(--ro-gold-100);
+/* Solo hover real (mouse) -- en touch (Android/iOS) ":hover" se activa
+   con el toque y se queda "pegado" hasta el próximo toque en otra
+   parte, lo que se veía como si el enlace se quedara azul después de
+   abrirlo. (hover:hover) lo limita a dispositivos con mouse de verdad;
+   en touch no queda ningún resabio, ni con clase ni con localStorage. */
+@media (hover: hover) and (pointer: fine) {
+  .recomendados-original .ro-list a:hover {
+    background: var(--ro-navy-950);
+    color: var(--ro-gold-100);
+  }
 }
 .recomendados-original .ro-desc {
   display: block; font-size: 0.8rem;

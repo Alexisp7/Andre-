@@ -189,37 +189,6 @@
     </div>
   </section>
 
-  <script>
-    /* Vive dentro de #spaMain a propósito (a diferencia del script del
-       menú, más abajo): nav-spa.js reemplaza este contenedor entero en
-       cada navegación y vuelve a ejecutar los <script> que encuentre
-       adentro (ver ejecutarScripts en nav-spa.js) -- así, cada vez que
-       se entra a Recomendados (directo o por SPA) los enlaces ya
-       visitados se recuperan y los nuevos clics quedan escuchados de
-       nuevo, sin depender de que la página se haya cargado de cero. */
-    (function () {
-      var STORAGE_KEY = 'neurona_visited_links';
-      var visited = {};
-      try {
-        visited = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-      } catch (e) { visited = {}; }
-
-      var links = document.querySelectorAll('.ro-list a[href]');
-      links.forEach(function (link) {
-        if (visited[link.href]) {
-          link.classList.add('is-visited');
-        }
-        link.addEventListener('click', function () {
-          link.classList.add('is-visited');
-          visited[link.href] = true;
-          try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(visited));
-          } catch (e) {}
-        });
-      });
-    })();
-  </script>
-
   </main>
 
   <div class="progressive-blur" aria-hidden="true"></div>
