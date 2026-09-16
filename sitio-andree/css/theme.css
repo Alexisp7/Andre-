@@ -1093,7 +1093,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   font-family: 'Space Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.12em;
-  color: #3A3A3A;
+  color: #fff;
 }
 
 .footer-greek {
