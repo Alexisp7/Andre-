@@ -6690,6 +6690,15 @@ body:has(.recomendados-original) .section {
     color: var(--ro-gold-100);
   }
 }
+/* En touch no hay hover, pero sí ":active" mientras el dedo sigue
+   apoyado -- a diferencia de ":hover", se suelta solo al levantar el
+   dedo, sin quedar pegado. Fuera del media query de arriba a propósito
+   para que corra en cualquier dispositivo (mouse incluido, como
+   feedback extra al hacer clic). */
+.recomendados-original .ro-list a:active {
+  background: var(--ro-navy-950);
+  color: var(--ro-gold-100);
+}
 .recomendados-original .ro-desc {
   display: block; font-size: 0.8rem;
   color: inherit; opacity: 0.72;
