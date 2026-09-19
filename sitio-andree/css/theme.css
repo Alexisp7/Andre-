@@ -6638,7 +6638,7 @@ body:has(.recomendados-original) .section {
 }
 .recomendados-original .ro-plate h2 {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
-  font-size: 1.45rem; font-weight: 500; line-height: 1.25;
+  font-size: calc(1.45rem - 1px); font-weight: 500; line-height: 1.25;
   margin: 0; color: var(--ro-gold-100);
   text-align: center;
 }
@@ -6692,6 +6692,6 @@ body:has(.recomendados-original) .section {
 }
 
 @media (max-width: 520px) {
-  .recomendados-original .ro-plate h2 { font-size: 1.3rem; }
+  .recomendados-original .ro-plate h2 { font-size: calc(1.3rem - 1px); }
 }
 
