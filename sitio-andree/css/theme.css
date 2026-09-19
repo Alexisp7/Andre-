@@ -4331,7 +4331,19 @@ body::selection { background: var(--blue-mid); color: var(--white); }
 .investigacion-sola .escudos-titulo {
   margin-bottom: 16px;
   color: #1b7778;
-  font-size: 16px;
+  font-size: 19px;
+}
+/* Sin la línea que salía a la derecha de cada subtítulo (Publicaciones
+   científicas, Dirección de tesis, Conferencias magistrales). */
+.investigacion-sola .escudos-titulo::after {
+  content: none;
+}
+/* A 19px, "Publicaciones científicas" y "Conferencias magistrales" ya no
+   caben en una línea en celulares angostos (360-390px) con el espaciado
+   de letras de escritorio y se partían en dos. Con menos espaciado
+   entran enteros sin bajar el tamaño pedido. */
+@media (max-width: 420px) {
+  .investigacion-sola .escudos-titulo { letter-spacing: 0.04em; }
 }
 
 /* Los subtítulos de cabecera iban todos en mayúscula por heredar
