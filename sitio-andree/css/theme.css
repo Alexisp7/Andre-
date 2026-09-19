@@ -6622,9 +6622,9 @@ body:has(.recomendados-original) .section {
 }
 
 /* Cada ficha lleva su propio color de acento (--ro-accent), tomado de
-   las variables --ro-c-* de más arriba -- el ícono y el punto delante de
-   cada nombre lo usan. La franja de color de arriba se quitó: la ficha
-   queda solo con su borde fino. */
+   las variables --ro-c-* de más arriba -- hoy solo lo usa el punto
+   delante de cada nombre. La franja de color de arriba y el ícono se
+   quitaron: la ficha queda con su borde fino y el título centrado. */
 .recomendados-original .ro-plate {
   --ro-accent: var(--ro-navy-900);
   position: relative;
@@ -6645,24 +6645,16 @@ body:has(.recomendados-original) .section {
 .recomendados-original .ro-plate--neuro { --ro-accent: var(--ro-c-neuro); }
 .recomendados-original .ro-plate--histo { --ro-accent: var(--ro-c-histo); }
 
+/* Sin ícono: el título de cada ficha va solo, centrado. */
 .recomendados-original .ro-plate-head {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center; justify-content: center;
   margin-bottom: 16px;
 }
-.recomendados-original .ro-plate-badge {
-  width: 38px; height: 38px; flex: 0 0 auto;
-  border-radius: 10px;
-  /* Mismo azul oscuro del pie de página, con el trazo del ícono en dorado
-     (los svg dibujan con currentColor). */
-  background: #071522;
-  color: var(--gold);
-  display: flex; align-items: center; justify-content: center;
-}
-.recomendados-original .ro-plate-badge svg { width: 20px; height: 20px; }
 .recomendados-original .ro-plate h2 {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
   font-size: 1.1rem; font-weight: 500;
   margin: 0; color: #000;
+  text-align: center;
 }
 
 .recomendados-original .ro-list {
