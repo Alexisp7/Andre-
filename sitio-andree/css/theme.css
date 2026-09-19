@@ -6622,8 +6622,9 @@ body:has(.recomendados-original) .section {
 }
 
 /* Cada ficha lleva su propio color de acento (--ro-accent), tomado de
-   las variables --ro-c-* de más arriba -- una franja arriba, el ícono y
-   el punto delante de cada nombre lo usan. */
+   las variables --ro-c-* de más arriba -- el ícono y el punto delante de
+   cada nombre lo usan. La franja de color de arriba se quitó: la ficha
+   queda solo con su borde fino. */
 .recomendados-original .ro-plate {
   --ro-accent: var(--ro-navy-900);
   position: relative;
@@ -6637,13 +6638,6 @@ body:has(.recomendados-original) .section {
 .recomendados-original .ro-plate:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 28px -14px rgba(10, 24, 48, 0.28);
-}
-.recomendados-original .ro-plate::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: var(--ro-accent);
 }
 .recomendados-original .ro-plate--meds  { --ro-accent: var(--ro-c-meds); }
 .recomendados-original .ro-plate--atlas { --ro-accent: var(--ro-c-atlas); }
