@@ -6650,9 +6650,14 @@ body:has(.recomendados-original) .section {
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 16px;
 }
+/* Misma letra que los subtítulos de Investigación (.escudos-titulo dentro
+   de .investigacion-sola): Space Mono en negrita, mayúsculas, 19px,
+   espaciado de letras amplio. Los textos van en minúscula en el HTML y
+   se pasan a mayúsculas por CSS. */
 .recomendados-original .ro-plate h2 {
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
-  font-size: 1.1rem; font-weight: 500;
+  font-family: 'Space Mono', monospace;
+  font-size: 19px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
   margin: 0; color: #000;
   text-align: center;
 }
@@ -6706,7 +6711,8 @@ body:has(.recomendados-original) .section {
   padding-left: 14px; margin-top: 2px;
 }
 
-@media (max-width: 520px) {
-  .recomendados-original .ro-plate h2 { font-size: 1rem; }
+@media (max-width: 420px) {
+  /* Mismo espaciado que los subtítulos de Investigación en celular. */
+  .recomendados-original .ro-plate h2 { letter-spacing: 0.04em; }
 }
 
