@@ -6652,15 +6652,17 @@ body:has(.recomendados-original) .section {
 .recomendados-original .ro-plate-badge {
   width: 38px; height: 38px; flex: 0 0 auto;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--ro-accent) 16%, white);
-  color: var(--ro-accent);
+  /* Mismo azul oscuro del pie de página, con el trazo del ícono en dorado
+     (los svg dibujan con currentColor). */
+  background: #071522;
+  color: var(--gold);
   display: flex; align-items: center; justify-content: center;
 }
 .recomendados-original .ro-plate-badge svg { width: 20px; height: 20px; }
 .recomendados-original .ro-plate h2 {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
   font-size: 1.1rem; font-weight: 500;
-  margin: 0; color: var(--ro-navy-950);
+  margin: 0; color: #000;
 }
 
 .recomendados-original .ro-list {
