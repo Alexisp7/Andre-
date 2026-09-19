@@ -6578,14 +6578,16 @@ body:has(.recomendados-original) .section {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
   color: var(--ro-navy-950);
 }
-/* El aviso usa el mismo formato que "Aviso de contenido" de los temarios
-   (.aviso-derechos, más arriba: línea, título en mono, texto justificado)
-   en vez de la caja azul. Solo se ajusta lo que hereda mal de este
-   contenedor: la tipografía (aquí el resto va en serif) y los márgenes,
-   porque en esta página va arriba y separa de las fichas, no al final. */
+/* El aviso reutiliza el texto gris justificado de "Aviso de contenido"
+   de los temarios (.aviso-derechos, más arriba), pero aquí va sin la
+   línea de arriba ni el título -- solo el párrafo, pegado al inicio de
+   la página. Se ajusta lo que hereda mal de este contenedor: la
+   tipografía (el resto va en serif) y los márgenes. */
 .recomendados-original .aviso-derechos {
   font-family: 'Inter', sans-serif;
-  margin: 8px 0 36px;
+  margin: 0 0 36px;
+  padding-top: 0;
+  border-top: none;
 }
 
 .recomendados-original .ro-catalog {
