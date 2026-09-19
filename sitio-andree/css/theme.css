@@ -4330,8 +4330,21 @@ body::selection { background: var(--blue-mid); color: var(--white); }
    para que se note como el encabezado de cada bloque que es. */
 .investigacion-sola .escudos-titulo {
   margin-bottom: 16px;
-  color: #1b7778;
+  color: var(--black);
   font-size: 19px;
+}
+/* Más aire entre subsecciones (antes 48px, el valor base de
+   .escudos-titulo). El primero ("Publicaciones científicas") no lo
+   recibe: es :first-child, y de hecho sube -- ver el padding de
+   .section más abajo. */
+.investigacion-sola .escudos-titulo:not(:first-child) {
+  margin-top: 76px;
+}
+/* El primer subtítulo quedaba muy abajo, con el padding de arriba que
+   trae .section (hasta 130px en escritorio). Se recorta a la mitad
+   aprox. -- sube, pero sin pegarse al encabezado. */
+body:has(.investigacion-sola) .section {
+  padding-top: clamp(40px, 5.5vw, 70px);
 }
 /* Sin la línea que salía a la derecha de cada subtítulo (Publicaciones
    científicas, Dirección de tesis, Conferencias magistrales). */
