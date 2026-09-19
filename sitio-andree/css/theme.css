@@ -3903,10 +3903,9 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 
 html { background: var(--ink); }
 
+/* Fondo liso (color entero) en todas las páginas: sin degradado ni resplandor. */
 body {
-  background:
-    radial-gradient(circle at 92% 8%, rgba(111, 216, 205, 0.14), transparent 20rem),
-    linear-gradient(180deg, #f8faf9 0%, #eef2f4 100%);
+  background: var(--white);
   color: var(--dark);
   letter-spacing: 0.005em;
 }
@@ -4131,17 +4130,8 @@ body::selection { background: var(--blue-mid); color: var(--white); }
   z-index: 2;
 }
 
-body:not(:has(.page-hero--portada)) #spaMain::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(17, 65, 82, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17, 65, 82, 0.035) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 80%);
-}
+/* (Aquí había una cuadrícula tenue de 34px en #spaMain::before para todas
+   las páginas internas; se quitó -- el fondo es un color entero.) */
 
 .section {
   max-width: 1240px;
@@ -5809,29 +5799,9 @@ html.visor-modo-presentacion .hero-nav-flotante {
   display: none;
 }
 
-/* --------------------------------------------------------------------------
-   INVESTIGACIÓN · fondo sólido, sin la cuadrícula
-
-   #spaMain::before le pone la cuadrícula tenue a todas las páginas que no
-   son la portada; en Investigación se apaga para que quede un fondo liso. */
-body:has(.investigacion-sola) #spaMain::before {
-  content: none;
-}
-
-/* --------------------------------------------------------------------------
-   CURSOS Y NOTICIAS · fondo blanco sólido, sin la cuadrícula
-
-   Mismo pedido que Investigación: se apaga la cuadrícula de #spaMain::before
-   y, además, el fondo general de body (que trae un degradado suave con un
-   resplandor turquesa) se fuerza a blanco puro en estas dos páginas. */
-body:has(.cursos-coverflow) #spaMain::before,
-body:has(#listaNoticias) #spaMain::before {
-  content: none;
-}
-body:has(.cursos-coverflow),
-body:has(#listaNoticias) {
-  background: var(--white) !important;
-}
+/* (Investigación, Cursos y Hitos ya iban sin cuadrícula y en blanco liso;
+   ahora es así en todas las páginas, ver body y #spaMain más arriba, así
+   que las reglas específicas de cada una ya no hacen falta.) */
 
 /* --------------------------------------------------------------------------
    REFERENCIAS DE INVESTIGACIÓN · sombreado azul, con el dorado como acento
@@ -5869,6 +5839,14 @@ body:has(.investigacion-sola) .progressive-blur {
   pointer-events: none;
   z-index: 60;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9));
+}
+/* Al llegar al final de la página esa franja blanca (fija a la ventana,
+   z-index 60) quedaba PINTADA ENCIMA del pie azul oscuro y lo lavaba en
+   blanco, con el texto blanco casi ilegible. El pie va por encima de la
+   franja (61): el desvanecido sigue sobre el contenido, pero no lo tapa. */
+body:has(.investigacion-sola) .footer-wrap {
+  position: relative;
+  z-index: 61;
 }
 
 /* --------------------------------------------------------------------------
