@@ -3721,9 +3721,14 @@ nav.main-nav .nav-submenu a.sub-activa { color: var(--black); }
 }
 .noticia-media img,
 .noticia-media video {
-  display: block; width: 100%; height: 100%; object-fit: contain;
+  display: block; width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
 }
+/* Todas las fotos llenan el marco entero (cover), así miden lo mismo
+   aunque su proporción original sea otra (los pocos píxeles que sobran
+   se recortan, centrados). La única excepción es el logo de YUYAY, que
+   es cuadrado y se ve completo, sin recortar (contain). */
+.noticia-media img[src*="post4"] { object-fit: contain; }
 .noticia-media::after {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
