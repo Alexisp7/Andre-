@@ -6593,11 +6593,7 @@ body:has(.recomendados-original) .section {
   --ro-gold-100: #f3e8cf;
   --ro-ink-soft: #5b6472;
   --ro-line: rgba(10, 24, 48, 0.12);
-  --ro-c-meds: #a8592f;
-  --ro-c-atlas: #b8863a;
-  --ro-c-img: #2f6e78;
-  --ro-c-neuro: #6d3a58;
-  --ro-c-histo: #5c7a34;
+  --ro-footer-blue: #071522;
   max-width: 980px;
   margin: 0 auto;
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
@@ -6621,17 +6617,16 @@ body:has(.recomendados-original) .section {
   gap: 20px;
 }
 
-/* Cada ficha lleva su propio color de acento (--ro-accent), tomado de
-   las variables --ro-c-* de más arriba -- hoy solo lo usa el punto
-   delante de cada nombre. La franja de color de arriba y el ícono se
-   quitaron: la ficha queda con su borde fino y el título centrado. */
+/* Cada ficha se divide en dos: arriba una banda con el azul del pie de
+   página y el título en dorado tenue; abajo la lista sobre blanco, con
+   las viñetas en ese mismo azul. overflow:hidden recorta la banda a las
+   esquinas redondeadas de la ficha. */
 .recomendados-original .ro-plate {
-  --ro-accent: var(--ro-navy-900);
   position: relative;
   background: #fff;
   border-radius: 12px;
   border: 1px solid var(--ro-line);
-  padding: 22px 20px 18px;
+  padding: 0;
   overflow: hidden;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
@@ -6639,26 +6634,21 @@ body:has(.recomendados-original) .section {
   transform: translateY(-3px);
   box-shadow: 0 10px 28px -14px rgba(10, 24, 48, 0.28);
 }
-.recomendados-original .ro-plate--meds  { --ro-accent: var(--ro-c-meds); }
-.recomendados-original .ro-plate--atlas { --ro-accent: var(--ro-c-atlas); }
-.recomendados-original .ro-plate--img   { --ro-accent: var(--ro-c-img); }
-.recomendados-original .ro-plate--neuro { --ro-accent: var(--ro-c-neuro); }
-.recomendados-original .ro-plate--histo { --ro-accent: var(--ro-c-histo); }
 
-/* Sin ícono: el título de cada ficha va solo, centrado. */
 .recomendados-original .ro-plate-head {
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 16px;
+  padding: 24px 20px;
+  background: var(--ro-footer-blue);
 }
 .recomendados-original .ro-plate h2 {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
-  font-size: 1.1rem; font-weight: 500;
-  margin: 0; color: #000;
+  font-size: 1.45rem; font-weight: 500;
+  margin: 0; color: var(--ro-gold-100);
   text-align: center;
 }
 
 .recomendados-original .ro-list {
-  list-style: none; margin: 0; padding: 0;
+  list-style: none; margin: 0; padding: 12px 20px 18px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 /* Sin rayas entre los enlaces de cada ficha: los separa solo el espacio. */
@@ -6677,7 +6667,7 @@ body:has(.recomendados-original) .section {
   content: "";
   position: absolute; left: 0; top: 0.5em;
   width: 6px; height: 6px; border-radius: 50%;
-  background: var(--ro-accent);
+  background: var(--ro-footer-blue);
 }
 /* Solo hover real (mouse) -- en touch (Android/iOS) ":hover" se activa
    con el toque y se queda "pegado" hasta el próximo toque en otra
@@ -6706,6 +6696,6 @@ body:has(.recomendados-original) .section {
 }
 
 @media (max-width: 520px) {
-  .recomendados-original .ro-plate h2 { font-size: 1rem; }
+  .recomendados-original .ro-plate h2 { font-size: 1.3rem; }
 }
 
