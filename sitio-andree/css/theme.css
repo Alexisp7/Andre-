@@ -1094,6 +1094,19 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rota
   font-size: 9px;
   letter-spacing: 0.12em;
   color: #fff;
+  text-align: center;
+}
+/* En celular la oración no cabe en una línea y se partía de forma
+   irregular pegada a la izquierda; ahí se apila: nombre arriba, lema
+   abajo, ambos centrados, sin el punto medio que los separaba. */
+@media (max-width: 600px) {
+  .footer-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-copy-sep { display: none; }
 }
 
 .footer-greek {
