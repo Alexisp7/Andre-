@@ -6600,20 +6600,15 @@ body:has(.recomendados-original) .section {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
   color: var(--ro-navy-950);
 }
-.recomendados-original .ro-disclaimer {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  background: var(--ro-navy-950);
-  color: var(--ro-gold-100);
-  border-radius: 6px;
-  padding: 18px 22px;
-  font-size: 0.92rem;
-  line-height: 1.6;
+/* El aviso usa el mismo formato que "Aviso de contenido" de los temarios
+   (.aviso-derechos, más arriba: línea, título en mono, texto justificado)
+   en vez de la caja azul. Solo se ajusta lo que hereda mal de este
+   contenedor: la tipografía (aquí el resto va en serif) y los márgenes,
+   porque en esta página va arriba y separa de las fichas, no al final. */
+.recomendados-original .aviso-derechos {
+  font-family: 'Inter', sans-serif;
   margin: 8px 0 36px;
-  border-left: 4px solid var(--ro-gold-500);
-  text-align: justify;
-  text-justify: inter-word;
 }
-.recomendados-original .ro-disclaimer strong { color: #fff; }
 
 .recomendados-original .ro-catalog {
   display: grid;
