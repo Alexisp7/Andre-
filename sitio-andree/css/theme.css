@@ -6599,16 +6599,12 @@ body:has(.recomendados-original) .section {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
   color: var(--ro-navy-950);
 }
-/* El aviso reutiliza el texto gris justificado de "Aviso de contenido"
-   de los temarios (.aviso-derechos, más arriba), pero aquí va sin la
-   línea de arriba ni el título -- solo el párrafo, pegado al inicio de
-   la página. Se ajusta lo que hereda mal de este contenedor: la
-   tipografía (el resto va en serif) y los márgenes. */
+/* El aviso va al final, igual que en los temarios: usa tal cual
+   .aviso-derechos (línea, título en mono, texto gris justificado; más
+   arriba). Lo único que se ajusta es la tipografía, porque este
+   contenedor pone el resto en serif y el aviso va en Inter. */
 .recomendados-original .aviso-derechos {
   font-family: 'Inter', sans-serif;
-  margin: 0 0 36px;
-  padding-top: 0;
-  border-top: none;
 }
 
 .recomendados-original .ro-catalog {
@@ -6637,12 +6633,12 @@ body:has(.recomendados-original) .section {
 
 .recomendados-original .ro-plate-head {
   display: flex; align-items: center; justify-content: center;
-  padding: 24px 20px;
+  padding: 14px 20px;
   background: var(--ro-footer-blue);
 }
 .recomendados-original .ro-plate h2 {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
-  font-size: 1.45rem; font-weight: 500;
+  font-size: 1.45rem; font-weight: 500; line-height: 1.25;
   margin: 0; color: var(--ro-gold-100);
   text-align: center;
 }
