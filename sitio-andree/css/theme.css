@@ -6845,3 +6845,19 @@ body:has(.recomendados-original) .section {
 @media (prefers-reduced-motion: reduce) {
   .ref-captura { transition: none; }
 }
+
+/* --------------------------------------------------------------------------
+   PORTADA · Contacto aparece de frente, sin efectos
+
+   Los datos, los campos y el botón de Contacto entraban con opacidad,
+   desplazamiento y (en celular) una transición ligadas al scroll
+   (.slide-pin [data-reveal], más arriba), y hasta que terminaban se veían
+   solo las cajas vacías. Se dejan siempre visibles, en su sitio y sin
+   transición. Va con selector por ID y !important para ganarle a las
+   reglas de entrada, que también usan !important. */
+#contactame [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
