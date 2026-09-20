@@ -6615,9 +6615,9 @@ body:has(.recomendados-original) .section {
 /* Cada categoría es una tarjeta blanca de esquinas redondeadas con sombra
    suave: arriba icono y título en serif, con una
    línea fina debajo; después la lista, con un triángulo gris pequeño de
-   viñeta, el nombre de cada sitio y su descripción debajo. Primera fila de
-   tres tarjetas y segunda de dos más anchas (rejilla de 6 columnas: 2+2+2
-   y 3+3). */
+   viñeta, el nombre de cada sitio y su descripción debajo, que se despliega
+   al pasar el mouse. Primera fila de tres tarjetas y segunda de dos más
+   anchas (rejilla de 6 columnas: 2+2+2 y 3+3). */
 .recomendados-original .ro-catalog {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -6702,7 +6702,8 @@ body:has(.recomendados-original) .section {
    abrirlo. (hover:hover) lo limita a dispositivos con mouse de verdad;
    en touch no queda ningún resabio, ni con clase ni con localStorage. */
 @media (hover: hover) and (pointer: fine) {
-  .recomendados-original .ro-list a:hover {
+  .recomendados-original .ro-list a:hover,
+  .recomendados-original .ro-list a:focus-visible {
     background: var(--ro-navy-950);
     color: var(--ro-gold-100);
   }
@@ -6723,6 +6724,28 @@ body:has(.recomendados-original) .section {
   display: block; font-size: 0.8rem; line-height: 1.45;
   color: inherit; opacity: 0.72;
   margin-top: 2px;
+}
+/* Al pasar el mouse (o mientras se pulsa en touch) la letra de la
+   descripción pasa a blanco sobre el fondo azul. */
+.recomendados-original .ro-list a:hover .ro-desc,
+.recomendados-original .ro-list a:focus-visible .ro-desc,
+.recomendados-original .ro-list a:active .ro-desc {
+  color: #fff; opacity: 1;
+}
+/* Con mouse, en reposo solo se ven los nombres: la descripción está
+   plegada y se despliega hacia abajo al pasar por encima (o al enfocar con
+   teclado). En touch no se pliega nada: sin hover no habría forma de
+   leerla. Va después de .ro-desc para ganar en el orden. */
+@media (hover: hover) and (pointer: fine) {
+  .recomendados-original .ro-desc {
+    max-height: 0; margin-top: 0; opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, margin-top 0.25s ease, opacity 0.2s ease;
+  }
+  .recomendados-original .ro-list a:hover .ro-desc,
+  .recomendados-original .ro-list a:focus-visible .ro-desc {
+    max-height: 6em; margin-top: 2px; opacity: 1;
+  }
 }
 
 
