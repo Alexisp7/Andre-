@@ -6612,63 +6612,91 @@ body:has(.recomendados-original) .section {
   font-family: 'Inter', sans-serif;
 }
 
+/* Cada categoría es una tarjeta blanca de esquinas redondeadas con sombra
+   suave: arriba icono, título en serif y una flecha a la derecha, con una
+   línea fina debajo; después la lista numerada (01, 02, ...) con solo el
+   nombre de cada sitio. Primera fila de tres tarjetas y segunda de dos más
+   anchas (rejilla de 6 columnas: 2+2+2 y 3+3). Las descripciones siguen en
+   el HTML pero ocultas a la vista (solo se leen con lector de pantalla) y
+   salen como tooltip (title) al pasar el mouse por el enlace. */
 .recomendados-original .ro-catalog {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 20px;
 }
+.recomendados-original .ro-plate { grid-column: span 2; }
+.recomendados-original .ro-plate:nth-child(n+4) { grid-column: span 3; }
+@media (max-width: 860px) {
+  .recomendados-original .ro-catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .recomendados-original .ro-plate,
+  .recomendados-original .ro-plate:nth-child(n+4) { grid-column: span 1; }
+  .recomendados-original .ro-plate:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .recomendados-original .ro-catalog { grid-template-columns: minmax(0, 1fr); }
+  .recomendados-original .ro-plate:last-child { grid-column: auto; }
+}
 
-/* Cada ficha se divide en dos: arriba una banda con el azul del pie de
-   página y el título en dorado tenue; abajo la lista sobre blanco, con
-   las viñetas en ese mismo azul. overflow:hidden recorta la banda a las
-   esquinas redondeadas de la ficha. */
 .recomendados-original .ro-plate {
   position: relative;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid var(--ro-line);
-  padding: 0;
-  overflow: hidden;
+  box-shadow: 0 8px 24px -16px rgba(10, 24, 48, 0.28);
+  padding: 20px 24px 14px;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .recomendados-original .ro-plate:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px -14px rgba(10, 24, 48, 0.28);
+  box-shadow: 0 14px 30px -16px rgba(10, 24, 48, 0.34);
 }
 
 .recomendados-original .ro-plate-head {
-  display: flex; align-items: center; justify-content: center;
-  padding: 14px 20px;
-  background: var(--ro-footer-blue);
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--ro-line);
 }
+.recomendados-original .ro-ico,
+.recomendados-original .ro-arrow {
+  flex: none; width: 22px; height: 22px;
+  fill: none; stroke: currentColor; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+  color: var(--ro-navy-950);
+}
+.recomendados-original .ro-arrow { width: 20px; height: 20px; transition: transform 0.2s ease; }
+.recomendados-original .ro-plate:hover .ro-arrow { transform: translateX(4px); }
 .recomendados-original .ro-plate h2 {
+  flex: 1; min-width: 0;
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
-  font-size: calc(1.45rem - 2px); font-weight: 500; line-height: 1.25;
-  margin: 0; color: var(--ro-gold-100);
-  text-align: center;
+  font-size: 1.05rem; font-weight: 600; line-height: 1.3;
+  margin: 0; color: var(--ro-navy-950);
+  text-align: left;
 }
 
 .recomendados-original .ro-list {
-  list-style: none; margin: 0; padding: 12px 20px 18px;
+  list-style: none; margin: 0; padding: 10px 0 4px;
+  counter-reset: ro;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
-/* Sin rayas entre los enlaces de cada ficha: los separa solo el espacio. */
+.recomendados-original .ro-list li { counter-increment: ro; }
+/* Sin rayas entre los enlaces: los separa solo el espacio. */
 .recomendados-original .ro-list a {
-  text-decoration: none; color: var(--ro-navy-950);
-  display: block; margin: 0 -10px; padding: 9px 10px;
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 0 -10px; padding: 7px 10px;
   border-radius: 6px;
+  text-decoration: none; color: var(--ro-navy-950);
   transition: background 0.15s ease, color 0.15s ease;
 }
-.recomendados-original .ro-name {
-  font-weight: 600; font-size: 0.95rem;
-  position: relative; padding-left: 14px;
-  color: inherit;
+.recomendados-original .ro-list a::before {
+  content: counter(ro, decimal-leading-zero);
+  flex: none; min-width: 1.6em;
+  font-size: 0.72rem; letter-spacing: 0.06em; font-variant-numeric: tabular-nums;
+  color: var(--ro-ink-soft);
+  transition: color 0.15s ease;
 }
-.recomendados-original .ro-name::before {
-  content: "";
-  position: absolute; left: 0; top: 0.5em;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--ro-footer-blue);
+.recomendados-original .ro-name {
+  font-weight: 500; font-size: 0.92rem;
+  color: inherit;
 }
 /* Solo hover real (mouse) -- en touch (Android/iOS) ":hover" se activa
    con el toque y se queda "pegado" hasta el próximo toque en otra
@@ -6680,6 +6708,7 @@ body:has(.recomendados-original) .section {
     background: var(--ro-navy-950);
     color: var(--ro-gold-100);
   }
+  .recomendados-original .ro-list a:hover::before { color: inherit; }
 }
 /* En touch no hay hover, pero sí ":active" mientras el dedo sigue
    apoyado -- a diferencia de ":hover", se suelta solo al levantar el
@@ -6690,14 +6719,11 @@ body:has(.recomendados-original) .section {
   background: var(--ro-navy-950);
   color: var(--ro-gold-100);
 }
+.recomendados-original .ro-list a:active::before { color: inherit; }
+/* Descripción oculta a la vista, disponible para lectores de pantalla. */
 .recomendados-original .ro-desc {
-  display: block; font-size: 0.8rem;
-  color: inherit; opacity: 0.72;
-  padding-left: 14px; margin-top: 2px;
-}
-
-@media (max-width: 520px) {
-  .recomendados-original .ro-plate h2 { font-size: calc(1.3rem - 2px); }
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
 
