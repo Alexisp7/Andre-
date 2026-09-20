@@ -6613,7 +6613,7 @@ body:has(.recomendados-original) .section {
 }
 
 /* Cada categoría es una tarjeta blanca de esquinas redondeadas con sombra
-   suave: arriba icono, título en serif y una flecha a la derecha, con una
+   suave: arriba icono y título en serif, con una
    línea fina debajo; después la lista numerada (01, 02, ...) con solo el
    nombre de cada sitio. Primera fila de tres tarjetas y segunda de dos más
    anchas (rejilla de 6 columnas: 2+2+2 y 3+3). Las descripciones siguen en
@@ -6656,15 +6656,12 @@ body:has(.recomendados-original) .section {
   padding: 0 0 14px;
   border-bottom: 1px solid var(--ro-line);
 }
-.recomendados-original .ro-ico,
-.recomendados-original .ro-arrow {
+.recomendados-original .ro-ico {
   flex: none; width: 22px; height: 22px;
   fill: none; stroke: currentColor; stroke-width: 1.6;
   stroke-linecap: round; stroke-linejoin: round;
   color: var(--ro-navy-950);
 }
-.recomendados-original .ro-arrow { width: 20px; height: 20px; transition: transform 0.2s ease; }
-.recomendados-original .ro-plate:hover .ro-arrow { transform: translateX(4px); }
 .recomendados-original .ro-plate h2 {
   flex: 1; min-width: 0;
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
