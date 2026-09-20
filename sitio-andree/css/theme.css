@@ -6682,16 +6682,13 @@ body:has(.recomendados-original) .section {
   text-decoration: none; color: var(--ro-navy-950);
   transition: background 0.15s ease, color 0.15s ease;
 }
-/* Viñeta: triángulo pequeño, gris y sin relleno (solo el contorno). Es una
-   máscara sobre background-color para poder cambiarle el color, como al
-   pasar el mouse, donde toma el color del texto (currentColor). */
+/* Viñeta: triángulo pequeño con borde dorado (--ro-gold-500, #c39a3f) y
+   relleno dorado más claro para que el borde se distinga. Colores fijos en
+   el SVG, se ven igual sobre el blanco y sobre el azul del hover. */
 .recomendados-original .ro-list a::before {
   content: "";
-  flex: none; width: 9px; height: 9px;
-  background-color: #98a0ae;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2.6 1.4 8 5 2.6 8.6Z' fill='none' stroke='black' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2.6 1.4 8 5 2.6 8.6Z' fill='none' stroke='black' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-  transition: background-color 0.15s ease;
+  flex: none; width: 10px; height: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2.6 1.4 8 5 2.6 8.6Z' fill='%23e6c982' stroke='%23c39a3f' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .recomendados-original .ro-name {
   font-weight: 500; font-size: 0.92rem;
@@ -6707,7 +6704,6 @@ body:has(.recomendados-original) .section {
     background: var(--ro-navy-950);
     color: var(--ro-gold-100);
   }
-  .recomendados-original .ro-list a:hover::before { background-color: currentColor; }
 }
 /* En touch no hay hover, pero sí ":active" mientras el dedo sigue
    apoyado -- a diferencia de ":hover", se suelta solo al levantar el
@@ -6718,7 +6714,6 @@ body:has(.recomendados-original) .section {
   background: var(--ro-navy-950);
   color: var(--ro-gold-100);
 }
-.recomendados-original .ro-list a:active::before { background-color: currentColor; }
 /* Descripción oculta a la vista, disponible para lectores de pantalla. */
 .recomendados-original .ro-desc {
   position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
