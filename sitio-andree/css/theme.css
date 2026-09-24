@@ -6645,9 +6645,11 @@ body:has(.recomendados-original) .section {
   padding: 20px 24px 14px;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.recomendados-original .ro-plate:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px -16px rgba(10, 24, 48, 0.34);
+@media (hover: hover) and (pointer: fine) {
+  .recomendados-original .ro-plate:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -16px rgba(10, 24, 48, 0.34);
+  }
 }
 
 .recomendados-original .ro-plate-head {
@@ -6681,6 +6683,9 @@ body:has(.recomendados-original) .section {
   border-radius: 6px;
   text-decoration: none; color: var(--ro-navy-950);
   transition: background 0.15s ease, color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; user-select: none;
 }
 /* Viñeta: triángulo pequeño, todo en un solo dorado (--ro-gold-500,
    #c39a3f), borde y relleno. Color fijo en el SVG, se ve igual sobre el
@@ -6696,55 +6701,37 @@ body:has(.recomendados-original) .section {
   font-weight: 500; font-size: 0.92rem;
   color: inherit;
 }
-/* Solo hover real (mouse) -- en touch (Android/iOS) ":hover" se activa
-   con el toque y se queda "pegado" hasta el próximo toque en otra
-   parte, lo que se veía como si el enlace se quedara azul después de
-   abrirlo. (hover:hover) lo limita a dispositivos con mouse de verdad;
-   en touch no queda ningún resabio, ni con clase ni con localStorage. */
-@media (hover: hover) and (pointer: fine) {
-  .recomendados-original .ro-list a:hover,
-  .recomendados-original .ro-list a:focus-visible {
-    background: var(--ro-navy-950);
-    color: var(--ro-gold-100);
-  }
-}
-/* En touch no hay hover, pero sí ":active" mientras el dedo sigue
-   apoyado -- a diferencia de ":hover", se suelta solo al levantar el
-   dedo, sin quedar pegado. Fuera del media query de arriba a propósito
-   para que corra en cualquier dispositivo (mouse incluido, como
-   feedback extra al hacer clic). */
-.recomendados-original .ro-list a:active {
-  background: var(--ro-navy-950);
-  color: var(--ro-gold-100);
-}
-/* Descripción del sitio, debajo del nombre y alineada con él. Toma el color
-   del enlace (más tenue), así en el hover pasa a dorado tenue con el resto. */
+/* Mismo comportamiento con mouse y con el dedo: en reposo solo se ven los
+   nombres; mientras el enlace está seleccionado (mouse encima, o dedo
+   apoyado = ":active") se pinta de azul y se despliega su descripción, en
+   blanco. ":hover" va SOLO dentro de (hover:hover): en touch se queda
+   "pegado" después del toque, y dejaba la descripción en blanco sobre el
+   fondo blanco (se veía como un hueco vacío bajo el nombre). ":active", en
+   cambio, se suelta solo al levantar el dedo. */
 .recomendados-original .ro-desc {
   grid-column: 2; grid-row: 2;
   display: block; font-size: 0.8rem; line-height: 1.45;
-  color: inherit; opacity: 0.72;
-  margin-top: 2px;
+  color: inherit;
+  max-height: 0; margin-top: 0; opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, margin-top 0.25s ease, opacity 0.2s ease;
 }
-/* Al pasar el mouse (o mientras se pulsa en touch) la letra de la
-   descripción pasa a blanco sobre el fondo azul. */
-.recomendados-original .ro-list a:hover .ro-desc,
-.recomendados-original .ro-list a:focus-visible .ro-desc,
-.recomendados-original .ro-list a:active .ro-desc {
-  color: #fff; opacity: 1;
+.recomendados-original .ro-list a:active,
+.recomendados-original .ro-list a:focus-visible {
+  background: var(--ro-navy-950);
+  color: var(--ro-gold-100);
 }
-/* Con mouse, en reposo solo se ven los nombres: la descripción está
-   plegada y se despliega hacia abajo al pasar por encima (o al enfocar con
-   teclado). En touch no se pliega nada: sin hover no habría forma de
-   leerla. Va después de .ro-desc para ganar en el orden. */
+.recomendados-original .ro-list a:active .ro-desc,
+.recomendados-original .ro-list a:focus-visible .ro-desc {
+  max-height: 6em; margin-top: 2px; opacity: 1; color: #fff;
+}
 @media (hover: hover) and (pointer: fine) {
-  .recomendados-original .ro-desc {
-    max-height: 0; margin-top: 0; opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease, margin-top 0.25s ease, opacity 0.2s ease;
+  .recomendados-original .ro-list a:hover {
+    background: var(--ro-navy-950);
+    color: var(--ro-gold-100);
   }
-  .recomendados-original .ro-list a:hover .ro-desc,
-  .recomendados-original .ro-list a:focus-visible .ro-desc {
-    max-height: 6em; margin-top: 2px; opacity: 1;
+  .recomendados-original .ro-list a:hover .ro-desc {
+    max-height: 6em; margin-top: 2px; opacity: 1; color: #fff;
   }
 }
 

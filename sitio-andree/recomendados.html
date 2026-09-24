@@ -182,6 +182,18 @@
     </div>
   </section>
 
+  <script>
+    /* En touch, mantener presionado un enlace despliega su descripción
+       (CSS, :active). Sin esto, el navegador abre su menú contextual a
+       los ~0.5 s, que cancela la pulsación y pliega la descripción. */
+    (function () {
+      if (!window.matchMedia || !matchMedia('(hover: none)').matches) return;
+      document.querySelectorAll('.recomendados-original .ro-list a').forEach(function (a) {
+        a.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+      });
+    })();
+  </script>
+
   </main>
 
   <div class="progressive-blur" aria-hidden="true"></div>
