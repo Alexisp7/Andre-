@@ -1948,6 +1948,23 @@ a.topic-row:hover .topic-vistas svg { color: var(--gold); }
   #sobre .section { padding-top: 32px; }
   #sobre .escudos-bloque { margin-top: 28px; }
 
+  /* El video de fondo se ve nítido alrededor de la caja de Contacto (a
+     los lados, sobre todo en pantallas anchas donde sobra aire): la caja
+     es de vidrio esmerilado, muy oscura, y ese contraste con el video sin
+     tapar hacía que se notara como un fondo aparte, no como parte del
+     mismo diseño. Un velo oscuro detrás de la caja (más fuerte hacia los
+     bordes, casi transparente en el centro, donde ya tapa la caja) lo
+     atenúa sin oscurecer el video en las demás diapositivas. */
+  #contactame-wrap .slide-pin::before {
+    content: '';
+    position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(ellipse 55% 60% at 50% 45%,
+      rgba(2, 7, 12, 0) 0%,
+      rgba(2, 7, 12, 0.55) 65%,
+      rgba(2, 7, 12, 0.85) 100%);
+    pointer-events: none;
+  }
+
   /* El "despegue" de una diapositiva pegada (sticky), al final, SIEMPRE
      se come de recorrido extra exactamente la altura de lo que venga
      después en el documento (aquí, el pie de página) — no importa
