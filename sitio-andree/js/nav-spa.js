@@ -283,7 +283,6 @@
           }
         }
         if (window.__sincronizarConstelacion) window.__sincronizarConstelacion();
-        if (window.__sincronizarPaginado) window.__sincronizarPaginado();
 
         heroActual.innerHTML = nuevoHero.innerHTML;
         mainActual.innerHTML = nuevoMain.innerHTML;
@@ -499,69 +498,6 @@
     actualizarDesvanecido();
     window.addEventListener('scroll', pedirDesvanecido, { passive: true });
     window.addEventListener('resize', pedirDesvanecido);
-
-    /* Scroll más dinámico en la portada: cada gesto de rueda o trackpad
-       avanza o retrocede una diapositiva ENTERA (Título / Biografía /
-       Contacto — las mismas 3 paradas del riel de la derecha), en vez
-       de dejar el avance continuo de siempre. Se "traga" el resto de
-       ese mismo gesto (preventDefault mientras dura el salto) porque un
-       trackpad dispara muchos eventos wheel seguidos para un solo
-       gesto de dedos — sin esto, un swipe largo saltaría varias
-       diapositivas de una. Solo en escritorio (el mismo límite de
-       901px que usa toda diapositiva) y nunca si se prefiere menos
-       movimiento: ahí se deja el scroll de toda la vida, sin saltos. */
-    var paginadoBloqueado = false;
-    function paradasPaginado() {
-      var paradas = [0];
-      var sobre = document.getElementById('sobre');
-      var contacto = document.getElementById('contactame-wrap');
-      if (sobre) paradas.push(posicionDestinoRiel(sobre));
-      if (contacto) paradas.push(posicionDestinoRiel(contacto));
-      return paradas;
-    }
-    function animarScrollA(destino, alTerminar) {
-      var inicio = window.scrollY;
-      var distancia = destino - inicio;
-      var duracion = 650;
-      if (Math.abs(distancia) < 2) { alTerminar(); return; }
-      var t0 = null;
-      function paso(marca) {
-        if (t0 === null) t0 = marca;
-        var t = Math.min(1, (marca - t0) / duracion);
-        var suave = t * (2 - t); // ease-out, igual espíritu que curvaSuave() de arriba
-        window.scrollTo(0, inicio + distancia * suave);
-        if (t < 1) requestAnimationFrame(paso);
-        else alTerminar();
-      }
-      requestAnimationFrame(paso);
-    }
-    function alRuedaPaginado(e) {
-      if (window.innerWidth < 901 || prefiereReducido) return;
-      if (paginadoBloqueado) { e.preventDefault(); return; }
-      var paradas = paradasPaginado();
-      var y = window.scrollY;
-      var actual = 0;
-      for (var i = 0; i < paradas.length; i++) {
-        if (paradas[i] <= y + 2) actual = i;
-      }
-      var indiceDestino = actual + (e.deltaY > 0 ? 1 : -1);
-      /* En un extremo (ya en el título subiendo más, o ya en Contacto
-         bajando más): se deja pasar el scroll normal, para que abajo
-         del todo se pueda seguir bajando hasta el pie de página. */
-      if (indiceDestino < 0 || indiceDestino >= paradas.length) return;
-      e.preventDefault();
-      paginadoBloqueado = true;
-      animarScrollA(paradas[indiceDestino], function () { paginadoBloqueado = false; });
-    }
-    function sincronizarPaginado() {
-      window.removeEventListener('wheel', alRuedaPaginado, { passive: false });
-      paginadoBloqueado = false;
-      if (heroSeccionGlobal.classList.contains('page-hero--portada')) {
-        window.addEventListener('wheel', alRuedaPaginado, { passive: false });
-      }
-    }
-    window.__sincronizarPaginado = sincronizarPaginado;
-    sincronizarPaginado();
   }
 
   /* Red de puntos tipo constelación, de fondo detrás del título de la
