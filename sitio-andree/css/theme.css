@@ -6743,11 +6743,8 @@ body:has(.recomendados-original) .section {
 
 .recomendados-original .ro-plate-head {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
-  display: flex; flex-direction: column; gap: 3px;
-  padding: 14px 24px;
-}
-.recomendados-original .ro-plate-head-row {
   display: flex; align-items: center; gap: 12px;
+  padding: 14px 24px;
 }
 .recomendados-original .ro-ico {
   flex: none; width: 28px; height: 28px;
@@ -6763,27 +6760,6 @@ body:has(.recomendados-original) .section {
   margin: 0; color: #fff;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
   text-align: left;
-}
-/* La descripción corta (3 palabras) va debajo del título, dentro de la
-   misma franja -- no centrada en la foto. Solo se ve al despejarse la
-   imagen (mouse/teclado); en touch, siempre visible, como el resto. */
-.recomendados-original .ro-caption {
-  margin-left: 40px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  font-size: 0.8rem; font-weight: 500; line-height: 1.3;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-  max-height: 0; opacity: 0; overflow: hidden;
-  transition: opacity 0.3s ease, max-height 0.3s ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .recomendados-original .ro-plate:hover .ro-caption,
-  .recomendados-original .ro-plate:focus-within .ro-caption {
-    max-height: 1.6em; opacity: 1;
-  }
-}
-@media (hover: none) {
-  .recomendados-original .ro-caption { max-height: 1.6em; opacity: 1; }
 }
 
 .recomendados-original .ro-list {
@@ -6882,7 +6858,6 @@ body:has(.recomendados-original) .section {
   .recomendados-original .ro-plate,
   .recomendados-original .ro-media,
   .recomendados-original .ro-media img,
-  .recomendados-original .ro-caption,
   .recomendados-original .ro-list a,
   .recomendados-original .ro-go,
   .recomendados-original .ro-desc {
