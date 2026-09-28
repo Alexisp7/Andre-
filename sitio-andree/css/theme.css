@@ -6613,11 +6613,15 @@ body:has(.recomendados-original) .section {
 }
 
 /* Cada categoría es una tarjeta blanca de esquinas redondeadas con sombra
-   suave: arriba icono y título en serif, con una
-   línea fina debajo; después la lista, con un triángulo gris pequeño de
-   viñeta, el nombre de cada sitio y su descripción debajo, que se despliega
-   al pasar el mouse. Primera fila de tres tarjetas y segunda de dos más
-   anchas (rejilla de 6 columnas: 2+2+2 y 3+3). */
+   suave: arriba una imagen temática de fondo (recortada con object-fit:
+   cover), debajo icono y título en serif con una línea fina, y la lista
+   de enlaces. En cada enlace, un triángulo dorado pequeño a la izquierda;
+   al pasar el mouse o enfocar con teclado, un fondo dorado tenue, el
+   contenido se desliza un poco a la derecha, el nombre gana peso, aparece
+   una flecha de enlace externo y se despliega la descripción. En touch no
+   hay hover: la descripción queda siempre visible (no depende del dedo).
+   Primera fila de tres tarjetas y segunda de dos más anchas (rejilla de 6
+   columnas: 2+2+2 y 3+3). */
 .recomendados-original .ro-catalog {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -6642,7 +6646,8 @@ body:has(.recomendados-original) .section {
   border-radius: 14px;
   border: 1px solid var(--ro-line);
   box-shadow: 0 8px 24px -16px rgba(10, 24, 48, 0.28);
-  padding: 20px 24px 14px;
+  overflow: hidden;
+  padding: 0 0 14px;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -6652,9 +6657,37 @@ body:has(.recomendados-original) .section {
   }
 }
 
+/* Imagen temática de cada categoría, a modo de cabecera. Recortada a una
+   proporción fija (object-fit: cover) para que las cinco tarjetas queden
+   parejas aunque las fotos originales no compartan proporción. Un
+   degradado azul marino muy tenue por encima las une a la paleta del
+   sitio, y con el mouse encima (o el teclado en cualquier enlace de la
+   tarjeta) la foto se acerca un poquito, apenas perceptible. */
+.recomendados-original .ro-media {
+  position: relative;
+  aspect-ratio: 7 / 2;
+  overflow: hidden;
+  background: var(--ro-navy-950);
+}
+.recomendados-original .ro-media img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.recomendados-original .ro-media::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(10, 24, 48, 0.04), rgba(10, 24, 48, 0.22));
+}
+@media (hover: hover) and (pointer: fine) {
+  .recomendados-original .ro-plate:hover .ro-media img,
+  .recomendados-original .ro-plate:focus-within .ro-media img {
+    transform: scale(1.025);
+  }
+}
+
 .recomendados-original .ro-plate-head {
   display: flex; align-items: center; gap: 12px;
-  padding: 0 0 14px;
+  padding: 16px 24px 14px;
   border-bottom: 1px solid var(--ro-line);
 }
 .recomendados-original .ro-ico {
@@ -6672,68 +6705,107 @@ body:has(.recomendados-original) .section {
 }
 
 .recomendados-original .ro-list {
-  list-style: none; margin: 0; padding: 10px 0 4px;
+  list-style: none; margin: 0; padding: 10px 24px 4px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
-/* Sin rayas entre los enlaces: los separa solo el espacio. */
+/* Sin rayas entre los enlaces: los separa solo el espacio. La segunda fila
+   (la descripción) empieza colapsada a 0 de alto -- truco de grid-template-
+   rows en 0fr/1fr, que anima el alto real del contenido sin tener que
+   adivinar un max-height fijo. */
 .recomendados-original .ro-list a {
-  display: grid; grid-template-columns: 10px minmax(0, 1fr);
-  align-items: center; column-gap: 12px;
-  margin: 0 -10px; padding: 8px 10px;
-  border-radius: 6px;
+  position: relative;
+  display: grid; grid-template-columns: 10px minmax(0, 1fr); grid-template-rows: auto 0fr;
+  align-items: start; column-gap: 12px;
+  margin: 0 -10px; padding: 9px 10px;
+  border-radius: 8px;
   text-decoration: none; color: var(--ro-navy-950);
-  transition: background 0.15s ease, color 0.15s ease;
+  background: transparent;
+  transition: background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              grid-template-rows 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none; user-select: none;
 }
+.recomendados-original .ro-list a:focus-visible {
+  outline: 2px solid var(--ro-gold-500); outline-offset: 2px;
+}
 /* Viñeta: triángulo pequeño, todo en un solo dorado (--ro-gold-500,
-   #c39a3f), borde y relleno. Color fijo en el SVG, se ve igual sobre el
-   blanco y sobre el azul del hover. */
+   #c39a3f), borde y relleno. Color fijo en el SVG. */
 .recomendados-original .ro-list a::before {
   content: "";
   grid-column: 1; grid-row: 1;
-  width: 10px; height: 10px;
+  width: 10px; height: 10px; margin-top: 0.35em;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2.6 1.4 8 5 2.6 8.6Z' fill='%23c39a3f' stroke='%23c39a3f' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-.recomendados-original .ro-name {
+.recomendados-original .ro-name-row {
   grid-column: 2; grid-row: 1;
-  font-weight: 500; font-size: 0.92rem;
-  color: inherit;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
 }
-/* Mismo comportamiento con mouse y con el dedo: en reposo solo se ven los
-   nombres; mientras el enlace está seleccionado (mouse encima, o dedo
-   apoyado = ":active") se pinta de azul y se despliega su descripción, en
-   blanco. ":hover" va SOLO dentro de (hover:hover): en touch se queda
-   "pegado" después del toque, y dejaba la descripción en blanco sobre el
-   fondo blanco (se veía como un hueco vacío bajo el nombre). ":active", en
-   cambio, se suelta solo al levantar el dedo. */
+.recomendados-original .ro-name { font-weight: 500; font-size: 0.92rem; color: inherit; }
+/* Flecha de enlace externo: oculta en reposo, aparece con el hover/foco
+   junto al nombre. En touch queda siempre visible y tenue -- ahí no hay
+   hover que la revele. */
+.recomendados-original .ro-go {
+  flex: none; align-self: center; width: 12px; height: 12px;
+  fill: none; stroke: var(--ro-gold-500); stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0; transform: translate(-3px, 3px);
+  transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Descripción del sitio: segunda fila, oculta a 0 de alto por defecto
+   (min-height:0 + overflow:hidden es lo que permite que el truco 0fr/1fr
+   del enlace la colapse de verdad). */
 .recomendados-original .ro-desc {
   grid-column: 2; grid-row: 2;
-  display: block; font-size: 0.8rem; line-height: 1.45;
-  color: inherit;
-  max-height: 0; margin-top: 0; opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease, margin-top 0.25s ease, opacity 0.2s ease;
+  display: block; min-height: 0; overflow: hidden;
+  font-size: 0.8rem; line-height: 1.45; color: var(--ro-ink-soft);
+  opacity: 0; transform: translateY(-4px);
+  transition: opacity 0.28s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.recomendados-original .ro-list a:active,
+.recomendados-original .ro-desc::before { content: ''; display: block; height: 3px; }
+/* El foco por teclado recibe el mismo tratamiento que el hover, en
+   cualquier dispositivo (para que no dependa solo del mouse). */
 .recomendados-original .ro-list a:focus-visible {
-  background: var(--ro-navy-950);
-  color: var(--ro-gold-100);
+  background: rgba(195, 154, 63, 0.12);
+  transform: translateX(8px);
+  grid-template-rows: auto 1fr;
 }
-.recomendados-original .ro-list a:active .ro-desc,
-.recomendados-original .ro-list a:focus-visible .ro-desc {
-  max-height: 6em; margin-top: 2px; opacity: 1; color: #fff;
-}
+.recomendados-original .ro-list a:focus-visible .ro-name { font-weight: 600; }
+.recomendados-original .ro-list a:focus-visible .ro-desc { opacity: 1; transform: none; }
+.recomendados-original .ro-list a:focus-visible .ro-go { opacity: 1; transform: translate(0, 0); }
+/* Con mouse de verdad: mismo tratamiento, solo con ":hover". Fuera de
+   (hover:hover) porque en touch ":hover" se queda "pegado" después del
+   toque -- ya nos pasó con el fondo azul de antes. */
 @media (hover: hover) and (pointer: fine) {
   .recomendados-original .ro-list a:hover {
-    background: var(--ro-navy-950);
-    color: var(--ro-gold-100);
+    background: rgba(195, 154, 63, 0.12);
+    transform: translateX(8px);
+    grid-template-rows: auto 1fr;
   }
-  .recomendados-original .ro-list a:hover .ro-desc {
-    max-height: 6em; margin-top: 2px; opacity: 1; color: #fff;
+  .recomendados-original .ro-list a:hover .ro-name { font-weight: 600; }
+  .recomendados-original .ro-list a:hover .ro-desc { opacity: 1; transform: none; }
+  .recomendados-original .ro-list a:hover .ro-go { opacity: 1; transform: translate(0, 0); }
+}
+/* En touch no hay hover: en vez de exigir mantener el dedo apoyado (frágil
+   -- el menú contextual del navegador lo interrumpe a medio segundo, como
+   ya pasó antes), la descripción y la flecha quedan siempre visibles. */
+@media (hover: none) {
+  .recomendados-original .ro-list a { grid-template-rows: auto 1fr; }
+  .recomendados-original .ro-desc { opacity: 1; transform: none; }
+  .recomendados-original .ro-go { opacity: 0.55; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .recomendados-original .ro-plate,
+  .recomendados-original .ro-media img,
+  .recomendados-original .ro-list a,
+  .recomendados-original .ro-go,
+  .recomendados-original .ro-desc {
+    transition: none;
   }
 }
+
 
 
 /* --------------------------------------------------------------------------
