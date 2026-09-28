@@ -6657,20 +6657,28 @@ body:has(.recomendados-original) .section {
   }
 }
 
-/* Imagen temática de cada categoría, a modo de cabecera. Recortada a una
-   proporción fija (object-fit: cover) para que las cinco tarjetas queden
-   parejas aunque las fotos originales no compartan proporción. El icono y
-   el título (.ro-plate-head) van encima de la propia foto, pegados abajo,
-   sobre un degradado azul marino que se oscurece hacia el borde inferior
-   para que el texto blanco se lea bien sin importar la imagen. Con el
-   mouse encima (o el teclado en cualquier enlace de la tarjeta) la foto
-   se acerca un poquito, apenas perceptible -- el título no se mueve,
-   porque no es hijo de la imagen que escala, sino de .ro-media. */
+/* Imagen temática de cada categoría, a modo de cabecera. La ventana usa la
+   proporción real de las fotos de arriba (Farmacología/Atlas/Neuroimagen,
+   ~4.4:1) para no recortarlas -- object-fit: cover casi no tiene que
+   recortar nada porque la caja ya calza con la imagen. Las dos de abajo
+   (Neurofisiología/Histología) son panorámicas de verdad (~9.7:1); una
+   ventana tan ancha las dejaría sin alto para el título, así que se
+   ensancha lo que se puede sin perderlo (~6:1) -- eso también reduce
+   cuánto hay que ampliarlas, así se ven más nítidas. El icono y el título
+   (.ro-plate-head) van encima de la propia foto, pegados abajo, sobre un
+   degradado azul marino que se oscurece hacia el borde inferior para que
+   el texto blanco se lea bien sin importar la imagen. Con el mouse
+   encima (o el teclado en cualquier enlace de la tarjeta) la foto se
+   acerca un poquito, apenas perceptible -- el título no se mueve, porque
+   no es hijo de la imagen que escala, sino de .ro-media. */
 .recomendados-original .ro-media {
   position: relative;
-  aspect-ratio: 7 / 2;
+  aspect-ratio: 22 / 5;
   overflow: hidden;
   background: var(--ro-navy-950);
+}
+.recomendados-original .ro-plate:nth-child(n+4) .ro-media {
+  aspect-ratio: 6 / 1;
 }
 .recomendados-original .ro-media img {
   display: block; width: 100%; height: 100%;
