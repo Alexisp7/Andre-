@@ -6659,10 +6659,13 @@ body:has(.recomendados-original) .section {
 
 /* Imagen temática de cada categoría, a modo de cabecera. Recortada a una
    proporción fija (object-fit: cover) para que las cinco tarjetas queden
-   parejas aunque las fotos originales no compartan proporción. Un
-   degradado azul marino muy tenue por encima las une a la paleta del
-   sitio, y con el mouse encima (o el teclado en cualquier enlace de la
-   tarjeta) la foto se acerca un poquito, apenas perceptible. */
+   parejas aunque las fotos originales no compartan proporción. El icono y
+   el título (.ro-plate-head) van encima de la propia foto, pegados abajo,
+   sobre un degradado azul marino que se oscurece hacia el borde inferior
+   para que el texto blanco se lea bien sin importar la imagen. Con el
+   mouse encima (o el teclado en cualquier enlace de la tarjeta) la foto
+   se acerca un poquito, apenas perceptible -- el título no se mueve,
+   porque no es hijo de la imagen que escala, sino de .ro-media. */
 .recomendados-original .ro-media {
   position: relative;
   aspect-ratio: 7 / 2;
@@ -6676,7 +6679,11 @@ body:has(.recomendados-original) .section {
 }
 .recomendados-original .ro-media::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 24, 48, 0.04), rgba(10, 24, 48, 0.22));
+  background: linear-gradient(to bottom,
+    rgba(10, 24, 48, 0.05) 0%,
+    rgba(10, 24, 48, 0.14) 45%,
+    rgba(10, 24, 48, 0.58) 78%,
+    rgba(10, 24, 48, 0.84) 100%);
 }
 @media (hover: hover) and (pointer: fine) {
   .recomendados-original .ro-plate:hover .ro-media img,
@@ -6686,21 +6693,23 @@ body:has(.recomendados-original) .section {
 }
 
 .recomendados-original .ro-plate-head {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
   display: flex; align-items: center; gap: 12px;
-  padding: 16px 24px 14px;
-  border-bottom: 1px solid var(--ro-line);
+  padding: 14px 24px;
 }
 .recomendados-original .ro-ico {
   flex: none; width: 22px; height: 22px;
   fill: none; stroke: currentColor; stroke-width: 1.6;
   stroke-linecap: round; stroke-linejoin: round;
-  color: var(--ro-navy-950);
+  color: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
 }
 .recomendados-original .ro-plate h2 {
   flex: 1; min-width: 0;
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
   font-size: 1.05rem; font-weight: 600; line-height: 1.3;
-  margin: 0; color: var(--ro-navy-950);
+  margin: 0; color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
   text-align: left;
 }
 
