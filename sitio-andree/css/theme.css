@@ -6705,6 +6705,11 @@ body:has(.recomendados-original) .section {
   filter: blur(5px);
   transition: filter 0.45s ease;
 }
+/* La cápsula (lo que hace reconocible la ilustración como "Farmacología")
+   queda arriba de la imagen; centrado a secas la dejaba fuera de cuadro. */
+.recomendados-original .ro-plate--meds .ro-media img {
+  object-position: center 15%;
+}
 @media (hover: hover) and (pointer: fine) {
   .recomendados-original .ro-plate:hover .ro-media img,
   .recomendados-original .ro-plate:focus-within .ro-media img {
