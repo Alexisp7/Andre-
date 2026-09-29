@@ -4381,7 +4381,9 @@ body:has(.recomendados-original) .page-hero-sub {
 
 .ref {
   padding: 22px 24px;
-  border-bottom-color: rgba(17, 75, 89, 0.1);
+  /* Blanca en vez de ese azul tenue -- igual que la costura de la vista
+     previa: no se ve ninguna raya de separación, solo queda el espacio. */
+  border-bottom-color: #fff;
   transition: background 250ms ease, padding-left 250ms ease, box-shadow 250ms ease;
 }
 
