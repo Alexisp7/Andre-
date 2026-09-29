@@ -6719,16 +6719,17 @@ body:has(.recomendados-original) .section {
 @media (hover: none) {
   .recomendados-original .ro-media img { filter: blur(0); }
 }
-/* Dos capas de filtro azul: ::before es un lavado parejo, al 15%, que en
-   reposo cubre toda la foto (y hace de "vista previa" junto con el
-   blur); ::after es el degradado fijo que solo oscurece hacia abajo,
-   donde va el título, y no se anima -- siempre está ahí para que el
-   texto blanco se lea bien. Al despejarse, ::before se desvanece y solo
-   queda el degradado. */
+/* ::before ya no es un lavado azul -- es el mismo brillo/destello de
+   Hitos (.noticia-media::after): una franja diagonal de luz, fuera de
+   cuadro en reposo, que cruza la foto una vez al pasar el mouse o
+   enfocar con teclado. ::after sigue siendo el degradado fijo que
+   oscurece hacia abajo, donde va el título, y no se anima -- siempre
+   está ahí para que el texto blanco se lea bien. */
 .recomendados-original .ro-media::before {
   content: ''; position: absolute; inset: 0; z-index: 1;
-  background: rgba(10, 24, 48, 0.15);
-  transition: opacity 0.45s ease;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  transform: translateX(-120%);
 }
 .recomendados-original .ro-media::after {
   content: ''; position: absolute; inset: 0; z-index: 1;
@@ -6741,11 +6742,9 @@ body:has(.recomendados-original) .section {
 @media (hover: hover) and (pointer: fine) {
   .recomendados-original .ro-plate:hover .ro-media::before,
   .recomendados-original .ro-plate:focus-within .ro-media::before {
-    opacity: 0;
+    transform: translateX(120%);
+    transition: transform 0.8s ease;
   }
-}
-@media (hover: none) {
-  .recomendados-original .ro-media::before { opacity: 0; }
 }
 
 .recomendados-original .ro-plate-head {
@@ -6865,6 +6864,7 @@ body:has(.recomendados-original) .section {
   .recomendados-original .ro-plate,
   .recomendados-original .ro-media,
   .recomendados-original .ro-media img,
+  .recomendados-original .ro-media::before,
   .recomendados-original .ro-list a,
   .recomendados-original .ro-go,
   .recomendados-original .ro-desc {
