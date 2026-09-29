@@ -6938,11 +6938,20 @@ body:has(.recomendados-original) .section {
     display: block; position: relative;
     width: min(700px, 82%); height: auto; aspect-ratio: 1240 / 930;
     margin: 0 auto;
-    box-shadow: 0 0 0 1px rgba(20, 35, 61, 0.1),
+    /* El contorno era azul (rgba(20,35,61,...)): al ir creciendo la
+       fila junto con la foto, se notaba como una línea azul bajando.
+       Blanco en vez de azul: sigue marcando el borde de la página
+       contra el fondo azul de arriba, pero ya no se ve como una raya
+       de color aparte. */
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
                 0 18px 36px -20px rgba(20, 35, 61, 0.45);
   }
   /* Degradado del azul de la fila hacia transparente, por encima de la
      página; se ve como si el azul se disolviera dejando salir el papel.
+     Empieza en el mismo azul exacto del fondo de la fila (--blue,
+     #0d2237 -- antes este degradado usaba rgb(20 35 61), un azul
+     ligeramente distinto, y se notaba la costura entre uno y otro) para
+     que no haya ningún salto de color, solo la fila que se va aclarando.
      Muchas paradas seguidas de una curva coseno (empieza y termina casi
      plana, cambia más rápido en el medio) en vez de pocas paradas a
      ojo: con pocas se notaba la secuencia, como franjas -- así queda
@@ -6951,35 +6960,35 @@ body:has(.recomendados-original) .section {
     content: ''; position: absolute; inset: 0; z-index: 1;
     pointer-events: none;
     background: linear-gradient(to bottom,
-      rgb(20 35 61 / 1.000) 0.00%,
-      rgb(20 35 61 / 0.997) 2.21%,
-      rgb(20 35 61 / 0.987) 4.43%,
-      rgb(20 35 61 / 0.972) 6.64%,
-      rgb(20 35 61 / 0.950) 8.86%,
-      rgb(20 35 61 / 0.923) 11.07%,
-      rgb(20 35 61 / 0.891) 13.29%,
-      rgb(20 35 61 / 0.854) 15.50%,
-      rgb(20 35 61 / 0.812) 17.71%,
-      rgb(20 35 61 / 0.766) 19.93%,
-      rgb(20 35 61 / 0.717) 22.14%,
-      rgb(20 35 61 / 0.665) 24.36%,
-      rgb(20 35 61 / 0.611) 26.57%,
-      rgb(20 35 61 / 0.556) 28.79%,
-      rgb(20 35 61 / 0.500) 31.00%,
-      rgb(20 35 61 / 0.444) 33.21%,
-      rgb(20 35 61 / 0.389) 35.43%,
-      rgb(20 35 61 / 0.335) 37.64%,
-      rgb(20 35 61 / 0.283) 39.86%,
-      rgb(20 35 61 / 0.234) 42.07%,
-      rgb(20 35 61 / 0.188) 44.29%,
-      rgb(20 35 61 / 0.146) 46.50%,
-      rgb(20 35 61 / 0.109) 48.71%,
-      rgb(20 35 61 / 0.077) 50.93%,
-      rgb(20 35 61 / 0.050) 53.14%,
-      rgb(20 35 61 / 0.028) 55.36%,
-      rgb(20 35 61 / 0.013) 57.57%,
-      rgb(20 35 61 / 0.003) 59.79%,
-      rgb(20 35 61 / 0.000) 62.00%);
+      rgb(13 34 55 / 1.000) 0.00%,
+      rgb(13 34 55 / 0.997) 2.21%,
+      rgb(13 34 55 / 0.987) 4.43%,
+      rgb(13 34 55 / 0.972) 6.64%,
+      rgb(13 34 55 / 0.950) 8.86%,
+      rgb(13 34 55 / 0.923) 11.07%,
+      rgb(13 34 55 / 0.891) 13.29%,
+      rgb(13 34 55 / 0.854) 15.50%,
+      rgb(13 34 55 / 0.812) 17.71%,
+      rgb(13 34 55 / 0.766) 19.93%,
+      rgb(13 34 55 / 0.717) 22.14%,
+      rgb(13 34 55 / 0.665) 24.36%,
+      rgb(13 34 55 / 0.611) 26.57%,
+      rgb(13 34 55 / 0.556) 28.79%,
+      rgb(13 34 55 / 0.500) 31.00%,
+      rgb(13 34 55 / 0.444) 33.21%,
+      rgb(13 34 55 / 0.389) 35.43%,
+      rgb(13 34 55 / 0.335) 37.64%,
+      rgb(13 34 55 / 0.283) 39.86%,
+      rgb(13 34 55 / 0.234) 42.07%,
+      rgb(13 34 55 / 0.188) 44.29%,
+      rgb(13 34 55 / 0.146) 46.50%,
+      rgb(13 34 55 / 0.109) 48.71%,
+      rgb(13 34 55 / 0.077) 50.93%,
+      rgb(13 34 55 / 0.050) 53.14%,
+      rgb(13 34 55 / 0.028) 55.36%,
+      rgb(13 34 55 / 0.013) 57.57%,
+      rgb(13 34 55 / 0.003) 59.79%,
+      rgb(13 34 55 / 0.000) 62.00%);
   }
   /* La página está recortada por abajo: se difumina en el blanco. */
   .ref-captura::after {
