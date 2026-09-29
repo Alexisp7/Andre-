@@ -6702,7 +6702,7 @@ body:has(.recomendados-original) .section {
 .recomendados-original .ro-media img {
   display: block; width: 100%; height: 100%;
   object-fit: cover;
-  filter: blur(3px);
+  filter: blur(1.6px);
   transition: filter 0.45s ease;
 }
 /* La cápsula (lo que hace reconocible la ilustración como "Farmacología")
